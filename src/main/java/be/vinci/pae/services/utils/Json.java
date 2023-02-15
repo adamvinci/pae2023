@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,14 +18,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Json<T> {
+
   private static final String DB_FILE_PATH = Config.getProperty("DatabaseFilePath");
-  private static Path pathToDb = Paths.get(DB_FILE_PATH);
+  private static final Path pathToDb = Paths.get(DB_FILE_PATH);
   private final static ObjectMapper jsonMapper = new ObjectMapper();
-  private Class<T> type ;
+
+  private final Class<T> type;
 
   // Java generics are mostly compile time, this means that the type information is lost at runtime.
   // To get the type information at runtime you have to add it as an argument of the constructor.
-  public Json(Class<T> type){
+  public Json(Class<T> type) {
     this.type = type;
   }
 
@@ -37,11 +38,13 @@ public class Json<T> {
       if (!Files.exists(pathToDb)) {
         // Create an object and add a JSON array as POJO, e.g. { items:[...]}
         ObjectNode newCollection = jsonMapper.createObjectNode().putPOJO(collectionName, items);
-        jsonMapper.writeValue(pathToDb.toFile(), newCollection); // write the JSON Object in the DB file
+        jsonMapper.writeValue(pathToDb.toFile(),
+            newCollection); // write the JSON Object in the DB file
         return;
       }
       // get all collections : can be read as generic JsonNode, if it can be Object or Array;
-      JsonNode allCollections = jsonMapper.readTree(pathToDb.toFile()); // e.g. { users:[...], items:[...]}
+      JsonNode allCollections = jsonMapper.readTree(
+          pathToDb.toFile()); // e.g. { users:[...], items:[...]}
       // remove current collection, e.g. remove the array of items
       if (allCollections.has(collectionName)) {
         ((ObjectNode) allCollections).remove(collectionName); //e.g. it leaves { users:[...]}
@@ -65,14 +68,16 @@ public class Json<T> {
       // e.g. the JSON array within "items" field of { users:[...], items:[...]}
       JsonNode collection = node.get(collectionName);
       if (collection == null) // Send an empty list if there is not the requested collection
-        return (List<T>) new ArrayList<T>();
+      {
+        return new ArrayList<T>();
+      }
       // convert the JsonNode to a List of POJOs & return it
       return jsonMapper.readerForListOf(type).readValue(collection);
     } catch (FileNotFoundException e) {
-      return (List<T>) new ArrayList<T>(); // send an empty list if there is no db file
+      return new ArrayList<T>(); // send an empty list if there is no db file
     } catch (IOException e) {
       e.printStackTrace();
-      return (List<T>) new ArrayList<T>();
+      return new ArrayList<T>();
     }
   }
 
@@ -81,10 +86,12 @@ public class Json<T> {
       JavaType type = jsonMapper.getTypeFactory().constructCollectionType(List.class, this.type);
       // serialize using JSON Views : public view (all fields not required in the
       // views are not serialized)
-      String publicItemListAsString = jsonMapper.writerWithView(Views.Public.class).writeValueAsString(list);
+      String publicItemListAsString = jsonMapper.writerWithView(Views.Public.class)
+          .writeValueAsString(list);
       // deserialize using JSON Views : Public View (all fields that are not serialized
       // are set to their default values in the POJOs)
-      return jsonMapper.readerWithView(Views.Public.class).forType(type).readValue(publicItemListAsString);
+      return jsonMapper.readerWithView(Views.Public.class).forType(type)
+          .readValue(publicItemListAsString);
     } catch (JsonProcessingException e) {
       e.printStackTrace();
       return null;
@@ -96,10 +103,12 @@ public class Json<T> {
     try {
       // serialize using JSON Views : public view (all fields not required in the
       // views are not serialized)
-      String publicItemAsString = jsonMapper.writerWithView(Views.Public.class).writeValueAsString(item);
+      String publicItemAsString = jsonMapper.writerWithView(Views.Public.class)
+          .writeValueAsString(item);
       // deserialize using JSON Views : Public View (all fields that are not serialized
       // are set to their default values in the POJO)
-      return jsonMapper.readerWithView(Views.Public.class).forType(type).readValue(publicItemAsString);
+      return jsonMapper.readerWithView(Views.Public.class).forType(type)
+          .readValue(publicItemAsString);
     } catch (JsonProcessingException e) {
       e.printStackTrace();
       return null;
@@ -110,17 +119,21 @@ public class Json<T> {
   // To be used if you want to filter attributes when serializing in a JSON file
   public void serializePublicInfoOnly(List<T> items, String collectionName) {
     try {
-      String currentCollectionAsString = jsonMapper.writerWithView(Views.Public.class).writeValueAsString(items);
+      String currentCollectionAsString = jsonMapper.writerWithView(Views.Public.class)
+          .writeValueAsString(items);
       JsonNode updatedCollection = jsonMapper.readTree(currentCollectionAsString);
       // if no DB file, write a new collection to a new db file
       if (!Files.exists(pathToDb)) {
         // Create an object and add a JSON array as POJO, e.g. { items:[...]}
-        ObjectNode newCollection = jsonMapper.createObjectNode().putPOJO(collectionName, updatedCollection);
-        jsonMapper.writeValue(pathToDb.toFile(), newCollection); // write the JSON Object in the DB file
+        ObjectNode newCollection = jsonMapper.createObjectNode()
+            .putPOJO(collectionName, updatedCollection);
+        jsonMapper.writeValue(pathToDb.toFile(),
+            newCollection); // write the JSON Object in the DB file
         return;
       }
       // get all collections : can be read as generic JsonNode, if it can be Object or Array;
-      JsonNode allCollections = jsonMapper.readTree(pathToDb.toFile()); // e.g. { users:[...], items:[...]}
+      JsonNode allCollections = jsonMapper.readTree(
+          pathToDb.toFile()); // e.g. { users:[...], items:[...]}
       // remove current collection, e.g. remove the array of items
       if (allCollections.has(collectionName)) {
         ((ObjectNode) allCollections).remove(collectionName); //e.g. it leaves { users:[...]}

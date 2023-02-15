@@ -3,11 +3,11 @@ package be.vinci.pae.main;
 import be.vinci.pae.utils.ApplicationBinder;
 import be.vinci.pae.utils.Config;
 import be.vinci.pae.utils.WebExceptionMapper;
+import java.io.IOException;
+import java.net.URI;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-import java.io.IOException;
-import java.net.URI;
 
 
 /**
@@ -15,12 +15,13 @@ import java.net.URI;
  */
 public class Main {
 
-  static {
-    Config.load("dev.properties");
-  }
-
   // Base URI the Grizzly HTTP server will listen on
   public static final String BASE_URI = Config.getProperty("BaseUri");
+
+  static {
+    Config.load("dev.properties");
+
+  }
 
   /**
    * Starts Grizzly HTTP server exposing JAX-RS resources defined in this application.
@@ -31,8 +32,8 @@ public class Main {
 
     // create a resource config that scans for JAX-RS resources and providers
     // in vinci.be package
-    String RESOURCES = "be.vinci.api";
-    final ResourceConfig rc = new ResourceConfig().packages(RESOURCES)
+    String resources = "be.vinci.api";
+    final ResourceConfig rc = new ResourceConfig().packages(resources)
         .register(ApplicationBinder.class)
         .register(WebExceptionMapper.class);
 
@@ -49,8 +50,8 @@ public class Main {
    */
   public static void main(String[] args) throws IOException {
     final HttpServer server = startServer();
-    System.out.println(String.format("Jersey app started with WADL available at "
-        + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
+    System.out.printf("Jersey app started with WADL available at "
+        + "%sapplication.wadl\nHit enter to stop it...%n", BASE_URI);
     System.in.read();
     server.stop();
   }
