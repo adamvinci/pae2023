@@ -10,7 +10,7 @@ public class Config {
   private static Properties props;
 
   /**
-   * Charge the file which contains the real value of references
+   * Charge the file which contains the real value of references.
    *
    * @param file the file
    */
@@ -24,7 +24,7 @@ public class Config {
   }
 
   /**
-   * Replace the reference with real values
+   * Replace the reference with real values.
    *
    * @param key the references
    * @return the real values

@@ -28,6 +28,8 @@ public class UserRessource {
   UserUcc userUcc;
 
   /**
+   * Login by providing an email and a password.
+   *
    * @param json contains the email and password
    * @return a json object with a token(formed by the user id) the user id and the user email
    */

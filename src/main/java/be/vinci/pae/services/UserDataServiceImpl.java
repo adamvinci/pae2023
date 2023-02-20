@@ -18,7 +18,7 @@ public class UserDataServiceImpl implements UserDataService {
   private PreparedStatement statement;
 
   /**
-   * Connect to the database for each request
+   * Connect to the database for each request.
    */
   public void connection() {
     try {
@@ -31,7 +31,7 @@ public class UserDataServiceImpl implements UserDataService {
   }
 
   /**
-   * Disconnect from the database after each request
+   * Disconnect from the database after each request.
    */
 
   public void disconnect() {
