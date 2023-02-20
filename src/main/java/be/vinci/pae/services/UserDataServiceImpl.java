@@ -42,7 +42,9 @@ public class UserDataServiceImpl implements UserDataService {
     connection();
     try {
       statement = conn.prepareStatement(
-          "SELECT id_utilisateur,mot_de_passe,nom,prenom,image,date_inscription,role,gsm FROM projet.utilisateurs_inscrits WHERE email = (?)");
+          "SELECT id_utilisateur,mot_de_passe,nom" +
+              ",prenom,image,date_inscription,role,gsm" +
+              " FROM projet.utilisateurs_inscrits WHERE email = (?)");
       statement.setString(1, email);
       try (ResultSet set = statement.executeQuery()) {
 
