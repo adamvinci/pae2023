@@ -17,6 +17,9 @@ public class UserDataServiceImpl implements UserDataService {
   private UserFactory userFactory;
   private PreparedStatement statement;
 
+  /**
+   * Connect to the database for each request
+   */
   public void connection() {
     try {
       conn = DriverManager.getConnection(Config.getProperty("url"), Config.getProperty("user"),
@@ -27,6 +30,9 @@ public class UserDataServiceImpl implements UserDataService {
     }
   }
 
+  /**
+   * Disconnect from the database after each request
+   */
 
   public void disconnect() {
     try {

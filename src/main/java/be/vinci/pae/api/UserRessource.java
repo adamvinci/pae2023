@@ -27,6 +27,10 @@ public class UserRessource {
   @Inject
   UserUcc userUcc;
 
+  /**
+   * @param json contains the email and password
+   * @return a json object with a token(formed by the user id) the user id and the user email
+   */
   @POST
   @Path("login")
   @Consumes(MediaType.APPLICATION_JSON)
