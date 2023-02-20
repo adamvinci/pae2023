@@ -10,6 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * UserDataServiceImpl
+ */
 public class UserDataServiceImpl implements UserDataService {
 
   private Connection conn = null;

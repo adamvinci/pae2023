@@ -3,6 +3,9 @@ package be.vinci.pae.domain;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.LocalDate;
 
+/**
+ * UserDTO.
+ */
 @JsonDeserialize(as = UserImpl.class)
 public interface UserDTO {
 

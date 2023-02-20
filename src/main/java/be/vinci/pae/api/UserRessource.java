@@ -18,6 +18,9 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
+/**
+ * UserRessource.
+ */
 @Singleton
 @Path("/auths")
 public class UserRessource {

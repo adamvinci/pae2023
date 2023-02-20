@@ -2,6 +2,9 @@ package be.vinci.pae.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+/**
+ * UserClass.
+ */
 @JsonDeserialize(as = UserImpl.class)
 public interface User extends UserDTO {
 
