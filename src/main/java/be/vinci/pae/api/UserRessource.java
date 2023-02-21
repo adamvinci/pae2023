@@ -28,7 +28,7 @@ public class UserRessource {
   private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
   private final ObjectMapper jsonMapper = new ObjectMapper();
   @Inject
-  UserUcc userUcc;
+  private UserUcc userUcc;
 
   /**
    * Login by providing an email and a password.
@@ -65,5 +65,6 @@ public class UserRessource {
     }
 
   }
+
 
 }

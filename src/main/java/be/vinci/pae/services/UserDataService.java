@@ -8,4 +8,6 @@ import be.vinci.pae.domain.UserDTO;
 public interface UserDataService {
 
   UserDTO getOne(String email);
+
+
 }
