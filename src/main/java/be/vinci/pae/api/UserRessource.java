@@ -53,11 +53,11 @@ public class UserRessource {
     try {
       token = JWT.create().withIssuer("auth0")
           .withClaim("user", userDTO.getId()).sign(this.jwtAlgorithm);
-      ObjectNode publicUser = jsonMapper.createObjectNode()
+
+      return jsonMapper.createObjectNode()
           .put("token", token)
           .put("id", userDTO.getId())
-          .put("email", userDTO.getEmail());
-      return publicUser;
+          .put("prenom", userDTO.getPrenom());
 
     } catch (Exception e) {
       System.out.println("Unable to create token");
