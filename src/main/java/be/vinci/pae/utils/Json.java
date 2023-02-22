@@ -19,7 +19,7 @@ public class Json<T> {
    *
    * @param item item containing the attribute
    * @param type class of the item
-   * @param <T>
+   * @param <T>  ...
    * @return the deserialized item
    */
   public static <T> T filterPublicJsonView(T item, Class<T> type) {
