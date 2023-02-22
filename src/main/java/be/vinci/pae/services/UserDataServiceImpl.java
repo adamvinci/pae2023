@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 /**
  * UserDataServiceImpl
@@ -94,20 +95,13 @@ public class UserDataServiceImpl implements UserDataService {
               + " FROM projet.utilisateurs_inscrits WHERE id_utilisateur = (?)");
       statement.setInt(1, id);
       try (ResultSet set = statement.executeQuery()) {
-
         while (set.next()) {
           if (set.getString(3).equals("null")) {
             return null;
           } else {
-            userDTO.setEmail(set.getString(1));
-            userDTO.setPassword(set.getString(2));
-            userDTO.setNom(set.getString(3));
-            userDTO.setPrenom(set.getString(4));
-            userDTO.setImage(set.getString(5));
-            userDTO.setDateInscription(
-                set.getDate(6).toLocalDate());
-            userDTO.setRole(set.getString(7));
-            userDTO.setGsm(set.getString(8));
+            initUser(userDTO, set.getString(1), set.getString(2), set.getString(3), set.getString(4)
+                , set.getString(5), set.getDate(6).toLocalDate(), set.getString(7),
+                set.getString(8));
           }
 
         }
@@ -119,5 +113,18 @@ public class UserDataServiceImpl implements UserDataService {
     disconnect();
     userDTO.setId(id);
     return userDTO;
+  }
+
+  public void initUser(UserDTO userDTO, String email, String password, String nom, String prenom,
+      String image,
+      LocalDate date, String role, String gsm) {
+    userDTO.setEmail(email);
+    userDTO.setPassword(password);
+    userDTO.setNom(nom);
+    userDTO.setPrenom(prenom);
+    userDTO.setImage(image);
+    userDTO.setDateInscription(date);
+    userDTO.setRole(role);
+    userDTO.setGsm(gsm);
   }
 }
