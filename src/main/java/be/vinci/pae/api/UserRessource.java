@@ -4,6 +4,7 @@ import be.vinci.pae.api.filters.Authorize;
 import be.vinci.pae.domain.UserDTO;
 import be.vinci.pae.domain.UserUcc;
 import be.vinci.pae.utils.Config;
+import be.vinci.pae.utils.Json;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -31,6 +32,7 @@ public class UserRessource {
 
   private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
   private final ObjectMapper jsonMapper = new ObjectMapper();
+  ;
   @Inject
   private UserUcc userUcc;
 
@@ -60,8 +62,7 @@ public class UserRessource {
 
       return jsonMapper.createObjectNode()
           .put("token", token)
-          .put("id", userDTO.getId())
-          .put("prenom", userDTO.getPrenom());
+          .putPOJO("user", Json.filterPublicJsonView(userDTO, UserDTO.class));
 
     } catch (Exception e) {
       System.out.println("Unable to create token");
@@ -82,9 +83,9 @@ public class UserRessource {
   @Authorize
   public ObjectNode getUser(@Context ContainerRequest request) {
     UserDTO userDTO = (UserDTO) request.getProperty("user");
-    return jsonMapper.createObjectNode().put("prenom", userDTO.getPrenom());
+    return jsonMapper.createObjectNode()
+        .putPOJO("User", Json.filterPublicJsonView(userDTO, UserDTO.class));
 
   }
-
 
 }
