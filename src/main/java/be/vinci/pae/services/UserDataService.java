@@ -9,5 +9,5 @@ public interface UserDataService {
 
   UserDTO getOne(String email);
 
-
+  UserDTO getOne(int id);
 }

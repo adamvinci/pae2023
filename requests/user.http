@@ -1,0 +1,39 @@
+### Login with default user credentials
+POST {{baseUrl}}/auths/login
+Content-Type: application/json
+
+{
+  "email":"adrien.riez@hotmail.be",
+  "password":"123*"
+}
+> {%
+  client.global.set("adrienToken", response.body.token);
+%}
+
+
+###
+GET {{baseUrl}}/auths/user
+Content-Type: application/json
+Authorization:{{adrienToken}}
+
+### Login with default user credentials
+POST {{baseUrl}}/auths/login
+Content-Type: application/json
+
+{
+  "email":"jean.jacques@hotmail.be",
+  "password":"123*"
+}
+> {%
+  client.global.set("jeanJacques", response.body.token);
+%}
+
+
+###
+GET {{baseUrl}}/auths/user
+Content-Type: application/json
+Authorization:{{jeanJacques}}
+
+###
+GET {{baseUrl}}/auths/user/1
+

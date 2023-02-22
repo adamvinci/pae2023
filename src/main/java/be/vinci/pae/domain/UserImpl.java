@@ -3,12 +3,13 @@ package be.vinci.pae.domain;
 import be.vinci.pae.views.Views.Internal;
 import be.vinci.pae.views.Views.Public;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonView;
 import java.time.LocalDate;
 import java.util.Arrays;
 import org.mindrot.jbcrypt.BCrypt;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(Include.NON_DEFAULT)
 class UserImpl implements User {
 
   @JsonView(Public.class)

@@ -1,8 +1,10 @@
 package be.vinci.pae.api;
 
+import be.vinci.pae.api.filters.Authorize;
 import be.vinci.pae.domain.UserDTO;
 import be.vinci.pae.domain.UserUcc;
 import be.vinci.pae.utils.Config;
+import be.vinci.pae.utils.Json;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -11,12 +13,15 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
+import org.glassfish.jersey.server.ContainerRequest;
 
 /**
  * UserRessource.
@@ -27,6 +32,7 @@ public class UserRessource {
 
   private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
   private final ObjectMapper jsonMapper = new ObjectMapper();
+
   @Inject
   private UserUcc userUcc;
 
@@ -56,8 +62,7 @@ public class UserRessource {
 
       return jsonMapper.createObjectNode()
           .put("token", token)
-          .put("id", userDTO.getId())
-          .put("prenom", userDTO.getPrenom());
+          .putPOJO("user", Json.filterPublicJsonView(userDTO, UserDTO.class));
 
     } catch (Exception e) {
       System.out.println("Unable to create token");
@@ -66,5 +71,21 @@ public class UserRessource {
 
   }
 
+  /**
+   * Path to retrieve the user from a token.
+   *
+   * @param request contains the token in the header
+   * @return the user contained in the token
+   */
+  @GET
+  @Path("user")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Authorize
+  public ObjectNode getUser(@Context ContainerRequest request) {
+    UserDTO userDTO = (UserDTO) request.getProperty("user");
+    return jsonMapper.createObjectNode()
+        .putPOJO("User", Json.filterPublicJsonView(userDTO, UserDTO.class));
+
+  }
 
 }
