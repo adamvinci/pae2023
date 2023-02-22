@@ -5,10 +5,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Config.
+ */
 public class Config {
 
   private static Properties props;
 
+  /**
+   * Charge the file which contains the real value of references.
+   *
+   * @param file the file
+   */
   public static void load(String file) {
     props = new Properties();
     try (InputStream input = new FileInputStream(file)) {
@@ -18,6 +26,12 @@ public class Config {
     }
   }
 
+  /**
+   * Replace the reference with real values.
+   *
+   * @param key the references
+   * @return the real values
+   */
   public static String getProperty(String key) {
     return props.getProperty(key);
   }

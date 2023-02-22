@@ -68,21 +68,23 @@ CREATE TABLE projet.notifications
 );
 
 
+-------------------------------------------------------------------SEED.SQL-------------------------------------------------------------
+
 INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
                                          role, gsm)
-VALUES ( 'adrien.riez@hotmail.be', ' $2a$10$CXX5pzjA2gPfpt78wGS/6.yiA9icznUSxb5sp2ZyaYp2k3KaB90/Ce'
+VALUES ( 'adrien.riez@hotmail.be', '$2a$10$fYQHAoeC3sQ.AZuBsxJUWuh7miB8QIZ1/gDsdp7zOhg2cmtknqlmy'
        , 'Riez', 'Adrien', 'image000.png', '2023-02-14', 'responsable'
        , '048856514647'); /* mdp = 123*, image ?*/
 
 INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
                                          role, gsm)
 VALUES ( 'steven.agbassah@student.vinci.be'
-       , ' $2a$10$CXX5pzjA2gPfpt78wGS/6.yiA9icznUSxb5sp2ZyaYp2k3KaB90/Ce'
+       , '$2a$10$fYQHAoeC3sQ.AZuBsxJUWuh7miB8QIZ1/gDsdp7zOhg2cmtknqlmy'
        , 'Agbassah', 'Steven', 'image001.png', '2023-02-14', 'aidant'
        , '04785691665'); /* mdp = 123*, image ?*/
 
 INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
                                          role, gsm)
-VALUES ( 'jean.jacques@hotmail.be', ' $2a$10$CXX5pzjA2gPfpt78wGS/6.yiA9icznUSxb5sp2ZyaYp2k3KaB90/Ce'
+VALUES ( 'jean.jacques@hotmail.be', '$2a$10$fYQHAoeC3sQ.AZuBsxJUWuh7miB8QIZ1/gDsdp7zOhg2cmtknqlmy'
        , 'Jacques', 'Jean', 'image002.png', '2023-02-14', 'membre'
        , '04894894448'); /* mdp = 123*, image ?*/
