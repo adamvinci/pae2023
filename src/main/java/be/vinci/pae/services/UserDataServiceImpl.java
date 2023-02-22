@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 /**
- * UserDataServiceImpl
+ * UserDataServiceImpl.
  */
 public class UserDataServiceImpl implements UserDataService {
 
@@ -99,8 +99,9 @@ public class UserDataServiceImpl implements UserDataService {
           if (set.getString(3).equals("null")) {
             return null;
           } else {
-            initUser(userDTO, set.getString(1), set.getString(2), set.getString(3), set.getString(4)
-                , set.getString(5), set.getDate(6).toLocalDate(), set.getString(7),
+            initUser(userDTO, set.getString(1), set.getString(2), set.getString(3),
+                set.getString(4),
+                set.getString(5), set.getDate(6).toLocalDate(), set.getString(7),
                 set.getString(8));
           }
 
@@ -115,6 +116,19 @@ public class UserDataServiceImpl implements UserDataService {
     return userDTO;
   }
 
+  /**
+   * init a UserDto from resultset got from the database (to pass the cpd duplications check).
+   *
+   * @param userDTO
+   * @param email
+   * @param password
+   * @param nom
+   * @param prenom
+   * @param image
+   * @param date
+   * @param role
+   * @param gsm
+   */
   public void initUser(UserDTO userDTO, String email, String password, String nom, String prenom,
       String image,
       LocalDate date, String role, String gsm) {
