@@ -83,5 +83,41 @@ public class UserDataServiceImpl implements UserDataService {
     return userDTO;
   }
 
+  @Override
+  public UserDTO getOne(int id) {
+    UserDTO userDTO = userFactory.getUserDTO();
+    connection();
+    try {
+      statement = conn.prepareStatement(
+          "SELECT email,mot_de_passe,nom"
+              + ",prenom,image,date_inscription,role,gsm"
+              + " FROM projet.utilisateurs_inscrits WHERE id_utilisateur = (?)");
+      statement.setInt(1, id);
+      try (ResultSet set = statement.executeQuery()) {
 
+        while (set.next()) {
+          if (set.getString(3).equals("null")) {
+            return null;
+          } else {
+            userDTO.setEmail(set.getString(1));
+            userDTO.setPassword(set.getString(2));
+            userDTO.setNom(set.getString(3));
+            userDTO.setPrenom(set.getString(4));
+            userDTO.setImage(set.getString(5));
+            userDTO.setDateInscription(
+                set.getDate(6).toLocalDate());
+            userDTO.setRole(set.getString(7));
+            userDTO.setGsm(set.getString(8));
+          }
+
+        }
+      }
+
+    } catch (SQLException e) {
+      System.out.println("\n" + e.getMessage().split("\n")[0] + "\n");
+    }
+    disconnect();
+    userDTO.setId(id);
+    return userDTO;
+  }
 }

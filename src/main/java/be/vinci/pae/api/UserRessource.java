@@ -1,5 +1,6 @@
 package be.vinci.pae.api;
 
+import be.vinci.pae.api.filters.Authorize;
 import be.vinci.pae.domain.UserDTO;
 import be.vinci.pae.domain.UserUcc;
 import be.vinci.pae.utils.Config;
@@ -11,12 +12,15 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
+import org.glassfish.jersey.server.ContainerRequest;
 
 /**
  * UserRessource.
@@ -63,6 +67,22 @@ public class UserRessource {
       System.out.println("Unable to create token");
       return null;
     }
+
+  }
+
+  /**
+   * Path to retrieve the user from a token.
+   *
+   * @param request contains the token in the header
+   * @return the user contained in the token
+   */
+  @GET
+  @Path("user")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Authorize
+  public ObjectNode getUser(@Context ContainerRequest request) {
+    UserDTO userDTO = (UserDTO) request.getProperty("user");
+    return jsonMapper.createObjectNode().put("prenom", userDTO.getPrenom());
 
   }
 

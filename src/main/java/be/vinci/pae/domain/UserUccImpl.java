@@ -27,5 +27,8 @@ public class UserUccImpl implements UserUcc {
     return userDTO;
   }
 
-
+  @Override
+  public UserDTO getOne(int id) {
+    return dataService.getOne(id);
+  }
 }
