@@ -7,14 +7,14 @@ Content-Type: application/json
   "password":"123*"
 }
 > {%
-  client.global.set("jamesToken", response.body.token);
+  client.global.set("adrienToken", response.body.token);
 %}
 
 
 ###
 GET {{baseUrl}}/auths/user
 Content-Type: application/json
-Authorization:{{jamesToken}}
+Authorization:{{adrienToken}}
 
 ### Login with default user credentials
 POST {{baseUrl}}/auths/login
@@ -25,12 +25,12 @@ Content-Type: application/json
   "password":"123*"
 }
 > {%
-  client.global.set("jamesToken", response.body.token);
+  client.global.set("jeanJacques", response.body.token);
 %}
 
 
 ###
 GET {{baseUrl}}/auths/user
 Content-Type: application/json
-Authorization:{{jamesToken}}
+Authorization:{{jeanJacques}}
 
