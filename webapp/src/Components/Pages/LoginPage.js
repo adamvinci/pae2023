@@ -13,12 +13,12 @@ function renderRegisterForm() {
   const main = document.querySelector('main');
   const form = document.createElement('form');
   form.className = 'p-5';
-  const username = document.createElement('input');
-  username.type = 'text';
-  username.id = 'username';
-  username.placeholder = 'username';
-  username.required = true;
-  username.className = 'form-control mb-3';
+  const email = document.createElement('input');
+  email.type = 'text';
+  email.id = 'email';
+  email.placeholder = 'email';
+  email.required = true;
+  email.className = 'form-control mb-3';
   const password = document.createElement('input');
   password.type = 'password';
   password.id = 'password';
@@ -49,7 +49,7 @@ function renderRegisterForm() {
   formCheckWrapper.appendChild(rememberme);
   formCheckWrapper.appendChild(checkLabel);
 
-  form.appendChild(username);
+  form.appendChild(email);
   form.appendChild(password);
   form.appendChild(formCheckWrapper);
   form.appendChild(submit);
@@ -64,13 +64,13 @@ function onCheckboxClicked(e) {
 async function onLogin(e) {
   e.preventDefault();
 
-  const username = document.querySelector('#username').value;
+  const email = document.querySelector('#email').value;
   const password = document.querySelector('#password').value;
 
   const options = {
     method: 'POST',
     body: JSON.stringify({
-      username,
+      email,
       password,
     }),
     headers: {
