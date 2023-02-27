@@ -26,7 +26,7 @@ public class UserUccImpl implements UserUcc {
       throw new WebApplicationException("Completer le champ username", Status.BAD_REQUEST);
     }
 
-    if ((!email.isBlank()) && (password == null || password.isBlank())) {
+    if (!email.isBlank() && (password == null || password.isBlank())) {
       throw new WebApplicationException("Completer le chanp password", Status.BAD_REQUEST);
     }
 
