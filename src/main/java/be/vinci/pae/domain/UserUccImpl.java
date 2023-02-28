@@ -2,9 +2,7 @@ package be.vinci.pae.domain;
 
 import be.vinci.pae.services.UserDataService;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.Response.Status;
+
 
 /**
  * UserUccImpl.
