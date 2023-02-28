@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * Authorize is an annotation called by the IHM class.
+ * Authorize is an annotation called by  the IHM class.
  */
 @NameBinding
 @Retention(RetentionPolicy.RUNTIME)

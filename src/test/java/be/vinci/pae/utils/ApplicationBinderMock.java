@@ -16,13 +16,13 @@ import org.mockito.Mockito;
 public class ApplicationBinderMock extends AbstractBinder {
 
 
-    @Override
-    protected void configure() {
-        // to avoid error Cannot invoke "be.vinci.pae.domain.UserUcc.getOne(int)"
-        // because "this.userUcc" is null
-        bind(UserUccImpl.class).to(UserUcc.class).in(Singleton.class);
-        //to avoid calling the UserDataServiceImpl which call the database
-        // but cant ass dev.propreties not initialzied
-        bind(Mockito.mock(UserDataServiceImpl.class)).to(UserDataService.class);
-    }
+  @Override
+  protected void configure() {
+    // to avoid error Cannot invoke "be.vinci.pae.domain.UserUcc.getOne(int)"
+    // because "this.userUcc"  is null
+    bind(UserUccImpl.class).to(UserUcc.class).in(Singleton.class);
+    //to avoid calling the UserDataServiceImpl which call the database
+    // but cant ass dev.propreties not initialzied
+    bind(Mockito.mock(UserDataServiceImpl.class)).to(UserDataService.class);
+  }
 }

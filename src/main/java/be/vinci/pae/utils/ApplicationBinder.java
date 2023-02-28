@@ -12,16 +12,16 @@ import jakarta.ws.rs.ext.Provider;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 /**
- * ApplicationBinderClass allow to inject service object.
+ * ApplicationBinderClass allow to inject service  object.
  */
 @Provider
 public class ApplicationBinder extends AbstractBinder {
 
-    @Override
-    protected void configure() {
-        bind(UserFactoryImpl.class).to(UserFactory.class).in(Singleton.class);
-        bind(UserDataServiceImpl.class).to(UserDataService.class).in(Singleton.class);
-        bind(UserUccImpl.class).to(UserUcc.class).in(Singleton.class);
+  @Override
+  protected void configure() {
+    bind(UserFactoryImpl.class).to(UserFactory.class).in(Singleton.class);
+    bind(UserDataServiceImpl.class).to(UserDataService.class).in(Singleton.class);
+    bind(UserUccImpl.class).to(UserUcc.class).in(Singleton.class);
 
-    }
+  }
 }

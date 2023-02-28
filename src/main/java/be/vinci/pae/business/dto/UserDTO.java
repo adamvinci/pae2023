@@ -2,48 +2,47 @@ package be.vinci.pae.business.dto;
 
 import be.vinci.pae.business.domaine.UserImpl;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
 import java.time.LocalDate;
 
 /**
- * UserDTO is used to create a User without accessing to the business method.
+ * UserDTO is used to  create a User without accessing to the business method.
  */
 @JsonDeserialize(as = UserImpl.class)
 public interface UserDTO {
 
-    Integer getId();
+  Integer getId();
 
-    void setId(Integer id);
+  void setId(Integer id);
 
-    String getPassword();
+  String getPassword();
 
-    void setPassword(String password);
+  void setPassword(String password);
 
-    String getNom();
+  String getNom();
 
-    void setNom(String nom);
+  void setNom(String nom);
 
-    String getPrenom();
+  String getPrenom();
 
-    void setPrenom(String prenom);
+  void setPrenom(String prenom);
 
-    String getEmail();
+  String getEmail();
 
-    void setEmail(String email);
+  void setEmail(String email);
 
-    String getImage();
+  String getImage();
 
-    void setImage(String image);
+  void setImage(String image);
 
-    LocalDate getDateInscription();
+  LocalDate getDateInscription();
 
-    void setDateInscription(LocalDate dateInscription);
+  void setDateInscription(LocalDate dateInscription);
 
-    String getRole();
+  String getRole();
 
-    void setRole(String role);
+  void setRole(String role);
 
-    String getGsm();
+  String getGsm();
 
-    void setGsm(String gsm);
+  void setGsm(String gsm);
 }
