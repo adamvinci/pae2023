@@ -11,28 +11,28 @@ import jakarta.inject.Inject;
  */
 public class UserUccImpl implements UserUcc {
 
-    @Inject
-    private UserDataService dataService;
+  @Inject
+  private UserDataService dataService;
 
-    @Override
-    public UserDTO login(String email, String password) {
+  @Override
+  public UserDTO login(String email, String password) {
 
-        UserDTO userDTO = dataService.getOne(email);
+    UserDTO userDTO = dataService.getOne(email);
 
-        if (userDTO == null) {
-            return null;
-        }
-
-        User user = (User) userDTO;
-        if (!user.checkPassword(password)) {
-            return null;
-        }
-
-        return userDTO;
+    if (userDTO == null) {
+      return null;
     }
 
-    @Override
-    public UserDTO getOne(int id) {
-        return dataService.getOne(id);
+    User user = (User) userDTO;
+    if (!user.checkPassword(password)) {
+      return null;
     }
+
+    return userDTO;
+  }
+
+  @Override
+  public UserDTO getOne(int id) {
+    return dataService.getOne(id);
+  }
 }
