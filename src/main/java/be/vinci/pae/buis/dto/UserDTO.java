@@ -1,5 +1,6 @@
-package be.vinci.pae.domain;
+package be.vinci.pae.buis.dto;
 
+import be.vinci.pae.buis.biz.UserImpl;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.LocalDate;
 

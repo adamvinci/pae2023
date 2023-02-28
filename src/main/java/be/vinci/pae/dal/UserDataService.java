@@ -1,6 +1,6 @@
-package be.vinci.pae.services;
+package be.vinci.pae.dal;
 
-import be.vinci.pae.domain.UserDTO;
+import be.vinci.pae.buis.dto.UserDTO;
 
 /**
  * UserDataService purpose is to communicate with the database.

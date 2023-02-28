@@ -1,5 +1,6 @@
-package be.vinci.pae.domain;
+package be.vinci.pae.buis.biz;
 
+import be.vinci.pae.buis.biz.User;
 import be.vinci.pae.views.Views.Internal;
 import be.vinci.pae.views.Views.Public;
 import com.fasterxml.jackson.annotation.JsonInclude;

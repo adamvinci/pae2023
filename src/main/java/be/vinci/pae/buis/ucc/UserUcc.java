@@ -1,4 +1,6 @@
-package be.vinci.pae.domain;
+package be.vinci.pae.buis.ucc;
+
+import be.vinci.pae.buis.dto.UserDTO;
 
 /**
  * UserUcc acts as an orchestrator to allow the IHM and DAL layers to communicate.
