@@ -7,7 +7,7 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
 /**
- * UserUccImpl.
+ * Implementation of UserUCC.
  */
 public class UserUccImpl implements UserUcc {
 

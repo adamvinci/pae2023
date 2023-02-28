@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.LocalDate;
 
 /**
- * UserDTO.
+ * UserDTO is used to create a User without accessing to the business method.
  */
 @JsonDeserialize(as = UserImpl.class)
 public interface UserDTO {

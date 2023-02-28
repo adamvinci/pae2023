@@ -24,7 +24,7 @@ import jakarta.ws.rs.core.Response.Status;
 import org.glassfish.jersey.server.ContainerRequest;
 
 /**
- * UserRessource.
+ * UserRessource retrieve the request process by Grizzly and treat it.
  */
 @Singleton
 @Path("/auths")

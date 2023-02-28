@@ -1,7 +1,7 @@
 package be.vinci.pae.domain;
 
 /**
- * UserFactory.
+ * UserFactory provide an instance of UserDTO.
  */
 public interface UserFactory {
 

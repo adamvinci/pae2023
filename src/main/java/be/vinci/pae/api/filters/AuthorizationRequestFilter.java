@@ -14,10 +14,9 @@ import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.ext.Provider;
-import java.io.IOException;
 
 /**
- * AuthorizationRequestFilter.
+ * AuthorizationRequestFilter treat the token send by the method with the Authorize Annotation.
  */
 @Singleton
 @Provider
@@ -30,8 +29,13 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
   @Inject
   private UserUcc userUcc;
 
+  /**
+   * Verifiy that the content of the token matches the signature.
+   *
+   * @param requestContext contains the token
+   */
   @Override
-  public void filter(ContainerRequestContext requestContext) throws IOException {
+  public void filter(ContainerRequestContext requestContext) {
     String token = requestContext.getHeaderString("Authorization");
     if (token == null) {
       requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)

@@ -1,7 +1,7 @@
 package be.vinci.pae.domain;
 
 /**
- * UserFactoryImpl.
+ * Implementation of UserFactory.
  */
 public class UserFactoryImpl implements UserFactory {
 

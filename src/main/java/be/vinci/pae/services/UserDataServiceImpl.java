@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 /**
- * UserDataServiceImpl.
+ * Implementation of UserDataService.
  */
 public class UserDataServiceImpl implements UserDataService {
 
@@ -40,6 +40,7 @@ public class UserDataServiceImpl implements UserDataService {
 
   public void disconnect() {
     try {
+
       conn.close();
     } catch (SQLException e) {
       throw new RuntimeException(e);

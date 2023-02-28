@@ -9,8 +9,11 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import org.mindrot.jbcrypt.BCrypt;
 
+/**
+ * Implementation of User.
+ */
 @JsonInclude(Include.NON_DEFAULT)
-class UserImpl implements User {
+public class UserImpl implements User {
 
   @JsonView(Public.class)
   private static final String[] POSSIBLE_ROLE = {"Responsable", "aidant", "membre"};

@@ -5,8 +5,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+
 /**
- * Json.
+ * Json convert an object in JSON taking into account the annotation(Public/Internal) of each
+ * attribute.
  *
  * @param <T> is the params.
  */
