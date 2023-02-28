@@ -23,6 +23,7 @@ class UserUccTest {
   private UserUcc userUcc;
   private UserDataService userDataService;
   private User userSteven;
+  private User badUser;
 
 
   @BeforeEach
@@ -62,9 +63,8 @@ class UserUccTest {
   @Test
   void testLoginWithBadEmailAndGoodPassword() {
     Mockito.when(userDataService.getOne("stevenagbassah@student.vinci.be"))
-        .thenReturn(new UserImpl());
-    assertThrows(WebApplicationException.class,
-        () -> userUcc.login("stevenagbassah@student.vinci.be", "123*"), "Cette email n'existe pas");
+        .thenReturn(null);
+    assertEquals(null, userUcc.login("stevenagbassah@student.vinci.be", "123*"), "Cette email n'existe pas");
 
   }
 
@@ -77,23 +77,22 @@ class UserUccTest {
   @DisplayName("Verify the login page for both when the field is blank and submit button is clicked")
   @Test
   void testLoginWithBlankField() {
-    assertThrows(WebApplicationException.class, () -> userUcc.login("", ""),
+    assertEquals(null,userUcc.login("", ""),
         "champ login ou mots de passe sont vide");
   }
 
   @DisplayName("Verify if the email field is empty and password is completed")
   @Test
   void testLoginWithBlankUserName() {
-    assertThrows(WebApplicationException.class, () -> userUcc.login("", "123*"),
+    assertEquals(null,userUcc.login("", "123*"),
         "Completer le champ username");
   }
 
   @DisplayName("Verify if the email field is completed and the password field is empty")
   @Test
   void testLoginWithBlankPassword() {
-    assertThrows(WebApplicationException.class,
-        () -> userUcc.login("steven.agbassah@student.vinci.be", ""),
-        "Completer le champ password");
+    assertEquals(null,userUcc.login("steven.agbassah@student.vinci.be", ""),
+            "Completer le champ password");
   }
   
 }
