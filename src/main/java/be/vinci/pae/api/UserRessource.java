@@ -39,20 +39,20 @@ public class UserRessource {
   /**
    * Login by providing an email and a password.
    *
-   * @param json contains the email and password
+   * @param userCredentials contains the email and password
    * @return a json object with a token(formed by the user id) the user id and the user email
    */
   @POST
   @Path("login")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public ObjectNode login(JsonNode json) {
-    if (!json.hasNonNull("email") || !json.hasNonNull("password")) {
+  public ObjectNode login(JsonNode userCredentials) {
+    if (!userCredentials.hasNonNull("email") || !userCredentials.hasNonNull("password")) {
       throw new WebApplicationException("email or password required", Status.BAD_REQUEST);
     }
 
-    String email = json.get("email").asText();
-    String password = json.get("password").asText();
+    String email = userCredentials.get("email").asText();
+    String password = userCredentials.get("password").asText();
 
     UserDTO userDTO = userUcc.login(email, password);
     String token;
