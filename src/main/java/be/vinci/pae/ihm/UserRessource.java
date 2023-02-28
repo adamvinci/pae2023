@@ -1,8 +1,8 @@
-package be.vinci.pae.api;
+package be.vinci.pae.ihm;
 
-import be.vinci.pae.api.filters.Authorize;
-import be.vinci.pae.domain.UserDTO;
-import be.vinci.pae.domain.UserUcc;
+import be.vinci.pae.ihm.filters.Authorize;
+import be.vinci.pae.buis.dto.UserDTO;
+import be.vinci.pae.buis.ucc.UserUcc;
 import be.vinci.pae.utils.Config;
 import be.vinci.pae.utils.Json;
 import com.auth0.jwt.JWT;

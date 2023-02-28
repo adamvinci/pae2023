@@ -1,6 +1,8 @@
-package be.vinci.pae.domain;
+package be.vinci.pae.buis.ucc;
 
-import be.vinci.pae.services.UserDataService;
+import be.vinci.pae.buis.biz.User;
+import be.vinci.pae.buis.dto.UserDTO;
+import be.vinci.pae.dal.UserDataService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;

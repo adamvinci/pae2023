@@ -1,5 +1,6 @@
-package be.vinci.pae.domain;
+package be.vinci.pae.buis.biz;
 
+import be.vinci.pae.buis.dto.UserDTO;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
