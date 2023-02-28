@@ -10,7 +10,7 @@ import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
 /**
- * Main class.
+ * Launch the webserver and initialize the .propreties file.
  */
 public class Main {
 
@@ -19,6 +19,8 @@ public class Main {
 
   static {
     Config.load("dev.properties");
+
+
   }
 
   /**

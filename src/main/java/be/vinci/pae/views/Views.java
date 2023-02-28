@@ -1,7 +1,7 @@
 package be.vinci.pae.views;
 
 /**
- * Views.
+ * Views allow to annotate JSON views using the two nested class.
  */
 public class Views {
 
