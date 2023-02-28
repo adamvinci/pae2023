@@ -75,8 +75,8 @@ class UserUccTest {
     assertEquals(userSteven, userUcc.getOne(2));
   }
 
-  @DisplayName("Verify the login page for both when the "+
-          "field is blank and submit button is clicked")
+  @DisplayName("Verify the login page for both when the "
+          + "field is blank and submit button is clicked")
   @Test
   void testLoginWithBlankField() {
     assertEquals(null,userUcc.login("", ""),
@@ -93,8 +93,8 @@ class UserUccTest {
   @DisplayName("Verify if the email field is completed and the password field is empty")
   @Test
   void testLoginWithBlankPassword() {
-    assertEquals(null,userUcc.login("steven.agbassah@student.vinci.be", " "),
-            "Completer le champ password");
+    assertEquals(null,userUcc.login("steven.agbassah@student.vinci.be", " ")
+            ,"Completer le champ password");
   }
   
 }

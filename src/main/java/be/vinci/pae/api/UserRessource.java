@@ -56,9 +56,9 @@ public class UserRessource {
 
     UserDTO userDTO = userUcc.login(email, password);
 
-    if(userDTO == null){
+    if(userDTO == null)
       throw new WebApplicationException("bad credentials", Status.BAD_REQUEST);
-    }
+
 
     String token;
     try {
