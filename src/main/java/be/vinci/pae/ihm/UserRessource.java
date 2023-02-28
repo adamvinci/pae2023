@@ -55,6 +55,11 @@ public class UserRessource {
     String password = userCredentials.get("password").asText();
 
     UserDTO userDTO = userUcc.login(email, password);
+
+    if (userDTO == null) {
+      throw new WebApplicationException("bad credentials", Status.BAD_REQUEST);
+    }
+
     String token;
     try {
       token = JWT.create().withIssuer("auth0")
