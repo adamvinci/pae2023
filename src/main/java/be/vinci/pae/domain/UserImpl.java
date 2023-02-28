@@ -9,6 +9,9 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import org.mindrot.jbcrypt.BCrypt;
 
+/**
+ * Implementation of User.
+ */
 @JsonInclude(Include.NON_DEFAULT)
 public class UserImpl implements User {
 
