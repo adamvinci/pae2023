@@ -53,8 +53,8 @@ class UserUccTest {
   @DisplayName("Test login(String email, String password) with good email and bad password")
   @Test
   void testLoginWithGoodEmailAndBadPassword() {
-    assertThrows(WebApplicationException.class,
-        () -> userUcc.login("steven.agbassah@student.vinci.be", "123"), "Mauvais mot de passe");
+    assertEquals(null,
+         userUcc.login("steven.agbassah@student.vinci.be", "123"), "Mauvais mot de passe");
 
   }
 
