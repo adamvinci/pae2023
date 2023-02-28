@@ -93,7 +93,7 @@ class UserUccTest {
   @DisplayName("Verify if the email field is completed and the password field is empty")
   @Test
   void testLoginWithBlankPassword() {
-    assertEquals(null,userUcc.login("steven.agbassah@student.vinci.be", ""),
+    assertEquals(null,userUcc.login("steven.agbassah@student.vinci.be", " "),
             "Completer le champ password");
   }
   
