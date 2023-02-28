@@ -51,7 +51,6 @@ CREATE TABLE projet.objets
     date_acceptation date,
     localisation     varchar(20),
     date_depot       date,
-    etat_vente       varchar(20),
     date_retrait     date,
     prix_vente       double precision,
     date_vente       date
