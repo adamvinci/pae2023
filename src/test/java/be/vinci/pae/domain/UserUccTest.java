@@ -64,7 +64,8 @@ class UserUccTest {
   void testLoginWithBadEmailAndGoodPassword() {
     Mockito.when(userDataService.getOne("stevenagbassah@student.vinci.be"))
         .thenReturn(null);
-    assertEquals(null, userUcc.login("stevenagbassah@student.vinci.be", "123*"), "Cette email n'existe pas");
+    assertEquals(null, userUcc.login("stevenagbassah@student.vinci.be", "123*"),
+            "Cette email n'existe pas");
 
   }
 
@@ -74,7 +75,8 @@ class UserUccTest {
     assertEquals(userSteven, userUcc.getOne(2));
   }
 
-  @DisplayName("Verify the login page for both when the field is blank and submit button is clicked")
+  @DisplayName("Verify the login page for both when the "+
+          "field is blank and submit button is clicked")
   @Test
   void testLoginWithBlankField() {
     assertEquals(null,userUcc.login("", ""),
