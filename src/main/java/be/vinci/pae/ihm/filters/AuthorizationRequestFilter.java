@@ -1,7 +1,7 @@
 package be.vinci.pae.ihm.filters;
 
-import be.vinci.pae.buis.dto.UserDTO;
-import be.vinci.pae.buis.ucc.UserUcc;
+import be.vinci.pae.business.dto.UserDTO;
+import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.utils.Config;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -16,7 +16,7 @@ import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.ext.Provider;
 
 /**
- * AuthorizationRequestFilter treat the token send by the method with the Authorize Annotation.
+ * AuthorizationRequestFilter treat the token send by the  method with the Authorize Annotation.
  */
 @Singleton
 @Provider

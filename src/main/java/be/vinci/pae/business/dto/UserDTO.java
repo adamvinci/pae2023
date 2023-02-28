@@ -1,11 +1,11 @@
-package be.vinci.pae.buis.dto;
+package be.vinci.pae.business.dto;
 
-import be.vinci.pae.buis.biz.UserImpl;
+import be.vinci.pae.business.domaine.UserImpl;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.LocalDate;
 
 /**
- * UserDTO is used to create a User without accessing to the business method.
+ * UserDTO is used to  create a User without accessing to the business method.
  */
 @JsonDeserialize(as = UserImpl.class)
 public interface UserDTO {

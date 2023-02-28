@@ -1,7 +1,7 @@
 package be.vinci.pae.dal;
 
-import be.vinci.pae.buis.dto.UserDTO;
-import be.vinci.pae.buis.factory.UserFactory;
+import be.vinci.pae.business.dto.UserDTO;
+import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.utils.Config;
 import jakarta.inject.Inject;
 import java.sql.Connection;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 /**
- * Implementation of UserDataService.
+ * Implementation of  UserDataService.
  */
 public class UserDataServiceImpl implements UserDataService {
 

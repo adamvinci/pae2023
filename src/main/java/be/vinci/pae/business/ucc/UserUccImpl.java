@@ -1,7 +1,7 @@
-package be.vinci.pae.buis.ucc;
+package be.vinci.pae.business.ucc;
 
-import be.vinci.pae.buis.biz.User;
-import be.vinci.pae.buis.dto.UserDTO;
+import be.vinci.pae.business.domaine.User;
+import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.dal.UserDataService;
 import jakarta.inject.Inject;
 
@@ -20,7 +20,7 @@ public class UserUccImpl implements UserUcc {
     UserDTO userDTO = dataService.getOne(email);
 
     if (userDTO == null) {
-      return  null;
+      return null;
     }
 
     User user = (User) userDTO;

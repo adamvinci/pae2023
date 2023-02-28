@@ -1,6 +1,6 @@
-package be.vinci.pae.buis.biz;
+package be.vinci.pae.business.domaine;
 
-import be.vinci.pae.buis.dto.UserDTO;
+import be.vinci.pae.business.dto.UserDTO;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 /**
@@ -29,7 +29,7 @@ public interface User extends UserDTO {
    * Check if the user can gain the role of 'aidant'.
    *
    * @param user to verify
-   * @return true if the user is not already an 'aidant', false if not
+   * @return true if the user  is not already an 'aidant', false if not
    */
   boolean checkCanBeAdmin(User user);
 

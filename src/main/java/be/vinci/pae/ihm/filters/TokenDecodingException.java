@@ -4,7 +4,7 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
 
 /**
- * TokenDecodingException manage the exception launched by the treatment of the token.
+ * TokenDecodingException manage the exception  launched by the treatment of the token.
  */
 public class TokenDecodingException extends WebApplicationException {
 

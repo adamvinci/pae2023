@@ -1,9 +1,9 @@
-package be.vinci.pae.buis.ucc;
+package be.vinci.pae.business.ucc;
 
-import be.vinci.pae.buis.dto.UserDTO;
+import be.vinci.pae.business.dto.UserDTO;
 
 /**
- * UserUcc acts as an orchestrator to allow the IHM and DAL layers to communicate.
+ * UserUcc acts  as an orchestrator to allow the IHM and DAL layers to communicate.
  */
 public interface UserUcc {
 

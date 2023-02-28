@@ -1,10 +1,10 @@
 package be.vinci.pae.utils;
 
 
-import be.vinci.pae.buis.factory.UserFactory;
-import be.vinci.pae.buis.factory.UserFactoryImpl;
-import be.vinci.pae.buis.ucc.UserUcc;
-import be.vinci.pae.buis.ucc.UserUccImpl;
+import be.vinci.pae.business.factory.UserFactory;
+import be.vinci.pae.business.factory.UserFactoryImpl;
+import be.vinci.pae.business.ucc.UserUcc;
+import be.vinci.pae.business.ucc.UserUccImpl;
 import be.vinci.pae.dal.UserDataService;
 import be.vinci.pae.dal.UserDataServiceImpl;
 import jakarta.inject.Singleton;
@@ -12,7 +12,7 @@ import jakarta.ws.rs.ext.Provider;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 /**
- * ApplicationBinderClass allow to inject service object.
+ * ApplicationBinderClass allow to inject service  object.
  */
 @Provider
 public class ApplicationBinder extends AbstractBinder {

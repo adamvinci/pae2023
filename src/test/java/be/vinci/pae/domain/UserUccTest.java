@@ -1,11 +1,13 @@
 package be.vinci.pae.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import be.vinci.pae.services.UserDataService;
+import be.vinci.pae.business.domaine.User;
+import be.vinci.pae.business.domaine.UserImpl;
+import be.vinci.pae.business.ucc.UserUcc;
+import be.vinci.pae.dal.UserDataService;
 import be.vinci.pae.utils.ApplicationBinderMock;
-import jakarta.ws.rs.WebApplicationException;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +25,6 @@ class UserUccTest {
   private UserUcc userUcc;
   private UserDataService userDataService;
   private User userSteven;
-  private User badUser;
 
 
   @BeforeEach
@@ -54,18 +55,17 @@ class UserUccTest {
   @DisplayName("Test login(String email, String password) with good email and bad password")
   @Test
   void testLoginWithGoodEmailAndBadPassword() {
-    assertEquals(null,
-         userUcc.login("steven.agbassah@student.vinci.be", "123"), "Mauvais mot de passe");
+    assertNull(userUcc.login("steven.agbassah@student.vinci.be", "123"), "Mauvais mot de passe");
 
   }
 
-  @DisplayName("Test login(String email, String password) with bad email and good password")
+  @DisplayName("Test  login(String email, String password) with bad email ")
   @Test
   void testLoginWithBadEmailAndGoodPassword() {
     Mockito.when(userDataService.getOne("stevenagbassah@student.vinci.be"))
         .thenReturn(null);
-    assertEquals(null, userUcc.login("stevenagbassah@student.vinci.be", "123*"),
-            "Cette email n'existe pas");
+    assertNull(userUcc.login("stevenagbassah@student.vinci.be", "123*"),
+        "Cette email n'existe pas");
 
   }
 
@@ -76,25 +76,23 @@ class UserUccTest {
   }
 
   @DisplayName("Verify the login page for both when the "
-          + "field is blank and submit button is clicked")
+      + "field is blank and submit button is clicked")
   @Test
   void testLoginWithBlankField() {
-    assertEquals(null, userUcc.login("", ""),
-        "champ login ou mots de passe sont vide");
+    assertNull(userUcc.login("", ""), "champ login ou mots de passe sont vide");
   }
 
   @DisplayName("Verify if the email field is empty and password is completed")
   @Test
   void testLoginWithBlankUserName() {
-    assertEquals(null, userUcc.login("", "123*"),
-        "Completer le champ username");
+    assertNull(userUcc.login("", "123*"), "Completer le champ username");
   }
 
   @DisplayName("Verify if the email field is completed and the password field is empty")
   @Test
   void testLoginWithBlankPassword() {
-    assertEquals(null, userUcc.login("steven.agbassah@student.vinci.be", " "),
-            "Completer le champ password");
+    assertNull(userUcc.login("steven.agbassah@student.vinci.be", " "),
+        "Completer le champ password");
   }
-  
+
 }

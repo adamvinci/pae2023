@@ -1,9 +1,9 @@
 package be.vinci.pae.dal;
 
-import be.vinci.pae.buis.dto.UserDTO;
+import be.vinci.pae.business.dto.UserDTO;
 
 /**
- * UserDataService purpose is to communicate with the database.
+ * UserDataService purpose is to  communicate with the database.
  */
 public interface UserDataService {
 

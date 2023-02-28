@@ -1,4 +1,4 @@
-package be.vinci.pae.buis.biz;
+package be.vinci.pae.business.domaine;
 
 import be.vinci.pae.views.Views.Internal;
 import be.vinci.pae.views.Views.Public;
@@ -10,7 +10,7 @@ import java.util.Arrays;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
- * Implementation of User.
+ * Implementation  of User.
  */
 @JsonInclude(Include.NON_DEFAULT)
 public class UserImpl implements User {

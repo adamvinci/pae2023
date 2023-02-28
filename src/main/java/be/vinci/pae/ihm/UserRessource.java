@@ -1,8 +1,8 @@
 package be.vinci.pae.ihm;
 
+import be.vinci.pae.business.dto.UserDTO;
+import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.ihm.filters.Authorize;
-import be.vinci.pae.buis.dto.UserDTO;
-import be.vinci.pae.buis.ucc.UserUcc;
 import be.vinci.pae.utils.Config;
 import be.vinci.pae.utils.Json;
 import com.auth0.jwt.JWT;
@@ -24,7 +24,7 @@ import jakarta.ws.rs.core.Response.Status;
 import org.glassfish.jersey.server.ContainerRequest;
 
 /**
- * UserRessource retrieve the request process by Grizzly and treat it.
+ * UserRessource retrieve the request  process by Grizzly and treat it.
  */
 @Singleton
 @Path("/auths")
