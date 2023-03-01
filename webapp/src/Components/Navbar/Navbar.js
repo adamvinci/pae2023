@@ -1,6 +1,9 @@
 // eslint-disable-next-line no-unused-vars
 import { Navbar as BootstrapNavbar } from 'bootstrap';
-import { getAuthenticatedUser, isAuthenticated } from '../../utils/auths';
+import {
+  getAuthenticatedUser,
+  getToken
+} from '../../utils/auths';
 
 const SITE_NAME = 'yourSiteName';
 
@@ -8,8 +11,8 @@ const Navbar = () => {
   renderNavbar();
 };
 
-function renderNavbar() {
-  const authenticatedUser = getAuthenticatedUser();
+async function renderNavbar() {
+  const authenticatedUser = await getAuthenticatedUser();
 
   const anonymousUserNavbar = `
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
@@ -67,7 +70,7 @@ function renderNavbar() {
               <a class="nav-link" href="#" data-uri="/logout">Logout</a>
             </li>    
             <li class="nav-item">
-              <a class="nav-link disabled" href="#">${authenticatedUser?.username}</a>
+              <a class="nav-link disabled" href="#">${authenticatedUser?.User.nom}</a>
             </li>           
           </ul>
         </div>
@@ -77,7 +80,7 @@ function renderNavbar() {
 
   const navbar = document.querySelector('#navbarWrapper');
 
-  navbar.innerHTML = isAuthenticated() ? authenticatedUserNavbar : anonymousUserNavbar;
+  navbar.innerHTML = getToken() ? authenticatedUserNavbar : anonymousUserNavbar;
 }
 
 export default Navbar;
