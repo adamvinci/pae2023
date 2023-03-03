@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import be.vinci.pae.business.domaine.User;
 import be.vinci.pae.business.domaine.UserImpl;
 import be.vinci.pae.business.ucc.UserUcc;
-import be.vinci.pae.dal.UserDataService;
+import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.utils.ApplicationBinderMock;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
@@ -23,14 +23,14 @@ class UserUccTest {
   ServiceLocator locator = ServiceLocatorUtilities.bind(new ApplicationBinderMock());
 
   private UserUcc userUcc;
-  private UserDataService userDataService;
+  private UserDAO userDAO;
   private User userSteven;
 
 
   @BeforeEach
   void setUp() {
     userUcc = locator.getService(UserUcc.class);
-    userDataService = locator.getService(UserDataService.class);
+    userDAO = locator.getService(UserDAO.class);
     userSteven = locator.getService(User.class);
     userSteven = Mockito.mock(UserImpl.class);
 
@@ -40,8 +40,8 @@ class UserUccTest {
     Mockito.when(userSteven.getPassword()).thenReturn("123*");
     Mockito.when(userSteven.checkPassword("123*")).thenReturn(true);
 
-    Mockito.when(userDataService.getOne(2)).thenReturn(userSteven);
-    Mockito.when(userDataService.getOne("steven.agbassah@student.vinci.be")).thenReturn(userSteven);
+    Mockito.when(userDAO.getOne(2)).thenReturn(userSteven);
+    Mockito.when(userDAO.getOne("steven.agbassah@student.vinci.be")).thenReturn(userSteven);
 
   }
 
@@ -62,7 +62,7 @@ class UserUccTest {
   @DisplayName("Test  login(String email, String password) with bad email ")
   @Test
   void testLoginWithBadEmailAndGoodPassword() {
-    Mockito.when(userDataService.getOne("stevenagbassah@student.vinci.be"))
+    Mockito.when(userDAO.getOne("stevenagbassah@student.vinci.be"))
         .thenReturn(null);
     assertNull(userUcc.login("stevenagbassah@student.vinci.be", "123*"),
         "Cette email n'existe pas");

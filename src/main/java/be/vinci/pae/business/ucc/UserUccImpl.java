@@ -2,7 +2,7 @@ package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.domaine.User;
 import be.vinci.pae.business.dto.UserDTO;
-import be.vinci.pae.dal.UserDataService;
+import be.vinci.pae.dal.UserDAO;
 import jakarta.inject.Inject;
 
 
@@ -12,7 +12,7 @@ import jakarta.inject.Inject;
 public class UserUccImpl implements UserUcc {
 
   @Inject
-  private UserDataService dataService;
+  private UserDAO dataService;
 
   @Override
   public UserDTO login(String email, String password) {
