@@ -5,7 +5,7 @@ import be.vinci.pae.business.dto.UserDTO;
 /**
  * UserDataService purpose is to  communicate with the database.
  */
-public interface UserDataService {
+public interface UserDAO {
 
   /**
    * Ask the database if the email match with an existing user.

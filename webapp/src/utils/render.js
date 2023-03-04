@@ -1,6 +1,9 @@
+import Navbar from "../Components/Navbar/Navbar";
+
 const clearPage = () => {
   const main = document.querySelector('main');
   main.innerHTML = '';
+  Navbar();
 };
 
 const renderPageTitle = (title) => {

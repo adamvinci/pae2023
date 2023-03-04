@@ -2,8 +2,8 @@ package be.vinci.pae.utils;
 
 import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.business.ucc.UserUccImpl;
-import be.vinci.pae.dal.UserDataService;
-import be.vinci.pae.dal.UserDataServiceImpl;
+import be.vinci.pae.dal.UserDAO;
+import be.vinci.pae.dal.UserDAOImpl;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.ext.Provider;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -23,6 +23,6 @@ public class ApplicationBinderMock extends AbstractBinder {
     bind(UserUccImpl.class).to(UserUcc.class).in(Singleton.class);
     //to avoid calling the UserDataServiceImpl which call the database
     // but cant ass dev.propreties not initialzied
-    bind(Mockito.mock(UserDataServiceImpl.class)).to(UserDataService.class);
+    bind(Mockito.mock(UserDAOImpl.class)).to(UserDAO.class);
   }
 }

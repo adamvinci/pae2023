@@ -2,10 +2,7 @@ package be.vinci.pae.dal;
 
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.UserFactory;
-import be.vinci.pae.utils.Config;
 import jakarta.inject.Inject;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,100 +11,69 @@ import java.time.LocalDate;
 /**
  * Implementation of  UserDataService.
  */
-public class UserDataServiceImpl implements UserDataService {
+public class UserDAOImpl implements UserDAO {
 
-  private Connection conn = null;
+
   @Inject
   private UserFactory userFactory;
-  private PreparedStatement statement;
+  @Inject
+  private DALService dalService;
 
-  /**
-   * Connect to the database for each request.
-   */
-  public void connection() {
-    try {
-      conn = DriverManager.getConnection(Config.getProperty("url"), Config.getProperty("user"),
-          Config.getProperty("dbPassword"));
-    } catch (SQLException e) {
-      System.out.println("Impossible de joindre le server !");
-      System.exit(1);
-    }
-  }
-
-  /**
-   * Disconnect from the database after each request.
-   */
-
-  public void disconnect() {
-    try {
-
-      conn.close();
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
-  }
 
   @Override
   public UserDTO getOne(String email) {
+
     UserDTO userDTO = userFactory.getUserDTO();
-    connection();
-    try {
-      statement = conn.prepareStatement(
-          "SELECT id_utilisateur,mot_de_passe,nom"
-              + ",prenom,image,date_inscription,role,gsm"
-              + " FROM projet.utilisateurs_inscrits WHERE email = (?)");
+    try (PreparedStatement statement = dalService.preparedStatement(
+        "SELECT id_utilisateur,mot_de_passe,nom" + ",prenom,image,date_inscription,role,gsm"
+            + " FROM projet.utilisateurs_inscrits WHERE email = (?)")) {
       statement.setString(1, email);
       try (ResultSet set = statement.executeQuery()) {
-
-        while (set.next()) {
-          if (set.getString(3).equals("null")) {
-            return null;
-          } else {
-            initUser(userDTO, email, set.getString(2), set.getString(3),
-                set.getString(4),
+        // check if resultset is empty (email does not exist)
+        if (!set.isBeforeFirst()) {
+          return null;
+        } else {
+          while (set.next()) {
+            initUser(userDTO, email, set.getString(2), set.getString(3), set.getString(4),
                 set.getString(5), set.getDate(6).toLocalDate(), set.getString(7),
-                set.getString(8), set.getInt(1));
+                set.getString(8),
+                set.getInt(1));
           }
-
         }
       }
 
     } catch (SQLException e) {
       System.out.println("\n" + e.getMessage().split("\n")[0] + "\n");
     }
-    disconnect();
-    userDTO.setEmail(email);
+
     return userDTO;
   }
 
   @Override
   public UserDTO getOne(int id) {
     UserDTO userDTO = userFactory.getUserDTO();
-    connection();
-    try {
-      statement = conn.prepareStatement(
-          "SELECT email,mot_de_passe,nom"
-              + ",prenom,image,date_inscription,role,gsm"
-              + " FROM projet.utilisateurs_inscrits WHERE id_utilisateur = (?)");
+    try (PreparedStatement statement = dalService.preparedStatement(
+        "SELECT email,mot_de_passe,nom" + ",prenom,image,date_inscription,role,gsm"
+            + " FROM projet.utilisateurs_inscrits WHERE id_utilisateur = (?)")) {
       statement.setInt(1, id);
       try (ResultSet set = statement.executeQuery()) {
-        while (set.next()) {
-          if (set.getString(3).equals("null")) {
-            return null;
-          } else {
+        if (!set.isBeforeFirst()) {
+          return null;
+        } else {
+          while (set.next()) {
             initUser(userDTO, set.getString(1), set.getString(2), set.getString(3),
-                set.getString(4),
-                set.getString(5), set.getDate(6).toLocalDate(), set.getString(7),
+                set.getString(4), set.getString(5), set.getDate(6).toLocalDate(),
+                set.getString(7),
                 set.getString(8), id);
-          }
 
+          }
         }
       }
 
     } catch (SQLException e) {
       System.out.println("\n" + e.getMessage().split("\n")[0] + "\n");
     }
-    disconnect();
+
     return userDTO;
   }
 
@@ -128,8 +94,7 @@ public class UserDataServiceImpl implements UserDataService {
    * @param gsm      the gsm corresponding to the email/id in the database
    */
   public void initUser(UserDTO userDTO, String email, String password, String nom, String prenom,
-      String image,
-      LocalDate date, String role, String gsm, int id) {
+      String image, LocalDate date, String role, String gsm, int id) {
     userDTO.setEmail(email);
     userDTO.setPassword(password);
     userDTO.setNom(nom);
