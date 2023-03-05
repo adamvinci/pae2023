@@ -49,7 +49,6 @@ CREATE TABLE projet.objets
     disponibilite    integer      NOT NULL REFERENCES projet.disponibilites (id_disponibilite),
     etat             varchar(25)  NOT NULL,
     date_acceptation date,
-    localisation     varchar(20),
     date_depot       date,
     date_retrait     date,
     prix_vente       double precision,
@@ -59,11 +58,18 @@ CREATE TABLE projet.objets
 
 CREATE TABLE projet.notifications
 (
-    objet               integer      NOT NULL references projet.objets (id_objet),
-    utilisateur_notifie integer      NOT NULL references projet.utilisateurs_inscrits (id_utilisateur),
-    message             varchar(500) NOT NULL,
-    lue                 boolean      NOT NULL,
-    PRIMARY KEY (objet, utilisateur_notifie)
+    id_notification SERIAL PRIMARY KEY,
+    objet           integer      NOT NULL references projet.objets (id_objet),
+    message         varchar(500) NOT NULL,
+    type            varchar(50)  NOT NULL
+);
+
+CREATE TABLE projet.notifications_utilisateurs
+(
+    id_notification_utilisateur SERIAL PRIMARY KEY,
+    notification                integer NOT NULL references projet.notifications (id_notification),
+    utilisateur_notifie         integer NOT NULL references projet.utilisateurs_inscrits (id_utilisateur),
+    lue                         boolean NOT NULL
 );
 
 
