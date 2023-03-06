@@ -5,19 +5,41 @@ import {
   getToken
 } from '../../utils/auths';
 
-const SITE_NAME = 'yourSiteName';
 
 const Navbar = () => {
+  header();
   renderNavbar();
 };
+
+function header(){
+
+  const h = document.querySelector('#head');
+  const head = `<div style="display: flex; justify-content: space-between;">
+    <div style="flex: 1; margin-top: 20px; margin-left: 20px;">
+      <p>Rue de Heuseux 77ter<br>4671 BLEGNY</p>
+    </div>
+    <div style="flex: 1; margin-top: 20px; text-align: center; font-size: 50px">
+      <p>DonneMoi </p>
+    </div>
+    <div
+        style="flex: 1; margin-right: 20px; margin-top: 10px; text-align: right;">
+      <a href="/login" data-uri="/login">
+        <button id="login-button" type="button"
+                className="btn btn-light">Bonjour, <br>Identifiez-vous</button>
+      </a>
+    </div>
+  </div>
+  `
+  h.innerHTML = head;
+}
 
 async function renderNavbar() {
   const authenticatedUser = await getAuthenticatedUser();
 
   const anonymousUserNavbar = `
-<nav class="navbar navbar-expand-lg navbar-light bg-info">
+  <div style=" justify-content: center; display: flex" >
+    <nav class="navbar navbar-expand-lg navbar-light " style="background-color: mediumorchid; border-color: green; border-style: solid">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">${SITE_NAME}</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -29,21 +51,26 @@ async function renderNavbar() {
         >
           <span class="navbar-toggler-icon"></span>
         </button>
+        
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#" data-uri="/">Home</a>
+              <a class="nav-link active" aria-current="page" href="#" data-uri="/ObjetEnVente">Objets mis en vente</a>
             </li>      
             <li id="loginItem" class="nav-item">
-              <a class="nav-link" href="#" data-uri="/login">Login</a>
+              <a class="nav-link" href="#" data-uri="/ObjetVendu">Objets vendus</a>
             </li>
             <li id="registerItem" class="nav-item">
-              <a class="nav-link" href="#" data-uri="/register">Register</a>
-            </li>            
+              <a class="nav-link" href="#" data-uri="/ObjetProposer">Objets à proposer</a>
+            </li>      
+            <li id="registerItem" class="nav-item">
+              <a class="nav-link" href="#" data-uri="/register">register</a>
+            </li>        
           </ul>
         </div>
       </div>
     </nav>
+  </div>
 `;
 
   const authenticatedUserNavbar = `
