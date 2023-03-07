@@ -5,6 +5,8 @@ import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.dal.UserDAO;
 import jakarta.inject.Inject;
 
+import java.util.List;
+
 
 /**
  * Implementation of UserUCC.
@@ -35,4 +37,10 @@ public class UserUccImpl implements UserUcc {
   public UserDTO getOne(int id) {
     return dataService.getOne(id);
   }
+
+  @Override
+  public List<UserDTO> getAll(){ return dataService.getAll() ;}
+
 }
+
+

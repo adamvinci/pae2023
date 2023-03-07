@@ -2,6 +2,8 @@ package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.dto.UserDTO;
 
+import java.util.List;
+
 /**
  * UserUcc acts  as an orchestrator to allow the IHM and DAL layers to communicate.
  */
@@ -23,4 +25,14 @@ public interface UserUcc {
    * @return the matching user or an exception
    */
   UserDTO getOne(int id);
+
+
+
+  /**
+   * Get the list of all the users of the database.
+   *
+   *
+   * @return the List with every users
+   */
+  List<UserDTO> getAll();
 }

@@ -2,6 +2,8 @@ package be.vinci.pae.dal;
 
 import be.vinci.pae.business.dto.UserDTO;
 
+import java.util.List;
+
 /**
  * UserDataService purpose is to  communicate with the database.
  */
@@ -22,4 +24,12 @@ public interface UserDAO {
    * @return the matching user or null
    */
   UserDTO getOne(int id);
+
+
+  /**
+   * Ask the database to get all the users.
+   *
+   * @return users
+   */
+  List<UserDTO> getAll();
 }
