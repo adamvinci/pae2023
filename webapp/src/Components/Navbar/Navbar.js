@@ -59,7 +59,10 @@ async function renderNavbar() {
             </li>      
             <li id="registerItem" class="nav-item">
               <a class="nav-link" href="#" data-uri="/register">register</a>
-            </li>        
+            </li>     
+             <li id="registerItem" class="nav-item">
+              <a class="nav-link" href="#" data-uri="/login">Login</a>
+            </li>    
           </ul>
         </div>
       </div>
