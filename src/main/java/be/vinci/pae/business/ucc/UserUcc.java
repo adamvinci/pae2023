@@ -1,7 +1,6 @@
 package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.dto.UserDTO;
-
 import java.util.List;
 
 /**
@@ -27,10 +26,8 @@ public interface UserUcc {
   UserDTO getOne(int id);
 
 
-
   /**
    * Get the list of all the users of the database.
-   *
    *
    * @return the List with every users
    */

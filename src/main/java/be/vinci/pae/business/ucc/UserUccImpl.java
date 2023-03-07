@@ -4,7 +4,6 @@ import be.vinci.pae.business.domaine.User;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.dal.UserDAO;
 import jakarta.inject.Inject;
-
 import java.util.List;
 
 
@@ -39,7 +38,9 @@ public class UserUccImpl implements UserUcc {
   }
 
   @Override
-  public List<UserDTO> getAll(){ return dataService.getAll() ;}
+  public List<UserDTO> getAll() {
+    return dataService.getAll();
+  }
 
 }
 

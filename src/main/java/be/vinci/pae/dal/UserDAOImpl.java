@@ -78,8 +78,9 @@ public class UserDAOImpl implements UserDAO {
 
     return userDTO;
   }
+
   @Override
-  public List<UserDTO> getAll(){
+  public List<UserDTO> getAll() {
     ArrayList<UserDTO> usersList = new ArrayList<>();
     UserDTO userDTO = userFactory.getUserDTO();
     return null;
