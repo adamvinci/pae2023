@@ -15,21 +15,15 @@ function header(){
 
   const h = document.querySelector('#head');
   const head = `<div style="display: flex; justify-content: space-between;">
-    <div style="flex: 1; margin-top: 20px; margin-left: 20px;">
+    <div style="flex: 1; margin-top: 20px; float: left;">
       <p>Rue de Heuseux 77ter<br>4671 BLEGNY</p>
     </div>
-    <div style="flex: 1; margin-top: 20px; text-align: center; font-size: 50px">
+    <div style="flex: 50%; margin-top: 20px;   font-size: 50px">
       <p>DonneMoi </p>
     </div>
-    <div
-        style="flex: 1; margin-right: 20px; margin-top: 10px; text-align: right;">
-      <a href="/login" data-uri="/login">
-        <button id="login-button" type="button"
-                className="btn btn-light">Bonjour, <br>Identifiez-vous</button>
-      </a>
-    </div>
-  </div>
-  `
+  
+`
+
   h.innerHTML = head;
 }
 
@@ -97,7 +91,7 @@ async function renderNavbar() {
               <a class="nav-link" href="#" data-uri="/logout">Logout</a>
             </li>    
             <li class="nav-item">
-              <a class="nav-link disabled" href="#">${authenticatedUser?.User.nom}</a>
+              <a class="nav-link disabled" href="#">${authenticatedUser?.nom}</a>
             </li>           
           </ul>
         </div>
