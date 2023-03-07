@@ -21,14 +21,15 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
+import java.util.Date;
 import org.glassfish.jersey.server.ContainerRequest;
 
 /**
- * UserRessource retrieve the request  process by Grizzly and treat it.
+ * AuthRessource retrieve the request  process by Grizzly and treat it.
  */
 @Singleton
 @Path("/auths")
-public class UserRessource {
+public class AuthRessource {
 
   private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
   private final ObjectMapper jsonMapper = new ObjectMapper();
@@ -54,15 +55,20 @@ public class UserRessource {
     String email = userCredentials.get("email").asText();
     String password = userCredentials.get("password").asText();
 
+    if (email.isBlank() || email.isEmpty() || password.isBlank() || password.isEmpty()) {
+      throw new WebApplicationException("email or password required", Status.BAD_REQUEST);
+    }
+
     UserDTO userDTO = userUcc.login(email, password);
 
     if (userDTO == null) {
-      throw new WebApplicationException("bad credentials", Status.BAD_REQUEST);
+      throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
     }
 
     String token;
     try {
-      token = JWT.create().withIssuer("auth0")
+      token = JWT.create().withExpiresAt(new Date(System.currentTimeMillis() + (86400 * 1000)))
+          .withIssuer("auth0")
           .withClaim("user", userDTO.getId()).sign(this.jwtAlgorithm);
 
       return jsonMapper.createObjectNode()
@@ -70,8 +76,7 @@ public class UserRessource {
           .putPOJO("user", Json.filterPublicJsonView(userDTO, UserDTO.class));
 
     } catch (Exception e) {
-      System.out.println("Unable to create token");
-      return null;
+      throw new WebApplicationException(e.getMessage(), Status.FORBIDDEN);
     }
 
   }
@@ -86,10 +91,10 @@ public class UserRessource {
   @Path("user")
   @Produces(MediaType.APPLICATION_JSON)
   @Authorize
-  public ObjectNode getUser(@Context ContainerRequest request) {
+  public UserDTO getUser(@Context ContainerRequest request) {
     UserDTO userDTO = (UserDTO) request.getProperty("user");
-    return jsonMapper.createObjectNode()
-        .putPOJO("User", Json.filterPublicJsonView(userDTO, UserDTO.class));
+
+    return Json.filterPublicJsonView(userDTO, UserDTO.class);
 
   }
 

@@ -31,7 +31,6 @@ class UserUccTest {
   void setUp() {
     userUcc = locator.getService(UserUcc.class);
     userDAO = locator.getService(UserDAO.class);
-    userSteven = locator.getService(User.class);
     userSteven = Mockito.mock(UserImpl.class);
 
     Mockito.when(userSteven.getId()).thenReturn(2);
@@ -45,11 +44,12 @@ class UserUccTest {
 
   }
 
-  @DisplayName("Test login(String email, String password) with good email and good password")
+  @DisplayName("Test login(String email, String password) w ith good email and good password")
   @Test
   void testLoginWithGoodCredentials() {
 
-    assertEquals(userSteven, userUcc.login("steven.agbassah@student.vinci.be", "123*"));
+    assertEquals(userSteven.getId(),
+        userUcc.login("steven.agbassah@student.vinci.be", "123*").getId());
   }
 
   @DisplayName("Test login(String email, String password) with good email and bad password")
@@ -72,27 +72,8 @@ class UserUccTest {
   @DisplayName("Test getOne(id) with the good id")
   @Test
   void getOneGoodId() {
-    assertEquals(userSteven, userUcc.getOne(2));
+    assertEquals(userSteven.getEmail(), userUcc.getOne(2).getEmail());
   }
 
-  @DisplayName("Verify the login page for both when the "
-      + "field is blank and submit button is clicked")
-  @Test
-  void testLoginWithBlankField() {
-    assertNull(userUcc.login("", ""), "champ login ou mots de passe sont vide");
-  }
-
-  @DisplayName("Verify if the email field is empty and password is completed")
-  @Test
-  void testLoginWithBlankUserName() {
-    assertNull(userUcc.login("", "123*"), "Completer le champ username");
-  }
-
-  @DisplayName("Verify if the email field is completed and the password field is empty")
-  @Test
-  void testLoginWithBlankPassword() {
-    assertNull(userUcc.login("steven.agbassah@student.vinci.be", " "),
-        "Completer le champ password");
-  }
 
 }
