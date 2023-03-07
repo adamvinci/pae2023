@@ -7,8 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Implementation of  UserDataService.
@@ -81,8 +81,8 @@ public class UserDAOImpl implements UserDAO {
 
   @Override
   public List<UserDTO> getAll() {
-    ArrayList<UserDTO> usersList = new ArrayList<>();
-    UserDTO userDTO = userFactory.getUserDTO();
+//    ArrayList<UserDTO> usersList = new ArrayList<>();
+//    UserDTO userDTO = userFactory.getUserDTO();
     return null;
   }
 

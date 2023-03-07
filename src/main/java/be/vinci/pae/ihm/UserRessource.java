@@ -11,7 +11,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
 /**
- * AuthRessource retrieve the request  process by Grizzly and treat it.
+ * UserRessource retrieve the request  process by Grizzly and treat it.
  */
 @Singleton
 @Path("/users")
@@ -23,7 +23,7 @@ public class UserRessource {
   private UserUcc userUcc;
 
   /**
-   * Get all the users
+   * Get all the users.
    *
    * @return a json object with a token(formed by the user id) the user id and the user email
    */
