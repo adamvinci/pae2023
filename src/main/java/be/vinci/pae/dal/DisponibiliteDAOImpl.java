@@ -25,7 +25,8 @@ public class DisponibiliteDAOImpl implements DisponibiliteDAO {
 
   @Override
   public DisponibiliteDTO getOne(int id) {
-    String query = "SELECT date_disponibilite,plage FROM projet.disponibilites  WHERE id_disponibilite = (?)";
+    String query = "SELECT date_disponibilite,plage"
+        + " FROM projet.disponibilites  WHERE id_disponibilite = (?)";
     DisponibiliteDTO disponibiliteDTO = disponibiliteFactory.getDisponibilite();
 
     try (PreparedStatement statement = dalService.preparedStatement(query)) {

@@ -7,6 +7,9 @@ import be.vinci.pae.dal.TypeObjetDAO;
 import jakarta.inject.Inject;
 import java.util.List;
 
+/**
+ * Implementation of {@link ObjetUCC}.
+ */
 public class ObjetUCCImpl implements ObjetUCC {
 
   @Inject

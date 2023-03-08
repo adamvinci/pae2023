@@ -5,6 +5,9 @@ import be.vinci.pae.dal.DisponibiliteDAO;
 import jakarta.inject.Inject;
 import java.util.List;
 
+/**
+ * Implementation of {@link DisponibiliteUCC}.
+ */
 public class DisponibiliteUCCImpl implements DisponibiliteUCC {
 
 

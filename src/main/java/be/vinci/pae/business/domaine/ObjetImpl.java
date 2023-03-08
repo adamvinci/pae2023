@@ -136,8 +136,8 @@ public class ObjetImpl implements Objet {
   }
 
   @Override
-  public void setDate_acceptation(LocalDate date_acceptation) {
-    this.dateAcceptation = date_acceptation;
+  public void setDate_acceptation(LocalDate dateAcceptation) {
+    this.dateAcceptation = dateAcceptation;
   }
 
   @Override
@@ -146,8 +146,8 @@ public class ObjetImpl implements Objet {
   }
 
   @Override
-  public void setDate_depot(LocalDate date_depot) {
-    this.dateDepot = date_depot;
+  public void setDate_depot(LocalDate dateDepot) {
+    this.dateDepot = dateDepot;
   }
 
   @Override
@@ -156,8 +156,8 @@ public class ObjetImpl implements Objet {
   }
 
   @Override
-  public void setDate_retrait(LocalDate date_retrait) {
-    this.dateRetrait = date_retrait;
+  public void setDate_retrait(LocalDate dateRetrait) {
+    this.dateRetrait = dateRetrait;
   }
 
   @Override
@@ -166,8 +166,8 @@ public class ObjetImpl implements Objet {
   }
 
   @Override
-  public void setDate_vente(LocalDate date_vente) {
-    this.dateVente = date_vente;
+  public void setDate_vente(LocalDate dateVente) {
+    this.dateVente = dateVente;
   }
 
   @Override
