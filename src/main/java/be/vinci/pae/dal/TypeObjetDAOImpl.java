@@ -45,6 +45,11 @@ public class TypeObjetDAOImpl implements TypeObjetDAO {
     return typeObjetDTO;
   }
 
+  /**
+   * Retrieve the type of object in the database.
+   *
+   * @return a list of object type or null if there are none.
+   */
   public List<TypeObjetDTO> getAll() {
     List<TypeObjetDTO> typeObjetDTOList = new ArrayList<>();
     try (PreparedStatement statement = dalService.preparedStatement("SELECT id_type,"

@@ -22,6 +22,11 @@ public class DisponibiliteRessource {
   @Inject
   private DisponibiliteUCC disponibiliteUCC;
 
+  /**
+   * Get all the Availabilty of Mr.Riez and his 'aidant'.
+   *
+   * @return a list of availability or null if there are none
+   */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public List<DisponibiliteDTO> getAllDisp() {

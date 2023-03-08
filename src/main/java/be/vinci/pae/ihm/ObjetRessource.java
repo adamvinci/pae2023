@@ -23,7 +23,11 @@ public class ObjetRessource {
   @Inject
   private ObjetUCC objetUCC;
 
-
+  /**
+   * Retrieve all the object in the database.
+   *
+   * @return a list of object or a WebAppException if there are none.
+   */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public List<ObjetDTO> getAllObject() {
@@ -34,6 +38,11 @@ public class ObjetRessource {
     return objetUCC.getAllObject();
   }
 
+  /**
+   * Retrieve all the type of object in the database.
+   *
+   * @return a list of object type or a WebAppException if there are none.
+   */
   @GET
   @Path("typeObjet")
   @Produces(MediaType.APPLICATION_JSON)
