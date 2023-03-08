@@ -3,6 +3,10 @@ package be.vinci.pae.business.domaine;
 import be.vinci.pae.business.dto.PlageHoraireDTO;
 import java.util.Arrays;
 
+/**
+ * Implements directly {@link PlageHoraireDTO} as it does not need a business class with business
+ * method.
+ */
 public class PlageHoraire implements PlageHoraireDTO {
 
 

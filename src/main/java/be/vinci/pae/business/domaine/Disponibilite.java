@@ -5,7 +5,8 @@ import be.vinci.pae.business.dto.PlageHoraireDTO;
 import java.time.LocalDate;
 
 /**
- * Implementation of DisponibiliteDTO.
+ * * Implements directly {@link DisponibiliteDTO} as it does not need a business class with business
+ * method.
  */
 public class Disponibilite implements DisponibiliteDTO {
 

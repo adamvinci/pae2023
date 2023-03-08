@@ -4,7 +4,7 @@ import be.vinci.pae.business.domaine.UserImpl;
 import be.vinci.pae.business.dto.UserDTO;
 
 /**
- * Implementation  of UserFactory.
+ * Implementation  of {@link UserFactory}.
  */
 public class UserFactoryImpl implements UserFactory {
 

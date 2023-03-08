@@ -4,6 +4,9 @@ import be.vinci.pae.business.domaine.Disponibilite;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.LocalDate;
 
+/**
+ * Used to define the Availability of the 'aidant' and 'responsable'.
+ */
 @JsonDeserialize(as = Disponibilite.class)
 public interface DisponibiliteDTO {
 
