@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementation of {@link DisponibiliteDAO}
+ * Implementation of {@link DisponibiliteDAO}.
  */
 public class DisponibiliteDAOImpl implements DisponibiliteDAO {
 

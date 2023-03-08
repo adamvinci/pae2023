@@ -10,7 +10,17 @@ import java.util.List;
  */
 public interface ObjetUCC {
 
+  /**
+   * Retrieve all the object in the database.
+   *
+   * @return a list of object
+   */
   List<ObjetDTO> getAllObject();
 
+  /**
+   * Retrieve all the type of object in the database.
+   *
+   * @return a list of object type
+   */
   List<TypeObjetDTO> getAllObjectType();
 }

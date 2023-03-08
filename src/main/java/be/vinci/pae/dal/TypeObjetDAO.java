@@ -8,7 +8,18 @@ import java.util.List;
  */
 public interface TypeObjetDAO {
 
+  /**
+   * Retrieve the type of object corresponding the id.
+   *
+   * @param id to search
+   * @return the Type or else null
+   */
   TypeObjetDTO getOne(int id);
 
+  /**
+   * Retrieve the type of object in the database.
+   *
+   * @return a list of object type or null if there are none.
+   */
   List<TypeObjetDTO> getAll();
 }

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementation of {@link ObjectDAO}
+ * Implementation of {@link ObjectDAO}.
  */
 public class ObjectDAOImpl implements ObjectDAO {
 

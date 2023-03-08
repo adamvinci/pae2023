@@ -8,5 +8,10 @@ import java.util.List;
  */
 public interface ObjectDAO {
 
+  /**
+   * Retrieve the objects in the database.
+   *
+   * @return a list of object or null if there are none.
+   */
   List<ObjetDTO> getAllObjet();
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementation of {@link TypeObjetDAO}
+ * Implementation of {@link TypeObjetDAO}.
  */
 
 public class TypeObjetDAOImpl implements TypeObjetDAO {

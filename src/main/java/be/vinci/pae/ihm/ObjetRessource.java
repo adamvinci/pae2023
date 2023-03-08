@@ -13,6 +13,9 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 import java.util.List;
 
+/**
+ * ObjetRessource retrieve the request process by Grizzly and treat it.
+ */
 @Singleton
 @Path("/objet")
 public class ObjetRessource {

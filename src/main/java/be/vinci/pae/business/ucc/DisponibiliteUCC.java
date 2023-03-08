@@ -9,5 +9,10 @@ import java.util.List;
  */
 public interface DisponibiliteUCC {
 
+  /**
+   * Retrieve the availability of Mr.Riez and his 'aidant'.
+   *
+   * @return a list containing the availability
+   */
   List<DisponibiliteDTO> getDisponibilite();
 }
