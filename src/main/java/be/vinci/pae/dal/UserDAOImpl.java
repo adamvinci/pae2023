@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 /**
- * Implementation of  UserDataService.
+ * Implementation of {@link UserDAO}.
  */
 public class UserDAOImpl implements UserDAO {
 

@@ -1,6 +1,7 @@
 package be.vinci.pae.business.domaine;
 
 import be.vinci.pae.business.dto.DisponibiliteDTO;
+import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.dto.UserDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -11,7 +12,7 @@ import java.util.Arrays;
  * Implementation of Object class.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ObjetImpl implements Objet {
+public class ObjetImpl implements Objet, ObjetDTO {
 
 
   private static final String[] POSSIBLE_LOCALISATION = {"Magasin", "Atelier"};

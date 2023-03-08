@@ -14,6 +14,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of {@link ObjectDAO}
+ */
 public class ObjectDAOImpl implements ObjectDAO {
 
   @Inject

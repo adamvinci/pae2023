@@ -43,20 +43,19 @@ public interface ObjetDTO {
 
   LocalDate getDate_acceptation();
 
-  void setDate_acceptation(LocalDate date_acceptation);
+  void setDate_acceptation(LocalDate dateAcceptation);
 
   LocalDate getDate_depot();
 
-  void setDate_depot(LocalDate date_depot);
+  void setDate_depot(LocalDate dateDepot);
 
   LocalDate getDate_retrait();
 
-  void setDate_retrait(LocalDate date_retrait);
+  void setDate_retrait(LocalDate dateRetrait);
 
   LocalDate getDate_vente();
 
-  void setDate_vente(LocalDate date_vente);
-
+  void setDate_vente(LocalDate dateVente);
 
   Double getPrix();
 
@@ -71,5 +70,4 @@ public interface ObjetDTO {
   String getLocalisation();
 
   void setLocalisation(String localisation);
-
 }

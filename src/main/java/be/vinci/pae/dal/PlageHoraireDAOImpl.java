@@ -8,6 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Implementation of {@link PlageHoraireDAO}
+ */
 public class PlageHoraireDAOImpl implements PlageHoraireDAO {
 
   @Inject
