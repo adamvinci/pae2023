@@ -1,4 +1,4 @@
-package be.vinci.pae.dal;
+package be.vinci.pae.dal.services;
 
 import java.sql.PreparedStatement;
 

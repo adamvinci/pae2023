@@ -1,0 +1,45 @@
+package be.vinci.pae.ihm;
+
+import be.vinci.pae.business.dto.ObjetDTO;
+import be.vinci.pae.business.dto.TypeObjetDTO;
+import be.vinci.pae.business.ucc.ObjetUCC;
+import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
+import java.util.List;
+
+@Singleton
+@Path("/objet")
+public class ObjetRessource {
+
+  @Inject
+  private ObjetUCC objetUCC;
+
+
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  public List<ObjetDTO> getAllObject() {
+    if (objetUCC.getAllObject() == null) {
+      throw new WebApplicationException("Liste vide", Status.NO_CONTENT);
+    }
+    System.out.println(objetUCC.getAllObject());
+    return objetUCC.getAllObject();
+  }
+
+  @GET
+  @Path("typeObjet")
+  @Produces(MediaType.APPLICATION_JSON)
+  public List<TypeObjetDTO> getAllObjectType() {
+    if (objetUCC.getAllObject() == null) {
+      throw new WebApplicationException("Liste vide", Status.NO_CONTENT);
+    }
+
+    return objetUCC.getAllObjectType();
+  }
+
+}

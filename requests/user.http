@@ -35,5 +35,11 @@ Content-Type: application/json
 Authorization:{{jeanJacques}}
 
 ###
-GET {{baseUrl}}/auths/user/1
+GET  {{baseUrl}}/objet/typeObjet
+
+###
+GET  {{baseUrl}}/disponibilite
+
+###
+GET {{baseUrl}}/objet
 

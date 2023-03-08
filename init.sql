@@ -41,7 +41,7 @@ CREATE TABLE projet.types_objets
 CREATE TABLE projet.objets
 (
     id_objet         SERIAL PRIMARY KEY,
-    utilisateur      integer      NOT NULL REFERENCES projet.utilisateurs_inscrits (id_utilisateur),
+    utilisateur      integer       REFERENCES projet.utilisateurs_inscrits (id_utilisateur),
     gsm              varchar(20),
     photo            varchar(100) NOT NULL,
     type             integer      NOT NULL references projet.types_objets (id_type),
@@ -93,3 +93,10 @@ INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image
 VALUES ( 'jean.jacques@hotmail.be', '$2a$10$fYQHAoeC3sQ.AZuBsxJUWuh7miB8QIZ1/gDsdp7zOhg2cmtknqlmy'
        , 'Jacques', 'Jean', 'image002.png', '2023-02-14', 'membre'
        , '04894894448'); /* mdp = 123*, image ?*/
+INSERT INTO projet.plages_horaires(plage) VALUES ('matin'),('apres midi');
+
+INSERT INTO projet.disponibilites(date_disponibilite, plage) VALUES ('2022-11-15',1), ('2022-11-16',2);
+
+INSERT INTO projet.types_objets(libelle) VALUES ('Meuble'),('Table'),('Chaise'),
+                                                ('Fauteuil'),('Lit/Sommier'),('Matelas'),
+                                                ('Couvertures'),('Materiel de cuisine'),('Vaiselle')
