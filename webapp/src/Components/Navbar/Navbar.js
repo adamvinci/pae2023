@@ -1,9 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { Navbar as BootstrapNavbar } from 'bootstrap';
-import {
-  getAuthenticatedUser,
-  getToken
-} from '../../utils/auths';
+import {getAuthenticatedUser,getToken} from '../../utils/auths';
 
 
 const Navbar = () => {
@@ -30,7 +27,7 @@ function header(){
 async function renderNavbar() {
   const authenticatedUser = await getAuthenticatedUser();
 
-  const anonymousUserNavbar = `
+  const navadd = `
   <div style=" justify-content: center; display: flex" >
     <nav class="navbar navbar-expand-lg navbar-light " style="background-color: mediumorchid; border-color: green; border-style: solid">
       <div class="container-fluid">
@@ -62,49 +59,61 @@ async function renderNavbar() {
             </li>     
              <li id="registerItem" class="nav-item">
               <a class="nav-link" href="#" data-uri="/login">Login</a>
-            </li>    
+            </li> 
           </ul>
+          <div id="member"></div>
         </div>
       </div>
     </nav>
   </div>
 `;
 
-  const authenticatedUserNavbar = `
-<nav class="navbar navbar-expand-lg navbar-light bg-info">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">myMovies</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#" data-uri="/">Home</a>
-            </li>            
-            <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/logout">Logout</a>
-            </li>    
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">${authenticatedUser?.nom}</a>
-            </li>           
-          </ul>
-        </div>
-      </div>
-    </nav>
-`;
+
 
   const navbar = document.querySelector('#navbarWrapper');
 
-  navbar.innerHTML = getToken() ? authenticatedUserNavbar : anonymousUserNavbar;
+  
+
+  navbar.innerHTML = navadd;
+  if(!getToken()){
+    
+    navbar.innerHTML = navadd;
+    console.log("shesh");
+  }else{
+    console.log(authenticatedUser?.nom);
+    const member=document.getElementById('member');
+    member.innerHTML=`
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+              <a class="nav-link" href="#" data-uri="/logout">Logout</a>
+    </li>
+    </ul>
+    `;
+    if(authenticatedUser?.role==='aidant' || authenticatedUser?.role==='responsable'){
+      member.innerHTML+=`
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+              <a class="nav-link" href="#" data-uri="/logout">Aidant</a>
+    </li>
+    </ul>
+    `;
+    }
+    if(authenticatedUser?.role==='responsable'){
+      member.innerHTML+=`
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+              <a class="nav-link" href="#" data-uri="/logout">Responsable</a>
+    </li>
+    </ul>
+    `;
+    }
+   
+
+  }
+      
+  
+  // navbar.innerHTML = getToken() ? authenticatedUserNavbar : anonymousUserNavbar;
+  // <li class="nav-item"><a class="nav-link disabled" href="#">${authenticatedUser?.nom}</a></li>
 }
 
 export default Navbar;
