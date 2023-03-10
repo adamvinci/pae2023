@@ -15,27 +15,27 @@ public interface TypeObjetDTO {
    *
    * @return the ID of the object
    */
-  public int getIdObjet();
+  int getIdObjet();
 
   /**
    * Sets the ID of the object.
    *
    * @param idObjet the ID to set
    */
-  public void setIdObjet(int idObjet);
+  void setIdObjet(int idObjet);
 
   /**
    * Returns the label of the object.
    *
    * @return the label of the object
    */
-  public String getLibelle();
+  String getLibelle();
 
   /**
    * Sets the label of the object.
    *
    * @param libelle the label to set
    */
-  public void setLibelle(String libelle);
+  void setLibelle(String libelle);
 
 }
