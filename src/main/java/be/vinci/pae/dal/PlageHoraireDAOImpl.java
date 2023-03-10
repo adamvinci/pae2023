@@ -19,6 +19,12 @@ public class PlageHoraireDAOImpl implements PlageHoraireDAO {
   @Inject
   private PlageHoraireFactory plageHoraireFactory;
 
+  /**
+   * Retrieve the 'plage' in the database.
+   *
+   * @param id to search in the DB
+   * @return a list of 'plage' or null if there are none.
+   */
   @Override
   public PlageHoraireDTO getOne(int id) {
 

@@ -8,6 +8,11 @@ import be.vinci.pae.business.dto.DisponibiliteDTO;
  */
 public class DisponibiliteFactoryImpl implements DisponibiliteFactory {
 
+  /**
+   * Returns a new {@link DisponibiliteDTO} object .
+   *
+   * @return a new {@link DisponibiliteDTO} object
+   */
   @Override
   public DisponibiliteDTO getDisponibilite() {
     return new Disponibilite();

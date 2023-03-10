@@ -10,11 +10,32 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 @JsonDeserialize(as = TypeObjetImpl.class)
 public interface TypeObjetDTO {
 
-  int getIdObjet();
+  /**
+   * Returns the ID of the object.
+   *
+   * @return the ID of the object
+   */
+  public int getIdObjet();
 
-  void setIdObjet(int idObjet);
+  /**
+   * Sets the ID of the object.
+   *
+   * @param idObjet the ID to set
+   */
+  public void setIdObjet(int idObjet);
 
-  String getLibelle();
+  /**
+   * Returns the label of the object.
+   *
+   * @return the label of the object
+   */
+  public String getLibelle();
 
-  void setLibelle(String libelle);
+  /**
+   * Sets the label of the object.
+   *
+   * @param libelle the label to set
+   */
+  public void setLibelle(String libelle);
+
 }

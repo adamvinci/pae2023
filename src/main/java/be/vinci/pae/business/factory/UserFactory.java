@@ -7,5 +7,10 @@ import be.vinci.pae.business.dto.UserDTO;
  */
 public interface UserFactory {
 
+  /**
+   * Returns a new {@link  UserDTO} object.
+   *
+   * @return a new {@link UserDTO} object
+   */
   UserDTO getUserDTO();
 }

@@ -7,5 +7,10 @@ import be.vinci.pae.business.dto.PlageHoraireDTO;
  */
 public interface PlageHoraireFactory {
 
+  /**
+   * Returns a new {@link PlageHoraireDTO} object .
+   *
+   * @return a new {@link PlageHoraireDTO} object
+   */
   PlageHoraireDTO getplageHoraireDTO();
 }

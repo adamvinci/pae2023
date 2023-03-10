@@ -7,5 +7,10 @@ import be.vinci.pae.business.dto.TypeObjetDTO;
  */
 public interface TypeObjetFactory {
 
+  /**
+   * Returns a new {@link  TypeObjetDTO} object.
+   *
+   * @return a new {@link TypeObjetDTO} object
+   */
   TypeObjetDTO getTypeObjet();
 }
