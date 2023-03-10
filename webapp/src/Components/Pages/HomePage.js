@@ -5,7 +5,7 @@ const HomePage =async () => {
   console.log(objets);
 
   const img = document.createElement("img");
-  img.src = `/api/objet/getPicture/${objets[0].idObjet}`
+  img.src = `/api/objet/getPicture/${objets[2].idObjet}`
   main.append(img);
 
 }

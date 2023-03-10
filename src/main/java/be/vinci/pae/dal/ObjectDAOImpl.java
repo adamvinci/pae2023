@@ -51,7 +51,6 @@ public class ObjectDAOImpl implements ObjectDAO {
             UserDTO userDTO = userDAO.getOne(set.getString(2));
             objetDTO.setUtilisateur(userDTO);
             objetDTO.setGsm(set.getString(3));
-            objetDTO.setPhoto(set.getString(4));
             TypeObjetDTO typeObjetDTO = typeObjetDAO.getOne(Integer.parseInt(set.getString(5)));
             objetDTO.setTypeObjet(typeObjetDTO);
             objetDTO.setDescription(set.getString(6));
