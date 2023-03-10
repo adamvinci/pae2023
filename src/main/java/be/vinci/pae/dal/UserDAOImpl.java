@@ -2,6 +2,7 @@ package be.vinci.pae.dal;
 
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.UserFactory;
+import be.vinci.pae.dal.services.DALService;
 import jakarta.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +10,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 /**
- * Implementation of  UserDataService.
+ * Implementation of {@link UserDAO}.
  */
 public class UserDAOImpl implements UserDAO {
 
