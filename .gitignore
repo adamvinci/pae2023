@@ -101,5 +101,7 @@ hs_err_pid*
 ## ignoring target file
 target/
 
+### ignore pic folder
+src/main/java/be/vinci/pae/utils/images
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,java-web
 

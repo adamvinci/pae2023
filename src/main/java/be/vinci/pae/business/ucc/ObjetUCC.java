@@ -23,4 +23,12 @@ public interface ObjetUCC {
    * @return a list of object type
    */
   List<TypeObjetDTO> getAllObjectType();
+
+  /**
+   * Ask the db the image of the object.
+   *
+   * @param id linked to an object
+   * @return the path of the picture
+   */
+  String getPicture(int id);
 }

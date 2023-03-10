@@ -86,5 +86,26 @@ public class ObjectDAOImpl implements ObjectDAO {
     return objetDTOList;
   }
 
+  @Override
+  public String getPicture(int id) {
+    String path = null;
+    String query = "SELECT photo FROM projet.objets WHERE id_objet = (?)";
+    try (PreparedStatement statement = dalService.preparedStatement(query)) {
+      statement.setInt(1, id);
+      try (ResultSet set = statement.executeQuery()) {
+        // check if resultset is empty (none objet)
+        if (!set.isBeforeFirst()) {
+          return null;
+        } else {
+          while (set.next()) {
+            path = set.getString(1);
+          }
+        }
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
 
+    return path;
+  }
 }

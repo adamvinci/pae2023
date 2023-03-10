@@ -14,4 +14,12 @@ public interface ObjectDAO {
    * @return a list of object or null if there are none.
    */
   List<ObjetDTO> getAllObjet();
+
+  /**
+   * Retrieve the path of the image of the object in the DB.
+   *
+   * @param id linked to an object
+   * @return the path of the picture or null
+   */
+  String getPicture(int id);
 }

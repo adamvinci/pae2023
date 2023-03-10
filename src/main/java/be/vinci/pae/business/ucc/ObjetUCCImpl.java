@@ -28,4 +28,9 @@ public class ObjetUCCImpl implements ObjetUCC {
   public List<TypeObjetDTO> getAllObjectType() {
     return typeObjetDAO.getAll();
   }
+
+  @Override
+  public String getPicture(int id) {
+    return dataService.getPicture(id);
+  }
 }
