@@ -51,7 +51,6 @@ public class ObjectDAOImpl implements ObjectDAO {
             UserDTO userDTO = userDAO.getOne(set.getString(2));
             objetDTO.setUtilisateur(userDTO);
             objetDTO.setGsm(set.getString(3));
-            objetDTO.setPhoto(set.getString(4));
             TypeObjetDTO typeObjetDTO = typeObjetDAO.getOne(Integer.parseInt(set.getString(5)));
             objetDTO.setTypeObjet(typeObjetDTO);
             objetDTO.setDescription(set.getString(6));
@@ -86,5 +85,26 @@ public class ObjectDAOImpl implements ObjectDAO {
     return objetDTOList;
   }
 
+  @Override
+  public String getPicture(int id) {
+    String path = null;
+    String query = "SELECT photo FROM projet.objets WHERE id_objet = (?)";
+    try (PreparedStatement statement = dalService.preparedStatement(query)) {
+      statement.setInt(1, id);
+      try (ResultSet set = statement.executeQuery()) {
+        // check if resultset is empty (none objet)
+        if (!set.isBeforeFirst()) {
+          return null;
+        } else {
+          while (set.next()) {
+            path = set.getString(1);
+          }
+        }
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
 
+    return path;
+  }
 }

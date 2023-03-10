@@ -10,6 +10,7 @@ public interface PlageHoraireDAO {
   /**
    * Retrieve the 'plage' in the database.
    *
+   * @param id to search in the DB
    * @return a list of 'plage' or null if there are none.
    */
   PlageHoraireDTO getOne(int id);

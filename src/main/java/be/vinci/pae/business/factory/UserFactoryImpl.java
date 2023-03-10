@@ -8,6 +8,11 @@ import be.vinci.pae.business.dto.UserDTO;
  */
 public class UserFactoryImpl implements UserFactory {
 
+  /**
+   * Returns a new {@link  UserDTO} object.
+   *
+   * @return a new {@link UserDTO} object
+   */
   @Override
   public UserDTO getUserDTO() {
     return new UserImpl();

@@ -8,6 +8,11 @@ import be.vinci.pae.business.dto.TypeObjetDTO;
  */
 public class TypeObjetFactoryImpl implements TypeObjetFactory {
 
+  /**
+   * Returns a new {@link  TypeObjetDTO} object.
+   *
+   * @return a new {@link TypeObjetDTO} object
+   */
   @Override
   public TypeObjetDTO getTypeObjet() {
     return new TypeObjetImpl();

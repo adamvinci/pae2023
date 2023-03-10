@@ -10,16 +10,46 @@ import java.time.LocalDate;
 @JsonDeserialize(as = Disponibilite.class)
 public interface DisponibiliteDTO {
 
+  /**
+   * Returns the date associated with this object.
+   *
+   * @return the date associated with this object
+   */
   LocalDate getDate();
 
+  /**
+   * Sets the date associated with this object.
+   *
+   * @param date the new date to associate with this object
+   */
   void setDate(LocalDate date);
 
+  /**
+   * Returns the PlageHoraireDTO object associated with this object.
+   *
+   * @return the PlageHoraireDTO object associated with this object
+   */
   PlageHoraireDTO getPlage();
 
+  /**
+   * Sets the PlageHoraireDTO object associated with this object.
+   *
+   * @param plage the new PlageHoraireDTO object to associate with this object
+   */
   void setPlage(PlageHoraireDTO plage);
 
+  /**
+   * Returns the ID of this object.
+   *
+   * @return the ID of this object
+   */
   int getId();
 
+  /**
+   * Sets the ID of this object.
+   *
+   * @param id the new ID to assign to this object
+   */
   void setId(int id);
 
 }
