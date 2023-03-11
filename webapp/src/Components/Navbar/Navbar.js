@@ -2,7 +2,6 @@
 import { Navbar as BootstrapNavbar } from 'bootstrap';
 import {getAuthenticatedUser,getToken} from '../../utils/auths';
 
-
 const Navbar = () => {
   header();
   renderNavbar();
@@ -21,7 +20,7 @@ function header(){
       </div>
     </div>
     <div style="flex-grow: 1;">
-      <div style="display: flex; margin-left: 235px;">
+      <div style="display: flex; margin-left: 250px;">
         <h1>
           <span style="background-color: #eee; padding: 20px;">
             DonneMoi
@@ -29,7 +28,8 @@ function header(){
         </h1>
       </div>
     </div>
-    <div style="flex-grow: 1;"></div>
+    <div style="flex-grow: 1;" id='bouttonCo'>
+    </div>
   </div>
   
 `
@@ -66,16 +66,8 @@ async function renderNavbar() {
             </li>
             <li id="registerItem" class="nav-item">
               <a class="nav-link" href="#" data-uri="/ObjetProposer">Objets à proposer</a>
-            </li>      
-            <li id="registerItem" class="nav-item">
-              <a class="nav-link" href="#" data-uri="/register">register</a>
-            </li>     
-             <li id="registerItem" class="nav-item">
-              <a class="nav-link" href="#" data-uri="/login">Login</a>
-            </li> 
-            
+            </li>       
           </ul>
-          
         </div>
       </div>
     </nav>
@@ -88,7 +80,6 @@ async function renderNavbar() {
 
   if(getToken()){
     const member=document.getElementById('member');
-    console.log(authenticatedUser?.role);
     if(authenticatedUser?.role==='aidant' || authenticatedUser?.role==='Responsable'){
     member.innerHTML+=`
     
@@ -122,6 +113,15 @@ async function renderNavbar() {
               <a class="nav-link" href="#" data-uri="/logout">Logout</a>
     </li>
     `;
+  }
+  else{
+    const bouttonCo = document.getElementById('bouttonCo');
+    bouttonCo.innerHTML =`
+    <a class="nav-link" href="/login" style="display: inline-block; background-color: grey; color: black; padding: 10px 20px; border-radius: 5px; text-decoration: none; float: right">Se Connecter</a>
+    `;
+    
+    
+
   }
       
 }
