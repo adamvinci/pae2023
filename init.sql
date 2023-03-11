@@ -101,6 +101,6 @@ INSERT INTO projet.types_objets(libelle) VALUES ('Meuble'),('Table'),('Chaise'),
                                                 ('Fauteuil'),('Lit/Sommier'),('Matelas'),
                                                 ('Couvertures'),('Materiel de cuisine'),('Vaiselle')
 
-    INSERT INTO projet.objets( photo, type, description, disponibilite, etat,prix_vente) VALUES ('photo',1,'desc',1,'accepte',9);
+INSERT INTO projet.objets( photo, type, description, disponibilite, etat,prix_vente) VALUES ('photo',1,'desc',1,'accepte',9);
 
 INSERT INTO projet.objets( photo, type, description, disponibilite, etat,prix_vente,date_acceptation) VALUES ('photo',1,'desc',1,'zedz',15,'2023-11-15');

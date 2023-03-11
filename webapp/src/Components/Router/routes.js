@@ -5,6 +5,7 @@ import RegisterPage from '../Pages/RegisterPage';
 import ObjetsEnVente from '../Pages/ObjetEnVentePage';
 import ObjetsVendu from '../Pages/ObjetVenduPage';
 import ObjetsProposer from '../Pages/ObjetProposerPage';
+import AccepterRefuserObjets from '../Pages/AccepterRefuserObjetPage';
 
 const routes = {
   '/': HomePage,
@@ -14,6 +15,7 @@ const routes = {
   '/ObjetEnVente': ObjetsEnVente,
   '/ObjetVendu': ObjetsVendu,
   '/ObjetProposer': ObjetsProposer,
+  '/AccepterRefuserObjet': AccepterRefuserObjets,
 };
 
 export default routes;
