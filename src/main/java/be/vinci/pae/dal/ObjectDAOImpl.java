@@ -61,18 +61,19 @@ public class ObjectDAOImpl implements ObjectDAO {
             if (set.getString(9) != null) {
               objetDTO.setDate_acceptation(LocalDate.parse(set.getString(9)));
             }
-            if (set.getString(10) != null) {
-              objetDTO.setDate_depot(LocalDate.parse(set.getString(10)));
-            }
+            objetDTO.setLocalisation(set.getString(10));
             if (set.getString(11) != null) {
-              objetDTO.setDate_retrait(LocalDate.parse(set.getString(11)));
+              objetDTO.setDate_depot(LocalDate.parse(set.getString(11)));
             }
             if (set.getString(12) != null) {
-              objetDTO.setPrix(Double.parseDouble(set.getString(12)));
+              objetDTO.setDate_retrait(LocalDate.parse(set.getString(12)));
+            }
+            if (set.getString(13) != null) {
+              objetDTO.setPrix(Double.parseDouble(set.getString(13)));
             }
 
-            if (set.getString(13) != null) {
-              objetDTO.setDate_vente(LocalDate.parse(set.getString(13)));
+            if (set.getString(14) != null) {
+              objetDTO.setDate_vente(LocalDate.parse(set.getString(14)));
             }
 
             objetDTOList.add(objetDTO);

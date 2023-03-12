@@ -4,9 +4,41 @@ const HomePage =async () => {
   const objets = await getObjects();
   console.log(objets);
 
-  const img = document.createElement("img");
-  img.src = `/api/objet/getPicture/${objets[2].idObjet}`
-  main.append(img);
+  let html = "<div id=page> <div id=rightC></div> <div id=container>";
+  /*
+    const response = await fetch(`${process.env.API_BASE_URL}/objet/getPicture/${objets[2].idObjet}`, options);
+
+  if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
+
+  const img1 = await response.blob();
+
+  img.src = URL.createObjectURL(img1);
+
+  */
+  objets.forEach((e)=>{
+    html += `
+<div class = "container2">
+<div id = "image">
+ <img src=/api/objet/getPicture/${e.idObjet} alt=${e.description}  data-id = ${e.idObjet} width="200" height="200">
+ <div class = "title">${e.typeObjet.libelle}</div>
+  <div class = "subtitle">${e.description}</div>
+</div>
+</div>
+`
+  })
+  html += '</div></div>'
+
+  main.innerHTML = html;
+
+
+
+
+  const x = document.querySelectorAll('img');
+  x.forEach((immg)=>{
+    immg.addEventListener("click",(e)=>{
+      console.log("img",e.target.dataset.id)
+    })
+  })
 
 }
 
