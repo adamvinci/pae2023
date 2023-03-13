@@ -1,6 +1,7 @@
 package be.vinci.pae.ihm;
 
 import be.vinci.pae.business.dto.UserDTO;
+import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.ihm.filters.Authorize;
 import be.vinci.pae.utils.Config;
@@ -36,6 +37,9 @@ public class AuthRessource {
 
   @Inject
   private UserUcc userUcc;
+
+  @Inject
+  private UserFactory userFactory;
 
   /**
    * Login by providing an email and a password.
@@ -80,6 +84,53 @@ public class AuthRessource {
     }
 
   }
+
+
+  /**
+
+   This method registers a new user using the provided userDTO object.
+
+   @param userDTO the userDTO object containing the user's information.
+
+   @return an ObjectNode containing the user's JWT token and public information.
+
+   @throws WebApplicationException if any required field in the userDTO object is missing or the userDTO object
+
+   is invalid.
+   */
+  @POST
+  @Path("register")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public ObjectNode register(UserDTO userDTO) {
+    if (userDTO.getEmail().equals("") || userDTO.getPassword().equals("")
+    || userDTO.getNom().equals("") || userDTO.getPrenom().equals("") ||
+    userDTO.getGsm().equals("")) {
+      throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
+    }
+       userDTO= userUcc.register(userDTO);
+
+    if (userDTO == null) {
+      throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
+    }
+
+    String token;
+    try {
+      token = JWT.create().withExpiresAt(new Date(System.currentTimeMillis() + (86400 * 1000)))
+          .withIssuer("auth0")
+          .withClaim("user", userDTO.getId()).sign(this.jwtAlgorithm);
+
+      return jsonMapper.createObjectNode()
+          .put("token", token)
+          .putPOJO("user", Json.filterPublicJsonView(userDTO, UserDTO.class));
+
+    } catch (Exception e) {
+      throw new WebApplicationException(e.getMessage(), Status.FORBIDDEN);
+    }
+
+  }
+
+
 
   /**
    * Path to retrieve the user from a token.

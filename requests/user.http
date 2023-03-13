@@ -1,5 +1,5 @@
 ### Login with default user credentials
-POST {{baseUrl}}/auths/login
+POST http://localhost:3000/auths/login
 Content-Type: application/json
 
 {
@@ -12,12 +12,12 @@ Content-Type: application/json
 
 
 ###
-GET {{baseUrl}}/auths/user
+GET http://localhost:3000/auths/user
 Content-Type: application/json
 Authorization:{{adrienToken}}
 
 ### Login with default user credentials
-POST {{baseUrl}}/auths/login
+POST http://localhost:3000/auths/login
 Content-Type: application/json
 
 {
@@ -27,6 +27,33 @@ Content-Type: application/json
 > {%
   client.global.set("jeanJacques", response.body.token);
 %}
+### Register
+POST http://localhost:3000/auths/register
+Content-Type: application/json
+
+{
+  "email":"test17@hotmail.be",
+  "password":"oui",
+  "nom":"test2",
+  "prenom":"test2",
+  "gsm": "044444444"
+}
+> {%
+  client.global.set("leonToken", response.body.token);
+%}
+
+### Login with default user credentials
+POST http://localhost:3000/auths/login
+Content-Type: application/json
+
+{
+  "email":"test13@hotmail.be",
+  "password":"oui"
+}
+> {%
+  client.global.set("adrienToken", response.body.token);
+%}
+
 
 
 ###

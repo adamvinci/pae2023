@@ -3,6 +3,7 @@ package be.vinci.pae.dal;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.UserFactory;
 import jakarta.inject.Inject;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -72,6 +73,43 @@ public class UserDAOImpl implements UserDAO {
 
     } catch (SQLException e) {
       System.out.println("\n" + e.getMessage().split("\n")[0] + "\n");
+    }
+
+    return userDTO;
+  }
+
+
+  @Override
+  public UserDTO createOne(UserDTO user) {
+    UserDTO userDTO = userFactory.getUserDTO();
+
+    try(PreparedStatement statement = dalService.preparedStatement(
+        "INSERT INTO projet.utilisateurs_inscrits VALUES "
+            + "(DEFAULT,?,?,?,?,?,?,?,?) RETURNING *;")){
+      statement.setString(1,user.getEmail());
+      statement.setString(2,user.getPassword());
+      statement.setString(3,user.getNom());
+      statement.setString(4,user.getPrenom());
+      statement.setString(5, "imageTest");
+      statement.setDate(6, Date.valueOf(LocalDate.now()));
+      statement.setString(7, "membre");
+      statement.setString(8, user.getGsm());
+      try (ResultSet set = statement.executeQuery()) {
+        if (!set.isBeforeFirst()) {
+          return null;
+        } else {
+          while (set.next()) {
+            initUser(userDTO, set.getString(2), set.getString(3), set.getString(4),
+                set.getString(5), set.getString(6), set.getDate(7).toLocalDate(),
+                set.getString(8),
+                set.getString(9), set.getInt(1));
+
+          }
+        }
+      }
+
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
     }
 
     return userDTO;
