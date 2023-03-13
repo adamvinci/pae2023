@@ -65,23 +65,7 @@ public class AuthRessource {
 
     UserDTO userDTO = userUcc.login(email, password);
 
-    if (userDTO == null) {
-      throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
-    }
-
-    String token;
-    try {
-      token = JWT.create().withExpiresAt(new Date(System.currentTimeMillis() + (86400 * 1000)))
-          .withIssuer("auth0")
-          .withClaim("user", userDTO.getId()).sign(this.jwtAlgorithm);
-
-      return jsonMapper.createObjectNode()
-          .put("token", token)
-          .putPOJO("user", Json.filterPublicJsonView(userDTO, UserDTO.class));
-
-    } catch (Exception e) {
-      throw new WebApplicationException(e.getMessage(), Status.FORBIDDEN);
-    }
+   return tokencreation(userDTO);
 
   }
 
@@ -106,6 +90,11 @@ public class AuthRessource {
     }
        userDTO = userUcc.register(userDTO);
 
+    return tokencreation(userDTO);
+
+
+  }
+  public ObjectNode tokencreation(UserDTO userDTO){
     if (userDTO == null) {
       throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
     }
@@ -123,6 +112,7 @@ public class AuthRessource {
     } catch (Exception e) {
       throw new WebApplicationException(e.getMessage(), Status.FORBIDDEN);
     }
+
 
   }
 

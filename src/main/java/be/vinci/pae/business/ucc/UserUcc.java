@@ -1,7 +1,7 @@
 package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.dto.UserDTO;
-import be.vinci.pae.business.factory.UserFactory;
+
 
 /**
  * UserUcc acts  as an orchestrator to allow the IHM and DAL layers to communicate.

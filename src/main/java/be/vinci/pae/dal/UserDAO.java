@@ -1,6 +1,5 @@
 package be.vinci.pae.dal;
 
-import be.vinci.pae.business.domaine.User;
 import be.vinci.pae.business.dto.UserDTO;
 
 /**
