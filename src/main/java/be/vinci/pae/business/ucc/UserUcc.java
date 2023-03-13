@@ -26,14 +26,13 @@ public interface UserUcc {
   UserDTO getOne(int id);
 
   /**
-
    Registers a new user.
-
-   Checks if user with given email already exists, if yes returns null, otherwise registers the user by creating a new user in the database and returns the newly created user as a UserDTO.
+   Checks if user with given email already exists, if yes returns null, otherwise registers
+   the user by creating a new user in the database and returns the newly created user as a UserDTO.
 
    @param userDTO the UserDTO object containing the user's details to be registered
-
-   @return the UserDTO object of the newly registered user, or null if a user with the given email already exists or registration fails
+   @return the UserDTO object of the newly registered user, or null if a user with the given email
+   already exists or registration fails
    */
   UserDTO register(UserDTO userDTO);
 }

@@ -29,6 +29,7 @@ public interface UserDAO {
    This method creates a new user and stores their information in the database.
    It takes in a UserDTO object representing the user to be created and returns
    a UserDTO object representing the created user with their information updated.
+
    @param user a UserDTO object representing the user to be created.
    @return a UserDTO object representing the created user with their information updated.
    If the user could not be created, it returns null.

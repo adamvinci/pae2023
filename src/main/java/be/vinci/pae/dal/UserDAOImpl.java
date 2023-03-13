@@ -83,13 +83,13 @@ public class UserDAOImpl implements UserDAO {
   public UserDTO createOne(UserDTO user) {
     UserDTO userDTO = userFactory.getUserDTO();
 
-    try(PreparedStatement statement = dalService.preparedStatement(
+    try (PreparedStatement statement = dalService.preparedStatement(
         "INSERT INTO projet.utilisateurs_inscrits VALUES "
-            + "(DEFAULT,?,?,?,?,?,?,?,?) RETURNING *;")){
-      statement.setString(1,user.getEmail());
-      statement.setString(2,user.getPassword());
-      statement.setString(3,user.getNom());
-      statement.setString(4,user.getPrenom());
+            + "(DEFAULT,?,?,?,?,?,?,?,?) RETURNING *;")) {
+      statement.setString(1, user.getEmail());
+      statement.setString(2, user.getPassword());
+      statement.setString(3, user.getNom());
+      statement.setString(4, user.getPrenom());
       statement.setString(5, "imageTest");
       statement.setDate(6, Date.valueOf(LocalDate.now()));
       statement.setString(7, "membre");
