@@ -83,8 +83,6 @@ async function onRegister(e) {
 
   const authenticatedUser = await response.json();
 
-  console.log('Newly registered & authenticated user : ', authenticatedUser);
-
   setAuthenticatedUser(authenticatedUser);
 
   Navbar();

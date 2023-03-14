@@ -106,8 +106,6 @@ const LoginPage = () => {
 
   const authenticatedUser = await response.json();
 
-  console.log('Authenticated user : ', authenticatedUser);
-
   setAuthenticatedUser(authenticatedUser);
 
   Navbar();
