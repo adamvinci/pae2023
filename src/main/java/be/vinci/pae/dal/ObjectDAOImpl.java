@@ -4,7 +4,9 @@ import be.vinci.pae.business.dto.DisponibiliteDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.dto.UserDTO;
+import be.vinci.pae.business.factory.DisponibiliteFactory;
 import be.vinci.pae.business.factory.ObjetFactory;
+import be.vinci.pae.business.factory.TypeObjetFactory;
 import be.vinci.pae.dal.services.DALService;
 import jakarta.inject.Inject;
 import java.sql.PreparedStatement;
@@ -29,15 +31,18 @@ public class ObjectDAOImpl implements ObjectDAO {
   private UserDAO userDAO;
 
   @Inject
-  private TypeObjetDAO typeObjetDAO;
+  private TypeObjetFactory typeObjetFactory;
 
   @Inject
-  private DisponibiliteDAO disponibiliteDAO;
+  private DisponibiliteFactory disponibiliteFactory;
 
   @Override
   public List<ObjetDTO> getAllObjet() {
     List<ObjetDTO> objetDTOList = new ArrayList<>();
-    String query = "SELECT * FROM projet.objets";
+    String query = "SELECT o.id_objet,o.gsm,o.photo,o.description,o.etat,o.date_acceptation,o.localisation,o.date_depot,o.date_retrait,o.prix_vente,"
+        + "o.date_vente,o.utilisateur,tob.id_type,tob.libelle,d.id_disponibilite,d.date_disponibilite,p.plage "
+        + "FROM projet.objets o,projet.disponibilites d ,projet.plages_horaires p ,projet.types_objets tob "
+        + "WHERE  tob.id_type = o.type  AND o.disponibilite = d.id_disponibilite AND d.plage = p.id_plage_horaire";
     try (PreparedStatement statement = dalService.preparedStatement(query)) {
       try (ResultSet set = statement.executeQuery()) {
         // check if resultset is empty (none objet)
@@ -48,33 +53,39 @@ public class ObjectDAOImpl implements ObjectDAO {
             ObjetDTO objetDTO = objetFactory.getObjet();
 
             objetDTO.setIdObjet(Integer.parseInt(set.getString(1)));
-            UserDTO userDTO = userDAO.getOne(set.getString(2));
-            objetDTO.setUtilisateur(userDTO);
-            objetDTO.setGsm(set.getString(3));
-            TypeObjetDTO typeObjetDTO = typeObjetDAO.getOne(Integer.parseInt(set.getString(5)));
-            objetDTO.setTypeObjet(typeObjetDTO);
-            objetDTO.setDescription(set.getString(6));
-            DisponibiliteDTO disponibiliteDTO = disponibiliteDAO.getOne(
-                Integer.parseInt(set.getString(7)));
-            objetDTO.setDisponibilite(disponibiliteDTO);
-            objetDTO.setEtat(set.getString(8));
+            objetDTO.setGsm(set.getString(2));
+            objetDTO.setPhoto(set.getString(3));
+            objetDTO.setDescription(set.getString(4));
+            objetDTO.setEtat(set.getString(5));
+            if (set.getString(6) != null) {
+              objetDTO.setDate_acceptation(LocalDate.parse(set.getString(6)));
+            }
+            objetDTO.setLocalisation(set.getString(7));
+            if (set.getString(8) != null) {
+              objetDTO.setDate_depot(LocalDate.parse(set.getString(8)));
+            }
             if (set.getString(9) != null) {
-              objetDTO.setDate_acceptation(LocalDate.parse(set.getString(9)));
+              objetDTO.setDate_retrait(LocalDate.parse(set.getString(9)));
             }
-            objetDTO.setLocalisation(set.getString(10));
-            if (set.getString(11) != null) {
-              objetDTO.setDate_depot(LocalDate.parse(set.getString(11)));
-            }
-            if (set.getString(12) != null) {
-              objetDTO.setDate_retrait(LocalDate.parse(set.getString(12)));
-            }
-            if (set.getString(13) != null) {
-              objetDTO.setPrix(Double.parseDouble(set.getString(13)));
+            if (set.getString(10) != null) {
+              objetDTO.setPrix(Double.parseDouble(set.getString(10)));
             }
 
-            if (set.getString(14) != null) {
-              objetDTO.setDate_vente(LocalDate.parse(set.getString(14)));
+            if (set.getString(11) != null) {
+              objetDTO.setDate_vente(LocalDate.parse(set.getString(11)));
             }
+
+            UserDTO userDTO = userDAO.getOne(set.getString(12));
+            objetDTO.setUtilisateur(userDTO);
+
+            TypeObjetDTO typeObjetDTO = typeObjetFactory.getTypeObjet();
+            typeObjetDTO.setIdObjet(set.getInt(13));
+            typeObjetDTO.setLibelle(set.getString(14));
+
+            DisponibiliteDTO disponibiliteDTO = disponibiliteFactory.getDisponibilite();
+            disponibiliteDTO.setId(set.getInt(15));
+            disponibiliteDTO.setDate(LocalDate.parse(set.getString(16)));
+            disponibiliteDTO.setPlage(set.getString(16));
 
             objetDTOList.add(objetDTO);
           }
