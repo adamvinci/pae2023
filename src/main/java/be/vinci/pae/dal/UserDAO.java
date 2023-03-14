@@ -22,4 +22,13 @@ public interface UserDAO {
    * @return the matching user or null
    */
   UserDTO getOne(int id);
+
+
+  /**
+   * This method creates a new user and stores their information in the database.
+   *
+   * @param user a UserDTO object representing the user to be created.
+   * @return a UserDTO object representing the created user with their information updated or null
+   */
+  UserDTO createOne(UserDTO user);
 }

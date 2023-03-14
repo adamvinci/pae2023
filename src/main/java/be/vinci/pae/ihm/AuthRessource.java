@@ -1,6 +1,7 @@
 package be.vinci.pae.ihm;
 
 import be.vinci.pae.business.dto.UserDTO;
+import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.ihm.filters.Authorize;
 import be.vinci.pae.utils.Config;
@@ -37,6 +38,9 @@ public class AuthRessource {
   @Inject
   private UserUcc userUcc;
 
+  @Inject
+  private UserFactory userFactory;
+
   /**
    * Login by providing an email and a password.
    *
@@ -60,11 +64,50 @@ public class AuthRessource {
     }
 
     UserDTO userDTO = userUcc.login(email, password);
-
     if (userDTO == null) {
       throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
     }
+    return objetCreation(userDTO);
 
+  }
+
+
+
+  /**
+   * This method registers a new user using the provided userDTO object.
+   *
+   * @param userDTO the userDTO object containing the user's information.
+   * @return an ObjectNode containing the user's JWT token and public information.
+   */
+  @POST
+  @Path("register")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public ObjectNode register(UserDTO userDTO) {
+    if (userDTO.getEmail().equals("") || userDTO.getPassword().equals("")
+        || userDTO.getNom().equals("") || userDTO.getPrenom().equals("")
+        || userDTO.getGsm().equals("")) {
+      throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
+    }
+    userDTO = userUcc.register(userDTO);
+
+    if (userDTO == null) {
+      throw new WebApplicationException("already exist", Status.CONFLICT);
+    }
+
+    return objetCreation(userDTO);
+
+
+  }
+
+  /**
+   * Creates an ObjectNode containing a JWT token and a user object based on the
+   *    provided userDTO information.
+   *
+   * @param userDTO The user information to use for creating the token and user object.
+   * @return An ObjectNode containing the JWT token and user object.
+   */
+  public ObjectNode objetCreation(UserDTO userDTO) {
     String token;
     try {
       token = JWT.create().withExpiresAt(new Date(System.currentTimeMillis() + (86400 * 1000)))
@@ -79,7 +122,10 @@ public class AuthRessource {
       throw new WebApplicationException(e.getMessage(), Status.FORBIDDEN);
     }
 
+
   }
+
+
 
   /**
    * Path to retrieve the user from a token.
