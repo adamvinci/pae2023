@@ -73,13 +73,11 @@ public class AuthRessource {
   }
 
 
-  /**
-   This method registers a new user using the provided userDTO object.
 
-   @param userDTO the userDTO object containing the user's information.
-   @return an ObjectNode containing the user's JWT token and public information.
-   @throws WebApplicationException if any required field in the userDTO object is missing or
-   the userDTO object is invalid.
+  /**
+   * This method registers a new user using the provided userDTO object.
+   * @param userDTO the userDTO object containing the user's information.
+   * @return an ObjectNode containing the user's JWT token and public information.
    */
   @POST
   @Path("register")
@@ -101,17 +99,14 @@ public class AuthRessource {
 
 
   }
+
   /**
-  Creates an ObjectNode containing a JWT token and a user object based on the provided userDTO information.
-
-  @param userDTO The user information to use for creating the token and user object.
-  @return An ObjectNode containing the JWT token and user object.
-  @throws WebApplicationException If an error occurs while creating the token.
-  */
-  
+   * Creates an ObjectNode containing a JWT token and a user object based on the
+   *    provided userDTO information.
+   * @param userDTO The user information to use for creating the token and user object.
+   * @return An ObjectNode containing the JWT token and user object.
+   */
   public ObjectNode objetCreation(UserDTO userDTO){
-
-
     String token;
     try {
       token = JWT.create().withExpiresAt(new Date(System.currentTimeMillis() + (86400 * 1000)))
