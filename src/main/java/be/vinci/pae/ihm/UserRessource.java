@@ -10,8 +10,10 @@ import jakarta.inject.Singleton;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response.Status;
 import java.util.List;
 import org.glassfish.jersey.server.ContainerRequest;
 
@@ -37,15 +39,16 @@ public class UserRessource {
   @Authorize
   public List<UserDTO> getAllUsers(@Context ContainerRequest request) {
     UserDTO userDTO = (UserDTO) request.getProperty("user");
-    if (userDTO.getRole().equals("Aidant") || userDTO.getRole().equals("Responsable")) {
-      System.out.println("autorisé");
-    } else {
-      System.out.println("pas autorisé");
-    }
     List<UserDTO> users = userUcc.getAll();
-    for (int index = 0; index < users.size(); index++) {
-      UserDTO nonFilteredUser = users.get(index);
-      users.set(index, Json.filterPublicJsonView(nonFilteredUser, UserDTO.class));
+    if (userDTO.getRole().equals("aidant") || userDTO.getRole().equals("responsable")) {
+      for (int index = 0; index < users.size(); index++) {
+        UserDTO nonFilteredUser = users.get(index);
+        users.set(index, Json.filterPublicJsonView(nonFilteredUser, UserDTO.class));
+      }
+
+    } else {
+      throw new WebApplicationException("Only roles 'responsable' and 'aidant' can do this",
+          Status.UNAUTHORIZED);
     }
     return users;
   }

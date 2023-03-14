@@ -49,4 +49,5 @@ GET {{baseUrl}}/objet/getPicture/0
 
 ###
 GET {{baseUrl}}/users
+Authorization: {{adrienToken}}
 

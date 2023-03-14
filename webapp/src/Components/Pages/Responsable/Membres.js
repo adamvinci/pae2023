@@ -1,29 +1,30 @@
-const utilisateursTests = [
-  {nom : 'Agbassah', prenom : 'Steven', email : 'steven.agbassah@student.vinci.be'},
-  {nom : 'Jacques', prenom : 'Jean', email : 'jean.jacques@student.vinci.be'},
-  {nom : 'Agbassah', prenom : 'Roy', email : 'Roy.agbassah@student.vinci.be'},
-  {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  
-];
-console.log(utilisateursTests);
+import {getToken } from "../../../utils/auths";
+import { clearPage } from "../../../utils/render";
 
+// const utilisateursTests = [
+//   {nom : 'Agbassah', prenom : 'Steven', email : 'steven.agbassah@student.vinci.be'},
+//   {nom : 'Jacques', prenom : 'Jean', email : 'jean.jacques@student.vinci.be'},
+//   {nom : 'Agbassah', prenom : 'Roy', email : 'Roy.agbassah@student.vinci.be'},
+//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
+//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
+//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
+//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
+//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
+//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
+//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
+//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
+//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
+//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
+//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
+//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
+//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
+//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
+//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
+//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
+//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
+//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
+  
+// ];
 const renderUsersTable = async () => {
   const main = document.querySelector('main');
   const UsersTable = document.createElement('table');
@@ -43,6 +44,7 @@ const renderUsersTable = async () => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+      Authorization : getToken()
     },
   };
 
@@ -69,6 +71,7 @@ const renderUsersTable = async () => {
 }
 
 const Membres = () => {
+  clearPage();
   const main = document.querySelector('main');
   main.innerHTML = `<h3>Listes utilisateurs`;
   renderUsersTable();
