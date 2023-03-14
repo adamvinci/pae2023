@@ -40,7 +40,7 @@ public class UserRessource {
   public List<UserDTO> getAllUsers(@Context ContainerRequest request) {
     UserDTO userDTO = (UserDTO) request.getProperty("user");
     List<UserDTO> users = userUcc.getAll();
-    if (userDTO.getRole().equals("responsable")) {
+    if (userDTO.getRole().equals("Responsable")) {
       for (int index = 0; index < users.size(); index++) {
         UserDTO nonFilteredUser = users.get(index);
         users.set(index, Json.filterPublicJsonView(nonFilteredUser, UserDTO.class));

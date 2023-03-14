@@ -80,7 +80,7 @@ CREATE TABLE projet.notifications_utilisateurs
 INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
                                          role, gsm)
 VALUES ( 'adrien.riez@hotmail.be', '$2a$10$fYQHAoeC3sQ.AZuBsxJUWuh7miB8QIZ1/gDsdp7zOhg2cmtknqlmy'
-       , 'Riez', 'Adrien', 'image000.png', '2023-02-14', 'responsable'
+       , 'Riez', 'Adrien', 'image000.png', '2023-02-14', 'Responsable'
        , '048856514647'); /* mdp = 123*, image ?*/
 
 INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
