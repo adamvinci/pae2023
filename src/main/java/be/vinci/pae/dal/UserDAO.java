@@ -1,6 +1,7 @@
 package be.vinci.pae.dal;
 
 import be.vinci.pae.business.dto.UserDTO;
+import java.util.List;
 
 /**
  * UserDAO purpose is to communicate with the database.
@@ -31,4 +32,12 @@ public interface UserDAO {
    * @return a UserDTO object representing the created user with their information updated or null
    */
   UserDTO createOne(UserDTO user);
+
+
+  /**
+   * Ask the database to get all the users.
+   *
+   * @return users
+   */
+  List<UserDTO> getAll();
 }

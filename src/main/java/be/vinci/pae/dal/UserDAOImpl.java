@@ -9,6 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Implementation of {@link UserDAO}.
@@ -114,6 +117,33 @@ public class UserDAOImpl implements UserDAO {
     }
 
     return userDTO;
+  }
+
+  @Override
+  public List<UserDTO> getAll() {
+    ArrayList<UserDTO> usersList = new ArrayList<>();
+    try (PreparedStatement statement = dalService.preparedStatement(
+        "SELECT email,mot_de_passe,nom" + ",prenom,image,date_inscription,role,gsm,id_utilisateur"
+            + " FROM projet.utilisateurs_inscrits")) {
+      try (ResultSet set = statement.executeQuery()) {
+        if (!set.isBeforeFirst()) {
+          return null;
+        } else {
+          while (set.next()) {
+            UserDTO userDTO = userFactory.getUserDTO();
+            initUser(userDTO, set.getString(1), set.getString(2), set.getString(3),
+                set.getString(4), set.getString(5), set.getDate(6).toLocalDate(),
+                set.getString(7),
+                set.getString(8), set.getInt(9));
+            usersList.add(userDTO);
+          }
+        }
+      }
+
+    } catch (SQLException e) {
+      System.out.println("\n" + e.getMessage().split("\n")[0] + "\n");
+    }
+    return usersList;
   }
 
   /**
