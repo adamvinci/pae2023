@@ -1,7 +1,57 @@
 main {
     background-color: bisque;
-
 }
+
+/*-----AccepterRefuserObjetPage---------------------------------------------------------*/
+
+tableEnTete{
+    border: 5px solid;
+    text-align: center;
+    padding: 20px;
+    margin: auto;
+    font-size: 40px;
+    position: absolute;
+}
+
+.th,td{
+    border: 1px solid;
+    border-color: black;
+    text-align: center;
+    padding: 5px;
+}
+
+button{
+    border-radius: 5px;
+}
+
+#accepter{
+    background-color: green;
+}
+
+#refuser{
+    background-color: red;
+}
+
+.popUpContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#formulaireRefuser {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+
+/*------------------------------------------------------------------------------------------------------*/
 #page{
     display: flex;
 }

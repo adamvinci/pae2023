@@ -21,16 +21,12 @@ public class ObjectDAOImpl implements ObjectDAO {
 
   @Inject
   private DALService dalService;
-
   @Inject
   private ObjetFactory objetFactory;
-
   @Inject
   private UserDAO userDAO;
-
   @Inject
   private TypeObjetDAO typeObjetDAO;
-
   @Inject
   private DisponibiliteDAO disponibiliteDAO;
 
@@ -105,7 +101,11 @@ public class ObjectDAOImpl implements ObjectDAO {
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
-
     return path;
+  }
+
+  @Override
+  public boolean modifierEtatObjet(String etat, int user) {
+    return true;
   }
 }
