@@ -1,5 +1,6 @@
-import {getToken } from "../../../utils/auths";
+import {getAuthenticatedUser, getToken } from "../../../utils/auths";
 import { clearPage } from "../../../utils/render";
+import Navigate from "../../Router/Navigate";
 
 // const utilisateursTests = [
 //   {nom : 'Agbassah', prenom : 'Steven', email : 'steven.agbassah@student.vinci.be'},
@@ -72,6 +73,10 @@ const renderUsersTable = async () => {
 
 const Membres = () => {
   clearPage();
+  console.log(getAuthenticatedUser().role)
+  if(getAuthenticatedUser() === undefined ||  getAuthenticatedUser().role !== "responsable" ) {
+    Navigate('/');
+  }
   const main = document.querySelector('main');
   main.innerHTML = `<h3>Listes utilisateurs`;
   renderUsersTable();
