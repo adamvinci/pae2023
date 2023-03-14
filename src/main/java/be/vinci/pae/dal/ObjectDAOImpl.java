@@ -76,7 +76,7 @@ public class ObjectDAOImpl implements ObjectDAO {
               objetDTO.setDate_vente(LocalDate.parse(set.getString(11)));
             }
             if (set.getString(12) != null) {
-              objetDTO.setUtilisateur(Integer.valueOf((set.getString(12))));
+              objetDTO.setUtilisateur(Integer.valueOf(set.getString(12)));
             }
 
             TypeObjetDTO typeObjetDTO = typeObjetFactory.getTypeObjet();
