@@ -31,4 +31,6 @@ public interface ObjetUCC {
    * @return the path of the picture
    */
   String getPicture(int id);
+
+  public Boolean modifierEtatObjet(String etat, int id_objet);
 }

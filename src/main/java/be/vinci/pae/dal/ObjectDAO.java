@@ -26,9 +26,9 @@ public interface ObjectDAO {
   /**
    * Modifies the state of an object to either "accepted" or "rejected".
    *
-   * @param etat The new state of the object, either "accepted" or "rejected".
-   * @param user The user making the state modification.
+   * @param etat     The new state of the object, either "accepted" or "rejected".
+   * @param id_objet The object will be modified.
    * @return Returns true if the state was successfully modified, false otherwise.
    */
-  boolean modifierEtatObjet(String etat, int user);
+  boolean modifierEtatObjet(String etat, int id_objet);
 }

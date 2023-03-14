@@ -33,4 +33,9 @@ public class ObjetUCCImpl implements ObjetUCC {
   public String getPicture(int id) {
     return dataService.getPicture(id);
   }
+
+  @Override
+  public Boolean modifierEtatObjet(String etat, int id_objet) {
+    return dataService.modifierEtatObjet(etat, id_objet);
+  }
 }
