@@ -101,6 +101,14 @@ public class AuthRessource {
 
 
   }
+  /**
+  Creates an ObjectNode containing a JWT token and a user object based on the provided userDTO information.
+
+  @param userDTO The user information to use for creating the token and user object.
+  @return An ObjectNode containing the JWT token and user object.
+  @throws WebApplicationException If an error occurs while creating the token.
+  */
+  
   public ObjectNode objetCreation(UserDTO userDTO){
 
 
