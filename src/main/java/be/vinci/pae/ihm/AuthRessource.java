@@ -26,7 +26,7 @@ import java.util.Date;
 import org.glassfish.jersey.server.ContainerRequest;
 
 /**
- * AuthRessource retrieve the request  process by Grizzly and treat it.
+ * AuthRessource retrieve the request process by Grizzly and treat it.
  */
 @Singleton
 @Path("/auths")

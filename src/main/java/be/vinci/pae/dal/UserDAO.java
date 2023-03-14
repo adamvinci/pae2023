@@ -3,7 +3,7 @@ package be.vinci.pae.dal;
 import be.vinci.pae.business.dto.UserDTO;
 
 /**
- * UserDataService purpose is to  communicate with the database.
+ * UserDAO purpose is to communicate with the database.
  */
 public interface UserDAO {
 

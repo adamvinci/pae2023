@@ -1,4 +1,4 @@
-package be.vinci.pae.dal;
+package be.vinci.pae.dal.services;
 
 import be.vinci.pae.utils.Config;
 import java.sql.Connection;

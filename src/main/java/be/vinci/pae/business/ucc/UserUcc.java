@@ -4,7 +4,8 @@ import be.vinci.pae.business.dto.UserDTO;
 
 
 /**
- * UserUcc acts  as an orchestrator to allow the IHM and DAL layers to communicate.
+ * UserUcc acts  as an orchestrator to allow {@link be.vinci.pae.ihm.AuthRessource} and
+ * {@link be.vinci.pae.dal.UserDAO} layers to communicate.
  */
 public interface UserUcc {
 

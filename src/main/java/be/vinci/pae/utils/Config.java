@@ -36,10 +36,27 @@ public class Config {
     return props.getProperty(key);
   }
 
+  /**
+   * Retrieves the value of the specified property as an integer.
+   *
+   * @param key the key of the property to retrieve
+   * @return the value of the property as an integer
+   * @throws NumberFormatException    if the property value cannot be parsed as an integer
+   * @throws NullPointerException     if the property value is null
+   * @throws IllegalArgumentException if the property value is not a valid integer
+   */
   public static Integer getIntProperty(String key) {
     return Integer.parseInt(props.getProperty(key));
   }
 
+  /**
+   * Retrieves the value of the specified property as a boolean.
+   *
+   * @param key the key of the property to retrieve
+   * @return the value of the property as a boolean
+   * @throws NullPointerException     if the property value is null
+   * @throws IllegalArgumentException if the property value is not a valid boolean
+   */
   public static boolean getBoolProperty(String key) {
     return Boolean.parseBoolean(props.getProperty(key));
   }

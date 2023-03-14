@@ -1,4 +1,3 @@
-import Navigate from "../Components/Router/Navigate";
 
 const STORE_NAME = 'token';
 const REMEMBER_ME = 'remembered';
@@ -15,7 +14,6 @@ const getToken = ()=>{
 const clearAuthenticatedUser = () => {
   localStorage.clear();
   sessionStorage.clear();
-  Navigate("/login")
 };
 
 async function getAuthenticatedUser() {

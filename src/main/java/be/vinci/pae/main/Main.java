@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.URI;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 /**
@@ -14,7 +15,7 @@ import org.glassfish.jersey.server.ResourceConfig;
  */
 public class Main {
 
-  // Base URI the Grizzly HTTP server will listen on
+  /* Base URI the Grizzly HTTP server will listen on */
 
 
   static {
@@ -33,7 +34,8 @@ public class Main {
     // in vinci.be package
     final ResourceConfig rc = new ResourceConfig().packages("be.vinci.pae.ihm")
         .register(WebExceptionMapper.class)
-        .register(ApplicationBinder.class);
+        .register(ApplicationBinder.class)
+        .register(MultiPartFeature.class);
 
     // create and start a new instance of grizzly http server
     // exposing the Jersey application at BASE_URI
@@ -41,7 +43,10 @@ public class Main {
   }
 
   /**
-   * Main method.
+   * This is the main method which starts the Jersey application.
+   *
+   * @param args an array of command-line arguments for the application
+   * @throws IOException IOException if an I/O error occurs while reading input from the console
    */
   public static void main(String[] args) throws IOException {
     final HttpServer server = startServer();
