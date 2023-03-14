@@ -64,6 +64,9 @@ public class AuthRessource {
     }
 
     UserDTO userDTO = userUcc.login(email, password);
+    if (userDTO == null) {
+      throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
+    }
 
    return objetCreation(userDTO);
 
@@ -90,14 +93,16 @@ public class AuthRessource {
     }
        userDTO = userUcc.register(userDTO);
 
+    if (userDTO == null) {
+      throw new WebApplicationException("already exist", Status.CONFLICT);
+    }
+
     return objetCreation(userDTO);
 
 
   }
   public ObjectNode objetCreation(UserDTO userDTO){
-    if (userDTO == null) {
-      throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
-    }
+
 
     String token;
     try {
