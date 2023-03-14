@@ -67,8 +67,7 @@ public class AuthRessource {
     if (userDTO == null) {
       throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
     }
-
-   return objetCreation(userDTO);
+    return objetCreation(userDTO);
 
   }
 
@@ -76,6 +75,7 @@ public class AuthRessource {
 
   /**
    * This method registers a new user using the provided userDTO object.
+   *
    * @param userDTO the userDTO object containing the user's information.
    * @return an ObjectNode containing the user's JWT token and public information.
    */
@@ -89,7 +89,7 @@ public class AuthRessource {
         || userDTO.getGsm().equals("")) {
       throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
     }
-       userDTO = userUcc.register(userDTO);
+    userDTO = userUcc.register(userDTO);
 
     if (userDTO == null) {
       throw new WebApplicationException("already exist", Status.CONFLICT);
