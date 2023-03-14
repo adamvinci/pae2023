@@ -7,7 +7,6 @@ import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.ObjetFactory;
 import be.vinci.pae.dal.services.DALService;
 import jakarta.inject.Inject;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,22 +18,16 @@ import java.util.List;
  * Implementation of {@link ObjectDAO}.
  */
 public class ObjectDAOImpl implements ObjectDAO {
-
     @Inject
     private DALService dalService;
-
     @Inject
     private ObjetFactory objetFactory;
-
     @Inject
     private UserDAO userDAO;
-
     @Inject
     private TypeObjetDAO typeObjetDAO;
-
     @Inject
     private DisponibiliteDAO disponibiliteDAO;
-
     @Override
     public List<ObjetDTO> getAllObjet() {
         List<ObjetDTO> objetDTOList = new ArrayList<>();
@@ -55,8 +48,7 @@ public class ObjectDAOImpl implements ObjectDAO {
                         TypeObjetDTO typeObjetDTO = typeObjetDAO.getOne(Integer.parseInt(set.getString(5)));
                         objetDTO.setTypeObjet(typeObjetDTO);
                         objetDTO.setDescription(set.getString(6));
-                        DisponibiliteDTO disponibiliteDTO = disponibiliteDAO.getOne(
-                                Integer.parseInt(set.getString(7)));
+                        DisponibiliteDTO disponibiliteDTO = disponibiliteDAO.getOne(Integer.parseInt(set.getString(7)));
                         objetDTO.setDisponibilite(disponibiliteDTO);
                         objetDTO.setEtat(set.getString(8));
                         if (set.getString(9) != null) {
@@ -86,7 +78,6 @@ public class ObjectDAOImpl implements ObjectDAO {
         }
         return objetDTOList;
     }
-
     @Override
     public String getPicture(int id) {
         String path = null;
@@ -106,7 +97,6 @@ public class ObjectDAOImpl implements ObjectDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return path;
     }
     @Override
@@ -120,7 +110,6 @@ public class ObjectDAOImpl implements ObjectDAO {
                 } else {
                     while (set.next()) {
                         ObjetDTO objetDTO = objetFactory.getObjet();
-
                     }
                 }
             } catch (SQLException e) {
@@ -131,5 +120,4 @@ public class ObjectDAOImpl implements ObjectDAO {
         }
         return true;
     }
-
 }
