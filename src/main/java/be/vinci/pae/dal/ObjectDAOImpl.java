@@ -78,14 +78,17 @@ public class ObjectDAOImpl implements ObjectDAO {
             UserDTO userDTO = userDAO.getOne(set.getString(12));
             objetDTO.setUtilisateur(userDTO);
 
+
             TypeObjetDTO typeObjetDTO = typeObjetFactory.getTypeObjet();
             typeObjetDTO.setIdObjet(set.getInt(13));
             typeObjetDTO.setLibelle(set.getString(14));
+            objetDTO.setTypeObjet(typeObjetDTO);
 
             DisponibiliteDTO disponibiliteDTO = disponibiliteFactory.getDisponibilite();
             disponibiliteDTO.setId(set.getInt(15));
             disponibiliteDTO.setDate(LocalDate.parse(set.getString(16)));
             disponibiliteDTO.setPlage(set.getString(16));
+            objetDTO.setDisponibilite(disponibiliteDTO);
 
             objetDTOList.add(objetDTO);
           }
