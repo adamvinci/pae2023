@@ -77,10 +77,10 @@ const renderUsersTable = async () => {
   main.appendChild(UsersTable);
 }
 
-const Membres = () => {
+const Membres = async () => {
   clearPage();
-  console.log(getAuthenticatedUser().role)
-  if(getAuthenticatedUser() === undefined ||  getAuthenticatedUser().role !== "responsable" ) {
+  const user = await getAuthenticatedUser();
+  if(user === undefined ||  user.role !== "responsable" ) {
     Navigate('/');
   }
   const main = document.querySelector('main');

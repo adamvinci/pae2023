@@ -16,7 +16,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class UserImpl implements User {
 
   @JsonView(Public.class)
-  private static final String[] POSSIBLE_ROLE = {"Responsable", "aidant", "membre"};
+  private static final String[] POSSIBLE_ROLE = {"responsable", "aidant", "membre"};
   @JsonView(Public.class)
   private Integer id;
   @JsonView(Internal.class)

@@ -2,9 +2,10 @@ const HomePage =async () => {
   const main = document.querySelector('main');
   main.innerHTML = `<h3>Welcome to your home page!</h3>`;
   const objets = await getObjects();
+  shuffleArray(objets);
   console.log(objets);
 
-  let html = "<div id=page> <div id=rightC></div> <div id=container>";
+  let html = "<div id=page> <div id=rightC> trier par type</div> <div id=container>";
   /*
     const response = await fetch(`${process.env.API_BASE_URL}/objet/getPicture/${objets[2].idObjet}`, options);
 
@@ -56,5 +57,15 @@ async function getObjects(){
   const objets = await response.json();
   return objets;
 }
+
+function shuffleArray(array) {
+  const aray = array
+  for (let i = aray.length - 1; i > 0; i-=1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [aray[i], aray[j]] = [aray[j], aray[i]];
+  }
+  return aray;
+}
+
 export default HomePage;
 
