@@ -106,23 +106,6 @@ public class ObjectDAOImpl implements ObjectDAO {
 
   @Override
   public boolean modifierEtatObjet(String etat, int user) {
-    String query = "SELECT * FROM projet.objets WHERE id_objet=";
-    try (PreparedStatement statement = dalService.preparedStatement(query)) {
-      try (ResultSet set = statement.executeQuery()) {
-        // check if resultset is empty (none objet)
-        if (!set.isBeforeFirst()) {
-          return false;
-        } else {
-          while (set.next()) {
-            ObjetDTO objetDTO = objetFactory.getObjet();
-          }
-        }
-      } catch (SQLException e) {
-        throw new RuntimeException(e);
-      }
-    } catch (SQLException e) {
-      throw new RuntimeException(e);
-    }
     return true;
   }
 }
