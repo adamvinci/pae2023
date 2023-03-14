@@ -53,25 +53,30 @@ button{
 
 /*------------------------------------------------------------------------------------------------------*/
 #page{
+
     display: flex;
+
 }
 #container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+
+    white-space: nowrap;
+    overflow: auto ;
     flex: 3;
 }
+
 #rightC{
    flex: 0.3;
     height: 500px;
     border: 2px solid darkgray;
+
 }
 .container2 {
-    flex-shrink: 2;
+    margin-top:80px ;
+    margin-left:50px ;
+    display: inline-block;
     text-align: center;
-    width: 300px;
-    padding: 20px;
     border: 2px solid darkgray;
+    padding: 20px;
 }
 
 

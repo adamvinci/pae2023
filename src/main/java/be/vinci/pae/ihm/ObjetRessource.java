@@ -76,7 +76,6 @@ public class ObjetRessource {
       throw new WebApplicationException("No content", Status.BAD_REQUEST);
     }
     String pathPicture = objetUCC.getPicture(id);
-    System.out.println(pathPicture);
     if (pathPicture == null) {
       throw new WebApplicationException("No image for this object in the database",
           Status.NOT_FOUND);

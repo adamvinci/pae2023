@@ -1,7 +1,6 @@
 package be.vinci.pae.business.domaine;
 
 import be.vinci.pae.business.dto.DisponibiliteDTO;
-import be.vinci.pae.business.dto.PlageHoraireDTO;
 import java.time.LocalDate;
 
 /**
@@ -13,7 +12,7 @@ public class Disponibilite implements DisponibiliteDTO {
   private int id;
   private LocalDate date;
 
-  private PlageHoraireDTO plage;
+  private String plage;
 
   @Override
   public LocalDate getDate() {
@@ -26,13 +25,13 @@ public class Disponibilite implements DisponibiliteDTO {
   }
 
   @Override
-  public PlageHoraireDTO getPlage() {
+  public String getPlage() {
     return plage;
   }
 
 
   @Override
-  public void setPlage(PlageHoraireDTO plage) {
+  public void setPlage(String plage) {
     this.plage = plage;
   }
 
