@@ -36,6 +36,8 @@ const renderUsersTable = async () => {
                               <th scope="col">Prénom</th>
                               <th scope="col">Nom</th>
                               <th scope="col">Mail</th>
+                              <th scope="col">Rôle</th>
+                              <th scope="col">GSM</th>
                               <th scope="col">Aidant</th>
                               </tr>
                           </thead>
@@ -61,8 +63,12 @@ const renderUsersTable = async () => {
       <td>${users[index].prenom}</td>
       <td>${users[index].nom}</td>
       <td>${users[index].email}</td>
-      <td><button type="button" class="btn btn-success">Indiquer aidant</button></td>
-  </tr>`
+      <td>${users[index].gsm}</td>
+      <td>${users[index].role}</td>
+      `
+      if(users[index].role === 'membres' ) UsersTable.innerHTML +=  `<td><button type="button" class="btn btn-success">Indiquer aidant</button></td>`
+      else UsersTable.innerHTML +=  `<td></td>`
+      UsersTable.innerHTML += `</tr>`
 
   }
 
