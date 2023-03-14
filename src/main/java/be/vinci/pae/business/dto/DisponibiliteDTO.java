@@ -29,14 +29,14 @@ public interface DisponibiliteDTO {
    *
    * @return the PlageHoraireDTO object associated with this object
    */
-  PlageHoraireDTO getPlage();
+  String getPlage();
 
   /**
    * Sets the PlageHoraireDTO object associated with this object.
    *
    * @param plage the new PlageHoraireDTO object to associate with this object
    */
-  void setPlage(PlageHoraireDTO plage);
+  void setPlage(String plage);
 
   /**
    * Returns the ID of this object.
