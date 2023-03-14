@@ -46,3 +46,7 @@ GET {{baseUrl}}/objet
 ###
 GET {{baseUrl}}/objet/getPicture/0
 
+
+###
+GET {{baseUrl}}/users
+
