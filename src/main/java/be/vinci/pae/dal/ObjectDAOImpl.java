@@ -109,8 +109,7 @@ public class ObjectDAOImpl implements ObjectDAO {
 
         return path;
     }
-
-    public boolean modifierEtatObjet(String etat, int user,) {
+    public boolean modifierEtatObjet(String etat, int user) {
         String query = "SELECT * FROM projet.objets WHERE id_objet=";
         try (PreparedStatement statement = dalService.preparedStatement(query)) {
             try (ResultSet set = statement.executeQuery()) {
@@ -131,4 +130,5 @@ public class ObjectDAOImpl implements ObjectDAO {
         }
         return true;
     }
+
 }
