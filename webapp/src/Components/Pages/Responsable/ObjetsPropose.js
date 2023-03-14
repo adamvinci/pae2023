@@ -1,9 +1,8 @@
-import { clearPage } from '../../../utils/render';
 
 const tableEnTete = `
   <div style=" justify-content: center; display: flex">
     <table class="tableEnTete">
-      <thead>
+      <thead> 
         <tr> 
           <th class="th"> Id Utilisateur</th> 
           <th class="th"> Photo objet </th>
@@ -15,7 +14,7 @@ const tableEnTete = `
       <tbody class="tableData"> 
       </tbody>    
     </table>
-  </div>`
+  </div>`;
 
 function text() {
   const main = document.querySelector('main');
@@ -23,13 +22,11 @@ function text() {
 }
 
 const ObjetPropose = () => {
-  clearPage();
   text();
   table();
-  const boutonsRefuser = document.querySelectorAll("#refuser");
-  boutonsRefuser.forEach((boutonRefuser) => {
-    boutonRefuser.addEventListener("click", event => {
-      event.preventDefault();
+  const boutonsRefuser = document.getElementById('refuser');
+  
+  boutonsRefuser.addEventListener("click", event => {
       const main = document.querySelector("main");
       const popUp = `
       <div class="popUpContainer">
@@ -45,7 +42,7 @@ const ObjetPropose = () => {
       </div>
       `;
       main.insertAdjacentHTML("beforeend", popUp);
-    });
+   
   });
 };
 
@@ -54,7 +51,7 @@ function table(){
 
   let data;
 
-  const tableBody = document.querySelector('.tableData');
+  
 
   async function getData() {
     try {
@@ -74,13 +71,14 @@ function table(){
         dataHtml += `
           <tr style="font-family: 'Games', sans-serif;">
             <td class="td">${data[i].idObjet}</td> 
-            <td class="td"><img src="${data[i].photo}" alt="photo" width="100px"></td> 
+            <td class="td"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
             <td class="td">${data[i].description}</td>
             <td class="td"><button id="accepter" type="submit" >Accepter</button> <button id="refuser" type="submit" >Réfuser</button></td>
             <td class="td">${data[i].date_acceptation}</td>
           </tr>`;
         i += 1
       } 
+      const tableBody = document.querySelector('.tableData');
       tableBody.innerHTML = dataHtml;
     } catch (error) {
       throw new Error(error);    }
