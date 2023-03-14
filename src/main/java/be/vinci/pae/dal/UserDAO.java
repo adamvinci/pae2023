@@ -30,7 +30,7 @@ public interface UserDAO {
    *    a UserDTO object representing the created user with their information updated.
    * @param user a UserDTO object representing the user to be created.
    * @return a UserDTO object representing the created user with their information updated.
-   *    If the user could not be created, it returns null.
+   * If the user could not be created, it returns null.
    */
   UserDTO createOne(UserDTO user);
 }

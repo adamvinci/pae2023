@@ -103,10 +103,11 @@ public class AuthRessource {
   /**
    * Creates an ObjectNode containing a JWT token and a user object based on the
    *    provided userDTO information.
+   *
    * @param userDTO The user information to use for creating the token and user object.
    * @return An ObjectNode containing the JWT token and user object.
    */
-  public ObjectNode objetCreation(UserDTO userDTO){
+  public ObjectNode objetCreation(UserDTO userDTO) {
     String token;
     try {
       token = JWT.create().withExpiresAt(new Date(System.currentTimeMillis() + (86400 * 1000)))
