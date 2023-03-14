@@ -40,14 +40,14 @@ public class UserRessource {
   public List<UserDTO> getAllUsers(@Context ContainerRequest request) {
     UserDTO userDTO = (UserDTO) request.getProperty("user");
     List<UserDTO> users = userUcc.getAll();
-    if (userDTO.getRole().equals("Responsable")) {
+    if (userDTO.getRole().equals("responsable")) {
       for (int index = 0; index < users.size(); index++) {
         UserDTO nonFilteredUser = users.get(index);
         users.set(index, Json.filterPublicJsonView(nonFilteredUser, UserDTO.class));
       }
 
     } else {
-      throw new WebApplicationException("Only roles 'responsable' and 'aidant' can do this",
+      throw new WebApplicationException("Only the roles 'responsable' and 'aidant' can acces to the users list",
           Status.UNAUTHORIZED);
     }
     return users;

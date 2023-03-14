@@ -80,7 +80,7 @@ async function renderNavbar() {
 
   if(getToken()){
     const member=document.getElementById('member');
-    if(authenticatedUser?.role==='aidant' || authenticatedUser?.role==='Responsable'){
+    if(authenticatedUser?.role==='aidant' || authenticatedUser?.role==='responsable'){
     member.innerHTML+=`
     
     <li class="nav-item">
@@ -97,7 +97,7 @@ async function renderNavbar() {
     </li>
     `;
     }
-    if(authenticatedUser?.role==='Responsable'){
+    if(authenticatedUser?.role==='responsable'){
       
       member.innerHTML+=`
     <li class="nav-item">
