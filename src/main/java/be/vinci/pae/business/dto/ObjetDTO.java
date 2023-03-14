@@ -28,7 +28,7 @@ public interface ObjetDTO {
    *
    * @return the {@link UserDTO} object representing the user associated with this object
    */
-  UserDTO getUtilisateur();
+  Integer getUtilisateur();
 
   /**
    * Sets the {@link UserDTO} object representing the user associated with this object.
@@ -36,7 +36,7 @@ public interface ObjetDTO {
    * @param utilisateur the new {@link UserDTO} object representing the user associated with this
    *                    object
    */
-  void setUtilisateur(UserDTO utilisateur);
+  void setUtilisateur(Integer utilisateur);
 
   /**
    * Returns the GSM number associated with this object.

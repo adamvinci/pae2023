@@ -23,10 +23,11 @@ public class DisponibiliteDAOImpl implements DisponibiliteDAO {
   private DisponibiliteFactory disponibiliteFactory;
 
 
-
   @Override
   public DisponibiliteDTO getOne(int id) {
-    String query = "SELECT d.date_disponibilite,p.plage FROM projet.disponibilites d,projet.plages_horaires p WHERE "
+    String query = "SELECT d.date_disponibilite,p.plage "
+        + "FROM projet.disponibilites d,"
+        + "projet.plages_horaires p WHERE "
         + "d.plage = p.id_plage_horaire AND id_disponibilite = (?)";
     DisponibiliteDTO disponibiliteDTO = disponibiliteFactory.getDisponibilite();
 
@@ -53,8 +54,11 @@ public class DisponibiliteDAOImpl implements DisponibiliteDAO {
   @Override
   public List<DisponibiliteDTO> getAll() {
     List<DisponibiliteDTO> disponibiliteDTOS = new ArrayList<>();
-    try (PreparedStatement statement = dalService.preparedStatement("SELECT d.id_disponibilite,d.date_disponibilite,p.plage FROM projet.plages_horaires p,"
-        + "projet.disponibilites d WHERE d.plage = p.id_plage_horaire ")) {
+    try (PreparedStatement statement = dalService.preparedStatement(
+        "SELECT d.id_disponibilite,"
+            + "d.date_disponibilite,p.plage "
+            + "FROM projet.plages_horaires p,"
+            + "projet.disponibilites d WHERE d.plage = p.id_plage_horaire ")) {
       try (ResultSet set = statement.executeQuery()) {
         // check if resultset is empty (email does not exist)
         if (!set.isBeforeFirst()) {
