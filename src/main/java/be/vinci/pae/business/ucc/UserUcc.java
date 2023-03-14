@@ -3,6 +3,7 @@ package be.vinci.pae.business.ucc;
 import be.vinci.pae.business.dto.UserDTO;
 import java.util.List;
 
+
 /**
  * UserUcc acts  as an orchestrator to allow {@link be.vinci.pae.ihm.AuthRessource} and
  * {@link be.vinci.pae.dal.UserDAO} layers to communicate.
@@ -33,4 +34,13 @@ public interface UserUcc {
    * @return the List with every users
    */
   List<UserDTO> getAll();
+
+
+  /**
+   * Registers a new user.
+   *
+   * @param userDTO the UserDTO object containing the user's details to be registered
+   * @return the UserDTO object of the newly registered user, or null if the eamilalready exists
+   */
+  UserDTO register(UserDTO userDTO);
 }

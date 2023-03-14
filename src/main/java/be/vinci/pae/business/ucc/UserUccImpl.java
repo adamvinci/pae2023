@@ -33,6 +33,23 @@ public class UserUccImpl implements UserUcc {
   }
 
   @Override
+  public UserDTO register(UserDTO userDTO) {
+    if (dataService.getOne(userDTO.getEmail()) != null) {
+      return null;
+    }
+    User user = (User) userDTO;
+
+    user.setPassword(user.hashPassword(user.getPassword()));
+
+    UserDTO userDATA = dataService.createOne(user);
+    if (userDATA == null) {
+      return null;
+    }
+    return userDATA;
+
+  }
+
+  @Override
   public UserDTO getOne(int id) {
     return dataService.getOne(id);
   }
@@ -42,6 +59,5 @@ public class UserUccImpl implements UserUcc {
     return dataService.getAll();
   }
 
+
 }
-
-
