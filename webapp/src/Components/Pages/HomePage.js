@@ -1,9 +1,12 @@
+import {getToken} from "../../utils/auths";
+
 const HomePage =async () => {
   const main = document.querySelector('main');
   main.innerHTML = `<h3>Welcome to your home page!</h3>`;
   const objets = await getObjects();
   shuffleArray(objets);
   console.log(objets);
+  console.log(getToken())
 
   let html = "<div id=page> <div id=rightC> trier par type</div> <div id=container>";
   /*
@@ -48,7 +51,6 @@ async function getObjects(){
 
   const options = {
     method: 'GET',
-
   };
   const response = await fetch(`${process.env.API_BASE_URL}/objet`, options);
 
