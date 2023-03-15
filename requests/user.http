@@ -71,6 +71,10 @@ GET  {{baseUrl}}/disponibilite
 GET {{baseUrl}}/objet
 
 ###
+GET {{baseUrl}}/objet
+Authorization: {{adrienToken}}
+
+###
 GET {{baseUrl}}/objet/getPicture/0
 
 

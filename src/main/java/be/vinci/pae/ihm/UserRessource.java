@@ -29,9 +29,11 @@ public class UserRessource {
   @Inject
   private UserUcc userUcc;
 
+
   /**
    * Get all the users.
    *
+   * @param request request the request container
    * @return a json object with a token(formed by the user id) the user id and the user email
    */
   @GET
@@ -47,7 +49,8 @@ public class UserRessource {
       }
 
     } else {
-      throw new WebApplicationException("Only the roles 'responsable' and 'aidant' can acces to the users list",
+      throw new WebApplicationException(
+          "Only the roles 'responsable' and 'aidant' can acces to the users list",
           Status.UNAUTHORIZED);
     }
     return users;
