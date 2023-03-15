@@ -13,12 +13,12 @@ tableEnTete{
     position: absolute;
 }
 
-.th,td{
+/* .th,td{
     border: 1px solid;
     border-color: black;
     text-align: center;
     padding: 5px;
-}
+} */
 
 button{
     border-radius: 5px;
@@ -65,15 +65,10 @@ button{
 }
 
 #rightC{
-
    flex: 0.3;
-    height: auto;
+    height: 500px;
     border: 2px solid darkgray;
 
-
-}
-#typeObjet{
-    padding-bottom: 30px;
 }
 .container2 {
     margin-top:80px ;
@@ -109,10 +104,10 @@ button{
 
     visibility: hidden;
 }
- #image:hover .hide {
+#image:hover .hide {
     visibility: visible;
-color: white;
+    color: white;
 }
- .hideContent{
-     font-size: x-large;
- }
+.hideContent{
+    font-size: x-large;
+}
