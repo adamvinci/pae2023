@@ -6,6 +6,7 @@ const HomePage =async () => {
   main.innerHTML = `<h3>Welcome to your home page!</h3>`;
   let objets = await getObjects();
   shuffleArray(objets);
+  console.log(objets);
 
   let etat = window.location.search.split("?")[1]?.split("=")[1];
 
@@ -45,6 +46,14 @@ const HomePage =async () => {
  <img src=/api/objet/getPicture/${e.idObjet} alt=${e.description}  data-id = ${e.idObjet} width="200" height="200">
  <div class = "title">${e.typeObjet.libelle}</div>
   <div class = "subtitle">${e.etat}</div>
+  <div class="hide">
+  <div class ="hideContent">
+  
+  <p>Description : ${e.description}</p>
+  ${e.prix ? `<p>Prix : ${e.prix}</p>` : '' }
+  ${e.date_vente? `<p> Date de vente : Le ${e.date_vente[2]}/ ${e.date_vente[1]}/${e.date_vente[0]} </p>` : '' }
+  </div>
+</div>
 </div>
 </div>
 `
@@ -79,7 +88,8 @@ const HomePage =async () => {
 
   const x = document.querySelectorAll('img');
   x.forEach((immg)=>{
-    immg.addEventListener("click",(e)=>{
+    immg.addEventListener("mouseover",(e)=>{
+
       console.log("img",e.target.dataset.id)
     })
   })

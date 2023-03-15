@@ -96,3 +96,23 @@ button{
     font-size: 16px;
     color: #666;
 }
+.hide {
+    position: fixed;
+    top:35%;
+    left: 30%;
+    width: 40%;
+    height: 20%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    visibility: hidden;
+}
+ #image:hover .hide {
+    visibility: visible;
+color: white;
+}
+ .hideContent{
+     font-size: x-large;
+ }
