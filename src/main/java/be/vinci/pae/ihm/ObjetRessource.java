@@ -49,7 +49,7 @@ public class ObjetRessource {
       throw new WebApplicationException("Liste vide", Status.NO_CONTENT);
     }
     UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
-    if (authenticatedUser != null && (authenticatedUser.getRole().equals("Responsable")
+    if (authenticatedUser != null && (authenticatedUser.getRole().equals("responsable")
         || authenticatedUser.getRole().equals("aidant"))) {
       return objetUCC.getAllObject();
     }
