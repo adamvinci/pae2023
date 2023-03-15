@@ -35,9 +35,11 @@ public class ObjetRessource {
   @Inject
   private ObjetUCC objetUCC;
 
+
   /**
    * Retrieve all the object in the database.
    *
+   * @param request request the request container
    * @return a list of object or a WebAppException if there are none.
    */
   @AnonymousOrAuthorize

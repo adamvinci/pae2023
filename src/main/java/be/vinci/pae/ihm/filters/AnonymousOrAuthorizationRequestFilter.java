@@ -19,7 +19,7 @@ import java.io.IOException;
 
 
 /**
- * @author e-Baron This filter allows anonymous requests
+ * @author e-Baron This filter allows anonymous requests.
  */
 @Singleton
 @Provider
@@ -42,8 +42,7 @@ public class AnonymousOrAuthorizationRequestFilter implements ContainerRequestFi
   @Override
   public void filter(ContainerRequestContext requestContext) throws IOException {
     String token = requestContext.getHeaderString("Authorization");
-    if (token == null) // anonymous request
-    {
+    if (token == null) {
       return;
     }
 

@@ -86,13 +86,6 @@ const HomePage =async () => {
   })
 
 
-  const x = document.querySelectorAll('img');
-  x.forEach((immg)=>{
-    immg.addEventListener("mouseover",(e)=>{
-
-      console.log("img",e.target.dataset.id)
-    })
-  })
 
 }
 
