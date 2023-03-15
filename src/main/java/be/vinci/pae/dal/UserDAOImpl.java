@@ -164,7 +164,6 @@ public class UserDAOImpl implements UserDAO {
    */
   public void initUser(UserDTO userDTO, String email, String password, String nom, String prenom,
       String image, LocalDate date, String role, String gsm, int id) {
-    System.out.println(role);
     userDTO.setEmail(email);
     userDTO.setPassword(password);
     userDTO.setNom(nom);
