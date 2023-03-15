@@ -2,7 +2,9 @@ package be.vinci.pae.ihm;
 
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
+import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.ucc.ObjetUCC;
+import be.vinci.pae.ihm.filters.AnonymousOrAuthorize;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.Consumes;
@@ -12,6 +14,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -20,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.util.List;
+import org.glassfish.jersey.server.ContainerRequest;
 
 /**
  * ObjetRessource retrieve the request process by Grizzly and treat it.
@@ -36,13 +40,21 @@ public class ObjetRessource {
    *
    * @return a list of object or a WebAppException if there are none.
    */
+  @AnonymousOrAuthorize
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public List<ObjetDTO> getAllObject() {
+  public List<ObjetDTO> getAllObject(@Context ContainerRequest request) {
+
     if (objetUCC.getAllObject() == null) {
       throw new WebApplicationException("Liste vide", Status.NO_CONTENT);
     }
-    return objetUCC.getAllObject();
+    UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
+    if (authenticatedUser != null && (authenticatedUser.getRole().equals("Responsable")
+        || authenticatedUser.getRole().equals("aidant"))) {
+      return objetUCC.getAllObject();
+    }
+    return objetUCC.getAllObject().stream()
+        .filter(objetDTO -> objetDTO.getLocalisation().equals("Magasin")).toList();
   }
 
   /**
