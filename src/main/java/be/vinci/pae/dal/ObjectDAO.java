@@ -30,5 +30,5 @@ public interface ObjectDAO {
    * @param id_objet The object will be modified.
    * @return Returns true if the state was successfully modified, false otherwise.
    */
-  boolean modifierEtatObjet(String etat, int id_objet);
+  boolean updateObjectState(String etat, int id_objet);
 }

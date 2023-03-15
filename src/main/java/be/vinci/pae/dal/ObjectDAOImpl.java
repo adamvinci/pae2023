@@ -105,20 +105,13 @@ public class ObjectDAOImpl implements ObjectDAO {
   }
 
   @Override
-  public boolean modifierEtatObjet(String etat, int id_objet) {
-    String path = null;
-    String query = "UPDATE projet.objets SET etat = (?) WHERE id_objet = (?)";
+  public boolean updateObjectState(String etat, int id_objet) {
+    String query = "UPDATE projet.objets SET etat = ? WHERE id_objet = ?";
     try (PreparedStatement statement = dalService.preparedStatement(query)) {
       statement.setString(1, etat);
       statement.setInt(2, id_objet);
-      try (ResultSet set = statement.executeQuery()) {
-        // check if resultset is empty (none objet)
-        if (!set.isBeforeFirst()) {
-          return false;
-        } else {
-          return true;
-        }
-      }
+      int rowsAffected = statement.executeUpdate();
+      return rowsAffected > 0;
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }

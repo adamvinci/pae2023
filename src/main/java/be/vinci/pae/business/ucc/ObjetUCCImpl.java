@@ -35,7 +35,7 @@ public class ObjetUCCImpl implements ObjetUCC {
   }
 
   @Override
-  public Boolean modifierEtatObjet(String etat, int id_objet) {
-    return dataService.modifierEtatObjet(etat, id_objet);
+  public Boolean updateObjectState(String etat, int id_objet) {
+    return dataService.updateObjectState(etat, id_objet);
   }
 }

@@ -3,11 +3,13 @@ package be.vinci.pae.ihm;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.ucc.ObjetUCC;
+import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -20,6 +22,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.util.List;
+import javax.json.Json;
+import javax.json.JsonObject;
 
 /**
  * ObjetRessource retrieve the request process by Grizzly and treat it.
@@ -99,4 +103,39 @@ public class ObjetRessource {
     };
     return Response.ok(output).build();
   }
+
+  @Path("etat")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response changeEtat(JsonNode objetCredentials) {
+    if (!objetCredentials.hasNonNull("etat") || !objetCredentials.hasNonNull("id_objet")) {
+      throw new WebApplicationException("etat or objet required", Status.BAD_REQUEST);
+    }
+    String etat = objetCredentials.get("etat").asText();
+
+    JsonNode idObjetNode = objetCredentials.get("id_objet");
+    if (idObjetNode.isNull() || !idObjetNode.isNumber()) {
+      throw new WebApplicationException("id_objet is not a number", Status.BAD_REQUEST);
+    }
+    int objet = idObjetNode.asInt();
+
+    if (etat.isBlank() || etat.isEmpty()) {
+      throw new WebApplicationException("etat is required", Status.BAD_REQUEST);
+    }
+    boolean changed = objetUCC.updateObjectState(etat, objet);
+    if (!changed) {
+      throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
+    }
+
+    // Construire la réponse JSON
+    JsonObject jsonObject = Json.createObjectBuilder()
+        .add("message", "L'état de l'objet a été modifié avec succès")
+        .build();
+
+    // Construire la réponse JAX-RS avec un code de statut 200 OK
+    return Response.ok(jsonObject).build();
+  }
+
+
 }

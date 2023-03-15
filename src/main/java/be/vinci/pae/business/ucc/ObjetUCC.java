@@ -32,5 +32,5 @@ public interface ObjetUCC {
    */
   String getPicture(int id);
 
-  public Boolean modifierEtatObjet(String etat, int id_objet);
+  public Boolean updateObjectState(String etat, int id_objet);
 }
