@@ -65,10 +65,15 @@ button{
 }
 
 #rightC{
+
    flex: 0.3;
-    height: 500px;
+    height: auto;
     border: 2px solid darkgray;
 
+
+}
+#typeObjet{
+    padding-bottom: 30px;
 }
 .container2 {
     margin-top:80px ;
