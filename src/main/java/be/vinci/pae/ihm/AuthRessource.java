@@ -83,7 +83,7 @@ public class AuthRessource {
   @Path("register")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public ObjectNode register(UserDTO userDTO) {
+  public UserDTO register(UserDTO userDTO) {
     if (userDTO.getEmail().equals("") || userDTO.getPassword().equals("")
         || userDTO.getNom().equals("") || userDTO.getPrenom().equals("")
         || userDTO.getGsm().equals("")) {
@@ -95,7 +95,7 @@ public class AuthRessource {
       throw new WebApplicationException("already exist", Status.CONFLICT);
     }
 
-    return objetCreation(userDTO);
+    return  Json.filterPublicJsonView(userDTO, UserDTO.class);
 
 
   }
