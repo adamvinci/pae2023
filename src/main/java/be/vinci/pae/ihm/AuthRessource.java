@@ -1,7 +1,5 @@
 package be.vinci.pae.ihm;
-
 import be.vinci.pae.business.dto.UserDTO;
-import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.ihm.filters.Authorize;
 import be.vinci.pae.utils.Config;
@@ -54,9 +52,7 @@ public class AuthRessource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ObjectNode login(JsonNode userCredentials) {
-
-
-    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,"Tentative de connexion  ");
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,"Tentative de connexion ");
     if (!userCredentials.hasNonNull("email") || !userCredentials.hasNonNull("password")) {
       throw new WebApplicationException("email or password required", Status.BAD_REQUEST);
     }
