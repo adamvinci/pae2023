@@ -18,8 +18,9 @@ import jakarta.ws.rs.ext.Provider;
 import java.io.IOException;
 
 
+
 /**
- * @author e-Baron This filter allows anonymous requests.
+ * This filter allows anonymous requests.
  */
 @Singleton
 @Provider
