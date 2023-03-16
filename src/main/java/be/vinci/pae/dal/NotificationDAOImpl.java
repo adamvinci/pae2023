@@ -13,24 +13,24 @@ public class NotificationDAOImpl implements NotificationDAO {
   private ObjectDAO objectDAO;
   private NotificationFactory notificationFactory;
 
+
+
   @Override
-  public NotificationDTO createOne(NotificationDTO notification) {
+  public boolean createOne(NotificationDTO notification) {
     NotificationDTO notificationDTO = notificationFactory.getNotification();
     try (PreparedStatement statement = dalService.preparedStatement(
         "INSERT INTO projet.notifications VALUES "
             + "(DEFAULT,?,?,?) RETURNING *;")) {
-      statement.setInt(1, notification.getObject().getIdObjet());
+      statement.setInt(1, notification.getObject());
       statement.setString(2, notification.getMessage());
       statement.setString(3, notification.getType());
       try (ResultSet set = statement.executeQuery()) {
         if (!set.isBeforeFirst()) {
-          return null;
+          return false;
         } else {
           while (set.next()) {
-            initUser(userDTO, set.getString(2), set.getString(3), set.getString(4),
-                set.getString(5), set.getString(6), set.getDate(7).toLocalDate(),
-                set.getString(8),
-                set.getString(9), set.getInt(1));
+            initNotification(notificationDTO, set.getInt(1), set.getInt(2), set.getString(3),
+                set.getString(4));
 
           }
         }
@@ -39,11 +39,14 @@ public class NotificationDAOImpl implements NotificationDAO {
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
-    return null;
+    return true;
   }
 
-  public void initNotification(NotificationDTO notificationDTO, int id, ObjectDTO object,
+  public void initNotification(NotificationDTO notificationDTO, int id, int object,
       String message, String type) {
-
+    notificationDTO.setId(id);
+    notificationDTO.setObject(object);
+    notificationDTO.setMessage(message);
+    notificationDTO.setType(type);
   }
 }

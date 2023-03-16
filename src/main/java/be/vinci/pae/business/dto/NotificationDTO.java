@@ -6,9 +6,9 @@ public interface NotificationDTO {
 
   public void setId(Integer id);
 
-  public ObjetDTO getObject();
+  public int getObject();
 
-  public void setObject(ObjetDTO object);
+  public void setObject(int object);
 
   public String getMessage();
 

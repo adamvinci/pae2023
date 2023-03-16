@@ -1,15 +1,16 @@
 package be.vinci.pae.business.domaine;
 
+import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.views.Views.Public;
 import com.fasterxml.jackson.annotation.JsonView;
 
-public class NotificationImpl implements Notification {
+public class NotificationImpl implements Notification, NotificationDTO {
 
   @JsonView(Public.class)
-  private Integer id;
+  private int id;
   @JsonView(Public.class)
-  private ObjetDTO object;
+  private int object;
   @JsonView(Public.class)
   private String message;
   @JsonView(Public.class)
@@ -23,11 +24,11 @@ public class NotificationImpl implements Notification {
     this.id = id;
   }
 
-  public ObjetDTO getObject() {
+  public int getObject() {
     return object;
   }
 
-  public void setObject(ObjetDTO object) {
+  public void setObject(int object) {
     this.object = object;
   }
 

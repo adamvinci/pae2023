@@ -1,7 +1,11 @@
 package be.vinci.pae.ihm;
 
+import be.vinci.pae.business.domaine.Notification;
+import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
+import be.vinci.pae.business.factory.NotificationFactoryImpl;
+import be.vinci.pae.business.ucc.NotificationUCC;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
@@ -34,6 +38,7 @@ public class ObjetRessource {
 
   @Inject
   private ObjetUCC objetUCC;
+  private NotificationUCC notificationUCC;
 
   /**
    * Retrieve all the object in the database.
@@ -123,7 +128,18 @@ public class ObjetRessource {
     if (etat.isBlank() || etat.isEmpty()) {
       throw new WebApplicationException("etat is required", Status.BAD_REQUEST);
     }
+    String message;
+    if (objetCredentials.hasNonNull("message")){
+      message = objetCredentials.get("message").asText();
+      if (message.isBlank() || message.isEmpty()){
+        throw new WebApplicationException("message is required", Status.BAD_REQUEST);
+      }
+
+    }else{
+      message="l'objet : "+objet+" a été refusé";
+    }
     boolean changed = objetUCC.updateObjectState(etat, objet);
+    boolean added = notificationUCC.createOne();
     if (!changed) {
       throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
     }
@@ -136,6 +152,8 @@ public class ObjetRessource {
     // Construire la réponse JAX-RS avec un code de statut 200 OK
     return Response.ok(jsonObject).build();
   }
+
+
 
 
 }
