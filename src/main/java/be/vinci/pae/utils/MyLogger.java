@@ -18,8 +18,6 @@ public class MyLogger {
 
   /**
    * Constructs a new MyLogger object with a rotating file handler.
-   *
-   * @throws IOException if an I/O error occurs while creating the log file
    */
   public MyLogger() {
     logger = Logger.getLogger(MyLogger.class.getName());
