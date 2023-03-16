@@ -6,6 +6,7 @@ import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.ihm.filters.Authorize;
 import be.vinci.pae.utils.Config;
 import be.vinci.pae.utils.Json;
+import be.vinci.pae.utils.MyLogger;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -23,6 +24,8 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.glassfish.jersey.server.ContainerRequest;
 
 /**
@@ -38,8 +41,7 @@ public class AuthRessource {
   @Inject
   private UserUcc userUcc;
 
-  @Inject
-  private UserFactory userFactory;
+
 
   /**
    * Login by providing an email and a password.
@@ -52,6 +54,9 @@ public class AuthRessource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ObjectNode login(JsonNode userCredentials) {
+
+
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,"Tentative de connexion  ");
     if (!userCredentials.hasNonNull("email") || !userCredentials.hasNonNull("password")) {
       throw new WebApplicationException("email or password required", Status.BAD_REQUEST);
     }

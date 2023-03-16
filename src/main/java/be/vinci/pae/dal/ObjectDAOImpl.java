@@ -24,8 +24,7 @@ public class ObjectDAOImpl implements ObjectDAO {
   private DALService dalService;
   @Inject
   private ObjetFactory objetFactory;
-  @Inject
-  private UserDAO userDAO;
+
   @Inject
   private TypeObjetFactory typeObjetFactory;
   @Inject
