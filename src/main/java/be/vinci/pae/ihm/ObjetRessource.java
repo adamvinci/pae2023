@@ -60,7 +60,8 @@ public class ObjetRessource {
           "Retrieve the complete list of object from user " + authenticatedUser.getEmail());
       return objetUCC.getAllObject();
     }
-    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve list of object located in store from anonymous");
+    Logger.getLogger(MyLogger.class.getName())
+        .log(Level.INFO, "Retrieve list of object located in store from anonymous");
     return objetUCC.getAllObject().stream()
         .filter(objetDTO -> objetDTO.getLocalisation().equals("Magasin")).toList();
   }
