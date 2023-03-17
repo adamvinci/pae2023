@@ -109,7 +109,7 @@ public class AuthRessource {
       throw new WebApplicationException("already exist", Status.CONFLICT);
     }
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Inscription de "
-    + userDTO.getEmail());
+        + userDTO.getEmail());
 
 
     return  Json.filterPublicJsonView(userDTO, UserDTO.class);
