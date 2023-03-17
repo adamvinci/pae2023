@@ -1,11 +1,11 @@
 package be.vinci.pae.ihm;
 
 import be.vinci.pae.business.dto.UserDTO;
-import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.ihm.filters.Authorize;
 import be.vinci.pae.utils.Config;
 import be.vinci.pae.utils.Json;
+import be.vinci.pae.utils.MyLogger;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -23,6 +23,8 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.glassfish.jersey.server.ContainerRequest;
 
 /**
@@ -38,8 +40,7 @@ public class AuthRessource {
   @Inject
   private UserUcc userUcc;
 
-  @Inject
-  private UserFactory userFactory;
+
 
   /**
    * Login by providing an email and a password.
@@ -67,7 +68,20 @@ public class AuthRessource {
     if (userDTO == null) {
       throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
     }
-    return objetCreation(userDTO);
+
+    String token;
+    try {
+      token = JWT.create().withExpiresAt(new Date(System.currentTimeMillis() + (86400 * 1000)))
+          .withIssuer("auth0")
+          .withClaim("user", userDTO.getId()).sign(this.jwtAlgorithm);
+
+    } catch (Exception e) {
+      throw new WebApplicationException(e.getMessage(), Status.FORBIDDEN);
+    }
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Connexion de " + email);
+    return jsonMapper.createObjectNode()
+        .put("token", token)
+        .putPOJO("user", Json.filterPublicJsonView(userDTO, UserDTO.class));
 
   }
 
@@ -94,36 +108,16 @@ public class AuthRessource {
     if (userDTO == null) {
       throw new WebApplicationException("already exist", Status.CONFLICT);
     }
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Inscription de "
+        + userDTO.getEmail());
+
 
     return  Json.filterPublicJsonView(userDTO, UserDTO.class);
 
 
   }
 
-  /**
-   * Creates an ObjectNode containing a JWT token and a user object based on the
-   *    provided userDTO information.
-   *
-   * @param userDTO The user information to use for creating the token and user object.
-   * @return An ObjectNode containing the JWT token and user object.
-   */
-  public ObjectNode objetCreation(UserDTO userDTO) {
-    String token;
-    try {
-      token = JWT.create().withExpiresAt(new Date(System.currentTimeMillis() + (86400 * 1000)))
-          .withIssuer("auth0")
-          .withClaim("user", userDTO.getId()).sign(this.jwtAlgorithm);
 
-      return jsonMapper.createObjectNode()
-          .put("token", token)
-          .putPOJO("user", Json.filterPublicJsonView(userDTO, UserDTO.class));
-
-    } catch (Exception e) {
-      throw new WebApplicationException(e.getMessage(), Status.FORBIDDEN);
-    }
-
-
-  }
 
 
 
@@ -139,7 +133,8 @@ public class AuthRessource {
   @Authorize
   public UserDTO getUser(@Context ContainerRequest request) {
     UserDTO userDTO = (UserDTO) request.getProperty("user");
-
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve user from token of "
+        + userDTO.getEmail());
     return Json.filterPublicJsonView(userDTO, UserDTO.class);
 
   }

@@ -59,7 +59,8 @@ class UserUccTest {
     Mockito.when(userLeonHash.getRole()).thenReturn("membre");
     Mockito.when(userLeonHash.getPassword()).thenReturn("123*");
     Mockito.when(userLeonHash.getNom()).thenReturn("leon");
-    Mockito.when(userLeonHash.getPrenom()).thenReturn("$2a$10$fYQHAoeC3sQ.AZuBsxJUWuh7miB8QIZ1/gDsdp7zOhg2cmtknqlmy");
+    Mockito.when(userLeonHash.getPrenom())
+        .thenReturn("$2a$10$fYQHAoeC3sQ.AZuBsxJUWuh7miB8QIZ1/gDsdp7zOhg2cmtknqlmy");
     Mockito.when(userLeonHash.getGsm()).thenReturn("123");
 
     Mockito.when(userDAO.getOne(2)).thenReturn(userSteven);
@@ -95,13 +96,14 @@ class UserUccTest {
 
   @DisplayName("test register with good email")
   @Test
-  void testRegisterWhitGoodemail(){
+  void testRegisterWhitGoodemail() {
     assertNotNull(userUcc.register(userLeon));
   }
 
   @DisplayName("test register with email already exist")
   @Test
-  void testRegisterWhitBademail(){
+  void testRegisterWhitBademail() {
+
     assertNull(userUcc.register(userSteven));
   }
 
