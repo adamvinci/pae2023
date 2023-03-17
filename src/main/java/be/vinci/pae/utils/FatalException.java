@@ -9,6 +9,7 @@ public class FatalException extends WebApplicationException {
 
   /**
    * Constructs a new FatalException object with the specified cause.
+   *
    * @param cause the Throwable object that caused the exception
    */
   public FatalException(Throwable cause) {

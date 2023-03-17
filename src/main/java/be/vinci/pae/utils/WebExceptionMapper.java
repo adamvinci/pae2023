@@ -16,13 +16,14 @@ public class WebExceptionMapper implements ExceptionMapper<Throwable> {
 
   @Override
   public Response toResponse(Throwable exception) {
-    if(exception instanceof FatalException) {
-      Logger.getLogger(MyLogger.class.getName()).
-          log(Level.INFO,exception.getCause().getMessage());
-      return Response.status(Status.INTERNAL_SERVER_ERROR).entity(exception.getCause().getMessage()).build();
+    if (exception instanceof FatalException) {
+      Logger.getLogger(MyLogger.class.getName())
+          .log(Level.INFO, exception.getCause().getMessage());
+      return Response.status(Status.INTERNAL_SERVER_ERROR)
+          .entity(exception.getCause().getMessage()).build();
     }
 
-    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,exception.getMessage());
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, exception.getMessage());
     if (exception instanceof WebApplicationException) {
       return Response.status(((WebApplicationException) exception).getResponse().getStatus())
           .entity(exception.getMessage())
