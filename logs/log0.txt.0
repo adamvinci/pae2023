@@ -294,3 +294,7 @@ mars 17, 2023 2:23:01 PM be.vinci.pae.ihm.ObjetRessource getAllObject
 INFO: Retrieve list of object located in store from anonymous 
 mars 17, 2023 2:23:01 PM be.vinci.pae.ihm.ObjetRessource getAllObjectType
 INFO: Retrieve the type of object
+mars 17, 2023 3:04:38 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de adrien.riez@hotmail.be
+mars 17, 2023 3:04:53 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: The token was expected to have 3 parts, but got 0.

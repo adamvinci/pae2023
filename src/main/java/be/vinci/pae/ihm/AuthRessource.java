@@ -68,8 +68,20 @@ public class AuthRessource {
     if (userDTO == null) {
       throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
     }
+
+    String token;
+    try {
+      token = JWT.create().withExpiresAt(new Date(System.currentTimeMillis() + (86400 * 1000)))
+          .withIssuer("auth0")
+          .withClaim("user", userDTO.getId()).sign(this.jwtAlgorithm);
+
+    } catch (Exception e) {
+      throw new WebApplicationException(e.getMessage(), Status.FORBIDDEN);
+    }
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Connexion de " + email);
-    return objetCreation(userDTO);
+    return jsonMapper.createObjectNode()
+        .put("token", token)
+        .putPOJO("user", Json.filterPublicJsonView(userDTO, UserDTO.class));
 
   }
 
@@ -105,30 +117,7 @@ public class AuthRessource {
 
   }
 
-  /**
-   * Creates an ObjectNode containing a JWT token and a user object based on the
-   *    provided userDTO information.
-   *
-   * @param userDTO The user information to use for creating the token and user object.
-   * @return An ObjectNode containing the JWT token and user object.
-   */
-  public ObjectNode objetCreation(UserDTO userDTO) {
-    String token;
-    try {
-      token = JWT.create().withExpiresAt(new Date(System.currentTimeMillis() + (86400 * 1000)))
-          .withIssuer("auth0")
-          .withClaim("user", userDTO.getId()).sign(this.jwtAlgorithm);
 
-      return jsonMapper.createObjectNode()
-          .put("token", token)
-          .putPOJO("user", Json.filterPublicJsonView(userDTO, UserDTO.class));
-
-    } catch (Exception e) {
-      throw new WebApplicationException(e.getMessage(), Status.FORBIDDEN);
-    }
-
-
-  }
 
 
 
