@@ -56,10 +56,10 @@ public class ObjetRessource {
     UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
     if (authenticatedUser != null && (authenticatedUser.getRole().equals("responsable")
         || authenticatedUser.getRole().equals("aidant"))) {
-      Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve the complete list of object from user "+authenticatedUser.getEmail());
+      Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve the complete list of object from user " + authenticatedUser.getEmail());
       return objetUCC.getAllObject();
     }
-    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve list of object located in store from anonymous ");
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve list of object located in store from anonymous");
     return objetUCC.getAllObject().stream()
         .filter(objetDTO -> objetDTO.getLocalisation().equals("Magasin")).toList();
   }
@@ -115,7 +115,7 @@ public class ObjetRessource {
         }
       }
     };
-    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve picture of object "+id);
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve picture of object " + id);
     return Response.ok(output).build();
   }
 }
