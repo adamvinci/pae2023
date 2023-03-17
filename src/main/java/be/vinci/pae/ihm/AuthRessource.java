@@ -53,7 +53,6 @@ public class AuthRessource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ObjectNode login(JsonNode userCredentials) {
-    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Tentative de connexion ");
     if (!userCredentials.hasNonNull("email") || !userCredentials.hasNonNull("password")) {
       throw new WebApplicationException("email or password required", Status.BAD_REQUEST);
     }
@@ -69,6 +68,7 @@ public class AuthRessource {
     if (userDTO == null) {
       throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
     }
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Connexion de "+email);
     return objetCreation(userDTO);
 
   }
@@ -96,7 +96,7 @@ public class AuthRessource {
     if (userDTO == null) {
       throw new WebApplicationException("already exist", Status.CONFLICT);
     }
-
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Inscription de "+userDTO.getEmail());
     return objetCreation(userDTO);
 
 
@@ -141,7 +141,7 @@ public class AuthRessource {
   @Authorize
   public UserDTO getUser(@Context ContainerRequest request) {
     UserDTO userDTO = (UserDTO) request.getProperty("user");
-
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve user from token of "+userDTO.getEmail());
     return Json.filterPublicJsonView(userDTO, UserDTO.class);
 
   }
