@@ -96,6 +96,9 @@ public class AuthRessource {
     if (userDTO == null) {
       throw new WebApplicationException("already exist", Status.CONFLICT);
     }
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Inscription de "
+    + userDTO.getEmail());
+
 
     return  Json.filterPublicJsonView(userDTO, UserDTO.class);
 
