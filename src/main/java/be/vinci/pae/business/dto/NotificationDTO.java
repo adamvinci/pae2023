@@ -1,5 +1,9 @@
 package be.vinci.pae.business.dto;
 
+import be.vinci.pae.business.domaine.NotificationImpl;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(as = NotificationImpl.class)
 public interface NotificationDTO {
 
   public Integer getId();

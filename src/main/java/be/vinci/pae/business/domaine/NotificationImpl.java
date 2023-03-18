@@ -5,7 +5,7 @@ import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.views.Views.Public;
 import com.fasterxml.jackson.annotation.JsonView;
 
-public class NotificationImpl implements Notification, NotificationDTO {
+public class NotificationImpl implements NotificationDTO {
 
   @JsonView(Public.class)
   private int id;

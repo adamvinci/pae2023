@@ -1,9 +1,6 @@
 package be.vinci.pae.ihm;
 
-import be.vinci.pae.business.domaine.Notification;
 import be.vinci.pae.business.domaine.Objet;
-import be.vinci.pae.business.domaine.ObjetImpl;
-import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.ucc.NotificationUCC;
@@ -32,8 +29,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.util.List;
-import javax.json.Json;
-import javax.json.JsonObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.glassfish.jersey.server.ContainerRequest;
@@ -153,7 +148,6 @@ public class ObjetRessource {
   @Path("atelierObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   public Response atelierObject(@PathParam("id") int id, Objet objet) {
-    if(!objet.depotObject()) throw new WebApplicationException("can not be at state atelier", Status.UNAUTHORIZED);
     ObjetDTO obj=objet;
     ObjetDTO changed = objetUCC.accepterObjet(obj);
     if (changed==null) {
