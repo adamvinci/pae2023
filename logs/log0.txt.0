@@ -526,3 +526,7 @@ mars 17, 2023 3:07:41 PM be.vinci.pae.ihm.ObjetRessource getPicture
 INFO: Retrieve picture of object 21
 mars 17, 2023 3:07:41 PM be.vinci.pae.ihm.ObjetRessource getPicture
 INFO: Retrieve picture of object 2
+mars 18, 2023 6:11:57 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 18, 2023 6:14:34 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "be.vinci.pae.business.domaine.Objet.depotObject()" because "objet" is null

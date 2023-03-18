@@ -245,8 +245,11 @@ public class ObjetRessource {
   @POST
   @Path("refuserObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response refuserObject(@PathParam("id") int id, JsonNode userCredentials) {
+  public Response refuserObject(@PathParam("id") int id, JsonNode objetCredentials) {
 
+    if (!objetCredentials.hasNonNull("message")) {
+      throw new WebApplicationException("etat or objet required", Status.BAD_REQUEST);
+    }
 
 
     // Retourne une réponse HTTP 200 OK avec un message de confirmation
