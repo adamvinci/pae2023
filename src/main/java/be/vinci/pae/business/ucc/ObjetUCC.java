@@ -32,5 +32,37 @@ public interface ObjetUCC {
    */
   String getPicture(int id);
 
-  public Boolean updateObjectState(String etat, int id_objet);
+  /**
+
+   Accepts an object represented by the given ObjetDTO object.
+   @param objetDTO the object to be accepted
+   @return true if the object is accepted successfully, false otherwise
+   */
+  Boolean accepterObjet(ObjetDTO objetDTO);
+
+  /**
+
+   Refuses an object represented by the given ObjetDTO object.
+   @param objetDTO the object to be refused
+   @return true if the object is refused successfully, false otherwise
+   */
+  Boolean refuserObject(ObjetDTO objetDTO);
+
+  /**
+
+   Deposits an object represented by the given ObjetDTO object.
+   @param objetDTO the object to be deposited
+   @return true if the object is deposited successfully, false otherwise
+   */
+  Boolean depotObject(ObjetDTO objetDTO);
+
+  /**
+
+   Sells an object represented by the given ObjetDTO object.
+   @param objetDTO the object to be sold
+   @return true if the object is sold successfully, false otherwise
+   */
+  Boolean venteObject(ObjetDTO objetDTO);
+
+    Boolean venduObject(ObjetDTO objetDTO);
 }

@@ -195,4 +195,52 @@ public class ObjetImpl implements Objet, ObjetDTO {
     this.localisation = Arrays.stream(POSSIBLE_LOCALISATION).filter(s -> s.equals(localisation))
         .findFirst().orElse(null);
   }
+
+  private Boolean propose(){
+    if(getEtat()!="proposer" || getDate_acceptation()!=null || getDate_retrait()!=null || getDate_vente()!=null){
+      return false;
+    }
+    return true;
+  }
+  @Override
+  public Boolean accepterObjet() {
+    if(!propose()){
+      return false;
+    }
+    setEtat("accepte");
+    return true;
+  }
+  @Override
+  public Boolean refuserObjet() {
+    if(!propose()){
+      return false;
+    }
+    setEtat("refuser");
+    return true;
+  }
+  @Override
+  public Boolean depotObject() {
+    if(getEtat()!="accepte" || getDate_acceptation()==null || getDate_retrait()==null || getDate_vente()!=null || getLocalisation()=="Atelier"){
+      return false;
+    }
+    setLocalisation("Atelier");
+    return true;
+  }
+  @Override
+  public Boolean venteObject(){
+    if(getEtat()!="accepte" || getDate_acceptation()==null || getDate_retrait()==null || getDate_vente()!=null){
+      return false;
+    }
+    setLocalisation("Magasin");
+    setEtat("en vente");
+    return true;
+  }
+  @Override
+  public Boolean venduObject(){
+    if(getEtat()!="en vente" || getDate_acceptation()==null || getDate_retrait()==null || getDate_vente()==null){
+      return false;
+    }
+    setEtat("vendu");
+    return true;
+  }
 }

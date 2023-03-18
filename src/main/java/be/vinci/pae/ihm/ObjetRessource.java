@@ -1,6 +1,8 @@
 package be.vinci.pae.ihm;
 
 import be.vinci.pae.business.domaine.Notification;
+import be.vinci.pae.business.domaine.Objet;
+import be.vinci.pae.business.domaine.ObjetImpl;
 import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
@@ -14,6 +16,7 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -138,8 +141,8 @@ public class ObjetRessource {
     }else{
       message="l'objet : "+objet+" a été refusé";
     }
-    boolean changed = objetUCC.updateObjectState(etat, objet);
-    boolean added = notificationUCC.createOne();
+    ObjetDTO obj=new ObjetImpl();
+    boolean changed = objetUCC.accepterObjet(obj);
     if (!changed) {
       throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
     }
@@ -153,7 +156,82 @@ public class ObjetRessource {
     return Response.ok(jsonObject).build();
   }
 
+  //change Etat of objects
+  @PUT
+  @Path("accepterObject/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Response accepterObject(@PathParam("id") int id, Objet objet) {
+    if(!objet.accepterObjet()) throw new WebApplicationException("can not be accepted", Status.UNAUTHORIZED);
+
+    ObjetDTO obj=objet;
+
+    boolean changed = objetUCC.accepterObjet(obj);
+    if (!changed) {
+      throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
+    }
+    // Retourne une réponse HTTP 200 OK avec un message de confirmation
+    return Response.status(Response.Status.OK)
+            .entity("Object with ID " + id + " accepted successfully")
+            .build();
+  }
+  @PUT
+  @Path("atelierObject/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Response atelierObject(@PathParam("id") int id, Objet objet) {
+    if(!objet.depotObject()) throw new WebApplicationException("can not be at state atelier", Status.UNAUTHORIZED);
+    ObjetDTO obj=objet;
+    boolean changed = objetUCC.accepterObjet(obj);
+    if (!changed) {
+      throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
+    }
+    // Retourne une réponse HTTP 200 OK avec un message de confirmation
+    return Response.status(Response.Status.OK)
+            .entity("Object with ID " + id + " accepted successfully")
+            .build();
+  }
+
+  @PUT
+  @Path("misEnVenteObject/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Response misEnVenteObject(@PathParam("id") int id, Objet objet) {
+    if(!objet.venteObject()) throw new WebApplicationException("can not be in store", Status.UNAUTHORIZED);
+    ObjetDTO obj=objet;
+    boolean changed = objetUCC.venteObject(obj);
+    if (!changed) {
+      throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
+    }
+    // Retourne une réponse HTTP 200 OK avec un message de confirmation
+    return Response.status(Response.Status.OK)
+            .entity("Object with ID " + id + " accepted successfully")
+            .build();
+  }
+
+  @PUT
+  @Path("vendreObject/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Response vendreObject(@PathParam("id") int id, Objet objet) {
+    if(!objet.venduObject()) throw new WebApplicationException("can not be sold", Status.UNAUTHORIZED);
+    ObjetDTO obj=objet;
+    boolean changed = objetUCC.venduObject(obj);
+    if (!changed) {
+      throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
+    }
+    // Retourne une réponse HTTP 200 OK avec un message de confirmation
+    return Response.status(Response.Status.OK)
+            .entity("Object with ID " + id + " accepted successfully")
+            .build();
+  }
+
+  @POST
+  @Path("refuserObject/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Response refuserObject(@PathParam("id") int id, JsonNode userCredentials) {
 
 
 
+    // Retourne une réponse HTTP 200 OK avec un message de confirmation
+    return Response.status(Response.Status.OK)
+            .entity("Object with ID " + id + " accepted successfully")
+            .build();
+  }
 }

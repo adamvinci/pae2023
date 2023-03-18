@@ -7,6 +7,8 @@ import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.ObjetFactory;
 import be.vinci.pae.dal.services.DALService;
 import jakarta.inject.Inject;
+
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -105,11 +107,16 @@ public class ObjectDAOImpl implements ObjectDAO {
   }
 
   @Override
-  public boolean updateObjectState(String etat, int id_objet) {
-    String query = "UPDATE projet.objets SET etat = ? WHERE id_objet = ?";
+  public boolean updateObjectState(ObjetDTO objetDTO) {
+    String query = "UPDATE projet.objets SET etat = ?, date_acceptation = ?, date_depot = ?, date_retrait = ?, date_vente = ?, localisation = ? WHERE id_objet = ?";
     try (PreparedStatement statement = dalService.preparedStatement(query)) {
-      statement.setString(1, etat);
-      statement.setInt(2, id_objet);
+      statement.setString(1, objetDTO.getEtat());
+      statement.setDate(2, Date.valueOf(objetDTO.getDate_acceptation()));
+      statement.setDate(3, Date.valueOf(objetDTO.getDate_depot()));
+      statement.setDate(4, Date.valueOf(objetDTO.getDate_retrait()));
+      statement.setDate(5, Date.valueOf(objetDTO.getDate_vente()));
+      statement.setString(6, objetDTO.getLocalisation());
+      statement.setInt(7, objetDTO.getIdObjet());
       int rowsAffected = statement.executeUpdate();
       return rowsAffected > 0;
     } catch (SQLException e) {

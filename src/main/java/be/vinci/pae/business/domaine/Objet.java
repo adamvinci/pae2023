@@ -7,4 +7,13 @@ import be.vinci.pae.business.dto.ObjetDTO;
  */
 public interface Objet extends ObjetDTO {
 
+    Boolean accepterObjet();
+
+    Boolean refuserObjet();
+
+    Boolean depotObject();
+
+    Boolean venteObject();
+
+    Boolean venduObject();
 }
