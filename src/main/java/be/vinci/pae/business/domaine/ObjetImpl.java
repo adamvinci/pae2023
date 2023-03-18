@@ -29,7 +29,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   private String photo;
 
-  private TypeObjetDTO typeObjet;
+  private TypeObjetDTO type;
 
   private String description;
 
@@ -49,6 +49,9 @@ public class ObjetImpl implements Objet, ObjetDTO {
   private Double prix;
 
   private String localisation;
+
+  public ObjetImpl() {
+  }
 
   @Override
   public int getIdObjet() {
@@ -92,12 +95,12 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   @Override
   public TypeObjetDTO getTypeObjet() {
-    return typeObjet;
+    return type;
   }
 
   @Override
-  public void setTypeObjet(TypeObjetDTO typeObjet) {
-    this.typeObjet = typeObjet;
+  public void setTypeObjet(TypeObjetDTO type) {
+    this.type = type;
   }
 
   @Override

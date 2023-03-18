@@ -38,7 +38,7 @@ public interface ObjetUCC {
    @param objetDTO the object to be accepted
    @return true if the object is accepted successfully, false otherwise
    */
-  Boolean accepterObjet(ObjetDTO objetDTO);
+  ObjetDTO accepterObjet(ObjetDTO objetDTO);
 
   /**
 
@@ -46,7 +46,7 @@ public interface ObjetUCC {
    @param objetDTO the object to be refused
    @return true if the object is refused successfully, false otherwise
    */
-  Boolean refuserObject(ObjetDTO objetDTO);
+  ObjetDTO refuserObject(ObjetDTO objetDTO);
 
   /**
 
@@ -54,7 +54,7 @@ public interface ObjetUCC {
    @param objetDTO the object to be deposited
    @return true if the object is deposited successfully, false otherwise
    */
-  Boolean depotObject(ObjetDTO objetDTO);
+  ObjetDTO depotObject(ObjetDTO objetDTO);
 
   /**
 
@@ -62,7 +62,7 @@ public interface ObjetUCC {
    @param objetDTO the object to be sold
    @return true if the object is sold successfully, false otherwise
    */
-  Boolean venteObject(ObjetDTO objetDTO);
+  ObjetDTO venteObject(ObjetDTO objetDTO);
 
-    Boolean venduObject(ObjetDTO objetDTO);
+  ObjetDTO venduObject(ObjetDTO objetDTO);
 }

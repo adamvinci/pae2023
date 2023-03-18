@@ -5,6 +5,7 @@ import be.vinci.pae.business.domaine.Notification;
 import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
+import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.factory.NotificationFactoryImpl;
 import be.vinci.pae.dal.NotificationDAO;
 import be.vinci.pae.dal.ObjectDAO;
@@ -21,8 +22,10 @@ public class ObjetUCCImpl implements ObjetUCC {
 
   @Inject
   private ObjectDAO dataService;
+  @Inject
   private NotificationDAO dataServiceNotification;
-
+  @Inject
+  private NotificationFactory notifFactory;
   @Inject
   private TypeObjetDAO typeObjetDAO;
 
@@ -44,27 +47,28 @@ public class ObjetUCCImpl implements ObjetUCC {
 
 
   @Override
-  public Boolean accepterObjet(ObjetDTO objetDTO){
+  public ObjetDTO accepterObjet(ObjetDTO objetDTO){
+
 
     LocalDate today = LocalDate.now();
 
     Objet objet=(Objet) objetDTO;
-
-    Notification notification= (Notification) new NotificationFactoryImpl().getNotification();
+    objet.accepterObjet();
+    Notification notification= (Notification) notifFactory.getNotification();
     notification.setObject(objetDTO.getIdObjet());
     notification.setMessage("l'objet n° : "+objetDTO.getIdObjet()+" a été ajouté");
     notification.setType("information");
-    if(!dataService.updateObjectState(objet) && !dataServiceNotification.createOne(notification)) return false;
+    if(!dataService.updateObjectState(objet) && !dataServiceNotification.createOne(notification)) return null;
 
-    return true;
+    return objet;
   }
   @Override
-  public Boolean refuserObject(ObjetDTO objetDTO){
+  public ObjetDTO refuserObject(ObjetDTO objetDTO){
 
-    return true;
+    return null;
   }
   @Override
-  public Boolean depotObject(ObjetDTO objetDTO){
+  public ObjetDTO depotObject(ObjetDTO objetDTO){
 
 
     LocalDate today = LocalDate.now();
@@ -72,16 +76,16 @@ public class ObjetUCCImpl implements ObjetUCC {
 
     objet.setDate_depot(today);
 
-    Notification notification= (Notification) new NotificationFactoryImpl().getNotification();
+    Notification notification= (Notification) notifFactory.getNotification();
     notification.setObject(objetDTO.getIdObjet());
     notification.setMessage("l'objet n° : "+objetDTO.getIdObjet()+" a été deposé en magasin");
     notification.setType("information");
-    if(!dataService.updateObjectState(objet) && !dataServiceNotification.createOne(notification)) return false;
+    if(!dataService.updateObjectState(objet) && !dataServiceNotification.createOne(notification)) return null;
 
-    return true;
+    return objet;
   }
   @Override
-  public Boolean venteObject(ObjetDTO objetDTO){
+  public ObjetDTO venteObject(ObjetDTO objetDTO){
 
 
     LocalDate today = LocalDate.now();
@@ -90,25 +94,25 @@ public class ObjetUCCImpl implements ObjetUCC {
 
     objet.setDate_vente(today);
 
-    Notification notification= (Notification) new NotificationFactoryImpl().getNotification();
+    Notification notification= (Notification) notifFactory.getNotification();
     notification.setObject(objetDTO.getIdObjet());
     notification.setMessage("l'objet n° : "+objetDTO.getIdObjet()+" a été mis en vente");
     notification.setType("information");
-    if(!dataService.updateObjectState(objet) && !dataServiceNotification.createOne(notification)) return false;
+    if(!dataService.updateObjectState(objet) && !dataServiceNotification.createOne(notification)) return null;
 
-    return true;
+    return objet;
   }
   @Override
-  public Boolean venduObject(ObjetDTO objetDTO){
+  public ObjetDTO venduObject(ObjetDTO objetDTO){
 
     Objet objet=(Objet) objetDTO;
 
-    Notification notification= (Notification) new NotificationFactoryImpl().getNotification();
+    Notification notification= (Notification) notifFactory.getNotification();
     notification.setObject(objetDTO.getIdObjet());
     notification.setMessage("l'objet n° : "+objetDTO.getIdObjet()+" a été vendu");
     notification.setType("information");
-    if(!dataService.updateObjectState(objet) && !dataServiceNotification.createOne(notification)) return false;
+    if(!dataService.updateObjectState(objet) && !dataServiceNotification.createOne(notification)) return null;
 
-    return true;
+    return objet;
   }
 }
