@@ -6,10 +6,12 @@ import be.vinci.pae.business.domaine.ObjetImpl;
 import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
-import be.vinci.pae.business.factory.NotificationFactoryImpl;
 import be.vinci.pae.business.ucc.NotificationUCC;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import com.fasterxml.jackson.databind.JsonNode;
+import be.vinci.pae.business.dto.UserDTO;
+import be.vinci.pae.ihm.filters.AnonymousOrAuthorize;
+import be.vinci.pae.utils.MyLogger;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.Consumes;
@@ -21,6 +23,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -31,6 +34,9 @@ import java.nio.file.Files;
 import java.util.List;
 import javax.json.Json;
 import javax.json.JsonObject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.glassfish.jersey.server.ContainerRequest;
 
 /**
  * ObjetRessource retrieve the request process by Grizzly and treat it.
@@ -43,18 +49,32 @@ public class ObjetRessource {
   private ObjetUCC objetUCC;
   private NotificationUCC notificationUCC;
 
+
   /**
    * Retrieve all the object in the database.
    *
+   * @param request request the request container
    * @return a list of object or a WebAppException if there are none.
    */
+  @AnonymousOrAuthorize
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  public List<ObjetDTO> getAllObject() {
+  public List<ObjetDTO> getAllObject(@Context ContainerRequest request) {
+
     if (objetUCC.getAllObject() == null) {
       throw new WebApplicationException("Liste vide", Status.NO_CONTENT);
     }
-    return objetUCC.getAllObject();
+    UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
+    if (authenticatedUser != null && (authenticatedUser.getRole().equals("responsable")
+        || authenticatedUser.getRole().equals("aidant"))) {
+      Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
+          "Retrieve the complete list of object from user " + authenticatedUser.getEmail());
+      return objetUCC.getAllObject();
+    }
+    Logger.getLogger(MyLogger.class.getName())
+        .log(Level.INFO, "Retrieve list of object located in store from anonymous");
+    return objetUCC.getAllObject().stream()
+        .filter(objetDTO -> objetDTO.getLocalisation().equals("Magasin")).toList();
   }
 
   /**
@@ -69,7 +89,7 @@ public class ObjetRessource {
     if (objetUCC.getAllObject() == null) {
       throw new WebApplicationException("Liste vide", Status.NO_CONTENT);
     }
-
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve the type of object");
     return objetUCC.getAllObjectType();
   }
 
@@ -88,7 +108,6 @@ public class ObjetRessource {
       throw new WebApplicationException("No content", Status.BAD_REQUEST);
     }
     String pathPicture = objetUCC.getPicture(id);
-    System.out.println(pathPicture);
     if (pathPicture == null) {
       throw new WebApplicationException("No image for this object in the database",
           Status.NOT_FOUND);
@@ -109,6 +128,7 @@ public class ObjetRessource {
         }
       }
     };
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve picture of object " + id);
     return Response.ok(output).build();
   }
 

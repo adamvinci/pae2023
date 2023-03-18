@@ -3,7 +3,6 @@ package be.vinci.pae.business.domaine;
 import be.vinci.pae.business.dto.DisponibiliteDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
-import be.vinci.pae.business.dto.UserDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -24,7 +23,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   private int idObjet;
 
-  private UserDTO utilisateur;
+  private Integer utilisateur;
 
   private String gsm;
 
@@ -62,12 +61,12 @@ public class ObjetImpl implements Objet, ObjetDTO {
   }
 
   @Override
-  public UserDTO getUtilisateur() {
+  public Integer getUtilisateur() {
     return utilisateur;
   }
 
   @Override
-  public void setUtilisateur(UserDTO utilisateur) {
+  public void setUtilisateur(Integer utilisateur) {
     this.utilisateur = utilisateur;
   }
 

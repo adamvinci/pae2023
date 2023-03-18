@@ -3,6 +3,7 @@ package be.vinci.pae.dal;
 import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.factory.TypeObjetFactory;
 import be.vinci.pae.dal.services.DALService;
+import be.vinci.pae.utils.FatalException;
 import jakarta.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,7 +41,7 @@ public class TypeObjetDAOImpl implements TypeObjetDAO {
         }
       }
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      throw new FatalException(e);
     }
     return typeObjetDTO;
   }
@@ -68,7 +69,7 @@ public class TypeObjetDAOImpl implements TypeObjetDAO {
         }
       }
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      throw new FatalException(e);
     }
     return typeObjetDTOList;
   }

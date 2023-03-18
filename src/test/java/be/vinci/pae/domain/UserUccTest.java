@@ -1,6 +1,7 @@
 package be.vinci.pae.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import be.vinci.pae.business.domaine.User;
@@ -26,12 +27,18 @@ class UserUccTest {
   private UserDAO userDAO;
   private User userSteven;
 
+  private User userLeon;
+
+  private User userLeonHash;
+
 
   @BeforeEach
   void setUp() {
     userUcc = locator.getService(UserUcc.class);
     userDAO = locator.getService(UserDAO.class);
     userSteven = Mockito.mock(UserImpl.class);
+    userLeonHash = Mockito.mock(UserImpl.class);
+    userLeon = Mockito.mock(UserImpl.class);
 
     Mockito.when(userSteven.getId()).thenReturn(2);
     Mockito.when(userSteven.getEmail()).thenReturn("steven.agbassah@student.vinci.be");
@@ -39,8 +46,26 @@ class UserUccTest {
     Mockito.when(userSteven.getPassword()).thenReturn("123*");
     Mockito.when(userSteven.checkPassword("123*")).thenReturn(true);
 
+    Mockito.when(userLeon.getId()).thenReturn(3);
+    Mockito.when(userLeon.getEmail()).thenReturn("leon.kelmendi@student.vinci.be");
+    Mockito.when(userLeon.getRole()).thenReturn("membre");
+    Mockito.when(userLeon.getPassword()).thenReturn("123*");
+    Mockito.when(userLeon.getNom()).thenReturn("leon");
+    Mockito.when(userLeon.getPrenom()).thenReturn("kelmendi");
+    Mockito.when(userLeon.getGsm()).thenReturn("123");
+
+    Mockito.when(userLeonHash.getId()).thenReturn(3);
+    Mockito.when(userLeonHash.getEmail()).thenReturn("leon.kelmendi@student.vinci.be");
+    Mockito.when(userLeonHash.getRole()).thenReturn("membre");
+    Mockito.when(userLeonHash.getPassword()).thenReturn("123*");
+    Mockito.when(userLeonHash.getNom()).thenReturn("leon");
+    Mockito.when(userLeonHash.getPrenom())
+        .thenReturn("$2a$10$fYQHAoeC3sQ.AZuBsxJUWuh7miB8QIZ1/gDsdp7zOhg2cmtknqlmy");
+    Mockito.when(userLeonHash.getGsm()).thenReturn("123");
+
     Mockito.when(userDAO.getOne(2)).thenReturn(userSteven);
     Mockito.when(userDAO.getOne("steven.agbassah@student.vinci.be")).thenReturn(userSteven);
+    Mockito.when(userDAO.createOne(userLeon)).thenReturn(userLeonHash);
 
   }
 
@@ -67,6 +92,19 @@ class UserUccTest {
     assertNull(userUcc.login("stevenagbassah@student.vinci.be", "123*"),
         "Cette email n'existe pas");
 
+  }
+
+  @DisplayName("test register with good email")
+  @Test
+  void testRegisterWhitGoodemail() {
+    assertNotNull(userUcc.register(userLeon));
+  }
+
+  @DisplayName("test register with email already exist")
+  @Test
+  void testRegisterWhitBademail() {
+
+    assertNull(userUcc.register(userSteven));
   }
 
   @DisplayName("Test getOne(id) with the good id")

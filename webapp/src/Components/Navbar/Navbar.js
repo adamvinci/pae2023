@@ -58,15 +58,16 @@ async function renderNavbar() {
         
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0" id='member'>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#" data-uri="/ObjetEnVente">Objets mis en vente</a>
+         <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#" data-uri="/">Objets en magasin</a>
             </li>      
             <li id="loginItem" class="nav-item">
-              <a class="nav-link" href="#" data-uri="/ObjetVendu">Objets vendus</a>
+              <a class="nav-link"  href="#" data-uri="/?etat=vente">Objets en vente</a>
             </li>
             <li id="registerItem" class="nav-item">
-              <a class="nav-link" href="#" data-uri="/ObjetProposer">Objets à proposer</a>
-            </li>       
+              <a class="nav-link"  href="#" data-uri="/?etat=vendu">Objets vendu </a>
+            </li>    
+      
           </ul>
         </div>
       </div>
@@ -74,13 +75,18 @@ async function renderNavbar() {
   </div>
 `;
 
+
   const navbar = document.querySelector('#navbarWrapper');
+
+
 
   navbar.innerHTML = navadd;
 
+
+
   if(getToken()){
     const member=document.getElementById('member');
-    if(authenticatedUser?.role==='aidant' || authenticatedUser?.role==='Responsable'){
+    if(authenticatedUser?.role==='aidant' || authenticatedUser?.role==='responsable'){
     member.innerHTML+=`
     
     <li class="nav-item">
@@ -97,7 +103,7 @@ async function renderNavbar() {
     </li>
     `;
     }
-    if(authenticatedUser?.role==='Responsable'){
+    if(authenticatedUser?.role==='responsable'){
       
       member.innerHTML+=`
     <li class="nav-item">

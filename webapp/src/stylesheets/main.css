@@ -13,12 +13,12 @@ tableEnTete{
     position: absolute;
 }
 
-.th,td{
+/* .th,td{
     border: 1px solid;
     border-color: black;
     text-align: center;
     padding: 5px;
-}
+} */
 
 button{
     border-radius: 5px;
@@ -53,25 +53,33 @@ button{
 
 /*------------------------------------------------------------------------------------------------------*/
 #page{
+
     display: flex;
+
 }
 #container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+
+    white-space: nowrap;
+    overflow: auto ;
     flex: 3;
 }
+
 #rightC{
    flex: 0.3;
-    height: 500px;
+    height: auto;
     border: 2px solid darkgray;
+
+}
+#typeObjet{
+    padding-bottom: 30px;
 }
 .container2 {
-    flex-shrink: 2;
+    margin-top:80px ;
+    margin-left:50px ;
+    display: inline-block;
     text-align: center;
-    width: 300px;
-    padding: 20px;
     border: 2px solid darkgray;
+    padding: 20px;
 }
 
 
@@ -85,4 +93,24 @@ button{
 .container2 .subtitle {
     font-size: 16px;
     color: #666;
+}
+.hide {
+    position: fixed;
+    top:35%;
+    left: 30%;
+    width: 40%;
+    height: 20%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    visibility: hidden;
+}
+#image:hover .hide {
+    visibility: visible;
+    color: white;
+}
+.hideContent{
+    font-size: x-large;
 }

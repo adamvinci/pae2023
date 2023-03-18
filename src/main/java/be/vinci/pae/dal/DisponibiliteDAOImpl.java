@@ -1,9 +1,9 @@
 package be.vinci.pae.dal;
 
 import be.vinci.pae.business.dto.DisponibiliteDTO;
-import be.vinci.pae.business.dto.PlageHoraireDTO;
 import be.vinci.pae.business.factory.DisponibiliteFactory;
 import be.vinci.pae.dal.services.DALService;
+import be.vinci.pae.utils.FatalException;
 import jakarta.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,13 +23,13 @@ public class DisponibiliteDAOImpl implements DisponibiliteDAO {
   @Inject
   private DisponibiliteFactory disponibiliteFactory;
 
-  @Inject
-  private PlageHoraireDAO plageHoraireDAO;
 
   @Override
   public DisponibiliteDTO getOne(int id) {
-    String query = "SELECT date_disponibilite,plage"
-        + " FROM projet.disponibilites  WHERE id_disponibilite = (?)";
+    String query = "SELECT d.date_disponibilite,p.plage "
+        + "FROM projet.disponibilites d,"
+        + "projet.plages_horaires p WHERE "
+        + "d.plage = p.id_plage_horaire AND id_disponibilite = (?)";
     DisponibiliteDTO disponibiliteDTO = disponibiliteFactory.getDisponibilite();
 
     try (PreparedStatement statement = dalService.preparedStatement(query)) {
@@ -42,14 +42,12 @@ public class DisponibiliteDAOImpl implements DisponibiliteDAO {
           while (set.next()) {
             disponibiliteDTO.setId(id);
             disponibiliteDTO.setDate(LocalDate.parse(set.getString(1)));
-            PlageHoraireDTO plageHoraireDTO = plageHoraireDAO.getOne(
-                Integer.parseInt(set.getString(2)));
-            disponibiliteDTO.setPlage(plageHoraireDTO);
+            disponibiliteDTO.setPlage(set.getString(2));
           }
         }
       }
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      throw new FatalException(e);
     }
     return disponibiliteDTO;
   }
@@ -57,8 +55,11 @@ public class DisponibiliteDAOImpl implements DisponibiliteDAO {
   @Override
   public List<DisponibiliteDTO> getAll() {
     List<DisponibiliteDTO> disponibiliteDTOS = new ArrayList<>();
-    try (PreparedStatement statement = dalService.preparedStatement("SELECT id_disponibilite,"
-        + "date_disponibilite,plage FROM projet.disponibilites")) {
+    try (PreparedStatement statement = dalService.preparedStatement(
+        "SELECT d.id_disponibilite,"
+            + "d.date_disponibilite,p.plage "
+            + "FROM projet.plages_horaires p,"
+            + "projet.disponibilites d WHERE d.plage = p.id_plage_horaire ")) {
       try (ResultSet set = statement.executeQuery()) {
         // check if resultset is empty (email does not exist)
         if (!set.isBeforeFirst()) {
@@ -68,15 +69,13 @@ public class DisponibiliteDAOImpl implements DisponibiliteDAO {
             DisponibiliteDTO disponibiliteDTO = disponibiliteFactory.getDisponibilite();
             disponibiliteDTO.setId(Integer.parseInt(set.getString(1)));
             disponibiliteDTO.setDate(LocalDate.parse(set.getString(2)));
-            PlageHoraireDTO plageHoraireDTO = plageHoraireDAO.getOne(
-                Integer.parseInt(set.getString(3)));
-            disponibiliteDTO.setPlage(plageHoraireDTO);
+            disponibiliteDTO.setPlage(set.getString(3));
             disponibiliteDTOS.add(disponibiliteDTO);
           }
         }
       }
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      throw new FatalException(e);
     }
     return disponibiliteDTOS;
   }

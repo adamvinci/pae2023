@@ -2,6 +2,7 @@ package be.vinci.pae.main;
 
 import be.vinci.pae.utils.ApplicationBinder;
 import be.vinci.pae.utils.Config;
+import be.vinci.pae.utils.MyLogger;
 import be.vinci.pae.utils.WebExceptionMapper;
 import java.io.IOException;
 import java.net.URI;
@@ -49,6 +50,7 @@ public class Main {
    * @throws IOException IOException if an I/O error occurs while reading input from the console
    */
   public static void main(String[] args) throws IOException {
+    new MyLogger();
     final HttpServer server = startServer();
     System.out.println(String.format("Jersey app started with WADL available at "
         + "%sapplication.wadl\nHit enter to stop it...", Config.getProperty("BaseUri")));
