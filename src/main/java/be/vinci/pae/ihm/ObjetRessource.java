@@ -149,7 +149,7 @@ public class ObjetRessource {
   @Consumes(MediaType.APPLICATION_JSON)
   public Response atelierObject(@PathParam("id") int id, Objet objet) {
     ObjetDTO obj=objet;
-    ObjetDTO changed = objetUCC.accepterObjet(obj);
+    ObjetDTO changed = objetUCC.depotObject(obj);
     if (changed==null) {
       throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
     }

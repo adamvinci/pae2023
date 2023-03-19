@@ -2,6 +2,7 @@ package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.domaine.NotificationImpl;
 import be.vinci.pae.business.domaine.Objet;
+import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
@@ -53,7 +54,7 @@ public class ObjetUCCImpl implements ObjetUCC {
 
     Objet objet=(Objet) objetDTO;
     objet.accepterObjet();
-    NotificationImpl notification= (NotificationImpl) notifFactory.getNotification();
+    NotificationDTO notification= notifFactory.getNotification();
     notification.setObject(objetDTO.getIdObjet());
     notification.setMessage("l'objet n° : "+objetDTO.getIdObjet()+" a été ajouté");
     notification.setType("information");
@@ -75,8 +76,7 @@ public class ObjetUCCImpl implements ObjetUCC {
 
     objet.setDate_depot(today);
 
-    NotificationImpl notification= (NotificationImpl) notifFactory.getNotification();
-    notification.setObject(objetDTO.getIdObjet());
+    NotificationDTO notification= notifFactory.getNotification();    notification.setObject(objetDTO.getIdObjet());
     notification.setMessage("l'objet n° : "+objetDTO.getIdObjet()+" a été deposé en magasin");
     notification.setType("information");
     if(!dataService.updateObjectState(objet) && !dataServiceNotification.createOne(notification)) return null;
@@ -93,8 +93,7 @@ public class ObjetUCCImpl implements ObjetUCC {
 
     objet.setDate_vente(today);
 
-    NotificationImpl notification= (NotificationImpl) notifFactory.getNotification();
-    notification.setObject(objetDTO.getIdObjet());
+    NotificationDTO notification= notifFactory.getNotification();    notification.setObject(objetDTO.getIdObjet());
     notification.setMessage("l'objet n° : "+objetDTO.getIdObjet()+" a été mis en vente");
     notification.setType("information");
     if(!dataService.updateObjectState(objet) && !dataServiceNotification.createOne(notification)) return null;
@@ -106,7 +105,7 @@ public class ObjetUCCImpl implements ObjetUCC {
 
     Objet objet=(Objet) objetDTO;
 
-    NotificationImpl notification= (NotificationImpl) notifFactory.getNotification();
+    NotificationDTO notification= notifFactory.getNotification();
     notification.setObject(objetDTO.getIdObjet());
     notification.setMessage("l'objet n° : "+objetDTO.getIdObjet()+" a été vendu");
     notification.setType("information");
