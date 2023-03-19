@@ -3,14 +3,16 @@ package be.vinci.pae.dal;
 import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.dal.services.DALService;
+import jakarta.inject.Inject;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class NotificationDAOImpl implements NotificationDAO {
-
+  @Inject
   private DALService dalService;
-  private ObjectDAO objectDAO;
+  @Inject
   private NotificationFactory notificationFactory;
 
 

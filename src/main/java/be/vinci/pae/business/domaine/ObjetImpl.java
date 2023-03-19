@@ -209,7 +209,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
     if(!propose()){
       return false;
     }
-    setEtat("accepte");
+    setEtat(POSSIBLE_ETAT[0]);
     return true;
   }
   @Override

@@ -51,9 +51,11 @@ public class ObjetUCCImpl implements ObjetUCC {
 
 
     LocalDate today = LocalDate.now();
-
+    objetDTO.setDate_acceptation(today);
     Objet objet=(Objet) objetDTO;
-    objet.accepterObjet();
+    if(!objet.accepterObjet()){
+      throw new IllegalArgumentException();
+    }
     NotificationDTO notification= notifFactory.getNotification();
     notification.setObject(objetDTO.getIdObjet());
     notification.setMessage("l'objet n° : "+objetDTO.getIdObjet()+" a été ajouté");

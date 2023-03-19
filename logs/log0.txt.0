@@ -566,3 +566,74 @@ mars 19, 2023 10:11:03 AM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: Cannot invoke "be.vinci.pae.business.factory.NotificationFactory.getNotification()" because "this.notificationFactory" is null
 mars 19, 2023 10:11:20 AM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: bad credentials
+mars 19, 2023 3:05:12 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: org.postgresql.util.PSQLException: ERROR: insert or update on table "notifications" violates foreign key constraint "notifications_objet_fkey"
+  Détail : Key (objet)=(0) is not present in table "objets".
+mars 19, 2023 3:10:13 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: org.postgresql.util.PSQLException: ERROR: insert or update on table "notifications" violates foreign key constraint "notifications_objet_fkey"
+  Détail : Key (objet)=(0) is not present in table "objets".
+mars 19, 2023 3:12:43 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: HTTP 405 Method Not Allowed
+mars 19, 2023 3:12:43 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: HTTP 405 Method Not Allowed
+mars 19, 2023 3:12:44 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: HTTP 404 Not Found
+mars 19, 2023 3:13:52 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 19, 2023 3:13:52 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "String.equals(Object)" because the return value of "be.vinci.pae.business.dto.ObjetDTO.getLocalisation()" is null
+mars 19, 2023 3:16:11 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 19, 2023 3:16:11 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "String.equals(Object)" because the return value of "be.vinci.pae.business.dto.ObjetDTO.getLocalisation()" is null
+mars 19, 2023 3:20:55 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 19, 2023 3:34:02 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 19, 2023 3:42:26 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "be.vinci.pae.business.domaine.Objet.accepterObjet()" because "objet" is null
+mars 19, 2023 3:42:45 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "java.time.LocalDate.getYear()" because "date" is null
+mars 19, 2023 3:45:59 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "java.time.LocalDate.getYear()" because "date" is null
+mars 19, 2023 3:46:02 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "java.time.LocalDate.getYear()" because "date" is null
+mars 19, 2023 4:04:26 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "java.time.LocalDate.getYear()" because "date" is null
+mars 19, 2023 4:05:22 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "java.time.LocalDate.getYear()" because "date" is null
+mars 19, 2023 4:05:38 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: org.postgresql.util.PSQLException: ERROR: null value in column "etat" violates not-null constraint
+  Détail : Failing row contains (2, null, null, src/main/java/be/vinci/pae/utils/images/ArmoireCasier-cabinets-2..., 1, Armoire 2, 1, null, 2022-03-18, null, 2022-03-18, 2022-03-18, 8, 2022-03-18).
+mars 19, 2023 4:05:51 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 19, 2023 4:05:53 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: HTTP 404 Not Found
+mars 19, 2023 4:05:53 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 19, 2023 4:05:53 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "java.time.LocalDate.getYear()" because "date" is null
+mars 19, 2023 4:05:53 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: org.postgresql.util.PSQLException: ERROR: null value in column "etat" violates not-null constraint
+  Détail : Failing row contains (2, null, null, src/main/java/be/vinci/pae/utils/images/ArmoireCasier-cabinets-2..., 1, Armoire 2, 1, null, 2022-03-18, null, 2022-03-18, 2022-03-18, 8, 2022-03-18).
+mars 19, 2023 4:06:00 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: org.postgresql.util.PSQLException: ERROR: null value in column "etat" violates not-null constraint
+  Détail : Failing row contains (2, null, null, src/main/java/be/vinci/pae/utils/images/ArmoireCasier-cabinets-2..., 1, Armoire 2, 1, null, 2022-03-18, null, 2022-03-18, 2022-03-18, 8, 2022-03-18).
+mars 19, 2023 4:06:38 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: org.postgresql.util.PSQLException: ERROR: null value in column "etat" violates not-null constraint
+  Détail : Failing row contains (2, null, null, src/main/java/be/vinci/pae/utils/images/ArmoireCasier-cabinets-2..., 1, Armoire 2, 1, null, 2022-03-18, Magasin, 2022-03-18, 2022-03-18, 8, 2022-03-18).
+mars 19, 2023 4:06:59 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: org.postgresql.util.PSQLException: ERROR: null value in column "etat" violates not-null constraint
+  Détail : Failing row contains (2, null, null, src/main/java/be/vinci/pae/utils/images/ArmoireCasier-cabinets-2..., 1, Armoire 2, 1, null, 2022-03-18, Magasin, 2022-03-18, 2022-03-18, 8, 2022-03-18).
+mars 19, 2023 4:07:15 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 19, 2023 4:08:26 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "java.time.LocalDate.getYear()" because "date" is null
+mars 19, 2023 4:09:26 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 19, 2023 4:13:05 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 19, 2023 4:13:30 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 19, 2023 4:15:03 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
