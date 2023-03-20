@@ -1,13 +1,12 @@
 package be.vinci.pae.business.ucc;
 
-import be.vinci.pae.business.domaine.User;
 import be.vinci.pae.business.dto.UserDTO;
 import java.util.List;
 
 
 /**
- * UserUcc acts  as an orchestrator to allow {@link be.vinci.pae.ihm.AuthRessource} and
- * {@link be.vinci.pae.dal.UserDAO} layers to communicate.
+ * UserUcc acts  as an orchestrator to allow {@link be.vinci.pae.ihm.AuthRessource} and {@link
+ * be.vinci.pae.dal.UserDAO} layers to communicate.
  */
 public interface UserUcc {
 
@@ -49,8 +48,7 @@ public interface UserUcc {
   /**
    * Update the role of the user making it becoming "aidant".
    *
-   * @param  userToChange the business object of the user who has to be changed
-   *
+   * @param userToChange the business object of the user who has to be changed
    */
   UserDTO makeAdmin(UserDTO userToChange); /* cela doit-il être un userDTO  ?*/
 }

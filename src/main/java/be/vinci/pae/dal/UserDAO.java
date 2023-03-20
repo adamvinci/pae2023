@@ -1,6 +1,6 @@
 package be.vinci.pae.dal;
 
-import be.vinci.pae.business.domaine.User;
+
 import be.vinci.pae.business.dto.UserDTO;
 import java.util.List;
 
@@ -46,8 +46,7 @@ public interface UserDAO {
   /**
    * Update an user in the database based on a business object "user".
    *
-   * @param  userToChange the user with the new changes
-   *
+   * @param userToChange the user with the new changes
    */
   void update(UserDTO userToChange);
 }

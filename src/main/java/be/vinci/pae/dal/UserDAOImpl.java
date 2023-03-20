@@ -174,7 +174,6 @@ public class UserDAOImpl implements UserDAO {
     } catch (SQLException e) {
       System.out.println("\n" + e.getMessage().split("\n")[0] + "\n");
     }
-    return;
   }
 
   /**

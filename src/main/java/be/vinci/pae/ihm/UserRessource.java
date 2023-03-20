@@ -1,6 +1,6 @@
 package be.vinci.pae.ihm;
 
-import be.vinci.pae.business.domaine.User;
+
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.ihm.filters.Authorize;
