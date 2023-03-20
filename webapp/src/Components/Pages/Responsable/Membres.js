@@ -3,35 +3,9 @@ import {getAuthenticatedUser, getToken } from "../../../utils/auths";
 import { clearPage } from "../../../utils/render";
 import Navigate from "../../Router/Navigate";
 
-// const utilisateursTests = [
-//   {nom : 'Agbassah', prenom : 'Steven', email : 'steven.agbassah@student.vinci.be'},
-//   {nom : 'Jacques', prenom : 'Jean', email : 'jean.jacques@student.vinci.be'},
-//   {nom : 'Agbassah', prenom : 'Roy', email : 'Roy.agbassah@student.vinci.be'},
-//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-//   {nom : 'Bertrand', prenom : 'Amar', email : 'bertrand.amar@student.vinci.be'},
-  
-// ];
-
 
 const confirmHelper = async (e) => {
   e.preventDefault();
-  // console.log(e.target.parentNode.children[0].value);
   const userID = e.target.parentNode.children[0].value;
 
   const options = {
