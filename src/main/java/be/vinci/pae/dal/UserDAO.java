@@ -44,7 +44,7 @@ public interface UserDAO {
 
 
   /**
-   * Update an user in the database based on a business object "user"
+   * Update an user in the database based on a business object "user".
    *
    * @param  userToChange the user with the new changes
    *

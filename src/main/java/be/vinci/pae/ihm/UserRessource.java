@@ -63,32 +63,37 @@ public class UserRessource {
   /**
    * Change the role of an user to make him "aidant".
    *
-   * @return
+   * @return a json object with the modified user.
    */
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/{id}/confirmHelper")
   @Authorize
-  public UserDTO confirmHelper(@Context ContainerRequest request, @DefaultValue("-1") @PathParam("id") int id) {
+  public UserDTO confirmHelper(@Context ContainerRequest request,
+      @DefaultValue("-1") @PathParam("id") int id) {
     if (id == -1) {
       throw new WebApplicationException("No content", Status.BAD_REQUEST);
     }
 
     UserDTO userDTO = (UserDTO) request.getProperty("user");
-    if(checkAccountableAutorization(userDTO)){
+    if (checkAccountableAutorization(userDTO)) {
       UserDTO userToChange = userUcc.getOne(id);
-      if (userToChange == null) throw new WebApplicationException("This user does not exist", Status.BAD_REQUEST);
+      if (userToChange == null) {
+        throw new WebApplicationException("This user does not exist", Status.BAD_REQUEST);
+      }
       UserDTO changedUser = userUcc.makeAdmin(userToChange);
-      if (changedUser == null) throw new WebApplicationException("This user can't become an 'aidant'", Status.BAD_REQUEST);
+      if (changedUser == null) {
+        throw new WebApplicationException("This user can't become an 'aidant'", Status.BAD_REQUEST);
+      }
       return changedUser;
-    }else {
+    } else {
       throw new WebApplicationException("Only the role 'responsable' can confirm an Helper",
           Status.UNAUTHORIZED);
     }
   }
 
 
-  private boolean checkAccountableAutorization(UserDTO user){
+  private boolean checkAccountableAutorization(UserDTO user) {
     if (user != null && user.getRole().equals("responsable")) {
       return true;
     }
