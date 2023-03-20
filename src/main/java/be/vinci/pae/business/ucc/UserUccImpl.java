@@ -59,5 +59,11 @@ public class UserUccImpl implements UserUcc {
     return dataService.getAll();
   }
 
+  @Override
+  public boolean upDateRole(String role, int id){
+
+    return false;
+  }
+
 
 }

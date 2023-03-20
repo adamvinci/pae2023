@@ -43,4 +43,14 @@ public interface UserUcc {
    * @return the UserDTO object of the newly registered user, or null if the eamilalready exists
    */
   UserDTO register(UserDTO userDTO);
+
+
+  /**
+   * Update the role of the user with the id provided.
+   *
+   * @param role the new role
+   * @param  id the id of the user we want to update
+   *
+   */
+  boolean upDateRole(String role, int id);
 }

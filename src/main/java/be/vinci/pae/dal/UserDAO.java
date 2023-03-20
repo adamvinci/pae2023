@@ -40,4 +40,16 @@ public interface UserDAO {
    * @return users
    */
   List<UserDTO> getAll();
+
+
+  /**
+   * Change de role of an User in the database.
+   *
+   * @param role the new role
+   * @param  id the id of the user we want to update
+   *
+   */
+  void updateRole(String role, int id);
 }
+
+

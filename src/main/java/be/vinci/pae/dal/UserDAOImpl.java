@@ -146,6 +146,19 @@ public class UserDAOImpl implements UserDAO {
     return usersList;
   }
 
+  public void updateRole(String role, int id) {
+    try (PreparedStatement statement = dalService.preparedStatement(
+        "UPDATE projet.utilisateurs_inscrits" + "SET role = (?) " +  role
+            + " FROM projet.utilisateurs_inscrits WHERE id_utilisateur = (?)")) {
+      statement.setString(1, role);
+      statement.setInt(2, id);
+      statement.executeQuery();
+    } catch (SQLException e) {
+      System.out.println("\n" + e.getMessage().split("\n")[0] + "\n");
+    }
+    return;
+  }
+
   /**
    * init a UserDto from resultset got from the database (to pass the cpd duplications check).
    *

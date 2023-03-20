@@ -40,7 +40,7 @@ public class UserRessource {
   public List<UserDTO> getAllUsers(@Context ContainerRequest request) {
     UserDTO userDTO = (UserDTO) request.getProperty("user");
     List<UserDTO> users = userUcc.getAll();
-    if (userDTO.getRole().equals("responsable")) {
+    if (checkAccountableAutorization(userDTO)) {
       for (int index = 0; index < users.size(); index++) {
         UserDTO nonFilteredUser = users.get(index);
         users.set(index, Json.filterPublicJsonView(nonFilteredUser, UserDTO.class));
@@ -52,4 +52,31 @@ public class UserRessource {
     }
     return users;
   }
+
+  /**
+   * Change the role of an user to make him "aidant".
+   *
+   * @return a json object with a token(formed by the user id) the user id and the user email
+   */
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Authorize
+  public boolean confirmHelper(@Context ContainerRequest request) {
+    UserDTO userDTO = (UserDTO) request.getProperty("user");
+    if(checkAccountableAutorization(userDTO)){
+      return userUcc.upDateRole("aidant",0);
+    }else {
+      throw new WebApplicationException("Only the roles 'responsable' and 'aidant' can acces to the users list",
+          Status.UNAUTHORIZED);
+    }
+  }
+
+
+  private boolean checkAccountableAutorization(UserDTO user){
+    if (user.getRole().equals("responsable")) {
+      return true;
+    }
+    return false;
+  }
 }
+
