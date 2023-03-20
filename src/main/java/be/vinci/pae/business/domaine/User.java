@@ -28,18 +28,16 @@ public interface User extends UserDTO {
   /**
    * Check if the user can gain the role of 'aidant'.
    *
-   * @param user to verify
-   * @return true if the user  is not already an 'aidant', false if not
+   * @return true if the user  is not already an 'aidant' or 'responsable', false if not
    */
-  boolean checkCanBeAdmin(User user);
+  boolean checkCanBeAdmin();
 
   /**
    * Change the role of a member into a 'aidant'.
    *
-   * @param user to change
    * @return true if the user is now an 'aidant',false if not
    */
-  boolean changeToAdmin(User user);
+  boolean changeToAdmin();
 
 
 }
