@@ -63,8 +63,8 @@ public class UserUccImpl implements UserUcc {
   @Override
   public UserDTO makeAdmin(UserDTO userToChange){
     User user = (User) userToChange;
-    if (user.checkCanBeAdmin(user)){
-      user.changeToAdmin(user);
+    if (user.checkCanBeAdmin()){
+      user.changeToAdmin();
       dataService.update(userToChange);
       return userToChange;
     }
