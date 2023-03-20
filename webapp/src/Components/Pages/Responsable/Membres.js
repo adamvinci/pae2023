@@ -28,14 +28,18 @@ import Navigate from "../../Router/Navigate";
 // ];
 const renderUsersTable = async () => {
   const main = document.querySelector('main');
-  const UsersTable = document.createElement('table');
-  UsersTable.className = 'table';
-  UsersTable.innerHTML =  `<thead class="thead-light">
+  const usersTable = document.createElement('table');
+  const tableWrapper = document.createElement('div');
+  tableWrapper.className = 'table-responsive';
+  usersTable.className = 'table table-hover';
+  usersTable.innerHTML =  `<thead class="thead-light">
                               <tr>
                               <th scope="col">#</th>
                               <th scope="col">Prénom</th>
                               <th scope="col">Nom</th>
                               <th scope="col">Mail</th>
+                              <th scope="col">Rôle</th>
+                              <th scope="col">GSM</th>
                               <th scope="col">Aidant</th>
                               </tr>
                           </thead>
@@ -56,19 +60,26 @@ const renderUsersTable = async () => {
   const users = await response.json();
 
   for (let index = 0; index < users.length; index+=1) {
-      UsersTable.innerHTML += `<tr>
+      let usersTableHTML = `<tr>
       <th scope="row">${index + 1}</th>
       <td>${users[index].prenom}</td>
       <td>${users[index].nom}</td>
       <td>${users[index].email}</td>
-      <td><button type="button" class="btn btn-success">Indiquer aidant</button></td>
-  </tr>`
+      <td>${users[index].gsm}</td>
+      <td>${users[index].role}</td>
+      `
+      if(users[index].role === 'membre' ) {usersTableHTML +=  `<td><button type="button" class="btn btn-success">Indiquer aidant</button></td>`}
+      else {usersTableHTML +=  `<td> Action impossible !</td>`}
+      usersTableHTML += `</tr>`
 
+      usersTable.innerHTML += usersTableHTML;
   }
 
-  UsersTable.innerHTML += `</tbody>
+  usersTable.innerHTML += `</tbody>
                           </table>`
-  main.appendChild(UsersTable);
+  
+  tableWrapper.appendChild(usersTable);
+  main.appendChild(tableWrapper);
 }
 
 const Membres = async () => {

@@ -3,6 +3,7 @@ package be.vinci.pae.dal;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.dal.services.DALService;
+import be.vinci.pae.utils.FatalException;
 import jakarta.inject.Inject;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -48,7 +49,7 @@ public class UserDAOImpl implements UserDAO {
       }
 
     } catch (SQLException e) {
-      System.out.println("\n" + e.getMessage().split("\n")[0] + "\n");
+      throw new FatalException(e);
     }
 
     return userDTO;
@@ -76,7 +77,7 @@ public class UserDAOImpl implements UserDAO {
       }
 
     } catch (SQLException e) {
-      System.out.println("\n" + e.getMessage().split("\n")[0] + "\n");
+      throw new FatalException(e);
     }
 
     return userDTO;
@@ -113,7 +114,7 @@ public class UserDAOImpl implements UserDAO {
       }
 
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      throw new FatalException(e);
     }
 
     return userDTO;
@@ -141,7 +142,7 @@ public class UserDAOImpl implements UserDAO {
       }
 
     } catch (SQLException e) {
-      System.out.println("\n" + e.getMessage().split("\n")[0] + "\n");
+      throw new FatalException(e);
     }
     return usersList;
   }
@@ -177,7 +178,6 @@ public class UserDAOImpl implements UserDAO {
    */
   public void initUser(UserDTO userDTO, String email, String password, String nom, String prenom,
       String image, LocalDate date, String role, String gsm, int id) {
-    System.out.println(role);
     userDTO.setEmail(email);
     userDTO.setPassword(password);
     userDTO.setNom(nom);

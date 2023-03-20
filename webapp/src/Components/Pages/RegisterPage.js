@@ -1,4 +1,4 @@
-import { getRememberMe, setAuthenticatedUser, setRememberMe } from '../../utils/auths';
+import { getRememberMe, setRememberMe } from '../../utils/auths';
 import { clearPage, renderPageTitle } from '../../utils/render';
 import Navbar from '../Navbar/Navbar';
 import Navigate from '../Router/Navigate';
@@ -130,13 +130,11 @@ async function onRegister(e) {
 
   if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
 
-  const authenticatedUser = await response.json();
-
-  setAuthenticatedUser(authenticatedUser);
+  await response.json();
 
   Navbar();
 
-  Navigate('/');
+  Navigate('/login');
 }
 
 export default RegisterPage;
