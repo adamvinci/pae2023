@@ -147,12 +147,29 @@ public class UserDAOImpl implements UserDAO {
     return usersList;
   }
 
-  public void updateRole(String role, int id) {
+  @Override
+  public void update(UserDTO userToChange) {
     try (PreparedStatement statement = dalService.preparedStatement(
-        "UPDATE projet.utilisateurs_inscrits" + "SET role = (?) " +  role
-            + " FROM projet.utilisateurs_inscrits WHERE id_utilisateur = (?)")) {
-      statement.setString(1, role);
-      statement.setInt(2, id);
+        "UPDATE projet.utilisateurs_inscrits"
+            + " SET role = ?"
+            + " ,email = ?"
+            + " ,nom = ?"
+            + " ,prenom = ?"
+            + " ,mot_de_passe = ?"
+            + " ,date_inscription = ?"
+            + " ,gsm = ?"
+            + " ,image = ?"
+            + " WHERE id_utilisateur = ?")) {
+
+      statement.setString(1, userToChange.getRole());
+      statement.setString(2, userToChange.getEmail());
+      statement.setString(3, userToChange.getNom());
+      statement.setString(4, userToChange.getPrenom());
+      statement.setString(5, userToChange.getPassword());
+      statement.setDate(6, Date.valueOf(LocalDate.now()));
+      statement.setString(7, userToChange.getGsm());
+      statement.setString(8, userToChange.getImage());
+      statement.setInt(9, userToChange.getId());
       statement.executeQuery();
     } catch (SQLException e) {
       System.out.println("\n" + e.getMessage().split("\n")[0] + "\n");

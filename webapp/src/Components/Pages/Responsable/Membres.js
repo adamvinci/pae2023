@@ -38,8 +38,9 @@ const renderUsersTable = async () => {
                               <th scope="col">Prénom</th>
                               <th scope="col">Nom</th>
                               <th scope="col">Mail</th>
-                              <th scope="col">Rôle</th>
                               <th scope="col">GSM</th>
+                              <th scope="col">Date d'inscription</th>
+                              <th scope="col">Rôle</th>
                               <th scope="col">Aidant</th>
                               </tr>
                           </thead>
@@ -66,6 +67,7 @@ const renderUsersTable = async () => {
       <td>${users[index].nom}</td>
       <td>${users[index].email}</td>
       <td>${users[index].gsm}</td>
+      <td>${users[index].dateInscription}</td>
       <td>${users[index].role}</td>
       `
       if(users[index].role === 'membre' ) {usersTableHTML +=  `<td><button type="button" class="btn btn-success">Indiquer aidant</button></td>`}
@@ -89,7 +91,7 @@ const Membres = async () => {
     Navigate('/');
   }
   const main = document.querySelector('main');
-  main.innerHTML = `<h3>Listes utilisateurs`;
+  main.innerHTML = `<h3>Listes utilisateurs</h3>`;
   renderUsersTable();
 };
 

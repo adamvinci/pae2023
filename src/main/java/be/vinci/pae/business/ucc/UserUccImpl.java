@@ -1,6 +1,7 @@
 package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.domaine.User;
+import be.vinci.pae.business.domaine.UserImpl;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.dal.UserDAO;
 import jakarta.inject.Inject;
@@ -60,9 +61,15 @@ public class UserUccImpl implements UserUcc {
   }
 
   @Override
-  public boolean upDateRole(String role, int id){
+  public UserDTO makeAdmin(UserDTO userToChange){
+    User user = (User) userToChange;
+    if (user.checkCanBeAdmin(user)){
+      user.changeToAdmin(user);
+      dataService.update(userToChange);
+      return userToChange;
+    }
+    return null;
 
-    return false;
   }
 
 

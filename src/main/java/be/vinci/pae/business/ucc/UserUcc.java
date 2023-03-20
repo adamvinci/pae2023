@@ -1,5 +1,6 @@
 package be.vinci.pae.business.ucc;
 
+import be.vinci.pae.business.domaine.User;
 import be.vinci.pae.business.dto.UserDTO;
 import java.util.List;
 
@@ -46,11 +47,10 @@ public interface UserUcc {
 
 
   /**
-   * Update the role of the user with the id provided.
+   * Update the role of the user making it becoming "aidant".
    *
-   * @param role the new role
-   * @param  id the id of the user we want to update
+   * @param  userToChange the business object of the user who has to be changed
    *
    */
-  boolean upDateRole(String role, int id);
+  UserDTO makeAdmin(UserDTO userToChange); /* cela doit-il être un userDTO  ?*/
 }
