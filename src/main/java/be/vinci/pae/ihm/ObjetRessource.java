@@ -7,7 +7,7 @@ import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.ucc.NotificationUCC;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.ihm.filters.AnonymousOrAuthorize;
-import be.vinci.pae.ihm.filters.Authorize;
+import be.vinci.pae.ihm.filters.ResponsableOrAidant;
 import be.vinci.pae.utils.MyLogger;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
@@ -129,22 +129,12 @@ public class ObjetRessource {
   }
 
   //change Etat of objects
-  @Authorize
+  @ResponsableOrAidant
   @POST
   @Path("accepterObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public ObjetDTO accepterObject(@PathParam("id") int id
-      , @Context ContainerRequest request) {
-    UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
-    System.out.println(authenticatedUser);
-    if (!authenticatedUser.getRole().equals("responsable")
-        && !authenticatedUser.getRole().equals("aidant")) {
-      Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
-          "Attempt of unauthorized change of object statuts from " + authenticatedUser.getEmail());
-      throw new WebApplicationException("Only the responsable and 'aidant' can accept an object"
-          , Status.UNAUTHORIZED);
-    }
+  public ObjetDTO accepterObject(@PathParam("id") int id) {
     ObjetDTO objetDTO1 = objetUCC.getOne(id);
     ObjetDTO changed = objetUCC.accepterObjet(objetDTO1);
     if (changed == null) {

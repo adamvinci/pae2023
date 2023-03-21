@@ -497,3 +497,21 @@ mars 21, 2023 2:39:45 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: missing fields
 mars 21, 2023 2:39:52 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: missing fields
+mars 21, 2023 2:56:44 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de jean.jacques@hotmail.be
+mars 21, 2023 2:56:50 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You do not have the required permissions to do this.
+mars 21, 2023 2:56:54 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You do not have the required permissions to do this.
+mars 21, 2023 2:57:07 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement
+mars 21, 2023 2:58:43 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You do not have the required permissions to do this.
+mars 21, 2023 3:00:28 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You are forbidden to access this resource
+mars 21, 2023 3:00:32 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "be.vinci.pae.business.domaine.Objet.getEtat()" because "objet" is null
+mars 21, 2023 3:00:36 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "be.vinci.pae.business.domaine.Objet.getEtat()" because "objet" is null
+mars 21, 2023 3:02:34 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You do not have the required permissions to do this.

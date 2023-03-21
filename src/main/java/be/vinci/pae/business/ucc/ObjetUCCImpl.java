@@ -46,7 +46,6 @@ public class ObjetUCCImpl implements ObjetUCC {
   @Override
   public ObjetDTO accepterObjet(ObjetDTO objetDTO) {
     Objet objet = (Objet) objetDTO;
-    System.out.println(objet.getEtat());
     if (!objet.accepterObjet()) {
       return null;
     }
