@@ -35,7 +35,7 @@ public class UserRessource {
   /**
    * Get all the users.
    *
-   * @return a json object with a token(formed by the user id) the user id and the user email
+   * @return a json object with all the users
    */
   @GET
   @Produces(MediaType.APPLICATION_JSON)
@@ -49,9 +49,11 @@ public class UserRessource {
     return users;
   }
 
+
   /**
    * Change the role of a user to make him "aidant".
    *
+   * @param id of the object
    * @return a json object with the modified user.
    */
   @POST

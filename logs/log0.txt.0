@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 mars 21, 2023 11:41:59 AM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: You do not have the required permissions to do this.
 mars 21, 2023 11:42:07 AM be.vinci.pae.utils.WebExceptionMapper toResponse
@@ -102,3 +103,271 @@ mars 21, 2023 12:09:05 PM be.vinci.pae.ihm.AuthRessource getUser
 INFO: Retrieve user from token of adrien.riez@hotmail.be
 mars 21, 2023 12:09:05 PM be.vinci.pae.ihm.AuthRessource getUser
 INFO: Retrieve user from token of adrien.riez@hotmail.be
+=======
+mars 21, 2023 11:02:10 AM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 21, 2023 11:02:10 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 15
+mars 21, 2023 11:02:10 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 19
+mars 21, 2023 11:02:10 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 17
+mars 21, 2023 11:02:11 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 2
+mars 21, 2023 11:02:11 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 9
+mars 21, 2023 11:02:11 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 21
+mars 21, 2023 11:02:11 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 11
+mars 21, 2023 11:02:11 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 10
+mars 21, 2023 11:02:11 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 20
+mars 21, 2023 11:02:11 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 13
+mars 21, 2023 11:02:11 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 16
+mars 21, 2023 11:02:11 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 3
+mars 21, 2023 11:02:11 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 8
+mars 21, 2023 11:02:11 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 4
+mars 21, 2023 11:02:11 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 1
+mars 21, 2023 11:02:11 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 14
+mars 21, 2023 11:02:13 AM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 21, 2023 11:02:13 AM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 21, 2023 11:02:13 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 20
+mars 21, 2023 11:02:13 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 2
+mars 21, 2023 11:02:13 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 4
+mars 21, 2023 11:02:13 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 10
+mars 21, 2023 11:02:13 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 19
+mars 21, 2023 11:02:13 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 3
+mars 21, 2023 11:02:13 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 13
+mars 21, 2023 11:02:14 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 17
+mars 21, 2023 11:02:14 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 1
+mars 21, 2023 11:02:14 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 21
+mars 21, 2023 11:02:14 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 15
+mars 21, 2023 11:02:14 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 9
+mars 21, 2023 11:02:14 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 11
+mars 21, 2023 11:02:14 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 8
+mars 21, 2023 11:02:14 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 14
+mars 21, 2023 11:02:14 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 16
+mars 21, 2023 11:02:27 AM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 21, 2023 11:02:27 AM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 21, 2023 11:02:27 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 14
+mars 21, 2023 11:02:27 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 17
+mars 21, 2023 11:02:27 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 19
+mars 21, 2023 11:02:27 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 16
+mars 21, 2023 11:02:27 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 20
+mars 21, 2023 11:02:27 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 1
+mars 21, 2023 11:02:27 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 11
+mars 21, 2023 11:02:27 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 10
+mars 21, 2023 11:02:27 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 4
+mars 21, 2023 11:02:27 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 21
+mars 21, 2023 11:02:27 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 13
+mars 21, 2023 11:02:27 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 8
+mars 21, 2023 11:02:27 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 2
+mars 21, 2023 11:02:28 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 15
+mars 21, 2023 11:02:28 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 9
+mars 21, 2023 11:02:28 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 3
+mars 21, 2023 11:02:41 AM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 21, 2023 11:02:41 AM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 21, 2023 11:02:41 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 10
+mars 21, 2023 11:02:42 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 1
+mars 21, 2023 11:02:42 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 14
+mars 21, 2023 11:02:42 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 13
+mars 21, 2023 11:02:42 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 9
+mars 21, 2023 11:02:42 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 16
+mars 21, 2023 11:02:42 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 19
+mars 21, 2023 11:02:42 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 21
+mars 21, 2023 11:02:42 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 3
+mars 21, 2023 11:02:42 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 4
+mars 21, 2023 11:02:42 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 2
+mars 21, 2023 11:02:42 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 17
+mars 21, 2023 11:02:42 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 15
+mars 21, 2023 11:03:04 AM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 21, 2023 11:03:04 AM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 21, 2023 11:03:04 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 21
+mars 21, 2023 11:03:04 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 10
+mars 21, 2023 11:03:04 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 13
+mars 21, 2023 11:03:04 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 17
+mars 21, 2023 11:03:04 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 4
+mars 21, 2023 11:03:05 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 16
+mars 21, 2023 11:03:05 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 9
+mars 21, 2023 11:03:05 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 15
+mars 21, 2023 11:03:05 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 20
+mars 21, 2023 11:03:05 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 14
+mars 21, 2023 11:03:05 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 11
+mars 21, 2023 11:03:05 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 8
+mars 21, 2023 11:03:05 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 19
+mars 21, 2023 11:03:05 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 2
+mars 21, 2023 11:03:05 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 3
+mars 21, 2023 11:03:05 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 1
+mars 21, 2023 11:03:06 AM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 21, 2023 11:03:06 AM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 21, 2023 11:03:06 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 1
+mars 21, 2023 11:03:08 AM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 21, 2023 11:03:08 AM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 21, 2023 11:03:10 AM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 21, 2023 11:03:10 AM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 21, 2023 11:03:11 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 4
+mars 21, 2023 11:03:11 AM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 21, 2023 11:03:12 AM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 21, 2023 11:03:12 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 2
+mars 21, 2023 11:03:12 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 1
+mars 21, 2023 11:03:12 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 9
+mars 21, 2023 11:03:12 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 3
+mars 21, 2023 11:03:12 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 10
+mars 21, 2023 11:03:12 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 13
+mars 21, 2023 11:03:12 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 14
+mars 21, 2023 11:03:12 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 15
+mars 21, 2023 11:03:12 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 11
+mars 21, 2023 11:03:12 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 8
+mars 21, 2023 11:03:12 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 16
+mars 21, 2023 11:03:36 AM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 21, 2023 11:03:36 AM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 21, 2023 11:03:36 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 2
+mars 21, 2023 11:03:36 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 15
+mars 21, 2023 11:03:36 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 1
+mars 21, 2023 11:03:36 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 11
+mars 21, 2023 11:03:36 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 17
+mars 21, 2023 11:03:45 AM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 21, 2023 11:03:45 AM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 21, 2023 11:03:45 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 15
+mars 21, 2023 11:03:45 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 14
+mars 21, 2023 11:03:45 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 10
+mars 21, 2023 11:03:45 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 9
+mars 21, 2023 11:03:45 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 4
+mars 21, 2023 11:03:45 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 1
+mars 21, 2023 11:03:45 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 16
+mars 21, 2023 11:03:45 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 11
+mars 21, 2023 11:03:45 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 2
+mars 21, 2023 11:03:45 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 3
+mars 21, 2023 11:03:45 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 17
+mars 21, 2023 11:03:45 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 19
+mars 21, 2023 11:03:45 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 21
+mars 21, 2023 11:03:45 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 20
+mars 21, 2023 11:03:45 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 13
+mars 21, 2023 11:03:45 AM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 8
+mars 21, 2023 11:26:44 AM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+>>>>>>> 61f9da4ed92b8e91fb9a6d44a60a905abe6048a2
