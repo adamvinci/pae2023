@@ -3,7 +3,6 @@ package be.vinci.pae.domain;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.Mockito.doReturn;
 
 import be.vinci.pae.business.domaine.User;
 import be.vinci.pae.business.domaine.UserImpl;
@@ -19,7 +18,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.stubbing.Answer;
 
 /**
  * UserUccTest.
@@ -27,16 +25,12 @@ import org.mockito.stubbing.Answer;
 class UserUccTest {
 
   ServiceLocator locator = ServiceLocatorUtilities.bind(new ApplicationBinderMock());
-
+  List<UserDTO> users = new ArrayList<>();
   private UserUcc userUcc;
   private UserDAO userDAO;
   private User userSteven;
-
   private User userLeon;
-
   private User userLeonHash;
-  List<UserDTO> users = new ArrayList<>();
-
 
   @BeforeEach
   void setUp() {
@@ -59,12 +53,13 @@ class UserUccTest {
     Mockito.when(userLeon.getNom()).thenReturn("leon");
     Mockito.when(userLeon.getPrenom()).thenReturn("kelmendi");
     Mockito.when(userLeon.getGsm()).thenReturn("123");
+
     Mockito.when(userLeon.checkCanBeAdmin()).thenReturn(true);
     Mockito.when(userLeon.changeToAdmin()).thenReturn(true);
 
     Mockito.when(userLeonHash.getId()).thenReturn(3);
     Mockito.when(userLeonHash.getEmail()).thenReturn("leon.kelmendi@student.vinci.be");
-    Mockito.when(userLeonHash.getRole()).thenReturn("membre");
+    Mockito.when(userLeonHash.getRole()).thenReturn("membre").thenReturn("aidant");
     Mockito.when(userLeonHash.getPassword()).thenReturn("123*");
     Mockito.when(userLeonHash.getNom()).thenReturn("leon");
     Mockito.when(userLeonHash.getPrenom())

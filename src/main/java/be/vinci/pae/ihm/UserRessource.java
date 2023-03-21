@@ -61,7 +61,7 @@ public class UserRessource {
   }
 
   /**
-   * Change the role of an user to make him "aidant".
+   * Change the role of a user to make him "aidant".
    *
    * @return a json object with the modified user.
    */
