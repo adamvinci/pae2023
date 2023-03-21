@@ -4,5 +4,7 @@ import be.vinci.pae.business.dto.NotificationDTO;
 
 public interface NotificationDAO {
 
-  boolean createOne(NotificationDTO notification);
+  NotificationDTO createOne(NotificationDTO notification);
+
+  void linkNotifToUser(int idNotif, int idUser);
 }

@@ -33,36 +33,38 @@ public interface ObjetUCC {
   String getPicture(int id);
 
   /**
-
-   Accepts an object represented by the given ObjetDTO object.
-   @param objetDTO the object to be accepted
-   @return true if the object is accepted successfully, false otherwise
+   * Accepts an object represented by the given ObjetDTO object.
+   *
+   * @param objetDTO the object to be accepted
+   * @return true if the object is accepted successfully, false otherwise
    */
   ObjetDTO accepterObjet(ObjetDTO objetDTO);
 
   /**
-
-   Refuses an object represented by the given ObjetDTO object.
-   @param objetDTO the object to be refused
-   @return true if the object is refused successfully, false otherwise
+   * Refuses an object represented by the given ObjetDTO object.
+   *
+   * @param objetDTO the object to be refused
+   * @return true if the object is refused successfully, false otherwise
    */
   ObjetDTO refuserObject(ObjetDTO objetDTO);
 
   /**
-
-   Deposits an object represented by the given ObjetDTO object.
-   @param objetDTO the object to be deposited
-   @return true if the object is deposited successfully, false otherwise
+   * Deposits an object represented by the given ObjetDTO object.
+   *
+   * @param objetDTO the object to be deposited
+   * @return true if the object is deposited successfully, false otherwise
    */
   ObjetDTO depotObject(ObjetDTO objetDTO);
 
   /**
-
-   Sells an object represented by the given ObjetDTO object.
-   @param objetDTO the object to be sold
-   @return true if the object is sold successfully, false otherwise
+   * Sells an object represented by the given ObjetDTO object.
+   *
+   * @param objetDTO the object to be sold
+   * @return true if the object is sold successfully, false otherwise
    */
   ObjetDTO venteObject(ObjetDTO objetDTO);
 
   ObjetDTO venduObject(ObjetDTO objetDTO);
+
+  ObjetDTO getOne(int id);
 }

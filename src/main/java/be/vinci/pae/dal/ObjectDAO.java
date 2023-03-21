@@ -24,11 +24,18 @@ public interface ObjectDAO {
   String getPicture(int id);
 
   /**
-   * Modifies the state of an object to either "accepted" or "rejected".
+   * Modifies the state of an object .
    *
-   * @param etat     The new state of the object, either "accepted" or "rejected".
-   * @param id_objet The object will be modified.
-   * @return Returns true if the state was successfully modified, false otherwise.
+   * @param objetDTO to change
+   * @return the changed object
    */
-  boolean updateObjectState(ObjetDTO objetDTO);
+  ObjetDTO updateObjectState(ObjetDTO objetDTO);
+
+  /**
+   * Retrieve the object
+   *
+   * @param id of object to search
+   * @return the objectDTO
+   */
+  ObjetDTO getOne(int id);
 }

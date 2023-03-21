@@ -637,3 +637,127 @@ mars 19, 2023 4:13:30 PM be.vinci.pae.ihm.ObjetRessource getAllObject
 INFO: Retrieve list of object located in store from anonymous
 mars 19, 2023 4:15:03 PM be.vinci.pae.ihm.ObjetRessource getAllObject
 INFO: Retrieve list of object located in store from anonymous
+mars 20, 2023 8:52:33 AM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "be.vinci.pae.business.dto.ObjetDTO.setDate_acceptation(java.time.LocalDate)" because "objetDTO" is null
+mars 20, 2023 8:56:39 AM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: HTTP 415 Unsupported Media Type
+mars 20, 2023 8:58:28 AM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: null
+mars 20, 2023 8:58:40 AM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: null
+mars 20, 2023 8:59:05 AM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: null
+mars 20, 2023 9:02:18 AM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: null
+mars 20, 2023 9:02:23 AM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: null
+mars 21, 2023 12:19:47 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 21, 2023 12:20:58 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: The token was expected to have 3 parts, but got 0.
+mars 21, 2023 12:21:06 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de jean.jacques@hotmail.be
+mars 21, 2023 12:21:09 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: The token was expected to have 3 parts, but got 0.
+mars 21, 2023 12:21:11 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: The token was expected to have 3 parts, but got 0.
+mars 21, 2023 12:21:15 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de adrien.riez@hotmail.be
+mars 21, 2023 12:55:00 PM be.vinci.pae.ihm.ObjetRessource accepterObject
+INFO: Attempt of unauthorized change of object statuts from adrien.riez@hotmail.be
+mars 21, 2023 12:55:00 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Only the responsable and 'aidant' can accept an object
+mars 21, 2023 12:55:06 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de adrien.riez@hotmail.be
+mars 21, 2023 12:55:09 PM be.vinci.pae.ihm.ObjetRessource accepterObject
+INFO: Attempt of unauthorized change of object statuts from adrien.riez@hotmail.be
+mars 21, 2023 12:55:09 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Only the responsable and 'aidant' can accept an object
+mars 21, 2023 12:55:35 PM be.vinci.pae.ihm.ObjetRessource accepterObject
+INFO: Attempt of unauthorized change of object statuts from adrien.riez@hotmail.be
+mars 21, 2023 12:55:35 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Only the responsable and 'aidant' can accept an object
+mars 21, 2023 12:56:43 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Le ResultSet n'est pas positionné correctement, vous devez peut-être appeler next().
+mars 21, 2023 12:58:04 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Le ResultSet n'est pas positionné correctement, vous devez peut-être appeler next().
+mars 21, 2023 12:58:41 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Le ResultSet n'est pas positionné correctement, vous devez peut-être appeler next().
+mars 21, 2023 12:59:35 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Text 'Armoire 2' could not be parsed at index 0
+mars 21, 2023 1:00:52 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 21, 2023 1:01:54 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: ERROR: syntax error at or near "WHERE"
+  Position : 331
+mars 21, 2023 1:02:41 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement
+mars 21, 2023 1:04:44 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement
+mars 21, 2023 1:09:55 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement
+mars 21, 2023 1:10:17 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "java.time.LocalDate.getYear()" because "date" is null
+mars 21, 2023 1:13:06 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Pas de valeur spécifiée pour le paramètre 3.
+mars 21, 2023 1:16:36 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Pas de valeur spécifiée pour le paramètre 3.
+mars 21, 2023 1:18:24 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Pas de valeur spécifiée pour le paramètre 4.
+mars 21, 2023 1:19:24 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Text 'Armoire 1' could not be parsed at index 0
+mars 21, 2023 1:21:02 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement
+mars 21, 2023 1:23:31 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement
+mars 21, 2023 1:23:44 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement
+mars 21, 2023 1:24:28 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement
+mars 21, 2023 1:25:22 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement
+mars 21, 2023 1:26:23 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: ERROR: syntax error at or near "o"
+  Position : 226
+mars 21, 2023 1:52:43 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement
+mars 21, 2023 1:54:02 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Text '(2023-03-21,,,)' could not be parsed at index 0
+mars 21, 2023 2:06:09 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: ERROR: column "date_acceptation" is of type date but expression is of type character varying
+  Indice : You will need to rewrite or cast the expression.
+  Position : 56
+mars 21, 2023 2:10:54 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Text '(2023-03-21,,,)' could not be parsed at index 0
+mars 21, 2023 2:11:04 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement
+mars 21, 2023 2:11:26 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Text '(2023-03-21,,,)' could not be parsed at index 0
+mars 21, 2023 2:14:34 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Text '(2023-03-21,,,)' could not be parsed at index 0
+mars 21, 2023 2:18:00 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: ERROR: relation "projet.utilisateurs_inscrits" does not exist
+  Position : 75
+mars 21, 2023 2:18:10 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "be.vinci.pae.business.domaine.Objet.getEtat()" because "objet" is null
+mars 21, 2023 2:18:14 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Text '(2023-03-21,,,)' could not be parsed at index 0
+mars 21, 2023 2:23:57 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Aucun résultat retourné par la requête.
+mars 21, 2023 2:26:52 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Aucun résultat retourné par la requête.
+mars 21, 2023 2:30:39 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Aucun résultat retourné par la requête.
+mars 21, 2023 2:34:38 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: ERROR: null value in column "lue" violates not-null constraint
+  Détail : Failing row contains (1, 1, 1, null).
+mars 21, 2023 2:36:04 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Aucun résultat retourné par la requête.
+mars 21, 2023 2:37:20 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: HTTP 500 Internal Server Error
+mars 21, 2023 2:37:48 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement
+mars 21, 2023 2:38:05 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: HTTP 500 Internal Server Error
+mars 21, 2023 2:38:24 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: HTTP 500 Internal Server Error
