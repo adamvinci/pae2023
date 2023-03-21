@@ -59,5 +59,14 @@ public class UserUccImpl implements UserUcc {
     return dataService.getAll();
   }
 
+  @Override
+  public UserDTO makeAdmin(UserDTO userToChange) {
+    User user = (User) userToChange;
+    if (user.changeToAdmin()) {
+      dataService.update(userToChange);
+      return userToChange;
+    }
+    return null;
 
+  }
 }

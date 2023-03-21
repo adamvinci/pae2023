@@ -6,9 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import be.vinci.pae.business.domaine.User;
 import be.vinci.pae.business.domaine.UserImpl;
+import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.utils.ApplicationBinderMock;
+import java.util.ArrayList;
+import java.util.List;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,15 +25,12 @@ import org.mockito.Mockito;
 class UserUccTest {
 
   ServiceLocator locator = ServiceLocatorUtilities.bind(new ApplicationBinderMock());
-
+  List<UserDTO> users = new ArrayList<>();
   private UserUcc userUcc;
   private UserDAO userDAO;
   private User userSteven;
-
   private User userLeon;
-
   private User userLeonHash;
-
 
   @BeforeEach
   void setUp() {
@@ -54,9 +54,12 @@ class UserUccTest {
     Mockito.when(userLeon.getPrenom()).thenReturn("kelmendi");
     Mockito.when(userLeon.getGsm()).thenReturn("123");
 
+    Mockito.when(userLeon.checkCanBeAdmin()).thenReturn(true);
+    Mockito.when(userLeon.changeToAdmin()).thenReturn(true);
+
     Mockito.when(userLeonHash.getId()).thenReturn(3);
     Mockito.when(userLeonHash.getEmail()).thenReturn("leon.kelmendi@student.vinci.be");
-    Mockito.when(userLeonHash.getRole()).thenReturn("membre");
+    Mockito.when(userLeonHash.getRole()).thenReturn("membre").thenReturn("aidant");
     Mockito.when(userLeonHash.getPassword()).thenReturn("123*");
     Mockito.when(userLeonHash.getNom()).thenReturn("leon");
     Mockito.when(userLeonHash.getPrenom())
@@ -66,6 +69,11 @@ class UserUccTest {
     Mockito.when(userDAO.getOne(2)).thenReturn(userSteven);
     Mockito.when(userDAO.getOne("steven.agbassah@student.vinci.be")).thenReturn(userSteven);
     Mockito.when(userDAO.createOne(userLeon)).thenReturn(userLeonHash);
+
+    users.add(userSteven);
+    users.add(userLeon);
+    Mockito.when(userDAO.getAll()).thenReturn(users);
+    Mockito.when(userDAO.update(userLeon)).thenReturn(true);
 
   }
 
@@ -111,6 +119,21 @@ class UserUccTest {
   @Test
   void getOneGoodId() {
     assertEquals(userSteven.getEmail(), userUcc.getOne(2).getEmail());
+  }
+
+
+  @DisplayName("Test getAll()")
+  @Test
+  void getAllTest() {
+    assertEquals(users, userUcc.getAll());
+  }
+
+
+  @DisplayName("Test make an user which is 'member' admin (= 'aidant')")
+  @Test
+  void makeAdminWithAGoodUser() {
+    assertEquals(userLeon.getRole(), userUcc.makeAdmin(userLeon).getRole());
+//    assertEquals(userLeon.getRole(), "aidant");
   }
 
 

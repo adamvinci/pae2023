@@ -5,8 +5,8 @@ import java.util.List;
 
 
 /**
- * UserUcc acts  as an orchestrator to allow {@link be.vinci.pae.ihm.AuthRessource} and
- * {@link be.vinci.pae.dal.UserDAO} layers to communicate.
+ * UserUcc acts  as an orchestrator to allow {@link be.vinci.pae.ihm.AuthRessource} and {@link
+ * be.vinci.pae.dal.UserDAO} layers to communicate.
  */
 public interface UserUcc {
 
@@ -43,4 +43,14 @@ public interface UserUcc {
    * @return the UserDTO object of the newly registered user, or null if the eamilalready exists
    */
   UserDTO register(UserDTO userDTO);
+
+
+
+  /**
+   * Update the role of the user making it becoming "aidant".
+   *
+   * @param userToChange the business object of the user who has to be changed
+   * @return the userDTO updated
+   */
+  UserDTO makeAdmin(UserDTO userToChange);
 }
