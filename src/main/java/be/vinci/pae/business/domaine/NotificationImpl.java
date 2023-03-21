@@ -1,7 +1,6 @@
 package be.vinci.pae.business.domaine;
 
 import be.vinci.pae.business.dto.NotificationDTO;
-import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.views.Views.Public;
 import com.fasterxml.jackson.annotation.JsonView;
 

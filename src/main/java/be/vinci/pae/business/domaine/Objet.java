@@ -9,13 +9,13 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 @JsonDeserialize(as = ObjetImpl.class)
 public interface Objet extends ObjetDTO {
 
-    Boolean accepterObjet();
+  Boolean accepterObjet();
 
-    Boolean refuserObjet();
+  Boolean refuserObjet();
 
-    Boolean depotObject();
+  Boolean depotObject();
 
-    Boolean venteObject();
+  Boolean venteObject();
 
-    Boolean venduObject();
+  Boolean venduObject();
 }

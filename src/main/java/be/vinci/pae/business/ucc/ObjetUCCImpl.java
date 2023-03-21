@@ -85,7 +85,7 @@ public class ObjetUCCImpl implements ObjetUCC {
     ObjetDTO objetDTO1 = dataService.updateObjectState(objet);
     dataServiceNotification.createOne(notification);
 
-    return objet;
+    return objetDTO1;
   }
 
   @Override
@@ -108,8 +108,6 @@ public class ObjetUCCImpl implements ObjetUCC {
 
   @Override
   public ObjetDTO venduObject(ObjetDTO objetDTO) {
-
-    Objet objet = (Objet) objetDTO;
 
     NotificationDTO notification = notifFactory.getNotification();
     notification.setObject(objetDTO.getIdObjet());
