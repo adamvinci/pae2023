@@ -3,11 +3,11 @@ const tableEnTete = `
     <table class="tableEnTete">
       <thead> 
         <tr> 
-          <th class="th"> Id Utilisateur</th> 
-          <th class="th"> Photo objet </th>
-          <th class="th"> Description objet</th>
-          <th class="th"> Accepter/refuser proposition</th>
-          <th class="th"> Date acceptation</th>
+          <th class="objetProposeTh"> Id Utilisateur</th> 
+          <th class="objetProposeTh"> Photo objet </th>
+          <th class="objetProposeTh"> Description objet</th>
+          <th class="objetProposeTh"> Accepter/refuser proposition</th>
+          <th class="objetProposeTh"> Date acceptation</th>
         </tr>
       </thead>
       <tbody class="tableData"> 
@@ -49,11 +49,11 @@ function table() {
             for (let i = 0; i < size;) {
                 dataHtml += `
                   <tr style="font-family: 'Games', sans-serif;">
-                    <td class="td">${data[i].idObjet}</td> 
-                    <td class="td"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
-                    <td class="td">${data[i].description}</td>
-                    <td class="td"><button id="accepter" type="submit" >Accepter</button> <button id="refuser" type="submit" >Réfuser</button></td>
-                    <td class="td">${data[i].date_acceptation}</td>
+                    <td class="objetProposeTd">${data[i].idObjet}</td> 
+                    <td class="objetProposeTd"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
+                    <td class="objetProposeTd">${data[i].description}</td>
+                    <td class="objetProposeTd"><button id="accepter" type="submit" >Accepter</button> <button id="refuser" type="submit" >Réfuser</button></td>
+                    <td class="objetProposeTd">${data[i].date_acceptation}</td>
                   </tr>
                 `;
                 i += 1
