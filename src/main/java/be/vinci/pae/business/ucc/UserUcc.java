@@ -50,5 +50,5 @@ public interface UserUcc {
    *
    * @param userToChange the business object of the user who has to be changed
    */
-  UserDTO makeAdmin(UserDTO userToChange); /* cela doit-il être un userDTO  ?*/
+  UserDTO makeAdmin(UserDTO userToChange);
 }

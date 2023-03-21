@@ -60,9 +60,11 @@ public class UserRessource {
     return users;
   }
 
+
   /**
    * Change the role of an user to make him "aidant".
-   *
+   * @param request request the request container
+   * @param id of the object
    * @return a json object with the modified user.
    */
   @POST
