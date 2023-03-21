@@ -45,10 +45,12 @@ public interface UserUcc {
   UserDTO register(UserDTO userDTO);
 
 
+
   /**
    * Update the role of the user making it becoming "aidant".
    *
    * @param userToChange the business object of the user who has to be changed
+   * @return the userDTO updated
    */
   UserDTO makeAdmin(UserDTO userToChange);
 }
