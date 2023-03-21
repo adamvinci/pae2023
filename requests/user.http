@@ -77,10 +77,13 @@ Authorization: {{adrienToken}}
 ###
 GET {{baseUrl}}/objet/getPicture/0
 
+###
+GET {{baseUrl}}/users
+
 
 ###
 GET {{baseUrl}}/users
-Authorization: {{adrienToken}}
+Authorization: {{jeanJacques}}
 
 ###
 GET {{baseUrl}}/users
