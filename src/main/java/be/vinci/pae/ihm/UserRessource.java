@@ -53,16 +53,18 @@ public class UserRessource {
       }
 
     } else {
-      throw new WebApplicationException(
-          "Only the role 'responsable' can acces to the users list",
+      throw new WebApplicationException("Only the role 'responsable' can acces to the users list",
           Status.UNAUTHORIZED);
     }
     return users;
   }
 
+
   /**
    * Change the role of an user to make him "aidant".
    *
+   * @param request request the request container
+   * @param id of the object
    * @return a json object with the modified user.
    */
   @POST

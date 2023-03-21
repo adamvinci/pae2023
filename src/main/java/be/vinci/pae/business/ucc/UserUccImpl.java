@@ -1,7 +1,6 @@
 package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.domaine.User;
-
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.dal.UserDAO;
 import jakarta.inject.Inject;
