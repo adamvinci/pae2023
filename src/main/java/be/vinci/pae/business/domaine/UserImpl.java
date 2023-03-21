@@ -138,16 +138,16 @@ public class UserImpl implements User {
   }
 
   @Override
-  public boolean checkCanBeAdmin(User user) {
-    return user.getRole().equals("membre");
+  public boolean checkCanBeAdmin() {
+    return this.getRole().equals("membre");
   }
 
   @Override
-  public boolean changeToAdmin(User user) {
-    if (!checkCanBeAdmin(user)) {
+  public boolean changeToAdmin() {
+    if (!this.checkCanBeAdmin()) {
       return false;
     }
-    user.setRole("aidant");
+    this.setRole("aidant");
     return true;
   }
 

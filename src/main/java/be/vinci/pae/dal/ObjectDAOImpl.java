@@ -7,6 +7,7 @@ import be.vinci.pae.business.factory.DisponibiliteFactory;
 import be.vinci.pae.business.factory.ObjetFactory;
 import be.vinci.pae.business.factory.TypeObjetFactory;
 import be.vinci.pae.dal.services.DALService;
+import be.vinci.pae.utils.FatalException;
 import jakarta.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,8 +25,7 @@ public class ObjectDAOImpl implements ObjectDAO {
   private DALService dalService;
   @Inject
   private ObjetFactory objetFactory;
-  @Inject
-  private UserDAO userDAO;
+
   @Inject
   private TypeObjetFactory typeObjetFactory;
   @Inject
@@ -95,7 +95,7 @@ public class ObjectDAOImpl implements ObjectDAO {
         }
       }
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      throw new FatalException(e);
     }
     return objetDTOList;
   }
@@ -117,7 +117,7 @@ public class ObjectDAOImpl implements ObjectDAO {
         }
       }
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      throw new FatalException(e);
     }
     return path;
   }

@@ -71,10 +71,39 @@ GET  {{baseUrl}}/disponibilite
 GET {{baseUrl}}/objet
 
 ###
+GET {{baseUrl}}/objet
+Authorization: {{adrienToken}}
+
+###
 GET {{baseUrl}}/objet/getPicture/0
 
+###
+GET {{baseUrl}}/users
+
+
+###
+GET {{baseUrl}}/users
+Authorization: {{jeanJacques}}
 
 ###
 GET {{baseUrl}}/users
 Authorization: {{adrienToken}}
 
+###
+POST {{baseUrl}}/users/4/confirmHelper
+
+###
+POST {{baseUrl}}/users/4/confirmHelper
+Authorization: {{jeanJacques}}
+
+###
+POST {{baseUrl}}/users/4/confirmHelper
+Authorization: {{adrienToken}}
+
+###
+POST {{baseUrl}}/users/7/confirmHelper
+Authorization: {{adrienToken}}
+
+###
+POST {{baseUrl}}/users/1/confirmHelper
+Authorization: {{adrienToken}}

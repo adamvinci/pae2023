@@ -1,5 +1,6 @@
 package be.vinci.pae.dal;
 
+
 import be.vinci.pae.business.dto.UserDTO;
 import java.util.List;
 
@@ -40,4 +41,16 @@ public interface UserDAO {
    * @return users
    */
   List<UserDTO> getAll();
+
+
+  /**
+   * Update an user in the database based on a business object "user" and return true if the update succeed.
+   *
+   * @param userToChange the user with the new changes
+   * @return true if the update has succeed.
+   */
+  boolean update(UserDTO userToChange);
 }
+
+
+

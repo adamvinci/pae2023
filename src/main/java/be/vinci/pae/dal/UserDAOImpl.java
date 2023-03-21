@@ -3,6 +3,7 @@ package be.vinci.pae.dal;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.dal.services.DALService;
+import be.vinci.pae.utils.FatalException;
 import jakarta.inject.Inject;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -48,7 +49,7 @@ public class UserDAOImpl implements UserDAO {
       }
 
     } catch (SQLException e) {
-      System.out.println("\n" + e.getMessage().split("\n")[0] + "\n");
+      throw new FatalException(e);
     }
 
     return userDTO;
@@ -76,7 +77,7 @@ public class UserDAOImpl implements UserDAO {
       }
 
     } catch (SQLException e) {
-      System.out.println("\n" + e.getMessage().split("\n")[0] + "\n");
+      throw new FatalException(e);
     }
 
     return userDTO;
@@ -113,7 +114,7 @@ public class UserDAOImpl implements UserDAO {
       }
 
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      throw new FatalException(e);
     }
 
     return userDTO;
@@ -141,9 +142,40 @@ public class UserDAOImpl implements UserDAO {
       }
 
     } catch (SQLException e) {
-      System.out.println("\n" + e.getMessage().split("\n")[0] + "\n");
+      throw new FatalException(e);
     }
     return usersList;
+  }
+
+  @Override
+  public boolean update(UserDTO userToChange) {
+    try (PreparedStatement statement = dalService.preparedStatement(
+        "UPDATE projet.utilisateurs_inscrits"
+            + " SET role = ?"
+            + " ,email = ?"
+            + " ,nom = ?"
+            + " ,prenom = ?"
+            + " ,mot_de_passe = ?"
+            + " ,date_inscription = ?"
+            + " ,gsm = ?"
+            + " ,image = ?"
+            + " WHERE id_utilisateur = ?")) {
+
+      statement.setString(1, userToChange.getRole());
+      statement.setString(2, userToChange.getEmail());
+      statement.setString(3, userToChange.getNom());
+      statement.setString(4, userToChange.getPrenom());
+      statement.setString(5, userToChange.getPassword());
+      statement.setDate(6, Date.valueOf(LocalDate.now()));
+      statement.setString(7, userToChange.getGsm());
+      statement.setString(8, userToChange.getImage());
+      statement.setInt(9, userToChange.getId());
+      statement.executeQuery();
+      return true;
+    } catch (SQLException e) {
+      System.out.println("\n" + e.getMessage().split("\n")[0] + "\n");
+      return false;
+    }
   }
 
   /**
