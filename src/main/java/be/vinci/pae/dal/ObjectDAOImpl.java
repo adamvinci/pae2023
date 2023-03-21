@@ -116,11 +116,7 @@ public class ObjectDAOImpl implements ObjectDAO {
 
       statement.setString(6, objetDTO.getLocalisation());
       statement.setInt(7, objetDTO.getIdObjet());
-      try (ResultSet set = statement.executeQuery()) {
-        if (!set.isBeforeFirst()) {
-          return null;
-        }
-      }
+      statement.executeQuery();
 
     } catch (SQLException e) {
       throw new FatalException(e);

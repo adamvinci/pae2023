@@ -53,8 +53,6 @@ public class NotificationDAOImpl implements NotificationDAO {
       statement.setInt(1, idNotif);
       statement.setInt(2, idUser);
       statement.executeQuery();
-
-
     } catch (SQLException e) {
       throw new FatalException(e);
     }

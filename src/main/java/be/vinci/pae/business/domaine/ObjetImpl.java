@@ -6,6 +6,7 @@ import be.vinci.pae.business.dto.TypeObjetDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Implementation of Object class.
@@ -195,11 +196,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
   }
 
   private Boolean propose() {
-    if (getEtat() != "proposer" || getDate_acceptation() != null || getDate_retrait() != null
-        || getDate_vente() != null) {
-      return false;
-    }
-    return true;
+    return Objects.equals(getEtat(), "proposer");
   }
 
   @Override
