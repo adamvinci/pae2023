@@ -148,7 +148,7 @@ public class UserDAOImpl implements UserDAO {
   }
 
   @Override
-  public void update(UserDTO userToChange) {
+  public boolean update(UserDTO userToChange) {
     try (PreparedStatement statement = dalService.preparedStatement(
         "UPDATE projet.utilisateurs_inscrits"
             + " SET role = ?"
@@ -171,8 +171,10 @@ public class UserDAOImpl implements UserDAO {
       statement.setString(8, userToChange.getImage());
       statement.setInt(9, userToChange.getId());
       statement.executeQuery();
+      return true;
     } catch (SQLException e) {
       System.out.println("\n" + e.getMessage().split("\n")[0] + "\n");
+      return false;
     }
   }
 
