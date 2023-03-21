@@ -515,3 +515,7 @@ mars 21, 2023 3:00:36 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: Cannot invoke "be.vinci.pae.business.domaine.Objet.getEtat()" because "objet" is null
 mars 21, 2023 3:02:34 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: You do not have the required permissions to do this.
+mars 21, 2023 3:06:39 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You do not have the required permissions to do this.
+mars 21, 2023 3:06:43 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement

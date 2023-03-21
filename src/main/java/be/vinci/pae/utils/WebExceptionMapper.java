@@ -16,7 +16,6 @@ public class WebExceptionMapper implements ExceptionMapper<Throwable> {
 
   @Override
   public Response toResponse(Throwable exception) {
-    exception.printStackTrace();
     if (exception instanceof FatalException) {
       Logger.getLogger(MyLogger.class.getName())
           .log(Level.INFO, exception.getCause().getMessage());

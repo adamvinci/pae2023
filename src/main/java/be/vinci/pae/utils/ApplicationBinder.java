@@ -29,6 +29,8 @@ import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.dal.UserDAOImpl;
 import be.vinci.pae.dal.services.DALService;
 import be.vinci.pae.dal.services.DALServiceImpl;
+import be.vinci.pae.ihm.filters.ResponsableOrAidantRequestFilter;
+import be.vinci.pae.ihm.filters.ResponsableOrAidantRequestFilterImpl;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.ext.Provider;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -59,5 +61,7 @@ public class ApplicationBinder extends AbstractBinder {
 
     bind(DALServiceImpl.class).to(DALService.class).in(Singleton.class);
 
+    bind(ResponsableOrAidantRequestFilterImpl.class).to(ResponsableOrAidantRequestFilter.class).in(
+        Singleton.class);
   }
 }
