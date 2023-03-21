@@ -19,8 +19,10 @@ public class WebExceptionMapper implements ExceptionMapper<Throwable> {
     if (exception instanceof FatalException) {
       Logger.getLogger(MyLogger.class.getName())
           .log(Level.INFO, exception.getCause().getMessage());
+      // Dont return the message in the Response as client doesnt
+      // need to know the problem with the database
       return Response.status(Status.INTERNAL_SERVER_ERROR)
-          .entity(exception.getCause().getMessage()).build();
+          .entity(exception.getCause()).build();
     }
 
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, exception.getMessage());

@@ -177,11 +177,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   @Override
   public void setPrix(Double prix) {
-    this.prix = null;
-    if (prix <= PRIX_MAX) {
-      this.prix = prix;
-    }
-
+    this.prix = prix;
   }
 
   @Override
