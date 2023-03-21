@@ -371,3 +371,129 @@ INFO: Retrieve picture of object 8
 mars 21, 2023 11:26:44 AM be.vinci.pae.ihm.ObjetRessource getAllObject
 INFO: Retrieve list of object located in store from anonymous
 >>>>>>> 61f9da4ed92b8e91fb9a6d44a60a905abe6048a2
+mars 21, 2023 2:31:31 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 21, 2023 2:31:32 PM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 21, 2023 2:31:34 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 21, 2023 2:31:34 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 21, 2023 2:31:34 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 21, 2023 2:31:34 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 21, 2023 2:31:34 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 21, 2023 2:31:34 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 21, 2023 2:31:34 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 21, 2023 2:31:35 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 21, 2023 2:31:35 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 21, 2023 2:31:35 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 21, 2023 2:31:35 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 21, 2023 2:31:35 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 21, 2023 2:31:35 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 21, 2023 2:31:35 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 21, 2023 2:31:35 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 21, 2023 2:31:35 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 21, 2023 2:31:35 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 21, 2023 2:31:36 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 21, 2023 2:33:06 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 21, 2023 2:33:06 PM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 21, 2023 2:33:07 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 14
+mars 21, 2023 2:33:07 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 2
+mars 21, 2023 2:33:07 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 17
+mars 21, 2023 2:33:07 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 11
+mars 21, 2023 2:33:07 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 20
+mars 21, 2023 2:33:07 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 15
+mars 21, 2023 2:33:07 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 3
+mars 21, 2023 2:33:08 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 18
+mars 21, 2023 2:33:08 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 10
+mars 21, 2023 2:33:08 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 16
+mars 21, 2023 2:33:08 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 7
+mars 21, 2023 2:33:08 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 5
+mars 21, 2023 2:33:08 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 4
+mars 21, 2023 2:33:08 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 1
+mars 21, 2023 2:33:08 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 12
+mars 21, 2023 2:33:09 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 9
+mars 21, 2023 2:33:09 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 22
+mars 21, 2023 2:33:09 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 21
+mars 21, 2023 2:39:02 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 21, 2023 2:39:03 PM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 21, 2023 2:39:03 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 3
+mars 21, 2023 2:39:03 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 17
+mars 21, 2023 2:39:03 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 9
+mars 21, 2023 2:39:03 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 5
+mars 21, 2023 2:39:04 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 20
+mars 21, 2023 2:39:04 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 11
+mars 21, 2023 2:39:04 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 7
+mars 21, 2023 2:39:04 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 16
+mars 21, 2023 2:39:04 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 18
+mars 21, 2023 2:39:04 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 14
+mars 21, 2023 2:39:04 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 1
+mars 21, 2023 2:39:04 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 12
+mars 21, 2023 2:39:04 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 21
+mars 21, 2023 2:39:05 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 15
+mars 21, 2023 2:39:05 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 10
+mars 21, 2023 2:39:05 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 4
+mars 21, 2023 2:39:05 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 2
+mars 21, 2023 2:39:05 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 22
+mars 21, 2023 2:39:41 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: email already exist
+mars 21, 2023 2:39:45 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: missing fields
+mars 21, 2023 2:39:52 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: missing fields
