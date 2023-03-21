@@ -1,6 +1,7 @@
 package be.vinci.pae.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -31,11 +32,12 @@ class UserUccTest {
   private UserUcc userUcc;
   private UserDAO userDAO;
   private User userLeon;
+  private User userMemberSteven;
 
+  private User userLeonHashed;
 
   private UserFactory userFactory = locator.getService(UserFactory.class);
 
-  private User userMemberSteven;
 
   @BeforeEach
   void setUp() {
@@ -59,28 +61,42 @@ class UserUccTest {
     userLeon.setId(3);
     userLeon.setNom("kelmendi");
     userLeon.setPrenom("leon");
-    userLeon.setPassword("$2a$10$fYQHAoeC3sQ.AZuBsxJUWuh7miB8QIZ1/gDsdp7zOhg2cmtknqlmy");
+    userLeon.setPassword("123*");
     userLeon.setImage("");
     userLeon.setDateInscription(LocalDate.now());
     userLeon.setRole("membre");
+
+    userLeonHashed = (User) userFactory.getUserDTO();
+    userLeonHashed.setEmail("leon.kelmendi@student.vinci.be");
+    userLeonHashed.setGsm("05678458586");
+    userLeonHashed.setId(3);
+    userLeonHashed.setNom("kelmendi");
+    userLeonHashed.setPrenom("leon");
+    userLeonHashed.setPassword("$2a$10$fYQHAoeC3sQ.AZuBsxJUWuh7miB8QIZ1/gDsdp7zOhg2cmtknqlmy");
+    userLeonHashed.setImage("");
+    userLeonHashed.setDateInscription(LocalDate.now());
+    userLeonHashed.setRole("membre");
 
     Mockito.when(userDAO.getOne(1)).thenReturn(userMemberSteven);
     Mockito.when(userDAO.getOne("steven.agbassah@student.vinci.be")).thenReturn(userMemberSteven);
   }
 
-  @DisplayName("Test login(String email, String password) with good email and good password")
+  @DisplayName("Test login(String email, String password) w ith good email and good password")
   @Test
   void testLoginWithGoodCredentials() {
+
     assertEquals(userMemberSteven,
         userUcc.login("steven.agbassah@student.vinci.be", "123*"));
   }
 
+
   @DisplayName("Test login(String email, String password) with good email and bad password")
   @Test
   void testLoginWithGoodEmailAndBadPassword() {
-    assertNull(userUcc.login("steven.agbassah@student.vinci.be", "123"), "Mauvais mot de passe");
+    assertNull(userUcc.login("steven.agbassah@student.vinci.be", "123"), "Bad credentials");
 
   }
+
 
   @DisplayName("Test  login(String email, String password) with bad email ")
   @Test
@@ -88,15 +104,19 @@ class UserUccTest {
     Mockito.when(userDAO.getOne("stevenagbassah@student.vinci.be"))
         .thenReturn(null);
     assertNull(userUcc.login("stevenagbassah@student.vinci.be", "123*"),
-        "Cette email n'existe pas");
+        "This email does not exists");
 
   }
 
-//  @DisplayName("test register with good email")
-//  @Test
-//  void testRegisterWhitGoodemail() {
-//    assertNotNull(userUcc.register(userLeon));
-//  }
+
+  @DisplayName("test register with good email")
+  @Test
+  void testRegisterWhitGoodemail() {
+    Mockito.when(userDAO.getOne("leon.kelmendi@student.vinci.be")).thenReturn(null);
+    Mockito.when(userDAO.createOne(userLeon)).thenReturn(userLeon);
+    assertNotNull(userUcc.register(userLeon));
+  }
+
 
   @DisplayName("test register with email already exist")
   @Test
