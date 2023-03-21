@@ -41,7 +41,6 @@ public class AuthRessource {
   private UserUcc userUcc;
 
 
-
   /**
    * Login by providing an email and a password.
    *
@@ -98,15 +97,17 @@ public class AuthRessource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public UserDTO register(UserDTO userDTO) {
-    if (userDTO.getEmail().equals("") || userDTO.getPassword().equals("")
-        || userDTO.getNom().equals("") || userDTO.getPrenom().equals("")
-        || userDTO.getGsm().equals("")) {
+    if (userDTO.getEmail().equals("") || userDTO.getEmail().isBlank()
+        || userDTO.getPassword().equals("") || userDTO.getPassword().isBlank()
+        || userDTO.getNom().equals("") || userDTO.getNom().isBlank()
+        || userDTO.getPrenom().equals("") || userDTO.getPrenom().isBlank()
+        || userDTO.getGsm().equals("") || userDTO.getGsm().isBlank()) {
       throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
     }
     userDTO = userUcc.register(userDTO);
 
     if (userDTO == null) {
-      throw new WebApplicationException("already exist", Status.CONFLICT);
+      throw new WebApplicationException("email already exist", Status.CONFLICT);
     }
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Inscription de "
         + userDTO.getEmail());
@@ -116,10 +117,6 @@ public class AuthRessource {
 
 
   }
-
-
-
-
 
   /**
    * Path to retrieve the user from a token.

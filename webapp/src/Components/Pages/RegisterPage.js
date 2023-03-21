@@ -1,12 +1,12 @@
 import { getRememberMe, setRememberMe } from '../../utils/auths';
-import { clearPage, renderPageTitle } from '../../utils/render';
+import { clearPage } from '../../utils/render';
 import Navbar from '../Navbar/Navbar';
 import Navigate from '../Router/Navigate';
 
 
 const RegisterPage = () => {
   clearPage();
-  renderPageTitle('Register');
+
   renderRegisterForm();
 };
 
@@ -16,7 +16,7 @@ function renderRegisterForm() {
   const form = document.createElement('form');
   form.className = 'p-5';
   const title = document.createElement('h1');
-  title.innerText="Bienvenue dans la page d'inscription";
+  title.innerText="Creer votre compte";
   title.style.color="#634835";
   const email = document.createElement('input');
   email.type = 'text';
@@ -69,6 +69,20 @@ function renderRegisterForm() {
   checkLabel.className = 'form-check-label';
   checkLabel.textContent = 'Remember me';
 
+  const msgErreur = document.createElement("h4");
+  msgErreur.id = "msgErreur";
+  msgErreur.innerText = "";
+  msgErreur.style.color="red";
+
+  const connecterLink = document.createElement("a");
+  connecterLink.id = "connecterLink";
+  connecterLink.innerText = "deja inscrit? connectez-vous ici!";
+  connecterLink.className = "text-dark mt-3";
+  connecterLink.addEventListener("click", () => {
+    Navigate("/login")
+  })
+
+
   formCheckWrapper.appendChild(rememberme);
   formCheckWrapper.appendChild(checkLabel);
   form.appendChild(title);
@@ -79,6 +93,8 @@ function renderRegisterForm() {
   form.appendChild(gsm)
   form.appendChild(formCheckWrapper);
   form.appendChild(submit);
+  form.appendChild(msgErreur)
+  form.appendChild(connecterLink)
   newDiv.appendChild(form);
   main.appendChild(newDiv);
   newDiv.style.display="flex";
@@ -128,8 +144,12 @@ async function onRegister(e) {
 
   const response = await fetch(`${process.env.API_BASE_URL}/auths/register`, options);
 
-  if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
-
+  if (!response.ok) {
+    response.text().then((message) => {
+      const erreur = document.getElementById("msgErreur");
+      erreur.innerText = message;
+    })
+  }
   await response.json();
 
   Navbar();
