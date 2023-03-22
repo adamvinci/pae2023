@@ -170,7 +170,9 @@ public class UserDAOImpl implements UserDAO {
       statement.setString(7, userToChange.getGsm());
       statement.setString(8, userToChange.getImage());
       statement.setInt(9, userToChange.getId());
-      try (ResultSet rs = statement.executeQuery()) {}
+      try (ResultSet rs = statement.executeQuery()) {
+        System.out.println("");
+      }
       return true;
     } catch (SQLException e) {
       throw new FatalException(e);
