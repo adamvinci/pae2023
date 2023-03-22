@@ -529,3 +529,7 @@ mars 21, 2023 2:57:14 PM be.vinci.pae.ihm.ObjetRessource getPicture
 INFO: Retrieve picture of object 12
 mars 21, 2023 2:57:15 PM be.vinci.pae.ihm.ObjetRessource getPicture
 INFO: Retrieve picture of object 5
+mars 22, 2023 12:03:47 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de adrien.riez@hotmail.be
+mars 22, 2023 12:03:52 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de jean.jacques@hotmail.be
