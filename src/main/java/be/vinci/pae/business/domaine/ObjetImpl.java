@@ -241,8 +241,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   @Override
   public Boolean venduObject() {
-    if (getEtat() != "en vente" || getDate_acceptation() == null || getDate_retrait() == null
-        || getDate_vente() == null) {
+    if (getEtat() != "en vente" || getDate_acceptation() == null) {
       return false;
     }
     setEtat("vendu");

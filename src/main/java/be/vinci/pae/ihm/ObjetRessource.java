@@ -187,30 +187,33 @@ public class ObjetRessource {
   @PUT
   @Path("vendreObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response vendreObject(@PathParam("id") int id, Objet objet) {
-    ObjetDTO obj = objet;
+  public ObjetDTO vendreObject(@PathParam("id") int id) {
+    ObjetDTO obj = objetUCC.getOne(id);
     ObjetDTO changed = objetUCC.venduObject(obj);
     if (changed == null) {
-      throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
+      throw new WebApplicationException("Impossible changement", Status.UNAUTHORIZED);
     }
-    // Retourne une réponse HTTP 200 OK avec un message de confirmation
-    return Response.status(Response.Status.OK)
-        .entity("Object with ID " + id + " accepted successfully")
-        .build();
+    return changed;
   }
 
   @POST
   @Path("refuserObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response refuserObject(@PathParam("id") int id, JsonNode objetCredentials) {
+  public ObjetDTO refuserObject(@PathParam("id") int id, JsonNode objetCredentials) {
 
     if (!objetCredentials.hasNonNull("message")) {
-      throw new WebApplicationException("etat or objet required", Status.BAD_REQUEST);
+      throw new WebApplicationException("message required", Status.BAD_REQUEST);
     }
+    String message = objetCredentials.get("message").asText();
 
-    // Retourne une réponse HTTP 200 OK avec un message de confirmation
-    return Response.status(Response.Status.OK)
-        .entity("Object with ID " + id + " accepted successfully")
-        .build();
+    if (message.isBlank() || message.isEmpty()) {
+      throw new WebApplicationException("message required", Status.BAD_REQUEST);
+    }
+    ObjetDTO objet = objetUCC.getOne(id);
+    ObjetDTO changed = objetUCC.refuserObject(objet, message);
+    if (changed == null) {
+      throw new WebApplicationException("impossible changement", Status.BAD_REQUEST);
+    }
+    return changed;
   }
 }

@@ -65,9 +65,24 @@ public class ObjetUCCImpl implements ObjetUCC {
   }
 
   @Override
-  public ObjetDTO refuserObject(ObjetDTO objetDTO) {
+  public ObjetDTO refuserObject(ObjetDTO objetDTO, String message) {
+    Objet objet = (Objet) objetDTO;
+    if (!objet.refuserObjet()) {
+      return null;
+    }
+    ObjetDTO objetDTO1 = dataService.updateObjectState(objet);
 
-    return null;
+    if (objetDTO1.getUtilisateur() != null) {
+      NotificationDTO notification = notifFactory.getNotification();
+      notification.setObject(objetDTO1.getIdObjet());
+      notification.setMessage(message);
+      notification.setType("refus");
+      NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
+      dataServiceNotification.linkNotifToUser(notificationCreated.getId()
+          , objetDTO1.getUtilisateur());
+    }
+
+    return objetDTO1;
   }
 
   @Override
@@ -108,12 +123,17 @@ public class ObjetUCCImpl implements ObjetUCC {
 
   @Override
   public ObjetDTO venduObject(ObjetDTO objetDTO) {
+    
+    Objet objet = (Objet) objetDTO;
+    if (!objet.venduObject()) {
+      return null;
+    }
+    ObjetDTO objetDTO1 = dataService.updateObjectState(objet);
 
     NotificationDTO notification = notifFactory.getNotification();
     notification.setObject(objetDTO.getIdObjet());
     notification.setMessage("l'objet n° : " + objetDTO.getIdObjet() + " a été vendu");
     notification.setType("information");
-    ObjetDTO objetDTO1 = dataService.updateObjectState(objetDTO);
     dataServiceNotification.createOne(notification);
 
     return objetDTO1;

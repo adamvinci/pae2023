@@ -46,7 +46,7 @@ public interface ObjetUCC {
    * @param objetDTO the object to be refused
    * @return true if the object is refused successfully, false otherwise
    */
-  ObjetDTO refuserObject(ObjetDTO objetDTO);
+  ObjetDTO refuserObject(ObjetDTO objetDTO, String message);
 
   /**
    * Deposits an object represented by the given ObjetDTO object.

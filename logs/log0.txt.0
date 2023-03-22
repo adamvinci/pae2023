@@ -519,3 +519,75 @@ mars 21, 2023 3:06:39 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: You do not have the required permissions to do this.
 mars 21, 2023 3:06:43 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: Impossible changement
+mars 21, 2023 3:28:50 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You do not have the required permissions to do this.
+mars 21, 2023 3:45:10 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You must be connected to access this ressource
+mars 21, 2023 3:45:14 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You do not have the required permissions to do this.
+mars 21, 2023 3:45:23 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You must be connected to access this ressource
+mars 21, 2023 3:45:27 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You must be connected to access this ressource
+mars 21, 2023 3:45:29 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You must be connected to access this ressource
+mars 21, 2023 3:45:33 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: This user does not exist
+mars 21, 2023 3:45:37 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You do not have the required permissions to do this.
+mars 21, 2023 3:45:39 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: This user does not exist
+mars 21, 2023 3:45:55 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: This user can't become an 'aidant'
+mars 22, 2023 4:37:56 PM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 22, 2023 4:38:17 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: No image for this object in the database
+mars 22, 2023 4:38:28 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You must be connected to access this ressource
+mars 22, 2023 4:38:42 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: bad credentials
+mars 22, 2023 4:38:57 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: The Token has expired on 2023-03-22T13:56:44Z.
+mars 22, 2023 4:39:17 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de jean.jacques@hotmail.be
+mars 22, 2023 4:39:45 PM be.vinci.pae.ihm.AuthRessource register
+INFO: Inscription de test17@hotmail.be
+mars 22, 2023 4:40:29 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de jean.jacques@hotmail.be
+mars 22, 2023 4:40:43 PM be.vinci.pae.ihm.AuthRessource getUser
+INFO: Retrieve user from token of jean.jacques@hotmail.be
+mars 22, 2023 4:40:57 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You do not have the required permissions to do this.
+mars 22, 2023 4:40:59 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Malformed token : The token was expected to have 3 parts, but got 0.
+mars 22, 2023 4:41:09 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You do not have the required permissions to do this.
+mars 22, 2023 4:41:15 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Malformed token : The token was expected to have 3 parts, but got 0.
+mars 22, 2023 4:41:37 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de adrien.riez@hotmail.be
+mars 22, 2023 4:41:45 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: This user does not exist
+mars 22, 2023 4:44:17 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: impossible changement
+mars 22, 2023 4:47:49 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve the complete list of object from user adrien.riez@hotmail.be
+mars 22, 2023 5:07:37 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Une erreur d'entrée/sortie a eu lieu lors d'envoi vers le serveur.
+mars 22, 2023 5:07:54 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: org.postgresql.util.PSQLException: This connection has been closed.
+mars 22, 2023 6:20:15 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve the complete list of object from user adrien.riez@hotmail.be
+mars 22, 2023 6:21:27 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: HTTP 405 Method Not Allowed
+mars 22, 2023 6:21:51 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: HTTP 500 Internal Server Error
+mars 22, 2023 6:33:17 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: HTTP 500 Internal Server Error
+mars 22, 2023 6:33:56 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: HTTP 500 Internal Server Error
+mars 22, 2023 6:36:13 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement
+mars 22, 2023 6:37:21 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve the complete list of object from user adrien.riez@hotmail.be

@@ -109,3 +109,7 @@ Authorization: {{adrienToken}}
 ###
 POST {{baseUrl}}/users/1/confirmHelper
 Authorization: {{adrienToken}}
+
+###
+PUT {{baseUrl}}/objet/vendreObject/3
+Authorization: {{adrienToken}}
