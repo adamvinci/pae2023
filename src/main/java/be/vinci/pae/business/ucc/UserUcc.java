@@ -5,8 +5,8 @@ import java.util.List;
 
 
 /**
- * UserUcc acts  as an orchestrator to allow {@link be.vinci.pae.ihm.AuthRessource} and {@link
- * be.vinci.pae.dal.UserDAO} layers to communicate.
+ * UserUcc acts  as an orchestrator to allow {@link be.vinci.pae.ihm.AuthRessource} and
+ * {@link be.vinci.pae.dal.UserDAO} layers to communicate.
  */
 public interface UserUcc {
 
@@ -40,10 +40,9 @@ public interface UserUcc {
    * Registers a new user.
    *
    * @param userDTO the UserDTO object containing the user's details to be registered
-   * @return the UserDTO object of the newly registered user, or null if the eamilalready exists
+   * @return the UserDTO object of the newly registered user, or null if the email already exists
    */
   UserDTO register(UserDTO userDTO);
-
 
 
   /**

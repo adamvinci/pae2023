@@ -1,5 +1,7 @@
 package be.vinci.pae.utils;
 
+import be.vinci.pae.business.factory.UserFactory;
+import be.vinci.pae.business.factory.UserFactoryImpl;
 import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.business.ucc.UserUccImpl;
 import be.vinci.pae.dal.UserDAO;
@@ -24,5 +26,6 @@ public class ApplicationBinderMock extends AbstractBinder {
     //to avoid calling the UserDataServiceImpl which call the database
     // but cant ass dev.propreties not initialzied
     bind(Mockito.mock(UserDAOImpl.class)).to(UserDAO.class);
+    bind(UserFactoryImpl.class).to(UserFactory.class).in(Singleton.class);
   }
 }

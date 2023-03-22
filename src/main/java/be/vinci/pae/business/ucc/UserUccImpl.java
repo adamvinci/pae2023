@@ -42,9 +42,6 @@ public class UserUccImpl implements UserUcc {
     user.setPassword(user.hashPassword(user.getPassword()));
 
     UserDTO userDATA = dataService.createOne(user);
-    if (userDATA == null) {
-      return null;
-    }
     return userDATA;
 
   }
