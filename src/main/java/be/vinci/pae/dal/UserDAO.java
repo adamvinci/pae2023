@@ -44,7 +44,8 @@ public interface UserDAO {
 
 
   /**
-   * Update an user in the database based on a business object "user" and return true if the update succeed.
+   * Update an user in the database based on a business object "user" and return true if the update
+   * succeed.
    *
    * @param userToChange the user with the new changes
    * @return true if the update has succeed.
