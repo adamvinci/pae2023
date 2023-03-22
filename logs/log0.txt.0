@@ -533,3 +533,17 @@ mars 22, 2023 12:03:47 PM be.vinci.pae.ihm.AuthRessource login
 INFO: Connexion de adrien.riez@hotmail.be
 mars 22, 2023 12:03:52 PM be.vinci.pae.ihm.AuthRessource login
 INFO: Connexion de jean.jacques@hotmail.be
+mars 22, 2023 12:09:03 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de adrien.riez@hotmail.be
+mars 22, 2023 12:09:06 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de jean.jacques@hotmail.be
+mars 22, 2023 12:09:13 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You must be connected to access this ressource
+mars 22, 2023 12:09:20 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You do not have the required permissions to do this.
+mars 22, 2023 12:09:27 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You must be connected to access this ressource
+mars 22, 2023 12:09:30 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You do not have the required permissions to do this.
+mars 22, 2023 12:09:36 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: This user does not exist
