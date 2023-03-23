@@ -141,9 +141,12 @@ public class ObjetRessource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ObjetDTO accepterObject(@PathParam("id") int id) {
-    ObjetDTO objetDTO1 = objetUCC.getOne(id);
+    ObjetDTO retrievedObject = objetUCC.getOne(id);
+    if(retrievedObject == null){
+      throw new WebApplicationException("this object does not exist",Status.BAD_REQUEST);
+    }
     NotificationDTO notification = notificationFactory.getNotification();
-    ObjetDTO changed = objetUCC.accepterObjet(objetDTO1, notification);
+    ObjetDTO changed = objetUCC.accepterObjet(retrievedObject, notification);
     if (changed == null) {
       throw new WebApplicationException("Impossible changement, to accept "
           + "an object it state must be 'proposer' ", 512);
@@ -177,7 +180,7 @@ public class ObjetRessource {
   @Produces(MediaType.APPLICATION_JSON)
   public Response misEnVenteObject(@PathParam("id") int id, Objet objet) {
     ObjetDTO obj = objet;
-    ObjetDTO changed = objetUCC.venteObject(obj);
+    ObjetDTO changed = objetUCC.mettreEnVente(obj);
     if (changed == null) {
       throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
     }
@@ -187,16 +190,26 @@ public class ObjetRessource {
         .build();
   }
 
+  /**
+   * Change the state of an object to 'vendu'.
+   *
+   * @param id of the object to modify
+   * @return the modified object
+   */
   @ResponsableOrAidant
   @POST
   @Path("vendreObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ObjetDTO vendreObject(@PathParam("id") int id) {
-    ObjetDTO obj = objetUCC.getOne(id);
-    ObjetDTO changed = objetUCC.venduObject(obj);
+    ObjetDTO retrievedObject = objetUCC.getOne(id);
+    if(retrievedObject == null){
+      throw new WebApplicationException("this object does not exist",Status.BAD_REQUEST);
+    }
+    ObjetDTO changed = objetUCC.vendreObject(retrievedObject);
     if (changed == null) {
-      throw new WebApplicationException("Impossible changement", Status.UNAUTHORIZED);
+      throw new WebApplicationException("Impossible changement,the object need to be in the state 'en vente'"
+          + "to be sold", Status.UNAUTHORIZED);
     }
     return changed;
   }
@@ -216,13 +229,16 @@ public class ObjetRessource {
     if (message.isBlank() || message.isEmpty()) {
       throw new WebApplicationException("message required", Status.BAD_REQUEST);
     }
-    ObjetDTO objet = objetUCC.getOne(id);
+    ObjetDTO retrievedObject = objetUCC.getOne(id);
+    if(retrievedObject == null){
+      throw new WebApplicationException("this object does not exist",Status.BAD_REQUEST);
+    }
     NotificationDTO notification = notificationFactory.getNotification();
-    ObjetDTO changed = objetUCC.refuserObject(objet, message,notification);
-    if (changed == null) {
+    ObjetDTO changedObject = objetUCC.refuserObject(retrievedObject, message,notification);
+    if (changedObject == null) {
       throw new WebApplicationException("\"Impossible changement, to refuse an object "
           + "it state must be 'proposer'", Status.BAD_REQUEST);
     }
-    return changed;
+    return changedObject;
   }
 }

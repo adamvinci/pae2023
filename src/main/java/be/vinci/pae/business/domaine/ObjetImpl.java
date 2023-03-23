@@ -192,13 +192,9 @@ public class ObjetImpl implements Objet, ObjetDTO {
         .findFirst().orElse(null);
   }
 
-  private Boolean propose() {
-    return Objects.equals(getEtat(), "proposer");
-  }
-
   @Override
   public Boolean accepterObjet() {
-    if (!propose()) {
+    if (!Objects.equals(getEtat(), "accepte")) {
       return false;
     }
     setEtat(POSSIBLE_ETAT[0]);
@@ -208,7 +204,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   @Override
   public Boolean refuserObjet() {
-    if (!propose()) {
+    if (!Objects.equals(getEtat(), "accepte")) {
       return false;
     }
     setEtat("refuser");
@@ -217,8 +213,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   @Override
   public Boolean depotObject() {
-    if (getEtat() != "accepte" || getDate_acceptation() == null || getDate_retrait() == null
-        || getDate_vente() != null || getLocalisation() == "Atelier") {
+    if (!Objects.equals(getEtat(), "accepte") || Objects.equals(getLocalisation(), "Atelier")) {
       return false;
     }
     setLocalisation("Atelier");
@@ -226,9 +221,8 @@ public class ObjetImpl implements Objet, ObjetDTO {
   }
 
   @Override
-  public Boolean venteObject() {
-    if (getEtat() != "accepte" || getDate_acceptation() == null || getDate_retrait() == null
-        || getDate_vente() != null) {
+  public Boolean mettreEnVente() {
+    if (!Objects.equals(getEtat(), "accepte")) {
       return false;
     }
     setLocalisation("Magasin");
@@ -237,11 +231,12 @@ public class ObjetImpl implements Objet, ObjetDTO {
   }
 
   @Override
-  public Boolean venduObject() {
-    if (getEtat() != "en vente" || getDate_acceptation() == null) {
+  public Boolean vendreObjet() {
+    if (!Objects.equals(getEtat(), "en vente")) {
       return false;
     }
     setEtat("vendu");
+    setDate_vente(LocalDate.now());
     return true;
   }
 }

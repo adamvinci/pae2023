@@ -119,4 +119,8 @@ Content-Type: application/json
 
 ###
 POST {{baseUrl}}/objet/accepterObject/1
-Authorization: {{memberToken}}
+Authorization: {{adrienToken}}
+
+###
+POST {{baseUrl}}/objet/vendreObject/1
+Authorization: {{aidantToken}}

@@ -35,12 +35,12 @@ public interface Objet extends ObjetDTO {
    *
    * @return True if the object is available for sale; false otherwise.
    */
-  Boolean venteObject();
+  Boolean mettreEnVente();
 
   /**
    * Indicates whether this object has been sold.
    *
    * @return True if the object has been sold; false otherwise.
    */
-  Boolean venduObject();
+  Boolean vendreObjet();
 }

@@ -102,11 +102,15 @@ public class ObjetUCCImpl implements ObjetUCC {
   }
 
   @Override
-  public ObjetDTO venteObject(ObjetDTO objetDTO) {
+  public ObjetDTO mettreEnVente(ObjetDTO objetDTO) {
+    Objet objet = (Objet) objetDTO;
 
+    if (!objet.mettreEnVente()) {
+      return null;
+    }
     LocalDate today = LocalDate.now();
 
-    Objet objet = (Objet) objetDTO;
+
 
     objet.setDate_vente(today);
 
@@ -120,18 +124,12 @@ public class ObjetUCCImpl implements ObjetUCC {
   }
 
   @Override
-  public ObjetDTO venduObject(ObjetDTO objetDTO) {
+  public ObjetDTO vendreObject(ObjetDTO objetDTO) {
     
     Objet objet = (Objet) objetDTO;
-    if (!objet.venduObject()) {
+    if (!objet.vendreObjet()) {
       return null;
     }
-
-    NotificationDTO notification = notifFactory.getNotification();
-    notification.setObject(objetDTO.getIdObjet());
-    notification.setMessage("l'objet n° : " + objetDTO.getIdObjet() + " a été vendu");
-    notification.setType("information");
-    dataServiceNotification.createOne(notification);
 
     return dataService.updateObjectState(objetDTO);
   }

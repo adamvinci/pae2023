@@ -188,4 +188,22 @@ class ObjetUCCTest {
         () -> assertEquals("message", notificationDTO.getMessage())
     );
   }
+
+  @DisplayName("Test vendreObject(ObjetDTO objetDTO) with a bad state")
+  @Test
+  void testVendreObjectWithBadState() {
+    objetDTO.setEtat("accepte");
+    assertNull(objetUCC.vendreObject(objetDTO), "The state need to be 'en vente' to be accepted");
+  }
+
+  @DisplayName("Test vendreObject(ObjetDTO objetDTO) with a good state")
+  @Test
+  void testVendreObjectWithGoodState() {
+    objetDTO.setEtat("en vente");
+    Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
+    assertAll(
+        () -> assertEquals(objetDTO, objetUCC.vendreObject(objetDTO)),
+        () -> assertEquals("vendu", objetDTO.getEtat())
+    );
+  }
 }
