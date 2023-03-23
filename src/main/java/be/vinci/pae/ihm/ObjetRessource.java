@@ -8,6 +8,7 @@ import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.ihm.filters.AnonymousOrAuthorize;
+import be.vinci.pae.ihm.filters.ResponsableAuthorization;
 import be.vinci.pae.ihm.filters.ResponsableOrAidant;
 import be.vinci.pae.utils.MyLogger;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -134,7 +135,7 @@ public class ObjetRessource {
    * @param id of the object to change
    * @return the changed object
    */
-  @ResponsableOrAidant
+  @ResponsableAuthorization
   @POST
   @Path("accepterObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
@@ -200,7 +201,7 @@ public class ObjetRessource {
     return changed;
   }
 
-  @ResponsableOrAidant
+  @ResponsableAuthorization
   @POST
   @Path("refuserObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
@@ -216,7 +217,8 @@ public class ObjetRessource {
       throw new WebApplicationException("message required", Status.BAD_REQUEST);
     }
     ObjetDTO objet = objetUCC.getOne(id);
-    ObjetDTO changed = objetUCC.refuserObject(objet, message);
+    NotificationDTO notification = notificationFactory.getNotification();
+    ObjetDTO changed = objetUCC.refuserObject(objet, message,notification);
     if (changed == null) {
       throw new WebApplicationException("\"Impossible changement, to refuse an object "
           + "it state must be 'proposer'", Status.BAD_REQUEST);

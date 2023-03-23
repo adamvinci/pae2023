@@ -43,14 +43,16 @@ public interface ObjetUCC {
   ObjetDTO accepterObjet(ObjetDTO objetDTO, NotificationDTO notificationDTO);
 
 
+
   /**
    * Refuses an object represented by the given ObjetDTO object.
    *
    * @param objetDTO the object to be refused
    * @param message of the notification provided by Mr.Riez
+   * @param notificationDTO to save the reason of the refusal
    * @return the changed ObjetDTO
    */
-  ObjetDTO refuserObject(ObjetDTO objetDTO, String message);
+  ObjetDTO refuserObject(ObjetDTO objetDTO, String message, NotificationDTO notificationDTO);
 
   /**
    * Deposits an object represented by the given ObjetDTO object.

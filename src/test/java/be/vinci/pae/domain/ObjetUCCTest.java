@@ -105,17 +105,18 @@ class ObjetUCCTest {
 
   @DisplayName("Test  getOne(int id) with a non-existent id")
   @Test
-  void testGetOneWithBadId(){
+  void testGetOneWithBadId() {
     Mockito.when(objectDAO.getOne(1)).thenReturn(null);
-    assertNull(objetUCC.getOne(1),"This id doesnt exist");
+    assertNull(objetUCC.getOne(1), "This id doesnt exist");
   }
 
   @DisplayName("Test  getOne(int id) with a =existent id")
   @Test
-  void testGetOneWithGoodId(){
+  void testGetOneWithGoodId() {
     Mockito.when(objectDAO.getOne(1)).thenReturn(objetDTO);
-    assertEquals(objetDTO,objetUCC.getOne(1));
+    assertEquals(objetDTO, objetUCC.getOne(1));
   }
+
   @DisplayName("Test accepterObjet(ObjetDTO objetDTO) with a bad state")
   @Test
   void testAccepterObjetWithBadState() {
@@ -145,10 +146,46 @@ class ObjetUCCTest {
     objetDTO.setUtilisateur(1);
     Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
     Mockito.when(notificationDAO.createOne(notificationDTO)).thenReturn(notificationDTO);
-    doNothing().when(notificationDAO)
-        .linkNotifToUser(notificationDTO.getId(), objetDTO.getUtilisateur());
 
     assertEquals(objetDTO, objetUCC.accepterObjet(objetDTO, notificationDTO));
 
+  }
+
+
+  @DisplayName("Test refuserObject(ObjetDTO objetDTO, String message,"
+      + " NotificationDTO notification) with a bad state")
+  @Test
+  void testRefuserObjectWithBadState() {
+    objetDTO.setEtat("refuser");
+    assertNull(objetUCC.refuserObject(objetDTO, "message", notificationDTO),
+        "Return null if refuserObjet() is false");
+  }
+
+  @DisplayName("Test refuserObject(ObjetDTO objetDTO, String message,"
+      + " NotificationDTO notification) with a good state and the object without registered user")
+  @Test
+  void testRefuserObjectWithGoodStateAndWithoutUser() {
+    objetDTO.setEtat("proposer");
+    Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
+    assertAll(
+        () -> assertEquals(objetDTO, objetUCC.refuserObject(objetDTO, "message", notificationDTO)),
+        () -> assertEquals("message", notificationDTO.getMessage())
+    );
+  }
+
+  @DisplayName("Test refuserObject(ObjetDTO objetDTO, String message,"
+      + " NotificationDTO notification) with a good state and the object with registered user")
+  @Test
+  void testRefuserObjectWithGoodStateAndWithUser() {
+    objetDTO.setEtat("proposer");
+    objetDTO.setUtilisateur(1);
+    Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
+
+    Mockito.when(notificationDAO.createOne(notificationDTO)).thenReturn(notificationDTO);
+
+    assertAll(
+        () -> assertEquals(objetDTO, objetUCC.refuserObject(objetDTO, "message", notificationDTO)),
+        () -> assertEquals("message", notificationDTO.getMessage())
+    );
   }
 }

@@ -64,14 +64,13 @@ public class ObjetUCCImpl implements ObjetUCC {
   }
 
   @Override
-  public ObjetDTO refuserObject(ObjetDTO objetDTO, String message) {
+  public ObjetDTO refuserObject(ObjetDTO objetDTO, String message,NotificationDTO notification) {
     Objet objet = (Objet) objetDTO;
     if (!objet.refuserObjet()) {
       return null;
     }
     ObjetDTO objetDTO1 = dataService.updateObjectState(objetDTO);
 
-    NotificationDTO notification = notifFactory.getNotification();
     notification.setObject(objetDTO1.getIdObjet());
     notification.setMessage(message);
     notification.setType("refus");

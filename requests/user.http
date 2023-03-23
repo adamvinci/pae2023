@@ -10,9 +10,7 @@ Content-Type: application/json
   client.global.set("adrienToken", response.body.token);
 %}
 
-###
-POST {{baseUrl}}/objet/accepterObject/1
-Authorization: {{memberToken}}
+
 ###
 GET http://localhost:3000/auths/user
 Content-Type: application/json
@@ -27,7 +25,7 @@ Content-Type: application/json
   "password":"123*"
 }
 > {%
-  client.global.set("jeanJacques", response.body.token);
+  client.global.set("memberToken", response.body.token);
 %}
 ### Register
 POST http://localhost:3000/auths/register
@@ -49,11 +47,11 @@ POST http://localhost:3000/auths/login
 Content-Type: application/json
 
 {
-  "email":"test17@hotmail.be",
-  "password":"oui"
+  "email":"steven.agbassah@student.vinci.be",
+  "password":"123*"
 }
 > {%
-  client.global.set("memberToken", response.body.token);
+  client.global.set("aidantToken", response.body.token);
 %}
 
 
@@ -111,5 +109,14 @@ POST {{baseUrl}}/users/1/confirmHelper
 Authorization: {{adrienToken}}
 
 ###
-PUT {{baseUrl}}/objet/vendreObject/3
+POST {{baseUrl}}/objet/refuserObject/1
 Authorization: {{adrienToken}}
+Content-Type: application/json
+
+{
+  "message": "refus"
+}
+
+###
+POST {{baseUrl}}/objet/accepterObject/1
+Authorization: {{memberToken}}
