@@ -9,6 +9,9 @@ import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.ext.Provider;
 
+/**
+ * Verify that the token belong to an 'aidant' or to the 'Responsable'.
+ */
 @Singleton
 @Provider
 @ResponsableOrAidant

@@ -61,11 +61,17 @@ public interface ObjetUCC {
   /**
    * Sells an object represented by the given ObjetDTO object.
    *
-   * @param objetDTO the object to be sold
+   * @param objetDTO the object to sell
    * @return the changed ObjetDTO
    */
   ObjetDTO venteObject(ObjetDTO objetDTO);
 
+  /**
+   * Sold an object
+   *
+   * @param objetDTO the solded object.
+   * @return the changed ObjetDTO
+   */
   ObjetDTO venduObject(ObjetDTO objetDTO);
 
   /**

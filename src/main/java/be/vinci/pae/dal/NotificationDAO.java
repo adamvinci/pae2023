@@ -9,6 +9,7 @@ public interface NotificationDAO {
 
   /**
    * Insert a notification in the database.
+   *
    * @param notification to create
    * @return the created notification
    */

@@ -51,9 +51,6 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   private String localisation;
 
-  public ObjetImpl() {
-  }
-
   @Override
   public int getIdObjet() {
     return idObjet;

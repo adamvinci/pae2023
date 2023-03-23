@@ -7,5 +7,10 @@ import be.vinci.pae.business.dto.NotificationDTO;
  */
 public interface NotificationFactory {
 
+  /**
+   * Provide an instance of {@link NotificationDTO}.
+   *
+   * @return a new {@link NotificationDTO}
+   */
   NotificationDTO getNotification();
 }
