@@ -36,15 +36,17 @@ public interface ObjetUCC {
    * Accepts an object represented by the given ObjetDTO object.
    *
    * @param objetDTO the object to be accepted
-   * @return true if the object is accepted successfully, false otherwise
+   * @return the changed ObjetDTO
    */
   ObjetDTO accepterObjet(ObjetDTO objetDTO);
+
 
   /**
    * Refuses an object represented by the given ObjetDTO object.
    *
    * @param objetDTO the object to be refused
-   * @return true if the object is refused successfully, false otherwise
+   * @param message of the notification provided by Mr.Riez
+   * @return the changed ObjetDTO
    */
   ObjetDTO refuserObject(ObjetDTO objetDTO, String message);
 
@@ -52,7 +54,7 @@ public interface ObjetUCC {
    * Deposits an object represented by the given ObjetDTO object.
    *
    * @param objetDTO the object to be deposited
-   * @return true if the object is deposited successfully, false otherwise
+   * @return the changed ObjetDTO
    */
   ObjetDTO depotObject(ObjetDTO objetDTO);
 
@@ -60,11 +62,17 @@ public interface ObjetUCC {
    * Sells an object represented by the given ObjetDTO object.
    *
    * @param objetDTO the object to be sold
-   * @return true if the object is sold successfully, false otherwise
+   * @return the changed ObjetDTO
    */
   ObjetDTO venteObject(ObjetDTO objetDTO);
 
   ObjetDTO venduObject(ObjetDTO objetDTO);
 
+  /**
+   * Retrieve the object linked to the id.
+   *
+   * @param id of the object to retrieve
+   * @return the object found.
+   */
   ObjetDTO getOne(int id);
 }

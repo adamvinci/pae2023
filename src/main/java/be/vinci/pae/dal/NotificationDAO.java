@@ -7,7 +7,18 @@ import be.vinci.pae.business.dto.NotificationDTO;
  */
 public interface NotificationDAO {
 
+  /**
+   * Insert a notification in the database.
+   * @param notification to create
+   * @return the created notification
+   */
   NotificationDTO createOne(NotificationDTO notification);
 
+  /**
+   * Insert a row in notification_utilisateur.
+   *
+   * @param idNotif to link with the user
+   * @param idUser to alert
+   */
   void linkNotifToUser(int idNotif, int idUser);
 }
