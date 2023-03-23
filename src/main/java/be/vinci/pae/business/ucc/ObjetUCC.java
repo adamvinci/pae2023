@@ -1,5 +1,6 @@
 package be.vinci.pae.business.ucc;
 
+import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
 import java.util.List;
@@ -38,7 +39,7 @@ public interface ObjetUCC {
    * @param objetDTO the object to be accepted
    * @return the changed ObjetDTO
    */
-  ObjetDTO accepterObjet(ObjetDTO objetDTO);
+  ObjetDTO accepterObjet(ObjetDTO objetDTO, NotificationDTO notificationDTO);
 
 
   /**

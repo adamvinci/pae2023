@@ -1,9 +1,11 @@
 package be.vinci.pae.ihm;
 
 import be.vinci.pae.business.domaine.Objet;
+import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.dto.UserDTO;
+import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.ihm.filters.AnonymousOrAuthorize;
 import be.vinci.pae.ihm.filters.ResponsableOrAidant;
@@ -41,6 +43,8 @@ public class ObjetRessource {
 
   @Inject
   private ObjetUCC objetUCC;
+  @Inject
+  private NotificationFactory notificationFactory;
 
   /**
    * Retrieve all the object in the database.
@@ -137,9 +141,10 @@ public class ObjetRessource {
   @Produces(MediaType.APPLICATION_JSON)
   public ObjetDTO accepterObject(@PathParam("id") int id) {
     ObjetDTO objetDTO1 = objetUCC.getOne(id);
-    ObjetDTO changed = objetUCC.accepterObjet(objetDTO1);
+    NotificationDTO notification = notificationFactory.getNotification();
+    ObjetDTO changed = objetUCC.accepterObjet(objetDTO1,notification);
     if (changed == null) {
-      throw new WebApplicationException("Impossible changement to accept "
+      throw new WebApplicationException("Impossible changement, to accept "
           + "an object it state must be 'proposer' ", 512);
     }
 
@@ -151,17 +156,8 @@ public class ObjetRessource {
   @Path("atelierObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response atelierObject(@PathParam("id") int id, Objet objet,
-      @Context ContainerRequest request) {
-    UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
-    if (authenticatedUser != null && (authenticatedUser.getRole().equals("responsable")
-        || authenticatedUser.getRole().equals("aidant"))) {
-      Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
-          "Attempt of unauthorized change of object localisation from "
-              + authenticatedUser.getEmail());
-      throw new WebApplicationException("Only the responsable and 'aidant' can accept an object",
-          Status.UNAUTHORIZED);
-    }
+  public Response atelierObject(@PathParam("id") int id, Objet objet) {
+
     ObjetDTO obj = objet;
     ObjetDTO changed = objetUCC.depotObject(obj);
     if (changed == null) {
@@ -209,12 +205,12 @@ public class ObjetRessource {
   @Path("refuserObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public ObjetDTO refuserObject(@PathParam("id") int id, JsonNode objetCredentials) {
+  public ObjetDTO refuserObject(@PathParam("id") int id, JsonNode json) {
 
-    if (!objetCredentials.hasNonNull("message")) {
+    if (!json.hasNonNull("message")) {
       throw new WebApplicationException("message required", Status.BAD_REQUEST);
     }
-    String message = objetCredentials.get("message").asText();
+    String message = json.get("message").asText();
 
     if (message.isBlank() || message.isEmpty()) {
       throw new WebApplicationException("message required", Status.BAD_REQUEST);
@@ -222,7 +218,8 @@ public class ObjetRessource {
     ObjetDTO objet = objetUCC.getOne(id);
     ObjetDTO changed = objetUCC.refuserObject(objet, message);
     if (changed == null) {
-      throw new WebApplicationException("impossible changement", Status.BAD_REQUEST);
+      throw new WebApplicationException("\"Impossible changement, to refuse an object "
+          + "it state must be 'proposer'", Status.BAD_REQUEST);
     }
     return changed;
   }

@@ -44,15 +44,14 @@ public class ObjetUCCImpl implements ObjetUCC {
 
 
   @Override
-  public ObjetDTO accepterObjet(ObjetDTO objetDTO) {
+  public ObjetDTO accepterObjet(ObjetDTO objetDTO,NotificationDTO notification) {
     Objet objet = (Objet) objetDTO;
     if (!objet.accepterObjet()) {
       return null;
     }
-    ObjetDTO objetDTO1 = dataService.updateObjectState(objet);
+    ObjetDTO objetDTO1 = dataService.updateObjectState(objetDTO);
 
     if (objetDTO1.getUtilisateur() != null) {
-      NotificationDTO notification = notifFactory.getNotification();
       notification.setObject(objetDTO1.getIdObjet());
       notification.setMessage("l'objet n° : " + objetDTO1.getIdObjet() + " a été ajouté");
       notification.setType("acceptation");
@@ -70,14 +69,14 @@ public class ObjetUCCImpl implements ObjetUCC {
     if (!objet.refuserObjet()) {
       return null;
     }
-    ObjetDTO objetDTO1 = dataService.updateObjectState(objet);
+    ObjetDTO objetDTO1 = dataService.updateObjectState(objetDTO);
 
+    NotificationDTO notification = notifFactory.getNotification();
+    notification.setObject(objetDTO1.getIdObjet());
+    notification.setMessage(message);
+    notification.setType("refus");
+    NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
     if (objetDTO1.getUtilisateur() != null) {
-      NotificationDTO notification = notifFactory.getNotification();
-      notification.setObject(objetDTO1.getIdObjet());
-      notification.setMessage(message);
-      notification.setType("refus");
-      NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
       dataServiceNotification.linkNotifToUser(notificationCreated.getId(),
           objetDTO1.getUtilisateur());
     }
@@ -135,7 +134,7 @@ public class ObjetUCCImpl implements ObjetUCC {
     notification.setType("information");
     dataServiceNotification.createOne(notification);
 
-    return dataService.updateObjectState(objet);
+    return dataService.updateObjectState(objetDTO);
   }
 
   @Override

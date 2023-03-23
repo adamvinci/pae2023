@@ -12,7 +12,7 @@ Content-Type: application/json
 
 ###
 POST {{baseUrl}}/objet/accepterObject/1
-Authorization: {{adrienToken}}
+Authorization: {{memberToken}}
 ###
 GET http://localhost:3000/auths/user
 Content-Type: application/json

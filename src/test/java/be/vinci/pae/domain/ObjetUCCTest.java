@@ -1,15 +1,19 @@
 package be.vinci.pae.domain;
 
 
-
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.doNothing;
 
 import be.vinci.pae.business.domaine.Objet;
+import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
+import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.factory.ObjetFactory;
 import be.vinci.pae.business.ucc.ObjetUCC;
+import be.vinci.pae.dal.NotificationDAO;
 import be.vinci.pae.dal.ObjectDAO;
 import be.vinci.pae.dal.TypeObjetDAO;
 import be.vinci.pae.utils.ApplicationBinderMock;
@@ -31,8 +35,11 @@ class ObjetUCCTest {
 
   private ObjetUCC objetUCC;
   private ObjectDAO objectDAO;
-  private Objet objet;
+  private ObjetDTO objetDTO;
   private ObjetFactory objetFactory;
+  private NotificationFactory notificationFactory;
+  private NotificationDAO notificationDAO;
+  private NotificationDTO notificationDTO;
 
   private TypeObjetDAO typeObjetDAO;
 
@@ -42,9 +49,11 @@ class ObjetUCCTest {
     objectDAO = locator.getService(ObjectDAO.class);
     typeObjetDAO = locator.getService(TypeObjetDAO.class);
     objetFactory = locator.getService(ObjetFactory.class);
-    objet = (Objet) objetFactory.getObjet();
-    objet.setIdObjet(1);
-    objet.setPhoto("PathToPic");
+    notificationFactory = locator.getService(NotificationFactory.class);
+    notificationDAO = locator.getService(NotificationDAO.class);
+    objetDTO = objetFactory.getObjet();
+    notificationDTO = notificationFactory.getNotification();
+
   }
 
   @DisplayName("Test getAllObject() return null when resultset is null")
@@ -91,6 +100,46 @@ class ObjetUCCTest {
   void testGetPictureReturnPathToPicture() {
     Mockito.when(objectDAO.getPicture(1)).thenReturn("Path To Picture");
     assertEquals("Path To Picture", objetUCC.getPicture(1));
+
+  }
+
+  @DisplayName("Test accepterObjet(ObjetDTO objetDTO) with a bad state")
+  @Test
+  void testAccepterObjetWithBadState() {
+    objetDTO.setEtat("refuser");
+
+    assertNull(objetUCC.accepterObjet(objetDTO,notificationDTO), "Return null if accepterObjet() is false");
+
+  }
+
+  @DisplayName("Test accepterObjet(ObjetDTO objetDTO) with a good state and without notification")
+  @Test
+  void testAccepterObjetWithGoodStateAndWithoutNotification() {
+    objetDTO.setEtat("proposer");
+    Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
+    assertAll(
+        () -> assertEquals(objetDTO, objetUCC.accepterObjet(objetDTO,notificationDTO)),
+        () -> assertEquals("accepte", objetDTO.getEtat())
+    );
+  }
+
+  @DisplayName("Test accepterObjet(ObjetDTO objetDTO) with a good state and with notification")
+  @Test
+  void testAccepterObjetWithGoodStateAndWithNotification() {
+    objetDTO.setIdObjet(1);
+    objetDTO.setEtat("proposer");
+    objetDTO.setUtilisateur(1);
+    Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
+    Mockito.when(notificationDAO.createOne(notificationDTO)).thenReturn(notificationDTO);
+    doNothing().when(notificationDAO)
+        .linkNotifToUser(notificationDTO.getId(), objetDTO.getUtilisateur());
+    assertAll(
+        ()->    assertEquals(objetDTO, objetUCC.accepterObjet(objetDTO,notificationDTO)),
+        ()->    assertEquals(notificationDTO.getObject(),objetDTO.getIdObjet())
+        );
+
+
+
 
   }
 }
