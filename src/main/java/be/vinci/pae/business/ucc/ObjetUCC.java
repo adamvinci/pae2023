@@ -33,10 +33,11 @@ public interface ObjetUCC {
    */
   String getPicture(int id);
 
+
   /**
    * Accepts an object represented by the given ObjetDTO object.
-   *
    * @param objetDTO the object to be accepted
+   * @param notificationDTO the notification to link with the object
    * @return the changed ObjetDTO
    */
   ObjetDTO accepterObjet(ObjetDTO objetDTO, NotificationDTO notificationDTO);

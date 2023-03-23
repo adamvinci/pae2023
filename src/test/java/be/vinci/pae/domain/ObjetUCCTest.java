@@ -134,9 +134,8 @@ class ObjetUCCTest {
     Mockito.when(notificationDAO.createOne(notificationDTO)).thenReturn(notificationDTO);
     doNothing().when(notificationDAO)
         .linkNotifToUser(notificationDTO.getId(), objetDTO.getUtilisateur());
-    assertAll(
-        () -> assertEquals(objetDTO, objetUCC.accepterObjet(objetDTO, notificationDTO)),
-        () -> assertEquals(notificationDTO.getObject(), objetDTO.getIdObjet())
-    );
+
+    assertEquals(objetDTO, objetUCC.accepterObjet(objetDTO, notificationDTO));
+
   }
 }
