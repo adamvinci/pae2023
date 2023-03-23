@@ -4,7 +4,7 @@ import be.vinci.pae.business.dto.DisponibiliteDTO;
 import java.util.List;
 
 /**
- * DisponibiliteDAO purpose is to communicate with the database.
+ * DisponibiliteDAO purpose is to communicate with the disponibilite table in the database.
  */
 public interface DisponibiliteDAO {
 

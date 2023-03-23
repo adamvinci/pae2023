@@ -9,6 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Implementation of {@link NotificationDAO}.
+ */
 public class NotificationDAOImpl implements NotificationDAO {
 
   @Inject

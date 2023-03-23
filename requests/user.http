@@ -49,11 +49,11 @@ POST http://localhost:3000/auths/login
 Content-Type: application/json
 
 {
-  "email":"test13@hotmail.be",
+  "email":"test17@hotmail.be",
   "password":"oui"
 }
 > {%
-  client.global.set("adrienToken", response.body.token);
+  client.global.set("memberToken", response.body.token);
 %}
 
 

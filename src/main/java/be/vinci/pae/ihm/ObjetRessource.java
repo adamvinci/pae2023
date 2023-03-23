@@ -4,7 +4,6 @@ import be.vinci.pae.business.domaine.Objet;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.dto.UserDTO;
-import be.vinci.pae.business.ucc.NotificationUCC;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.ihm.filters.AnonymousOrAuthorize;
 import be.vinci.pae.ihm.filters.ResponsableOrAidant;
@@ -43,8 +42,6 @@ public class ObjetRessource {
 
   @Inject
   private ObjetUCC objetUCC;
-  private NotificationUCC notificationUCC;
-
 
   /**
    * Retrieve all the object in the database.
@@ -128,7 +125,11 @@ public class ObjetRessource {
     return Response.ok(output).build();
   }
 
-  //change Etat of objects
+  /**
+   * Change the state of an object from 'proposer' to 'accepte'.
+   * @param id of the object to change
+   * @return the changed object
+   */
   @ResponsableOrAidant
   @POST
   @Path("accepterObject/{id}")

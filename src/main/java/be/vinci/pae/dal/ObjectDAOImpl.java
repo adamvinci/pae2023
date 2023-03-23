@@ -124,7 +124,12 @@ public class ObjectDAOImpl implements ObjectDAO {
     return objetDTO;
   }
 
-
+  /**
+   * Fill an objetDTO with the resultset of a query.
+   * @param set the response of a query.
+   * @param objetDTO object to fill.
+   * @throws SQLException in case of problem with the database
+   */
   public void setObjetDTOFromResultSet(ResultSet set, ObjetDTO objetDTO) throws SQLException {
     objetDTO.setIdObjet(Integer.parseInt(set.getString(1)));
     objetDTO.setGsm(set.getString(2));
@@ -164,6 +169,11 @@ public class ObjectDAOImpl implements ObjectDAO {
     objetDTO.setDisponibilite(disponibiliteDTO);
   }
 
+  /**
+   * Retrieve the object linked to the id.
+   * @param id of object to search
+   * @return the object or null
+   */
   public ObjetDTO getOne(int id) {
     ObjetDTO objetDTO = objetFactory.getObjet();
     String query = "SELECT o.id_objet,o.gsm,o.photo,o.description,o.etat,"

@@ -26,26 +26,19 @@ import java.io.IOException;
 @ResponsableAuthorization
 public class ResponsableAuthorizationRequestFilter implements ContainerRequestFilter {
 
-  private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
-  private final JWTVerifier jwtVerifier = JWT.require(this.jwtAlgorithm).withIssuer("auth0")
-      .build();
   @Inject
-  private UserUcc userUcc;
-
-  @Inject
-  private ResponsableOrAidantRequestFilter responsableOrAidantRequestFilter;
+  private TokenFilter tokenFilter;
 
   /**
    * If the token is valid and the user associated with it is authorized to access the requested
    * resource.
    *
    * @param requestContext the context object representing the incoming request
-   * @throws IOException if an I/O error occurs while processing the request
    */
   @Override
-  public void filter(ContainerRequestContext requestContext) throws IOException {
+  public void filter(ContainerRequestContext requestContext) {
 
-    UserDTO authenticatedUser = responsableOrAidantRequestFilter.tokenFilter(requestContext);
+    UserDTO authenticatedUser = tokenFilter.tokenFilter(requestContext);
 
     if (!authenticatedUser.getRole().equals("responsable")) {
       throw new WebApplicationException("You do not have the required permissions to do this.",

@@ -4,15 +4,14 @@ import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.views.Views.Public;
 import com.fasterxml.jackson.annotation.JsonView;
 
+/**
+ * Implementation of {@link NotificationDTO}.
+ */
 public class NotificationImpl implements NotificationDTO {
 
-  @JsonView(Public.class)
   private int id;
-  @JsonView(Public.class)
   private int object;
-  @JsonView(Public.class)
   private String message;
-  @JsonView(Public.class)
   private String type;
 
   public Integer getId() {
