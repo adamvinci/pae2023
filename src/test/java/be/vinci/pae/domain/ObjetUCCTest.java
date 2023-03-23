@@ -4,14 +4,11 @@ package be.vinci.pae.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
 
 import be.vinci.pae.business.domaine.Objet;
-import be.vinci.pae.business.domaine.ObjetImpl;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.factory.ObjetFactory;
-import be.vinci.pae.business.factory.ObjetFactoryImpl;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.dal.ObjectDAO;
 import be.vinci.pae.dal.TypeObjetDAO;
