@@ -1,6 +1,5 @@
 package be.vinci.pae.ihm;
 
-import be.vinci.pae.business.domaine.Objet;
 import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
