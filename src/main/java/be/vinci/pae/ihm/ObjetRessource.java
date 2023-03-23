@@ -158,7 +158,7 @@ public class ObjetRessource {
   /**
    * Change the localisation of an object.
    *
-   * @param id of the object to modify
+   * @param id   of the object to modify
    * @param json contains the localisation
    * @return the modified object
    */
@@ -196,14 +196,32 @@ public class ObjetRessource {
     return changedObject;
   }
 
+  /**
+   * Change the state of an object to 'en vente'.
+   *
+   * @param id   of the object to modify
+   * @param json contains the price of sell
+   * @return the modified object
+   */
   @ResponsableOrAidant
   @POST
   @Path("misEnVenteObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response misEnVenteObject(@PathParam("id") int id, Objet objet) {
-    ObjetDTO obj = objet;
-    ObjetDTO changed = objetUCC.mettreEnVente(obj);
+  public Response misEnVenteObject(@PathParam("id") int id, JsonNode json) {
+    if (!json.hasNonNull("prix")) {
+      throw new WebApplicationException("price required", Status.BAD_REQUEST);
+    }
+    String prix = json.get("prix").asText();
+
+    if (prix.isBlank() || prix.isEmpty()) {
+      throw new WebApplicationException("message required", Status.BAD_REQUEST);
+    }
+    ObjetDTO retrievedObject = objetUCC.getOne(id);
+    if (retrievedObject == null) {
+      throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
+    }
+    ObjetDTO changed = objetUCC.mettreEnVente(retrievedObject);
     if (changed == null) {
       throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
     }
@@ -238,6 +256,13 @@ public class ObjetRessource {
     return changed;
   }
 
+  /**
+   * Refuse a proposed object.
+   *
+   * @param id   of the object to refuse
+   * @param json containing the reason of refusal
+   * @return the refused object
+   */
   @ResponsableAuthorization
   @POST
   @Path("refuserObject/{id}")
