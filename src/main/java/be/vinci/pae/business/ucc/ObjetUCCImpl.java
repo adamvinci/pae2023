@@ -44,7 +44,7 @@ public class ObjetUCCImpl implements ObjetUCC {
 
 
   @Override
-  public ObjetDTO accepterObjet(ObjetDTO objetDTO,NotificationDTO notification) {
+  public ObjetDTO accepterObjet(ObjetDTO objetDTO, NotificationDTO notification) {
     Objet objet = (Objet) objetDTO;
     if (!objet.accepterObjet()) {
       return null;

@@ -108,7 +108,8 @@ class ObjetUCCTest {
   void testAccepterObjetWithBadState() {
     objetDTO.setEtat("refuser");
 
-    assertNull(objetUCC.accepterObjet(objetDTO,notificationDTO), "Return null if accepterObjet() is false");
+    assertNull(objetUCC.accepterObjet(objetDTO, notificationDTO),
+        "Return null if accepterObjet() is false");
 
   }
 
@@ -118,7 +119,7 @@ class ObjetUCCTest {
     objetDTO.setEtat("proposer");
     Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
     assertAll(
-        () -> assertEquals(objetDTO, objetUCC.accepterObjet(objetDTO,notificationDTO)),
+        () -> assertEquals(objetDTO, objetUCC.accepterObjet(objetDTO, notificationDTO)),
         () -> assertEquals("accepte", objetDTO.getEtat())
     );
   }
@@ -134,12 +135,8 @@ class ObjetUCCTest {
     doNothing().when(notificationDAO)
         .linkNotifToUser(notificationDTO.getId(), objetDTO.getUtilisateur());
     assertAll(
-        ()->    assertEquals(objetDTO, objetUCC.accepterObjet(objetDTO,notificationDTO)),
-        ()->    assertEquals(notificationDTO.getObject(),objetDTO.getIdObjet())
-        );
-
-
-
-
+        () -> assertEquals(objetDTO, objetUCC.accepterObjet(objetDTO, notificationDTO)),
+        () -> assertEquals(notificationDTO.getObject(), objetDTO.getIdObjet())
+    );
   }
 }

@@ -142,7 +142,7 @@ public class ObjetRessource {
   public ObjetDTO accepterObject(@PathParam("id") int id) {
     ObjetDTO objetDTO1 = objetUCC.getOne(id);
     NotificationDTO notification = notificationFactory.getNotification();
-    ObjetDTO changed = objetUCC.accepterObjet(objetDTO1,notification);
+    ObjetDTO changed = objetUCC.accepterObjet(objetDTO1, notification);
     if (changed == null) {
       throw new WebApplicationException("Impossible changement, to accept "
           + "an object it state must be 'proposer' ", 512);
