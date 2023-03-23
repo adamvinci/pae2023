@@ -213,8 +213,8 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   @Override
   public Boolean deposerEnMagasin() {
-    if (Objects.equals(getEtat(), "accepte") && Objects.equals(getLocalisation(), null) ||
-        Objects.equals(getLocalisation(), "Atelier") && Objects.equals(getEtat(), "accepte")) {
+    if (Objects.equals(getEtat(), "accepte") && Objects.equals(getLocalisation(), null)
+        || Objects.equals(getLocalisation(), "Atelier") && Objects.equals(getEtat(), "accepte")) {
       setLocalisation("Magasin");
       setDate_depot(LocalDate.now());
       return true;

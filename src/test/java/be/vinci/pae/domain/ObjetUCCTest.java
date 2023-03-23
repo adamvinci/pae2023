@@ -243,9 +243,10 @@ class ObjetUCCTest {
     );
   }
 
-  @DisplayName("Test depotObject(ObjetDTO objetDTO, String localisation) with an already existing location (Atelier)")
+  @DisplayName("Test depotObject(ObjetDTO objetDTO, String localisation) "
+      + "with an already existing location (Atelier)")
   @Test
-  void testDepotObjectWithTransfertOfLocalisation(){
+  void testDepotObjectWithTransfertOfLocalisation() {
     objetDTO.setEtat("accepte");
     objetDTO.setLocalisation("Atelier");
     Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);

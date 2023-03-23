@@ -58,6 +58,7 @@ public interface ObjetUCC {
    * Deposits an object represented by the given ObjetDTO object.
    *
    * @param objetDTO the object to be deposited
+   * @param localisation to put in the object
    * @return the changed ObjetDTO
    */
   ObjetDTO depotObject(ObjetDTO objetDTO, String localisation);
