@@ -621,3 +621,7 @@ mars 23, 2023 12:01:09 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: Malformed token : The token was expected to have 3 parts, but got 0.
 mars 23, 2023 12:01:12 PM be.vinci.pae.ihm.AuthRessource login
 INFO: Connexion de adrien.riez@hotmail.be
+mars 23, 2023 12:04:41 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement to accept an object it state must be 'proposer' 
+mars 23, 2023 12:04:56 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You do not have the required permissions to do this.

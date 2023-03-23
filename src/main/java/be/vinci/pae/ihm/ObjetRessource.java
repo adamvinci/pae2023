@@ -127,6 +127,7 @@ public class ObjetRessource {
 
   /**
    * Change the state of an object from 'proposer' to 'accepte'.
+   *
    * @param id of the object to change
    * @return the changed object
    */
@@ -146,9 +147,11 @@ public class ObjetRessource {
     return changed;
   }
 
-  @PUT
+  @ResponsableOrAidant
+  @POST
   @Path("atelierObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
   public Response atelierObject(@PathParam("id") int id, Objet objet,
       @Context ContainerRequest request) {
     UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
@@ -171,9 +174,11 @@ public class ObjetRessource {
         .build();
   }
 
-  @PUT
+  @ResponsableOrAidant
+  @POST
   @Path("misEnVenteObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
   public Response misEnVenteObject(@PathParam("id") int id, Objet objet) {
     ObjetDTO obj = objet;
     ObjetDTO changed = objetUCC.venteObject(obj);
@@ -186,9 +191,11 @@ public class ObjetRessource {
         .build();
   }
 
-  @PUT
+  @ResponsableOrAidant
+  @POST
   @Path("vendreObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
   public ObjetDTO vendreObject(@PathParam("id") int id) {
     ObjetDTO obj = objetUCC.getOne(id);
     ObjetDTO changed = objetUCC.venduObject(obj);
@@ -198,9 +205,11 @@ public class ObjetRessource {
     return changed;
   }
 
+  @ResponsableOrAidant
   @POST
   @Path("refuserObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
   public ObjetDTO refuserObject(@PathParam("id") int id, JsonNode objetCredentials) {
 
     if (!objetCredentials.hasNonNull("message")) {
