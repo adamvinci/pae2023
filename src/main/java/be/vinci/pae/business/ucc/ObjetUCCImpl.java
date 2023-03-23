@@ -57,8 +57,8 @@ public class ObjetUCCImpl implements ObjetUCC {
       notification.setMessage("l'objet n° : " + objetDTO1.getIdObjet() + " a été ajouté");
       notification.setType("acceptation");
       NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
-      dataServiceNotification.linkNotifToUser(notificationCreated.getId()
-          , objetDTO1.getUtilisateur());
+      dataServiceNotification.linkNotifToUser(notificationCreated.getId(),
+          objetDTO1.getUtilisateur());
     }
 
     return objetDTO1;
@@ -78,8 +78,8 @@ public class ObjetUCCImpl implements ObjetUCC {
       notification.setMessage(message);
       notification.setType("refus");
       NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
-      dataServiceNotification.linkNotifToUser(notificationCreated.getId()
-          , objetDTO1.getUtilisateur());
+      dataServiceNotification.linkNotifToUser(notificationCreated.getId(),
+          objetDTO1.getUtilisateur());
     }
 
     return objetDTO1;
@@ -128,7 +128,6 @@ public class ObjetUCCImpl implements ObjetUCC {
     if (!objet.venduObject()) {
       return null;
     }
-    ObjetDTO objetDTO1 = dataService.updateObjectState(objet);
 
     NotificationDTO notification = notifFactory.getNotification();
     notification.setObject(objetDTO.getIdObjet());
@@ -136,7 +135,7 @@ public class ObjetUCCImpl implements ObjetUCC {
     notification.setType("information");
     dataServiceNotification.createOne(notification);
 
-    return objetDTO1;
+    return dataService.updateObjectState(objet);
   }
 
   @Override

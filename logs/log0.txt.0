@@ -591,3 +591,33 @@ mars 22, 2023 6:36:13 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: Impossible changement
 mars 22, 2023 6:37:21 PM be.vinci.pae.ihm.ObjetRessource getAllObject
 INFO: Retrieve the complete list of object from user adrien.riez@hotmail.be
+mars 23, 2023 11:57:40 AM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 23, 2023 11:57:47 AM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Malformed token : The token was expected to have 3 parts, but got 0.
+mars 23, 2023 11:57:52 AM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de adrien.riez@hotmail.be
+mars 23, 2023 11:57:55 AM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve the complete list of object from user adrien.riez@hotmail.be
+mars 23, 2023 11:58:18 AM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement
+mars 23, 2023 12:00:21 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Malformed token : The token was expected to have 3 parts, but got 0.
+mars 23, 2023 12:00:32 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: bad credentials
+mars 23, 2023 12:00:35 PM be.vinci.pae.ihm.AuthRessource register
+INFO: Inscription de test17@hotmail.be
+mars 23, 2023 12:00:37 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: bad credentials
+mars 23, 2023 12:00:56 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de test17@hotmail.be
+mars 23, 2023 12:01:02 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You do not have the required permissions to do this.
+mars 23, 2023 12:01:05 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Malformed token : The token was expected to have 3 parts, but got 0.
+mars 23, 2023 12:01:08 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Malformed token : The token was expected to have 3 parts, but got 0.
+mars 23, 2023 12:01:09 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Malformed token : The token was expected to have 3 parts, but got 0.
+mars 23, 2023 12:01:12 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de adrien.riez@hotmail.be

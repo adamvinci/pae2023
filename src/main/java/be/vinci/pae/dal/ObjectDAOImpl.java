@@ -126,6 +126,7 @@ public class ObjectDAOImpl implements ObjectDAO {
 
   /**
    * Fill an objetDTO with the resultset of a query.
+   *
    * @param set the response of a query.
    * @param objetDTO object to fill.
    * @throws SQLException in case of problem with the database
@@ -171,6 +172,7 @@ public class ObjectDAOImpl implements ObjectDAO {
 
   /**
    * Retrieve the object linked to the id.
+   *
    * @param id of object to search
    * @return the object or null
    */

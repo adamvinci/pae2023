@@ -139,7 +139,8 @@ public class ObjetRessource {
     ObjetDTO objetDTO1 = objetUCC.getOne(id);
     ObjetDTO changed = objetUCC.accepterObjet(objetDTO1);
     if (changed == null) {
-      throw new WebApplicationException("Impossible changement", 512);
+      throw new WebApplicationException("Impossible changement to accept "
+          + "an object it state must be 'proposer' ", 512);
     }
 
     return changed;
