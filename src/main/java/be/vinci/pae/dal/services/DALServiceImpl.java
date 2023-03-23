@@ -44,6 +44,7 @@ public class DALServiceImpl implements DALService, DALTransaction {
    * @param query to put in the prepared statement
    * @return the prepared statement
    */
+
   @Override
   public PreparedStatement preparedStatement(String query) {
     PreparedStatement statement;
@@ -56,11 +57,14 @@ public class DALServiceImpl implements DALService, DALTransaction {
   }
 
   /**
-   *Starts a new transaction by getting a new connection from the database and disabling auto-commit.
-   *
+   *Starts a new transaction by getting a new connection from the database
+   *and disabling auto-commit.
+
    *Throws a RuntimeException if a connection has already been acquired.
+
    * @throws FatalException if an SQL exception occurs while starting the transaction.
    */
+
   @Override
   public void startTransaction() {
     try {
@@ -77,11 +81,12 @@ public class DALServiceImpl implements DALService, DALTransaction {
   }
   /**
    *Commits the current transaction to the database.
-   *
+
    *Throws a RuntimeException if no connection is available.
    *Any SQLException encountered during the commit will be wrapped in a FatalException and rethrown.
    *At the end, the connection is closed.
    */
+
   @Override
   public void commitTransaction() {
     try {
@@ -103,6 +108,7 @@ public class DALServiceImpl implements DALService, DALTransaction {
    *@throws RuntimeException if there is no active transaction
    *@throws FatalException if a SQL exception occurs during the rollback process
    */
+
   @Override
   public void rollBackTransaction() {
     try {
@@ -121,6 +127,7 @@ public class DALServiceImpl implements DALService, DALTransaction {
   /**
    *Closes the current database connection.
    */
+
   @Override
   public void fermerConnexion() {
     try {

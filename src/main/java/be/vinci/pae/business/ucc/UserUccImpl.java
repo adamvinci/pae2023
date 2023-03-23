@@ -3,11 +3,9 @@ package be.vinci.pae.business.ucc;
 import be.vinci.pae.business.domaine.User;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.dal.UserDAO;
-import be.vinci.pae.dal.services.DALService;
 import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.FatalException;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.WebApplicationException;
 import java.util.List;
 
 
@@ -103,7 +101,7 @@ public class UserUccImpl implements UserUcc {
         return userToChange;
       }
       return null;
-    } catch (FatalException e){
+    } catch (FatalException e) {
       dal.rollBackTransaction();
       throw new FatalException(e);
     } finally {
