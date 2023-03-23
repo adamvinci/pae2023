@@ -212,12 +212,23 @@ public class ObjetImpl implements Objet, ObjetDTO {
   }
 
   @Override
-  public Boolean depotObject() {
-    if (!Objects.equals(getEtat(), "accepte") || Objects.equals(getLocalisation(), "Atelier")) {
-      return false;
+  public Boolean deposerEnMagasin() {
+    if ( (Objects.equals(getEtat(), "accepte") && Objects.equals(getLocalisation(),null) ) ||
+        ( Objects.equals(getLocalisation(), "Atelier") && Objects.equals(getEtat(), "accepte")) ) {
+      setLocalisation("Magasin");
+      setDate_depot(LocalDate.now());
+      return true;
     }
-    setLocalisation("Atelier");
-    return true;
+ return false;
+  }
+
+  @Override
+  public Boolean deposerEnAtelier() {
+    if (Objects.equals(getEtat(), "accepte") && Objects.equals(getLocalisation(),null) ){
+      setLocalisation("Atelier");
+      return true;
+    }
+return false;
   }
 
   @Override

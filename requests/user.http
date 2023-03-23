@@ -122,5 +122,16 @@ POST {{baseUrl}}/objet/accepterObject/1
 Authorization: {{adrienToken}}
 
 ###
+POST {{baseUrl}}/objet/depositObject/1
+Authorization: {{aidantToken}}
+Content-Type: application/json
+
+{
+  "localisation" : "Magasin"
+}
+
+###
 POST {{baseUrl}}/objet/vendreObject/1
 Authorization: {{aidantToken}}
+
+

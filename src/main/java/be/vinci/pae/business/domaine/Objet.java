@@ -28,7 +28,14 @@ public interface Objet extends ObjetDTO {
    *
    * @return True if the object has been deposited; false otherwise.
    */
-  Boolean depotObject();
+  Boolean deposerEnMagasin();
+
+  /**
+   * Indicates whether this object has been deposited.
+   *
+   * @return True if the object has been deposited; false otherwise.
+   */
+  Boolean deposerEnAtelier();
 
   /**
    * Indicates whether this object is available for sale.

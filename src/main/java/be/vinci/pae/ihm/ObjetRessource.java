@@ -142,8 +142,8 @@ public class ObjetRessource {
   @Produces(MediaType.APPLICATION_JSON)
   public ObjetDTO accepterObject(@PathParam("id") int id) {
     ObjetDTO retrievedObject = objetUCC.getOne(id);
-    if(retrievedObject == null){
-      throw new WebApplicationException("this object does not exist",Status.BAD_REQUEST);
+    if (retrievedObject == null) {
+      throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
     }
     NotificationDTO notification = notificationFactory.getNotification();
     ObjetDTO changed = objetUCC.accepterObjet(retrievedObject, notification);
@@ -155,22 +155,45 @@ public class ObjetRessource {
     return changed;
   }
 
+  /**
+   * Change the localisation of an object.
+   *
+   * @param id of the object to modify
+   * @param json contains the localisation
+   * @return the modified object
+   */
   @ResponsableOrAidant
   @POST
-  @Path("atelierObject/{id}")
+  @Path("depositObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response atelierObject(@PathParam("id") int id, Objet objet) {
-
-    ObjetDTO obj = objet;
-    ObjetDTO changed = objetUCC.depotObject(obj);
-    if (changed == null) {
-      throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
+  public ObjetDTO deposerObject(@PathParam("id") int id, JsonNode json) {
+    if (!json.hasNonNull("localisation")) {
+      throw new WebApplicationException("message required", Status.BAD_REQUEST);
     }
-    // Retourne une réponse HTTP 200 OK avec un message de confirmation
-    return Response.status(Response.Status.OK)
-        .entity("Object with ID " + id + " accepted successfully")
-        .build();
+    String localisation = json.get("localisation").asText();
+
+    if (localisation.isBlank() || localisation.isEmpty()) {
+      throw new WebApplicationException("message required", Status.BAD_REQUEST);
+    }
+    if (!localisation.equals("Magasin") && !localisation.equals("Atelier")) {
+      throw new WebApplicationException(
+          "An object can be deposited either in 'Atelier' or 'Magasin '"
+              + "", Status.BAD_REQUEST);
+    }
+    ObjetDTO retrievedObject = objetUCC.getOne(id);
+    if (retrievedObject == null) {
+      throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
+    }
+
+    ObjetDTO changedObject = objetUCC.depotObject(retrievedObject, localisation);
+    if (changedObject == null) {
+      throw new WebApplicationException(
+          "Impossible changement, to deposite an object it state must be 'accepte'"
+              + "and must not have already a location except if the deposit is for an atelier",
+          Status.UNAUTHORIZED);
+    }
+    return changedObject;
   }
 
   @ResponsableOrAidant
@@ -203,13 +226,14 @@ public class ObjetRessource {
   @Produces(MediaType.APPLICATION_JSON)
   public ObjetDTO vendreObject(@PathParam("id") int id) {
     ObjetDTO retrievedObject = objetUCC.getOne(id);
-    if(retrievedObject == null){
-      throw new WebApplicationException("this object does not exist",Status.BAD_REQUEST);
+    if (retrievedObject == null) {
+      throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
     }
     ObjetDTO changed = objetUCC.vendreObject(retrievedObject);
     if (changed == null) {
-      throw new WebApplicationException("Impossible changement,the object need to be in the state 'en vente'"
-          + "to be sold", Status.UNAUTHORIZED);
+      throw new WebApplicationException(
+          "Impossible changement,the object need to be in the state 'en vente'"
+              + "to be sold", Status.UNAUTHORIZED);
     }
     return changed;
   }
@@ -230,11 +254,11 @@ public class ObjetRessource {
       throw new WebApplicationException("message required", Status.BAD_REQUEST);
     }
     ObjetDTO retrievedObject = objetUCC.getOne(id);
-    if(retrievedObject == null){
-      throw new WebApplicationException("this object does not exist",Status.BAD_REQUEST);
+    if (retrievedObject == null) {
+      throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
     }
     NotificationDTO notification = notificationFactory.getNotification();
-    ObjetDTO changedObject = objetUCC.refuserObject(retrievedObject, message,notification);
+    ObjetDTO changedObject = objetUCC.refuserObject(retrievedObject, message, notification);
     if (changedObject == null) {
       throw new WebApplicationException("\"Impossible changement, to refuse an object "
           + "it state must be 'proposer'", Status.BAD_REQUEST);

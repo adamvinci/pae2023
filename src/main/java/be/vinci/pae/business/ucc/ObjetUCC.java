@@ -36,19 +36,19 @@ public interface ObjetUCC {
 
   /**
    * Accepts an object represented by the given ObjetDTO object.
-   * @param objetDTO the object to be accepted
+   *
+   * @param objetDTO        the object to be accepted
    * @param notificationDTO the notification to link with the object
    * @return the changed ObjetDTO
    */
   ObjetDTO accepterObjet(ObjetDTO objetDTO, NotificationDTO notificationDTO);
 
 
-
   /**
    * Refuses an object represented by the given ObjetDTO object.
    *
-   * @param objetDTO the object to be refused
-   * @param message of the notification provided by Mr.Riez
+   * @param objetDTO        the object to be refused
+   * @param message         of the notification provided by Mr.Riez
    * @param notificationDTO to save the reason of the refusal
    * @return the changed ObjetDTO
    */
@@ -60,7 +60,7 @@ public interface ObjetUCC {
    * @param objetDTO the object to be deposited
    * @return the changed ObjetDTO
    */
-  ObjetDTO depotObject(ObjetDTO objetDTO);
+  ObjetDTO depotObject(ObjetDTO objetDTO, String localisation);
 
   /**
    * Sells an object represented by the given ObjetDTO object.

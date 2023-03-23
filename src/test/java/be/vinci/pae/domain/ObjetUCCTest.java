@@ -204,4 +204,55 @@ class ObjetUCCTest {
         () -> assertEquals("vendu", objetDTO.getEtat())
     );
   }
+
+  @DisplayName("Test depotObject(ObjetDTO objetDTO, String localisation) with bad state")
+  @Test
+  void testDepotObjectwithBadStateAndLocalisationMagasin() {
+    objetDTO.setEtat("proposer");
+    assertNull(objetUCC.depotObject(objetDTO, "Magasin"), "The state must be 'accepted'");
+  }
+
+  @DisplayName("Test depotObject(ObjetDTO objetDTO, String localisation) with bad state")
+  @Test
+  void testDepotObjectwithBadStateAndLocalisationAtelier() {
+    objetDTO.setEtat("proposer");
+    assertNull(objetUCC.depotObject(objetDTO, "Atelier"), "The state must be 'accepted'");
+  }
+
+  @DisplayName("Test depotObject(ObjetDTO objetDTO, String localisation) with good "
+      + "state and localisation = magasin")
+  @Test
+  void testDepotObjectwithGoodStateAndLocalisationMagasin() {
+    objetDTO.setEtat("accepte");
+    Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
+    assertAll(
+        () -> assertEquals(objetDTO, objetUCC.depotObject(objetDTO, "Magasin")),
+        () -> assertEquals(objetDTO.getLocalisation(), "Magasin")
+    );
+  }
+
+  @DisplayName("Test depotObject(ObjetDTO objetDTO, String localisation) with good "
+      + "state and localisation = atelier")
+  @Test
+  void testDepotObjectwithGoodStateAndLocalisationAtelier() {
+    objetDTO.setEtat("accepte");
+    Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
+    assertAll(
+        () -> assertEquals(objetDTO, objetUCC.depotObject(objetDTO, "Atelier")),
+        () -> assertEquals(objetDTO.getLocalisation(), "Atelier")
+    );
+  }
+
+  @DisplayName("Test depotObject(ObjetDTO objetDTO, String localisation) with an already existing location (Atelier)")
+  @Test
+  void testDepotObjectWithTransfertOfLocalisation(){
+    objetDTO.setEtat("accepte");
+    objetDTO.setLocalisation("Atelier");
+    Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
+
+    assertAll(
+        () -> assertEquals(objetDTO, objetUCC.depotObject(objetDTO, "Magasin")),
+        () -> assertEquals(objetDTO.getLocalisation(), "Magasin")
+    );
+  }
 }

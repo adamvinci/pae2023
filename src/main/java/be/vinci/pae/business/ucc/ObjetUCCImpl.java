@@ -64,7 +64,7 @@ public class ObjetUCCImpl implements ObjetUCC {
   }
 
   @Override
-  public ObjetDTO refuserObject(ObjetDTO objetDTO, String message,NotificationDTO notification) {
+  public ObjetDTO refuserObject(ObjetDTO objetDTO, String message, NotificationDTO notification) {
     Objet objet = (Objet) objetDTO;
     if (!objet.refuserObjet()) {
       return null;
@@ -84,21 +84,18 @@ public class ObjetUCCImpl implements ObjetUCC {
   }
 
   @Override
-  public ObjetDTO depotObject(ObjetDTO objetDTO) {
-
-    LocalDate today = LocalDate.now();
+  public ObjetDTO depotObject(ObjetDTO objetDTO, String localisation) {
     Objet objet = (Objet) objetDTO;
-
-    objet.setDate_depot(today);
-
-    NotificationDTO notification = notifFactory.getNotification();
-    notification.setObject(objetDTO.getIdObjet());
-    notification.setMessage("l'objet n° : " + objetDTO.getIdObjet() + " a été deposé en magasin");
-    notification.setType("information");
-    ObjetDTO objetDTO1 = dataService.updateObjectState(objet);
-    dataServiceNotification.createOne(notification);
-
-    return objetDTO1;
+    if (localisation.equals("Magasin")) {
+      if (!objet.deposerEnMagasin()) {
+        return null;
+      }
+    }else{
+      if (!objet.deposerEnAtelier()) {
+        return null;
+      }
+    }
+    return dataService.updateObjectState(objetDTO);
   }
 
   @Override
@@ -109,8 +106,6 @@ public class ObjetUCCImpl implements ObjetUCC {
       return null;
     }
     LocalDate today = LocalDate.now();
-
-
 
     objet.setDate_vente(today);
 
@@ -125,7 +120,7 @@ public class ObjetUCCImpl implements ObjetUCC {
 
   @Override
   public ObjetDTO vendreObject(ObjetDTO objetDTO) {
-    
+
     Objet objet = (Objet) objetDTO;
     if (!objet.vendreObjet()) {
       return null;

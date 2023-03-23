@@ -665,3 +665,31 @@ mars 23, 2023 3:46:32 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: Impossible changement,the object need to be in the state 'en vente'to be sold
 mars 23, 2023 3:46:46 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: Impossible changement,the object need to be in the state 'en vente'to be sold
+mars 23, 2023 4:15:18 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: An object can be deposited either in 'Atelier' or 'Magasin '
+mars 23, 2023 4:15:22 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: message required
+mars 23, 2023 4:15:38 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement, to deposite an object it state must be 'accepte'and must not have already a location except if the deposit is for an atelier
+mars 23, 2023 4:15:49 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement, to deposite an object it state must be 'accepte'and must not have already a location except if the deposit is for an atelier
+mars 23, 2023 4:15:53 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement, to deposite an object it state must be 'accepte'and must not have already a location except if the deposit is for an atelier
+mars 23, 2023 4:16:04 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement, to deposite an object it state must be 'accepte'and must not have already a location except if the deposit is for an atelier
+mars 23, 2023 4:18:11 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement, to deposite an object it state must be 'accepte'and must not have already a location except if the deposit is for an atelier
+mars 23, 2023 4:18:23 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: this object already has a location
+mars 23, 2023 4:18:32 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: this object already has a location
+mars 23, 2023 4:19:03 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: this object already has a location
+mars 23, 2023 4:19:10 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: this object already has a location
+mars 23, 2023 4:19:15 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "String.equals(Object)" because the return value of "be.vinci.pae.business.dto.ObjetDTO.getLocalisation()" is null
+mars 23, 2023 4:19:20 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "String.equals(Object)" because the return value of "be.vinci.pae.business.dto.ObjetDTO.getLocalisation()" is null
+mars 23, 2023 4:19:44 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement, to deposite an object it state must be 'accepte'and must not have already a location except if the deposit is for an atelier
