@@ -14,4 +14,5 @@ public interface DALService {
    * @return the prepared statement
    */
   PreparedStatement preparedStatement(String query);
+
 }
