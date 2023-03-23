@@ -6,6 +6,7 @@ import be.vinci.pae.business.dto.TypeObjetDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Implementation of Object class.
@@ -29,7 +30,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   private String photo;
 
-  private TypeObjetDTO typeObjet;
+  private TypeObjetDTO type;
 
   private String description;
 
@@ -49,6 +50,9 @@ public class ObjetImpl implements Objet, ObjetDTO {
   private Double prix;
 
   private String localisation;
+
+  public ObjetImpl() {
+  }
 
   @Override
   public int getIdObjet() {
@@ -92,12 +96,12 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   @Override
   public TypeObjetDTO getTypeObjet() {
-    return typeObjet;
+    return type;
   }
 
   @Override
-  public void setTypeObjet(TypeObjetDTO typeObjet) {
-    this.typeObjet = typeObjet;
+  public void setTypeObjet(TypeObjetDTO type) {
+    this.type = type;
   }
 
   @Override
@@ -189,5 +193,58 @@ public class ObjetImpl implements Objet, ObjetDTO {
   public void setLocalisation(String localisation) {
     this.localisation = Arrays.stream(POSSIBLE_LOCALISATION).filter(s -> s.equals(localisation))
         .findFirst().orElse(null);
+  }
+
+  private Boolean propose() {
+    return Objects.equals(getEtat(), "proposer");
+  }
+
+  @Override
+  public Boolean accepterObjet() {
+    if (!propose()) {
+      return false;
+    }
+    setEtat(POSSIBLE_ETAT[0]);
+    setDate_acceptation(LocalDate.now());
+    return true;
+  }
+
+  @Override
+  public Boolean refuserObjet() {
+    if (!propose()) {
+      return false;
+    }
+    setEtat("refuser");
+    return true;
+  }
+
+  @Override
+  public Boolean depotObject() {
+    if (getEtat() != "accepte" || getDate_acceptation() == null || getDate_retrait() == null
+        || getDate_vente() != null || getLocalisation() == "Atelier") {
+      return false;
+    }
+    setLocalisation("Atelier");
+    return true;
+  }
+
+  @Override
+  public Boolean venteObject() {
+    if (getEtat() != "accepte" || getDate_acceptation() == null || getDate_retrait() == null
+        || getDate_vente() != null) {
+      return false;
+    }
+    setLocalisation("Magasin");
+    setEtat("en vente");
+    return true;
+  }
+
+  @Override
+  public Boolean venduObject() {
+    if (getEtat() != "en vente" || getDate_acceptation() == null) {
+      return false;
+    }
+    setEtat("vendu");
+    return true;
   }
 }

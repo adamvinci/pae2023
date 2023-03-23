@@ -1,0 +1,68 @@
+package be.vinci.pae.domain;
+
+
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
+import be.vinci.pae.business.dto.DisponibiliteDTO;
+import be.vinci.pae.business.factory.DisponibiliteFactory;
+import be.vinci.pae.business.ucc.DisponibiliteUCC;
+import be.vinci.pae.dal.DisponibiliteDAO;
+import be.vinci.pae.utils.ApplicationBinderMock;
+import java.util.ArrayList;
+import java.util.List;
+import org.glassfish.hk2.api.ServiceLocator;
+import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+class DisponibiliteUCCTest {
+  private ServiceLocator locator = ServiceLocatorUtilities.bind(new ApplicationBinderMock());
+  private DisponibiliteDAO disponibiliteDAO;
+  private DisponibiliteUCC disponibiliteUCC;
+  private DisponibiliteDTO disponibilite;
+  private DisponibiliteFactory disponibiliteFactory;
+
+  @BeforeEach
+  void setUp() {
+    disponibiliteDAO = locator.getService(DisponibiliteDAO.class);
+    disponibiliteUCC = locator.getService(DisponibiliteUCC.class);
+    disponibiliteFactory = locator.getService(DisponibiliteFactory.class);
+    disponibilite = disponibiliteFactory.getDisponibilite();
+    disponibilite.setId(1);
+
+  }
+
+  @DisplayName("Test getDisponibilite() return null when resultset is empty")
+  @Test
+  void testGetDisponibiliteReturnNull() {
+    Mockito.when(disponibiliteDAO.getAll()).thenReturn(null);
+    assertNull(disponibiliteUCC.getDisponibilite(), "No disponiblity saved in the database");
+  }
+
+  @DisplayName("Test getDisponibilite() return a list when resultset is not empty")
+  @Test
+  void testGetDisponibiliteReturnList() {
+    List<DisponibiliteDTO> disponibiliteDTOS = new ArrayList<>();
+    Mockito.when(disponibiliteDAO.getAll()).thenReturn(disponibiliteDTOS);
+    assertEquals(disponibiliteDTOS, disponibiliteUCC.getDisponibilite());
+  }
+
+  @DisplayName("Test getOneDisponibilite( int id ) return null when id does not exist")
+  @Test
+  void testGetOneDisponibiliteReturnNull() {
+    Mockito.when(disponibiliteDAO.getOne(1)).thenReturn(null);
+    assertNull(disponibiliteUCC.getOne(1), "No object corresponding to the id");
+  }
+
+  @DisplayName("Test getOneDisponibilite( int id ) return an object when id does  exist")
+  @Test
+  void testGetOneDisponibiliteReturnDTO() {
+    Mockito.when(disponibiliteDAO.getOne(1)).thenReturn(disponibilite);
+    assertEquals(disponibilite, disponibiliteUCC.getOne(1));
+  }
+}

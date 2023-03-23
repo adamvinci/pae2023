@@ -1,16 +1,22 @@
 package be.vinci.pae.ihm;
 
+import be.vinci.pae.business.domaine.Objet;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.dto.UserDTO;
+import be.vinci.pae.business.ucc.NotificationUCC;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.ihm.filters.AnonymousOrAuthorize;
+import be.vinci.pae.ihm.filters.ResponsableOrAidant;
 import be.vinci.pae.utils.MyLogger;
+import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -37,6 +43,7 @@ public class ObjetRessource {
 
   @Inject
   private ObjetUCC objetUCC;
+  private NotificationUCC notificationUCC;
 
 
   /**
@@ -119,5 +126,94 @@ public class ObjetRessource {
     };
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve picture of object " + id);
     return Response.ok(output).build();
+  }
+
+  //change Etat of objects
+  @ResponsableOrAidant
+  @POST
+  @Path("accepterObject/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public ObjetDTO accepterObject(@PathParam("id") int id) {
+    ObjetDTO objetDTO1 = objetUCC.getOne(id);
+    ObjetDTO changed = objetUCC.accepterObjet(objetDTO1);
+    if (changed == null) {
+      throw new WebApplicationException("Impossible changement", 512);
+    }
+
+    return changed;
+  }
+
+  @PUT
+  @Path("atelierObject/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Response atelierObject(@PathParam("id") int id, Objet objet,
+      @Context ContainerRequest request) {
+    UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
+    if (authenticatedUser != null && (authenticatedUser.getRole().equals("responsable")
+        || authenticatedUser.getRole().equals("aidant"))) {
+      Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
+          "Attempt of unauthorized change of object localisation from "
+              + authenticatedUser.getEmail());
+      throw new WebApplicationException("Only the responsable and 'aidant' can accept an object"
+          , Status.UNAUTHORIZED);
+    }
+    ObjetDTO obj = objet;
+    ObjetDTO changed = objetUCC.depotObject(obj);
+    if (changed == null) {
+      throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
+    }
+    // Retourne une réponse HTTP 200 OK avec un message de confirmation
+    return Response.status(Response.Status.OK)
+        .entity("Object with ID " + id + " accepted successfully")
+        .build();
+  }
+
+  @PUT
+  @Path("misEnVenteObject/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public Response misEnVenteObject(@PathParam("id") int id, Objet objet) {
+    ObjetDTO obj = objet;
+    ObjetDTO changed = objetUCC.venteObject(obj);
+    if (changed == null) {
+      throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
+    }
+    // Retourne une réponse HTTP 200 OK avec un message de confirmation
+    return Response.status(Response.Status.OK)
+        .entity("Object with ID " + id + " accepted successfully")
+        .build();
+  }
+
+  @PUT
+  @Path("vendreObject/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public ObjetDTO vendreObject(@PathParam("id") int id) {
+    ObjetDTO obj = objetUCC.getOne(id);
+    ObjetDTO changed = objetUCC.venduObject(obj);
+    if (changed == null) {
+      throw new WebApplicationException("Impossible changement", Status.UNAUTHORIZED);
+    }
+    return changed;
+  }
+
+  @POST
+  @Path("refuserObject/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  public ObjetDTO refuserObject(@PathParam("id") int id, JsonNode objetCredentials) {
+
+    if (!objetCredentials.hasNonNull("message")) {
+      throw new WebApplicationException("message required", Status.BAD_REQUEST);
+    }
+    String message = objetCredentials.get("message").asText();
+
+    if (message.isBlank() || message.isEmpty()) {
+      throw new WebApplicationException("message required", Status.BAD_REQUEST);
+    }
+    ObjetDTO objet = objetUCC.getOne(id);
+    ObjetDTO changed = objetUCC.refuserObject(objet, message);
+    if (changed == null) {
+      throw new WebApplicationException("impossible changement", Status.BAD_REQUEST);
+    }
+    return changed;
   }
 }

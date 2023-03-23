@@ -10,7 +10,9 @@ Content-Type: application/json
   client.global.set("adrienToken", response.body.token);
 %}
 
-
+###
+POST {{baseUrl}}/objet/accepterObject/1
+Authorization: {{adrienToken}}
 ###
 GET http://localhost:3000/auths/user
 Content-Type: application/json
@@ -106,4 +108,8 @@ Authorization: {{adrienToken}}
 
 ###
 POST {{baseUrl}}/users/1/confirmHelper
+Authorization: {{adrienToken}}
+
+###
+PUT {{baseUrl}}/objet/vendreObject/3
 Authorization: {{adrienToken}}

@@ -18,4 +18,9 @@ public class DisponibiliteUCCImpl implements DisponibiliteUCC {
   public List<DisponibiliteDTO> getDisponibilite() {
     return disponibiliteDAO.getAll();
   }
+
+  @Override
+  public DisponibiliteDTO getOne(int id) {
+    return disponibiliteDAO.getOne(id);
+  }
 }

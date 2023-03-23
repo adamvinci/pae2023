@@ -15,4 +15,6 @@ public interface DisponibiliteUCC {
    * @return a list containing the availability
    */
   List<DisponibiliteDTO> getDisponibilite();
+
+  DisponibiliteDTO getOne(int id);
 }
