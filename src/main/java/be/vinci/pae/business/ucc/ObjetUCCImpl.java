@@ -28,10 +28,10 @@ public class ObjetUCCImpl implements ObjetUCC {
     try {
       dal.startTransaction();
       return dataService.getAllObjet();
-    }catch (FatalException e){
+    } catch (FatalException e) {
       dal.rollBackTransaction();
       throw new FatalException(e);
-    }finally {
+    } finally {
       dal.commitTransaction();
     }
   }
@@ -41,10 +41,10 @@ public class ObjetUCCImpl implements ObjetUCC {
     try {
       dal.startTransaction();
       return typeObjetDAO.getAll();
-    }catch (FatalException e){
+    } catch (FatalException e) {
       dal.rollBackTransaction();
       throw new FatalException(e);
-    }finally {
+    } finally {
       dal.commitTransaction();
     }
   }
@@ -54,10 +54,10 @@ public class ObjetUCCImpl implements ObjetUCC {
     try {
       dal.startTransaction();
       return dataService.getPicture(id);
-    }catch (FatalException e){
+    } catch (FatalException e) {
       dal.rollBackTransaction();
       throw new FatalException(e);
-    }finally {
+    } finally {
       dal.commitTransaction();
     }
   }

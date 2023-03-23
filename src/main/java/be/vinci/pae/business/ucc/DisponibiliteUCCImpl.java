@@ -24,10 +24,10 @@ public class DisponibiliteUCCImpl implements DisponibiliteUCC {
     try {
       dal.startTransaction();
       return disponibiliteDAO.getAll();
-    }catch (FatalException e){
+    } catch (FatalException e) {
       dal.rollBackTransaction();
       throw new FatalException(e);
-    }finally {
+    } finally {
       dal.commitTransaction();
     }
   }
