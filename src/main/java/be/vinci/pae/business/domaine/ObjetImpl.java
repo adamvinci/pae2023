@@ -194,7 +194,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   @Override
   public Boolean accepterObjet() {
-    if (!Objects.equals(getEtat(), "accepte")) {
+    if (!Objects.equals(getEtat(), "proposer")) {
       return false;
     }
     setEtat(POSSIBLE_ETAT[0]);
@@ -204,7 +204,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   @Override
   public Boolean refuserObjet() {
-    if (!Objects.equals(getEtat(), "accepte")) {
+    if (!Objects.equals(getEtat(), "proposer")) {
       return false;
     }
     setEtat("refuser");

@@ -4,9 +4,7 @@ package be.vinci.pae.domain;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.mockito.Mockito.doNothing;
 
-import be.vinci.pae.business.domaine.Objet;
 import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;

@@ -659,3 +659,9 @@ mars 23, 2023 3:39:56 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: this object does not exist
 mars 23, 2023 3:40:13 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: this object does not exist
+mars 23, 2023 3:46:28 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: You do not have the required permissions to do this.
+mars 23, 2023 3:46:32 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement,the object need to be in the state 'en vente'to be sold
+mars 23, 2023 3:46:46 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement,the object need to be in the state 'en vente'to be sold
