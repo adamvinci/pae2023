@@ -22,6 +22,7 @@ public class AnonymousOrAuthorizationRequestFilter implements ContainerRequestFi
 
   @Inject
   private TokenFilter tokenFilter;
+
   /**
    * If the token is valid and the user associated with it is authorized to access the requested
    * resource.

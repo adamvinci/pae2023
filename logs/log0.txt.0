@@ -625,3 +625,7 @@ mars 23, 2023 12:04:41 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: Impossible changement to accept an object it state must be 'proposer' 
 mars 23, 2023 12:04:56 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: You do not have the required permissions to do this.
+mars 23, 2023 12:16:36 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 23, 2023 12:16:40 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve the complete list of object from user adrien.riez@hotmail.be
