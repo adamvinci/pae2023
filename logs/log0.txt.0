@@ -821,3 +821,53 @@ mars 22, 2023 9:23:44 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: bad credentials
 mars 23, 2023 5:47:55 PM be.vinci.pae.ihm.AuthRessource login
 INFO: Connexion de adrien.riez@hotmail.be
+mars 23, 2023 6:10:05 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 23, 2023 6:10:06 PM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 23, 2023 6:10:34 PM be.vinci.pae.ihm.AuthRessource register
+INFO: Inscription de test@hotmail.com
+mars 23, 2023 6:10:46 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de test@hotmail.com
+mars 23, 2023 6:10:46 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 23, 2023 6:10:46 PM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 23, 2023 6:10:46 PM be.vinci.pae.ihm.AuthRessource getUser
+INFO: Retrieve user from token of test@hotmail.com
+mars 23, 2023 6:10:47 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 23, 2023 6:10:47 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 23, 2023 6:10:47 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 23, 2023 6:10:47 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 23, 2023 6:10:47 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 23, 2023 6:10:47 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 23, 2023 6:10:47 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 23, 2023 6:10:47 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 23, 2023 6:10:47 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 23, 2023 6:10:47 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 23, 2023 6:10:47 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 23, 2023 6:10:47 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 23, 2023 6:10:47 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 23, 2023 6:10:47 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 23, 2023 6:10:47 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 23, 2023 6:10:47 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 23, 2023 6:10:47 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Not Found in the server
+mars 23, 2023 6:10:58 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: bad credentials
