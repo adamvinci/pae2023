@@ -103,6 +103,19 @@ class ObjetUCCTest {
 
   }
 
+  @DisplayName("Test  getOne(int id) with a non-existent id")
+  @Test
+  void testGetOneWithBadId(){
+    Mockito.when(objectDAO.getOne(1)).thenReturn(null);
+    assertNull(objetUCC.getOne(1),"This id doesnt exist");
+  }
+
+  @DisplayName("Test  getOne(int id) with a =existent id")
+  @Test
+  void testGetOneWithGoodId(){
+    Mockito.when(objectDAO.getOne(1)).thenReturn(objetDTO);
+    assertEquals(objetDTO,objetUCC.getOne(1));
+  }
   @DisplayName("Test accepterObjet(ObjetDTO objetDTO) with a bad state")
   @Test
   void testAccepterObjetWithBadState() {
