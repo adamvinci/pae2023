@@ -90,7 +90,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       if (!objet.deposerEnMagasin()) {
         return null;
       }
-    }else{
+    } else {
       if (!objet.deposerEnAtelier()) {
         return null;
       }
