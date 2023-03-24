@@ -49,7 +49,6 @@ public class ObjetUCCImpl implements ObjetUCC {
 
     if (objetDTO1.getUtilisateur() != null) {
       notification.setObject(objetDTO1.getIdObjet());
-      notification.setMessage("l'objet n° : " + objetDTO1.getIdObjet() + " a été ajouté");
       notification.setType("acceptation");
       NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
       dataServiceNotification.linkNotifToUser(notificationCreated.getId(),
