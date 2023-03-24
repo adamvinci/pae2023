@@ -3,6 +3,7 @@ package be.vinci.pae.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
@@ -82,8 +83,8 @@ class DisponibiliteUCCTest {
   @DisplayName("Test getOneDisponibilite() with a FatalException")
   @Test
   void testGetOneDisponibiliteWithFatalException() {
-    doThrow(new FatalException()).when(dalTransaction).startTransaction();
+    doThrow(new FatalException("exception")).when(dalTransaction).startTransaction();
+    assertThrows(FatalException.class,()->disponibiliteUCC.getOne(1));
 
-    Mockito.verify(dalTransaction, Mockito.atMostOnce()).rollBackTransaction();
   }
 }

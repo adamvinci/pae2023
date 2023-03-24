@@ -51,7 +51,7 @@ public class DALServiceImpl implements DALService, DALTransaction {
     try {
       statement = conn.get().prepareStatement(query);
     } catch (SQLException e) {
-      throw new RuntimeException(e);
+      throw new FatalException(e);
     }
     return statement;
   }
