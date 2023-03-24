@@ -14,7 +14,9 @@ import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.dal.NotificationDAO;
 import be.vinci.pae.dal.ObjectDAO;
 import be.vinci.pae.dal.TypeObjetDAO;
+import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.ApplicationBinderMock;
+import be.vinci.pae.utils.FatalException;
 import java.util.ArrayList;
 import java.util.List;
 import org.glassfish.hk2.api.ServiceLocator;
@@ -41,6 +43,8 @@ class ObjetUCCTest {
 
   private TypeObjetDAO typeObjetDAO;
 
+  private DALTransaction dalService;
+
   @BeforeEach
   void setUp() {
     objetUCC = locator.getService(ObjetUCC.class);
@@ -51,6 +55,7 @@ class ObjetUCCTest {
     notificationDAO = locator.getService(NotificationDAO.class);
     objetDTO = objetFactory.getObjet();
     notificationDTO = notificationFactory.getNotification();
+    dalService = locator.getService(DALTransaction.class);
 
   }
 
@@ -149,6 +154,12 @@ class ObjetUCCTest {
 
   }
 
+  @DisplayName("Test accepterObjet(ObjetDTO objetDTO) with a FatalException")
+  @Test
+  void testAccepterObjetWithFatalException() {
+    Mockito.when(objectDAO.updateObjectState(objetDTO)).thenThrow(FatalException.class);
+    Mockito.verify(dalService, Mockito.atMostOnce()).rollBackTransaction();
+  }
 
   @DisplayName("Test refuserObject(ObjetDTO objetDTO, String message,"
       + " NotificationDTO notification) with a bad state")
@@ -187,6 +198,14 @@ class ObjetUCCTest {
     );
   }
 
+  @DisplayName("Test  refuserObject(ObjetDTO objetDTO, "
+      + "String message,NotificationDTO notification) with a fatalException")
+  @Test
+  void testRefuserObjetWithFatalException() {
+    Mockito.when(objectDAO.updateObjectState(objetDTO)).thenThrow(FatalException.class);
+    Mockito.verify(dalService, Mockito.atMostOnce()).rollBackTransaction();
+  }
+
   @DisplayName("Test vendreObject(ObjetDTO objetDTO) with a bad state")
   @Test
   void testVendreObjectWithBadState() {
@@ -203,6 +222,13 @@ class ObjetUCCTest {
         () -> assertEquals(objetDTO, objetUCC.vendreObject(objetDTO)),
         () -> assertEquals("vendu", objetDTO.getEtat())
     );
+  }
+
+  @DisplayName("Test vendreObject(ObjetDTO objetDTO) with a FatalException")
+  @Test
+  void testVendreObjectWithFatalException() {
+    Mockito.when(objectDAO.updateObjectState(objetDTO)).thenThrow(FatalException.class);
+    Mockito.verify(dalService, Mockito.atMostOnce()).rollBackTransaction();
   }
 
   @DisplayName("Test depotObject(ObjetDTO objetDTO, String localisation) with bad state")
@@ -257,6 +283,13 @@ class ObjetUCCTest {
     );
   }
 
+  @DisplayName("Test depotObject(ObjetDTO objetDTO, String localisation) with a FatalException")
+  @Test
+  void testDepotObjectWithFatalException() {
+    Mockito.when(objectDAO.updateObjectState(objetDTO)).thenThrow(FatalException.class);
+    Mockito.verify(dalService, Mockito.atMostOnce()).rollBackTransaction();
+  }
+
   @DisplayName("Test mettreEnVente(ObjetDTO objetDTO) with a bad state")
   @Test
   void testMettreEnVenteWithABadState() {
@@ -281,5 +314,12 @@ class ObjetUCCTest {
     objetDTO.setLocalisation("Magasin");
     Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
     assertEquals(objetDTO, objetUCC.mettreEnVente(objetDTO));
+  }
+
+  @DisplayName("Test mettreEnVente(ObjetDTO objetDTO)with a FatalException")
+  @Test
+  void testMettreEnVenteWithFatalException() {
+    Mockito.when(objectDAO.updateObjectState(objetDTO)).thenThrow(FatalException.class);
+    Mockito.verify(dalService, Mockito.atMostOnce()).rollBackTransaction();
   }
 }
