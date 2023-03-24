@@ -34,6 +34,16 @@ public class DisponibiliteUCCImpl implements DisponibiliteUCC {
 
   @Override
   public DisponibiliteDTO getOne(int id) {
-    return disponibiliteDAO.getOne(id);
+    try {
+      dal.startTransaction();
+      return disponibiliteDAO.getOne(id);
+    } catch (FatalException e) {
+      dal.rollBackTransaction();
+      throw new FatalException(e);
+    } finally {
+      dal.commitTransaction();
+    }
   }
+
+
 }
