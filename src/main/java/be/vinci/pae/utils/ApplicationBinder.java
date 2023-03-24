@@ -31,6 +31,7 @@ import be.vinci.pae.dal.services.DALService;
 import be.vinci.pae.dal.services.DALServiceImpl;
 import be.vinci.pae.ihm.filters.TokenFilter;
 import be.vinci.pae.ihm.filters.TokenFilterImpl;
+import be.vinci.pae.dal.services.DALTransaction;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.ext.Provider;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -59,7 +60,8 @@ public class ApplicationBinder extends AbstractBinder {
     bind(ObjetUCCImpl.class).to(ObjetUCC.class).in(Singleton.class);
     bind(DisponibiliteUCCImpl.class).to(DisponibiliteUCC.class).in(Singleton.class);
 
-    bind(DALServiceImpl.class).to(DALService.class).in(Singleton.class);
+    bind(DALServiceImpl.class).to(DALTransaction.class).to(DALService.class).in(Singleton.class);
+
 
     bind(TokenFilterImpl.class).to(TokenFilter.class).in(
         Singleton.class);

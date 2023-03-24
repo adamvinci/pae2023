@@ -24,6 +24,8 @@ import be.vinci.pae.dal.TypeObjetDAO;
 import be.vinci.pae.dal.TypeObjetDAOImpl;
 import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.dal.UserDAOImpl;
+import be.vinci.pae.dal.services.DALServiceImpl;
+import be.vinci.pae.dal.services.DALTransaction;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.ext.Provider;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -56,5 +58,7 @@ public class ApplicationBinderMock extends AbstractBinder {
     bind(ObjetFactoryImpl.class).to(ObjetFactory.class).in(Singleton.class);
     bind(DisponibiliteFactoryImpl.class).to(DisponibiliteFactory.class).in(Singleton.class);
     bind(NotificationFactoryImpl.class).to(NotificationFactory.class).in(Singleton.class);
+    bind(Mockito.mock(DALServiceImpl.class)).to(DALTransaction.class);
+
   }
 }

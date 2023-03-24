@@ -32,7 +32,7 @@ POST http://localhost:3000/auths/register
 Content-Type: application/json
 
 {
-  "email":"test17@hotmail.be",
+  "email":"testé8@hotmail.be",
   "password":"oui",
   "nom":"test2",
   "prenom":"test2",
