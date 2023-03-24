@@ -62,7 +62,7 @@ CREATE TABLE projet.notifications
 (
     id_notification SERIAL PRIMARY KEY,
     objet           integer      NOT NULL references projet.objets (id_objet),
-    message         varchar(500) NOT NULL,
+    message         varchar(500)  NULL,
     type            varchar(50)  NOT NULL
 );
 
@@ -150,3 +150,6 @@ VALUES
 --Matelas
 
 --Couverture
+
+UPDATE projet.objets SET date_vente=null, date_depot=null,
+                         date_acceptation=null,utilisateur=1, etat = 'proposer',localisation = null,prix_vente = null WHERE id_objet = 1;
