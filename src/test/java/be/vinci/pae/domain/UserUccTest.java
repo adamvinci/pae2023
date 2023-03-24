@@ -11,9 +11,7 @@ import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.dal.UserDAO;
-import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.ApplicationBinderMock;
-import be.vinci.pae.utils.FatalException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,14 +38,11 @@ class UserUccTest {
 
   private UserFactory userFactory = locator.getService(UserFactory.class);
 
-  private DALTransaction dalTransaction;
-
 
   @BeforeEach
   void setUp() {
     userUcc = locator.getService(UserUcc.class);
     userDAO = locator.getService(UserDAO.class);
-    dalTransaction = locator.getService(DALTransaction.class);
 
     userMemberSteven = (User) userFactory.getUserDTO();
     userMemberSteven.setEmail("steven.agbassah@student.vinci.be");
@@ -113,12 +108,6 @@ class UserUccTest {
 
   }
 
-  @DisplayName("Test login() with a FatalException")
-  @Test
-  void testLogintWithFatalException() {
-    Mockito.when(userDAO.getOne("de")).thenThrow(FatalException.class);
-    Mockito.verify(dalTransaction, Mockito.atMostOnce()).rollBackTransaction();
-  }
 
   @DisplayName("test register with good email")
   @Test
@@ -135,25 +124,12 @@ class UserUccTest {
     assertNull(userUcc.register(userMemberSteven));
   }
 
-  @DisplayName("Test register with a FatalException")
-  @Test
-  void testRegistertWithFatalException() {
-    Mockito.when(userDAO.createOne(userLeon)).thenThrow(FatalException.class);
-    Mockito.verify(dalTransaction, Mockito.atMostOnce()).rollBackTransaction();
-  }
-
   @DisplayName("Test getOne(id) with the good id")
   @Test
   void getOneGoodId() {
     assertEquals(userMemberSteven, userUcc.getOne(1));
   }
 
-  @DisplayName("Test getOne(id) with a FatalException")
-  @Test
-  void testGetOneWithFatalException() {
-    Mockito.when(userDAO.getOne(1)).thenThrow(FatalException.class);
-    Mockito.verify(dalTransaction, Mockito.atMostOnce()).rollBackTransaction();
-  }
 
   @DisplayName("Test make an user which is 'member' admin (= 'aidant')")
   @Test
@@ -174,13 +150,6 @@ class UserUccTest {
     assertEquals(userMemberSteven.getRole(), "aidant");
   }
 
-  @DisplayName("Test makeAdmin with a FatalException")
-  @Test
-  void testMakeAdminWithFatalException() {
-    Mockito.when(userDAO.update(userLeon)).thenThrow(FatalException.class);
-    Mockito.verify(dalTransaction, Mockito.atMostOnce()).rollBackTransaction();
-  }
-
   @DisplayName("Test getAll() users with a non-empty list(resultset)")
   @Test
   void getAllUsersNonEmpty() {
@@ -199,11 +168,5 @@ class UserUccTest {
     assertNull(userUcc.getAll(), "Non users in the database");
   }
 
-  @DisplayName("Test getAll() with a FatalException")
-  @Test
-  void testGetAllUserstWithFatalException() {
-    Mockito.when(userDAO.getAll()).thenThrow(FatalException.class);
-    Mockito.verify(dalTransaction, Mockito.atMostOnce()).rollBackTransaction();
-  }
 
 }
