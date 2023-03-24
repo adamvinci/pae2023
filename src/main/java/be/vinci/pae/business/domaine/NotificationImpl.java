@@ -14,6 +14,7 @@ public class NotificationImpl implements NotificationDTO {
   private String type;
 
   private static final String[] POSSIBLE_TYPE = {"acceptation", "refus", "alerteProposition"};
+
   public Integer getId() {
     return id;
   }
