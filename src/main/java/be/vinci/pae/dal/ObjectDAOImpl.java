@@ -89,7 +89,7 @@ public class ObjectDAOImpl implements ObjectDAO {
   public ObjetDTO updateObjectState(ObjetDTO objetDTO) {
     String query = "UPDATE projet.objets SET etat = ?, date_acceptation = ?, "
         + "date_depot = ?, date_retrait = ?, date_vente = ?"
-        + ", localisation = ? WHERE id_objet = ? RETURNING *";
+        + ", localisation = ?,prix_vente = ? WHERE id_objet = ? RETURNING *";
     try (PreparedStatement statement = dalService.preparedStatement(query)) {
       statement.setString(1, objetDTO.getEtat());
 
@@ -115,7 +115,13 @@ public class ObjectDAOImpl implements ObjectDAO {
       }
 
       statement.setString(6, objetDTO.getLocalisation());
-      statement.setInt(7, objetDTO.getIdObjet());
+      if(objetDTO.getPrix() != null){
+        statement.setDouble(7, objetDTO.getPrix());
+      }else{
+        statement.setNull(7, java.sql.Types.DOUBLE);
+      }
+
+      statement.setInt(8, objetDTO.getIdObjet());
       statement.executeQuery();
 
     } catch (SQLException e) {

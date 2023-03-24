@@ -145,13 +145,15 @@ public class ObjetRessource {
       throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
     }
     NotificationDTO notification = notificationFactory.getNotification();
-    ObjetDTO changed = objetUCC.accepterObjet(retrievedObject, notification);
-    if (changed == null) {
+    ObjetDTO changedObject = objetUCC.accepterObjet(retrievedObject, notification);
+    if (changedObject == null) {
       throw new WebApplicationException("Impossible changement, to accept "
           + "an object it state must be 'proposer' ", 512);
     }
+    Logger.getLogger(MyLogger.class.getName())
+        .log(Level.INFO, "Acceptation of object : " + id);
 
-    return changed;
+    return changedObject;
   }
 
   /**
@@ -192,6 +194,8 @@ public class ObjetRessource {
               + "and must not have already a location except if the deposit is for an atelier",
           Status.UNAUTHORIZED);
     }
+    Logger.getLogger(MyLogger.class.getName())
+        .log(Level.INFO, "Deposit of object : " + id + " at "+localisation);
     return changedObject;
   }
 
@@ -207,27 +211,31 @@ public class ObjetRessource {
   @Path("misEnVenteObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response misEnVenteObject(@PathParam("id") int id, JsonNode json) {
+  public ObjetDTO misEnVenteObject(@PathParam("id") int id, JsonNode json) {
     if (!json.hasNonNull("prix")) {
       throw new WebApplicationException("price required", Status.BAD_REQUEST);
     }
     String prix = json.get("prix").asText();
-
     if (prix.isBlank() || prix.isEmpty()) {
-      throw new WebApplicationException("message required", Status.BAD_REQUEST);
+      throw new WebApplicationException("price required", Status.BAD_REQUEST);
     }
     ObjetDTO retrievedObject = objetUCC.getOne(id);
     if (retrievedObject == null) {
       throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
     }
-    ObjetDTO changed = objetUCC.mettreEnVente(retrievedObject);
-    if (changed == null) {
-      throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
+
+    if(Double.parseDouble(prix)>10){
+      throw new WebApplicationException("The price must be inferior to 10", 512);
     }
-    // Retourne une réponse HTTP 200 OK avec un message de confirmation
-    return Response.status(Response.Status.OK)
-        .entity("Object with ID " + id + " accepted successfully")
-        .build();
+    retrievedObject.setPrix(Double.parseDouble(prix));
+    ObjetDTO changedObject = objetUCC.mettreEnVente(retrievedObject);
+    if (changedObject == null) {
+      throw new WebApplicationException("Impossible changement, to put an object at"
+          + " sell its statut must be 'accepte' and be deposited in the store", Status.UNAUTHORIZED);
+    }
+    Logger.getLogger(MyLogger.class.getName())
+        .log(Level.INFO, "Put to sale of the object : " + id + " at price " +prix);
+    return changedObject;
   }
 
   /**
@@ -246,13 +254,15 @@ public class ObjetRessource {
     if (retrievedObject == null) {
       throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
     }
-    ObjetDTO changed = objetUCC.vendreObject(retrievedObject);
-    if (changed == null) {
+    ObjetDTO changedObject = objetUCC.vendreObject(retrievedObject);
+    if (changedObject == null) {
       throw new WebApplicationException(
           "Impossible changement,the object need to be in the state 'en vente'"
               + "to be sold", Status.UNAUTHORIZED);
     }
-    return changed;
+    Logger.getLogger(MyLogger.class.getName())
+        .log(Level.INFO, "Sale of the object : " + id) ;
+    return changedObject;
   }
 
   /**
@@ -287,6 +297,8 @@ public class ObjetRessource {
       throw new WebApplicationException("\"Impossible changement, to refuse an object "
           + "it state must be 'proposer'", Status.BAD_REQUEST);
     }
+    Logger.getLogger(MyLogger.class.getName())
+        .log(Level.INFO, "Refusal of objet : " + id);
     return changedObject;
   }
 }

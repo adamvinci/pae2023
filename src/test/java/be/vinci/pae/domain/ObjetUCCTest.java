@@ -256,4 +256,30 @@ class ObjetUCCTest {
         () -> assertEquals(objetDTO.getLocalisation(), "Magasin")
     );
   }
+
+  @DisplayName("Test mettreEnVente(ObjetDTO objetDTO) with a bad state")
+  @Test
+  void testMettreEnVenteWithABadState(){
+    objetDTO.setEtat("proposer");
+    assertNull(objetUCC.mettreEnVente(objetDTO),"The state need to be 'accepte'"
+        + " to put an object at sell");
+  }
+
+  @DisplayName("Test mettreEnVente(ObjetDTO objetDTO) with a good state but bad localisation")
+  @Test
+  void testMettreEnVenteWithAGoodStateBadLocalisation(){
+    objetDTO.setEtat("accepte");
+    objetDTO.setLocalisation("Atelier");
+    assertNull(objetUCC.mettreEnVente(objetDTO),"The state need to be 'accepte'"
+        + " to put an object at sell");
+  }
+
+  @DisplayName("Test mettreEnVente(ObjetDTO objetDTO) with good params")
+  @Test
+  void testMettreEnVenteWithGoodParams(){
+    objetDTO.setEtat("accepte");
+    objetDTO.setLocalisation("Magasin");
+    Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
+    assertEquals(objetDTO,objetUCC.mettreEnVente(objetDTO));
+  }
 }

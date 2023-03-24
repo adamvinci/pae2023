@@ -22,8 +22,6 @@ public class ObjetUCCImpl implements ObjetUCC {
   @Inject
   private NotificationDAO dataServiceNotification;
   @Inject
-  private NotificationFactory notifFactory;
-  @Inject
   private TypeObjetDAO typeObjetDAO;
 
   @Override
@@ -105,17 +103,8 @@ public class ObjetUCCImpl implements ObjetUCC {
     if (!objet.mettreEnVente()) {
       return null;
     }
-    LocalDate today = LocalDate.now();
 
-    objet.setDate_vente(today);
-
-    NotificationDTO notification = notifFactory.getNotification();
-    notification.setObject(objetDTO.getIdObjet());
-    notification.setMessage("l'objet n° : " + objetDTO.getIdObjet() + " a été mis en vente");
-    notification.setType("information");
-    ObjetDTO objetDTO1 = dataService.updateObjectState(objetDTO);
-    dataServiceNotification.createOne(notification);
-    return objetDTO1;
+    return dataService.updateObjectState(objetDTO);
   }
 
   @Override

@@ -693,3 +693,57 @@ mars 23, 2023 4:19:20 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: Cannot invoke "String.equals(Object)" because the return value of "be.vinci.pae.business.dto.ObjetDTO.getLocalisation()" is null
 mars 23, 2023 4:19:44 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: Impossible changement, to deposite an object it state must be 'accepte'and must not have already a location except if the deposit is for an atelier
+mars 24, 2023 2:02:49 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Malformed token : The token was expected to have 3 parts, but got 0.
+mars 24, 2023 2:02:57 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de adrien.riez@hotmail.be
+mars 24, 2023 2:02:59 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de jean.jacques@hotmail.be
+mars 24, 2023 2:03:01 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de steven.agbassah@student.vinci.be
+mars 24, 2023 2:03:21 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: bad credentials
+mars 24, 2023 2:12:25 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: bad credentials
+mars 24, 2023 2:12:40 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement, to put an object at sell its statut must be 'accepte' and be at 'magasin'
+mars 24, 2023 2:13:01 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement, to put an object at sell its statut must be 'accepte' and be at 'magasin'
+mars 24, 2023 2:14:27 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: message required
+mars 24, 2023 2:14:39 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement, to put an object at sell its statut must be 'accepte' and be at 'magasin'
+mars 24, 2023 2:14:58 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: The price must be inferior to 10
+mars 24, 2023 2:15:14 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement, to put an object at sell its statut must be 'accepte' and be at 'magasin'
+mars 24, 2023 2:15:22 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement, to put an object at sell its statut must be 'accepte' and be at 'magasin'
+mars 24, 2023 2:19:53 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement, to put an object at sell its statut must be 'accepte' and be deposited in the store
+mars 24, 2023 2:20:00 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement, to deposite an object it state must be 'accepte'and must not have already a location except if the deposit is for an atelier
+mars 24, 2023 2:20:06 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "java.lang.Double.doubleValue()" because the return value of "be.vinci.pae.business.dto.ObjetDTO.getPrix()" is null
+mars 24, 2023 2:21:05 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Pas de valeur spécifiée pour le paramètre 7.
+mars 24, 2023 2:21:42 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: ERROR: column "prix_vente" is of type double precision but expression is of type character varying
+  Indice : You will need to rewrite or cast the expression.
+  Position : 144
+mars 24, 2023 2:22:22 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Cannot invoke "String.trim()" because "in" is null
+mars 24, 2023 2:24:35 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement, to put an object at sell its statut must be 'accepte' and be deposited in the store
+mars 24, 2023 2:36:07 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement, to put an object at sell its statut must be 'accepte' and be deposited in the store
+mars 24, 2023 2:36:16 PM be.vinci.pae.ihm.ObjetRessource accepterObject
+INFO: Acceptation of object :1
+mars 24, 2023 2:36:41 PM be.vinci.pae.ihm.ObjetRessource deposerObject
+INFO: Deposit of object : 1 at Magasin
+mars 24, 2023 2:36:52 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: Impossible changement,the object need to be in the state 'en vente'to be sold
+mars 24, 2023 2:36:55 PM be.vinci.pae.ihm.ObjetRessource misEnVenteObject
+INFO: Put to sale of the object : 1at price5
+mars 24, 2023 2:37:12 PM be.vinci.pae.ihm.ObjetRessource vendreObject
+INFO: Sale of the object : 1
