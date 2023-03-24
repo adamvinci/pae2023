@@ -195,7 +195,7 @@ public class ObjetRessource {
           Status.UNAUTHORIZED);
     }
     Logger.getLogger(MyLogger.class.getName())
-        .log(Level.INFO, "Deposit of object : " + id + " at "+localisation);
+        .log(Level.INFO, "Deposit of object : " + id + " at " + localisation);
     return changedObject;
   }
 
@@ -224,17 +224,18 @@ public class ObjetRessource {
       throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
     }
 
-    if(Double.parseDouble(prix)>10){
+    if (Double.parseDouble(prix) > 10) {
       throw new WebApplicationException("The price must be inferior to 10", 512);
     }
     retrievedObject.setPrix(Double.parseDouble(prix));
     ObjetDTO changedObject = objetUCC.mettreEnVente(retrievedObject);
     if (changedObject == null) {
       throw new WebApplicationException("Impossible changement, to put an object at"
-          + " sell its statut must be 'accepte' and be deposited in the store", Status.UNAUTHORIZED);
+          + " sell its statut must be 'accepte' and be deposited in the store",
+          Status.UNAUTHORIZED);
     }
     Logger.getLogger(MyLogger.class.getName())
-        .log(Level.INFO, "Put to sale of the object : " + id + " at price " +prix);
+        .log(Level.INFO, "Put to sale of the object : " + id + " at price " + prix);
     return changedObject;
   }
 
@@ -261,7 +262,7 @@ public class ObjetRessource {
               + "to be sold", Status.UNAUTHORIZED);
     }
     Logger.getLogger(MyLogger.class.getName())
-        .log(Level.INFO, "Sale of the object : " + id) ;
+        .log(Level.INFO, "Sale of the object : " + id);
     return changedObject;
   }
 

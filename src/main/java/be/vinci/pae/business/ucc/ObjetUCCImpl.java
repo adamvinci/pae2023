@@ -4,12 +4,10 @@ import be.vinci.pae.business.domaine.Objet;
 import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
-import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.dal.NotificationDAO;
 import be.vinci.pae.dal.ObjectDAO;
 import be.vinci.pae.dal.TypeObjetDAO;
 import jakarta.inject.Inject;
-import java.time.LocalDate;
 import java.util.List;
 
 /**
