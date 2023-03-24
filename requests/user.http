@@ -25,7 +25,7 @@ Content-Type: application/json
   "password":"123*"
 }
 > {%
-  client.global.set("jeanJacques", response.body.token);
+  client.global.set("memberToken", response.body.token);
 %}
 ### Register
 POST http://localhost:3000/auths/register
@@ -47,11 +47,11 @@ POST http://localhost:3000/auths/login
 Content-Type: application/json
 
 {
-  "email":"test13@hotmail.be",
-  "password":"oui"
+  "email":"steven.agbassah@student.vinci.be",
+  "password":"123*"
 }
 > {%
-  client.global.set("adrienToken", response.body.token);
+  client.global.set("aidantToken", response.body.token);
 %}
 
 
@@ -107,3 +107,43 @@ Authorization: {{adrienToken}}
 ###
 POST {{baseUrl}}/users/1/confirmHelper
 Authorization: {{adrienToken}}
+
+###
+POST {{baseUrl}}/objet/refuserObject/1
+Authorization: {{adrienToken}}
+Content-Type: application/json
+
+{
+  "message": "refus"
+}
+
+###
+POST {{baseUrl}}/objet/accepterObject/1
+Authorization: {{adrienToken}}
+
+###
+POST {{baseUrl}}/objet/depositObject/1
+Authorization: {{aidantToken}}
+Content-Type: application/json
+
+{
+  "localisation" : "Magasin"
+}
+
+###
+POST {{baseUrl}}/objet/misEnVenteObject/1
+Authorization: {{aidantToken}}
+Content-Type: application/json
+
+{
+  "prix" : "5"
+}
+
+###
+POST {{baseUrl}}/objet/vendreObject/1
+Authorization: {{aidantToken}}
+
+
+
+
+

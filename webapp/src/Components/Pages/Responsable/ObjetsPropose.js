@@ -74,13 +74,13 @@ function table() {
                             <br>
                             <br>
                             <form>
-                                <textarea  placeholder="Votre message"></textarea><br>
-                                <input type="submit" value="Envoyer">
+                                <textarea  placeholder="Votre message" id="reason"></textarea><br>
+                                <input type="submit" value="Envoyer" id="refuseObjet">
                             </form>
                         </div>
                         </div>
                   `;
-                    main.insertAdjacentHTML("beforeend", popUp);
+                  main.insertAdjacentHTML("beforeend", popUp);
 
                 });
             })

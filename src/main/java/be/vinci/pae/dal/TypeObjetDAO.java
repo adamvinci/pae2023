@@ -4,7 +4,7 @@ import be.vinci.pae.business.dto.TypeObjetDTO;
 import java.util.List;
 
 /**
- * TypeObjetDAO purpose is to communicate with the database.
+ * TypeObjetDAO purpose is to communicate with the type_object table in the database.
  */
 public interface TypeObjetDAO {
 

@@ -31,4 +31,9 @@ public class DisponibiliteUCCImpl implements DisponibiliteUCC {
       dal.commitTransaction();
     }
   }
+
+  @Override
+  public DisponibiliteDTO getOne(int id) {
+    return disponibiliteDAO.getOne(id);
+  }
 }

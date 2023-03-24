@@ -4,7 +4,7 @@ import be.vinci.pae.business.dto.ObjetDTO;
 import java.util.List;
 
 /**
- * ObjectDAO purpose is to communicate with the database.
+ * ObjectDAO purpose is to communicate with the object table in the database.
  */
 public interface ObjectDAO {
 
@@ -24,11 +24,18 @@ public interface ObjectDAO {
   String getPicture(int id);
 
   /**
-   * Modifies the state of an object to either "accepted" or "rejected".
+   * Modifies the state of an object.
    *
-   * @param etat The new state of the object, either "accepted" or "rejected".
-   * @param user The user making the state modification.
-   * @return Returns true if the state was successfully modified, false otherwise.
+   * @param objetDTO to change
+   * @return the changed object
    */
-  boolean modifierEtatObjet(String etat, int user);
+  ObjetDTO updateObjectState(ObjetDTO objetDTO);
+
+  /**
+   * Retrieve an object.
+   *
+   * @param id of object to search
+   * @return the objectDTO
+   */
+  ObjetDTO getOne(int id);
 }

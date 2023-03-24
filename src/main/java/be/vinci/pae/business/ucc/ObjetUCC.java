@@ -1,5 +1,6 @@
 package be.vinci.pae.business.ucc;
 
+import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
 import java.util.List;
@@ -31,4 +32,58 @@ public interface ObjetUCC {
    * @return the path of the picture
    */
   String getPicture(int id);
+
+
+  /**
+   * Accepts an object represented by the given ObjetDTO object.
+   *
+   * @param objetDTO        the object to be accepted
+   * @param notificationDTO the notification to link with the object
+   * @return the changed ObjetDTO
+   */
+  ObjetDTO accepterObjet(ObjetDTO objetDTO, NotificationDTO notificationDTO);
+
+
+  /**
+   * Refuses an object represented by the given ObjetDTO object.
+   *
+   * @param objetDTO        the object to be refused
+   * @param message         of the notification provided by Mr.Riez
+   * @param notificationDTO to save the reason of the refusal
+   * @return the changed ObjetDTO
+   */
+  ObjetDTO refuserObject(ObjetDTO objetDTO, String message, NotificationDTO notificationDTO);
+
+  /**
+   * Deposits an object represented by the given ObjetDTO object.
+   *
+   * @param objetDTO the object to be deposited
+   * @param localisation to put in the object
+   * @return the changed ObjetDTO
+   */
+  ObjetDTO depotObject(ObjetDTO objetDTO, String localisation);
+
+  /**
+   * Sells an object represented by the given ObjetDTO object.
+   *
+   * @param objetDTO the object to sell
+   * @return the changed ObjetDTO
+   */
+  ObjetDTO mettreEnVente(ObjetDTO objetDTO);
+
+  /**
+   * Sold an object.
+   *
+   * @param objetDTO the solded object.
+   * @return the changed ObjetDTO
+   */
+  ObjetDTO vendreObject(ObjetDTO objetDTO);
+
+  /**
+   * Retrieve the object linked to the id.
+   *
+   * @param id of the object to retrieve
+   * @return the object found.
+   */
+  ObjetDTO getOne(int id);
 }

@@ -15,4 +15,12 @@ public interface DisponibiliteUCC {
    * @return a list containing the availability
    */
   List<DisponibiliteDTO> getDisponibilite();
+
+  /**
+   * Retrieve one 'disponibility' of the database.
+   *
+   * @param id of the 'disponibility' to search
+   * @return the disponibility
+   */
+  DisponibiliteDTO getOne(int id);
 }
