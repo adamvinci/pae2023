@@ -4,6 +4,8 @@ import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.dal.ObjectDAO;
 import be.vinci.pae.dal.TypeObjetDAO;
+import be.vinci.pae.dal.services.DALTransaction;
+import be.vinci.pae.utils.FatalException;
 import jakarta.inject.Inject;
 import java.util.List;
 
@@ -18,19 +20,45 @@ public class ObjetUCCImpl implements ObjetUCC {
   @Inject
   private TypeObjetDAO typeObjetDAO;
 
+  @Inject
+  private DALTransaction dal;
+
   @Override
   public List<ObjetDTO> getAllObject() {
-
-    return dataService.getAllObjet();
+    try {
+      dal.startTransaction();
+      return dataService.getAllObjet();
+    } catch (FatalException e) {
+      dal.rollBackTransaction();
+      throw new FatalException(e);
+    } finally {
+      dal.commitTransaction();
+    }
   }
 
   @Override
   public List<TypeObjetDTO> getAllObjectType() {
-    return typeObjetDAO.getAll();
+    try {
+      dal.startTransaction();
+      return typeObjetDAO.getAll();
+    } catch (FatalException e) {
+      dal.rollBackTransaction();
+      throw new FatalException(e);
+    } finally {
+      dal.commitTransaction();
+    }
   }
 
   @Override
   public String getPicture(int id) {
-    return dataService.getPicture(id);
+    try {
+      dal.startTransaction();
+      return dataService.getPicture(id);
+    } catch (FatalException e) {
+      dal.rollBackTransaction();
+      throw new FatalException(e);
+    } finally {
+      dal.commitTransaction();
+    }
   }
 }

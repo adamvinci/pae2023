@@ -5,6 +5,8 @@
 ### IntelliJ ###
 .idea/
 
+logs/
+
 ### Eclipse ###
 .metadata
 bin/
