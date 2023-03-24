@@ -233,7 +233,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   @Override
   public Boolean mettreEnVente() {
-    if (Objects.equals(getEtat(), "accepte") && Objects.equals(getLocalisation(),"Magasin")) {
+    if (Objects.equals(getEtat(), "accepte") && Objects.equals(getLocalisation(), "Magasin")) {
       setEtat("en vente");
       return true;
     }

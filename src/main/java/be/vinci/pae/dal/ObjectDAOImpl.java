@@ -115,9 +115,9 @@ public class ObjectDAOImpl implements ObjectDAO {
       }
 
       statement.setString(6, objetDTO.getLocalisation());
-      if(objetDTO.getPrix() != null){
+      if (objetDTO.getPrix() != null) {
         statement.setDouble(7, objetDTO.getPrix());
-      }else{
+      } else {
         statement.setNull(7, java.sql.Types.DOUBLE);
       }
 
@@ -133,7 +133,7 @@ public class ObjectDAOImpl implements ObjectDAO {
   /**
    * Fill an objetDTO with the resultset of a query.
    *
-   * @param set the response of a query.
+   * @param set      the response of a query.
    * @param objetDTO object to fill.
    * @throws SQLException in case of problem with the database
    */
