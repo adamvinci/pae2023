@@ -105,6 +105,6 @@ target/
 src/main/java/be/vinci/pae/utils/images
 
 ### ignore log folder
-logs/
+logs/*
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,java-web
 
