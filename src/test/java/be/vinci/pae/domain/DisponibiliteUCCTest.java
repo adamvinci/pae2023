@@ -21,7 +21,6 @@ import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 class DisponibiliteUCCTest {
 
@@ -63,7 +62,7 @@ class DisponibiliteUCCTest {
   @Test
   void testGetDisponibiliteWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalTransaction).startTransaction();
-    assertThrows(FatalException.class,()->disponibiliteUCC.getDisponibilite());
+    assertThrows(FatalException.class, () -> disponibiliteUCC.getDisponibilite());
   }
 
   @DisplayName("Test getOneDisponibilite( int id ) return null when id does not exist")
@@ -82,10 +81,9 @@ class DisponibiliteUCCTest {
 
   @DisplayName("Test getOneDisponibilite() with a FatalException")
   @Test
-
   void testGetOneDisponibiliteWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalTransaction).startTransaction();
-    assertThrows(FatalException.class,()->disponibiliteUCC.getOne(1));
+    assertThrows(FatalException.class, () -> disponibiliteUCC.getOne(1));
 
   }
 }

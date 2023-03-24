@@ -78,6 +78,14 @@ class ObjetUCCTest {
     assertEquals(objetDTOList, objetUCC.getAllObject());
   }
 
+  @DisplayName("Test getAllObject()  with a FatalException")
+  @Test
+  void testGetAllObjectWithFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> objetUCC.getAllObject());
+
+  }
+
   @DisplayName("Test getAllObjectType() return null when resultset is null")
   @Test
   void testGetAllObjectTypeReturnNull() {
@@ -91,6 +99,14 @@ class ObjetUCCTest {
     List<TypeObjetDTO> typeObjetDTOList = new ArrayList<>();
     Mockito.when(typeObjetDAO.getAll()).thenReturn(typeObjetDTOList);
     assertEquals(typeObjetDTOList, objetUCC.getAllObjectType());
+  }
+
+  @DisplayName("Test getAllObjectType()  with a FatalException")
+  @Test
+  void testGetAllObjectTypeWithFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> objetUCC.getAllObjectType());
+
   }
 
   @DisplayName("Test getPicture() return null for an non existent id")
@@ -108,6 +124,14 @@ class ObjetUCCTest {
 
   }
 
+  @DisplayName("Test getPicture()  with a FatalException")
+  @Test
+  void testGetPictureWithFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> objetUCC.getPicture(1));
+
+  }
+
   @DisplayName("Test  getOne(int id) with a non-existent id")
   @Test
   void testGetOneWithBadId() {
@@ -120,6 +144,14 @@ class ObjetUCCTest {
   void testGetOneWithGoodId() {
     Mockito.when(objectDAO.getOne(1)).thenReturn(objetDTO);
     assertEquals(objetDTO, objetUCC.getOne(1));
+  }
+
+  @DisplayName("Test getOne(int id)  with a FatalException")
+  @Test
+  void testGetOneObjectWithFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> objetUCC.getOne(1));
+
   }
 
   @DisplayName("Test accepterObjet(ObjetDTO objetDTO) with a bad state")
@@ -160,7 +192,7 @@ class ObjetUCCTest {
   @Test
   void testAccepterObjetWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
-    assertThrows(FatalException.class,()->objetUCC.accepterObjet(objetDTO,notificationDTO));
+    assertThrows(FatalException.class, () -> objetUCC.accepterObjet(objetDTO, notificationDTO));
 
   }
 
@@ -206,7 +238,8 @@ class ObjetUCCTest {
   @Test
   void testRefuserObjetWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
-    assertThrows(FatalException.class,()->objetUCC.refuserObject(objetDTO,"refus",notificationDTO));
+    assertThrows(FatalException.class,
+        () -> objetUCC.refuserObject(objetDTO, "refus", notificationDTO));
   }
 
   @DisplayName("Test vendreObject(ObjetDTO objetDTO) with a bad state")
@@ -231,7 +264,7 @@ class ObjetUCCTest {
   @Test
   void testVendreObjectWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
-    assertThrows(FatalException.class,()->objetUCC.vendreObject(objetDTO));
+    assertThrows(FatalException.class, () -> objetUCC.vendreObject(objetDTO));
   }
 
   @DisplayName("Test depotObject(ObjetDTO objetDTO, String localisation) with bad state")
@@ -290,7 +323,7 @@ class ObjetUCCTest {
   @Test
   void testDepotObjectWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
-    assertThrows(FatalException.class,()->objetUCC.depotObject(objetDTO,"Magasin"));
+    assertThrows(FatalException.class, () -> objetUCC.depotObject(objetDTO, "Magasin"));
   }
 
   @DisplayName("Test mettreEnVente(ObjetDTO objetDTO) with a bad state")
@@ -323,6 +356,6 @@ class ObjetUCCTest {
   @Test
   void testMettreEnVenteWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
-    assertThrows(FatalException.class,()->objetUCC.mettreEnVente(objetDTO));
+    assertThrows(FatalException.class, () -> objetUCC.mettreEnVente(objetDTO));
   }
 }

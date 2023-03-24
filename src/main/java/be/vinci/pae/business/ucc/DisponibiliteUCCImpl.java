@@ -23,7 +23,7 @@ public class DisponibiliteUCCImpl implements DisponibiliteUCC {
   public List<DisponibiliteDTO> getDisponibilite() {
     try {
       dal.startTransaction();
-    List<DisponibiliteDTO> disponibiliteDTOS = disponibiliteDAO.getAll();
+      List<DisponibiliteDTO> disponibiliteDTOS = disponibiliteDAO.getAll();
       dal.commitTransaction();
       return disponibiliteDTOS;
 

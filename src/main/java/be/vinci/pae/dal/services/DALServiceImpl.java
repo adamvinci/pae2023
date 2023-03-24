@@ -57,11 +57,11 @@ public class DALServiceImpl implements DALService, DALTransaction {
   }
 
   /**
-   *Starts a new transaction by getting a new connection from the database
-   *and disabling auto-commit.
-
-   *Throws a RuntimeException if a connection has already been acquired.
-
+   * Starts a new transaction by getting a new connection from the database and disabling
+   * auto-commit.
+   * <p>
+   * Throws a RuntimeException if a connection has already been acquired.
+   *
    * @throws FatalException if an SQL exception occurs while starting the transaction.
    */
 
@@ -79,12 +79,13 @@ public class DALServiceImpl implements DALService, DALTransaction {
       throw new FatalException(exception);
     }
   }
-  /**
-   *Commits the current transaction to the database.
 
-   *Throws a RuntimeException if no connection is available.
-   *Any SQLException encountered during the commit will be wrapped in a FatalException and rethrown.
-   *At the end, the connection is closed.
+  /**
+   * Commits the current transaction to the database.
+   * <p>
+   * Throws a RuntimeException if no connection is available. Any SQLException encountered during
+   * the commit will be wrapped in a FatalException and rethrown. At the end, the connection is
+   * closed.
    */
 
   @Override
@@ -102,11 +103,12 @@ public class DALServiceImpl implements DALService, DALTransaction {
       fermerConnexion();
     }
   }
+
   /**
-   *Rolls back the current transaction associated with the connection.
+   * Rolls back the current transaction associated with the connection.
    *
-   *@throws RuntimeException if there is no active transaction
-   *@throws FatalException if a SQL exception occurs during the rollback process
+   * @throws RuntimeException if there is no active transaction
+   * @throws FatalException   if a SQL exception occurs during the rollback process
    */
 
   @Override
@@ -124,8 +126,9 @@ public class DALServiceImpl implements DALService, DALTransaction {
       fermerConnexion();
     }
   }
+
   /**
-   *Closes the current database connection.
+   * Closes the current database connection.
    */
 
   @Override
