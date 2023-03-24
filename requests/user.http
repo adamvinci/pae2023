@@ -131,10 +131,6 @@ Content-Type: application/json
 }
 
 ###
-POST {{baseUrl}}/objet/vendreObject/1
-Authorization: {{aidantToken}}
-
-###
 POST {{baseUrl}}/objet/misEnVenteObject/1
 Authorization: {{aidantToken}}
 Content-Type: application/json
@@ -142,6 +138,12 @@ Content-Type: application/json
 {
   "prix" : "5"
 }
+
+###
+POST {{baseUrl}}/objet/vendreObject/1
+Authorization: {{aidantToken}}
+
+
 
 
 

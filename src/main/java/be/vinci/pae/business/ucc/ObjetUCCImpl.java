@@ -69,82 +69,135 @@ public class ObjetUCCImpl implements ObjetUCC {
 
   @Override
   public ObjetDTO accepterObjet(ObjetDTO objetDTO, NotificationDTO notification) {
-    Objet objet = (Objet) objetDTO;
-    if (!objet.accepterObjet()) {
-      return null;
-    }
-    ObjetDTO objetDTO1 = dataService.updateObjectState(objetDTO);
+    try {
+      dal.startTransaction();
+      Objet objet = (Objet) objetDTO;
+      if (!objet.accepterObjet()) {
+        return null;
+      }
+      ObjetDTO objetDTO1 = dataService.updateObjectState(objetDTO);
 
-    if (objetDTO1.getUtilisateur() != null) {
-      notification.setObject(objetDTO1.getIdObjet());
-      notification.setType("acceptation");
-      NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
-      dataServiceNotification.linkNotifToUser(notificationCreated.getId(),
-          objetDTO1.getUtilisateur());
+      if (objetDTO1.getUtilisateur() != null) {
+        notification.setObject(objetDTO1.getIdObjet());
+        notification.setType("acceptation");
+        NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
+        dataServiceNotification.linkNotifToUser(notificationCreated.getId(),
+            objetDTO1.getUtilisateur());
+      }
+
+      return objetDTO1;
+    } catch (FatalException e) {
+      dal.rollBackTransaction();
+      throw new FatalException(e);
+    } finally {
+      dal.commitTransaction();
     }
 
-    return objetDTO1;
   }
 
   @Override
   public ObjetDTO refuserObject(ObjetDTO objetDTO, String message, NotificationDTO notification) {
-    Objet objet = (Objet) objetDTO;
-    if (!objet.refuserObjet()) {
-      return null;
-    }
-    ObjetDTO objetDTO1 = dataService.updateObjectState(objetDTO);
+    try {
+      dal.startTransaction();
+      Objet objet = (Objet) objetDTO;
+      if (!objet.refuserObjet()) {
+        return null;
+      }
+      ObjetDTO objetDTO1 = dataService.updateObjectState(objetDTO);
 
-    notification.setObject(objetDTO1.getIdObjet());
-    notification.setMessage(message);
-    notification.setType("refus");
-    NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
-    if (objetDTO1.getUtilisateur() != null) {
-      dataServiceNotification.linkNotifToUser(notificationCreated.getId(),
-          objetDTO1.getUtilisateur());
+      notification.setObject(objetDTO1.getIdObjet());
+      notification.setMessage(message);
+      notification.setType("refus");
+      NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
+      if (objetDTO1.getUtilisateur() != null) {
+        dataServiceNotification.linkNotifToUser(notificationCreated.getId(),
+            objetDTO1.getUtilisateur());
+      }
+
+      return objetDTO1;
+    }  catch (FatalException e) {
+      dal.rollBackTransaction();
+      throw new FatalException(e);
+    } finally {
+      dal.commitTransaction();
     }
 
-    return objetDTO1;
   }
 
   @Override
   public ObjetDTO depotObject(ObjetDTO objetDTO, String localisation) {
-    Objet objet = (Objet) objetDTO;
-    if (localisation.equals("Magasin")) {
-      if (!objet.deposerEnMagasin()) {
-        return null;
+    try {
+      dal.startTransaction();
+      Objet objet = (Objet) objetDTO;
+      if (localisation.equals("Magasin")) {
+        if (!objet.deposerEnMagasin()) {
+          return null;
+        }
+      } else {
+        if (!objet.deposerEnAtelier()) {
+          return null;
+        }
       }
-    } else {
-      if (!objet.deposerEnAtelier()) {
-        return null;
-      }
+      return dataService.updateObjectState(objetDTO);
+    }  catch (FatalException e) {
+      dal.rollBackTransaction();
+      throw new FatalException(e);
+    } finally {
+      dal.commitTransaction();
     }
-    return dataService.updateObjectState(objetDTO);
   }
 
   @Override
   public ObjetDTO mettreEnVente(ObjetDTO objetDTO) {
-    Objet objet = (Objet) objetDTO;
+    try {
+      dal.startTransaction();
+      Objet objet = (Objet) objetDTO;
 
-    if (!objet.mettreEnVente()) {
-      return null;
+      if (!objet.mettreEnVente()) {
+        return null;
+      }
+
+      return dataService.updateObjectState(objetDTO);
+    }  catch (FatalException e) {
+      dal.rollBackTransaction();
+      throw new FatalException(e);
+    } finally {
+      dal.commitTransaction();
     }
 
-    return dataService.updateObjectState(objetDTO);
   }
 
   @Override
   public ObjetDTO vendreObject(ObjetDTO objetDTO) {
+    try {
+      dal.startTransaction();
+      Objet objet = (Objet) objetDTO;
+      if (!objet.vendreObjet()) {
+        return null;
+      }
 
-    Objet objet = (Objet) objetDTO;
-    if (!objet.vendreObjet()) {
-      return null;
+      return dataService.updateObjectState(objetDTO);
+    }  catch (FatalException e) {
+      dal.rollBackTransaction();
+      throw new FatalException(e);
+    } finally {
+      dal.commitTransaction();
     }
 
-    return dataService.updateObjectState(objetDTO);
+
   }
 
   @Override
   public ObjetDTO getOne(int id) {
-    return dataService.getOne(id);
+    try {
+      dal.startTransaction();
+      return dataService.getOne(id);
+    }  catch (FatalException e) {
+      dal.rollBackTransaction();
+      throw new FatalException(e);
+    } finally {
+      dal.commitTransaction();
+    }
+
   }
 }
