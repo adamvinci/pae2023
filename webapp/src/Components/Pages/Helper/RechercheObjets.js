@@ -197,6 +197,7 @@ function homeScreen(){
           const objTr = event.target.closest("tr");
           const objIndex = Array.from(objTr.parentNode.children).indexOf(objTr);
           const objData = data[objIndex];
+          console.log(data[objIndex])
           const main = document.querySelector("main");
           const popUp = `
       <div class="popUpContainer">
@@ -228,7 +229,7 @@ function homeScreen(){
                   <td class="rechercheObjetsTd">${objData.typeObjet.libelle}</td>
                   <td class="rechercheObjetsTd">${objData.date_depot}</td>
                   <td class="rechercheObjetsTd">${objData.date_vente}</td>
-                  <td class="rechercheObjetsTd">${objData.prix_vente}</td>
+                  <td class="rechercheObjetsTd">${objData.prix} € </td>
                   <td class="rechercheObjetsTd">${objData.etat}</td>
                   <td class="rechercheObjetsTd">/</td>
                 </tr>
