@@ -159,7 +159,7 @@ public class UserDAOImpl implements UserDAO {
             + " ,date_inscription = ?"
             + " ,gsm = ?"
             + " ,image = ?"
-            + " WHERE id_utilisateur = ?")) {
+            + " WHERE id_utilisateur = ? RETURNING *")) {
 
       statement.setString(1, userToChange.getRole());
       statement.setString(2, userToChange.getEmail());
@@ -170,11 +170,12 @@ public class UserDAOImpl implements UserDAO {
       statement.setString(7, userToChange.getGsm());
       statement.setString(8, userToChange.getImage());
       statement.setInt(9, userToChange.getId());
-      statement.executeQuery();
+      try (ResultSet rs = statement.executeQuery()) {
+        System.out.println("");
+      }
       return true;
     } catch (SQLException e) {
-      System.out.println("\n" + e.getMessage().split("\n")[0] + "\n");
-      return false;
+      throw new FatalException(e);
     }
   }
 
