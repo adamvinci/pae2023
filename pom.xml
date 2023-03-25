@@ -45,6 +45,11 @@
 	<dependencies>
 
 		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+		<dependency>
 			<artifactId>jersey-hk2</artifactId>
 			<groupId>org.glassfish.jersey.inject</groupId>
 		</dependency>
@@ -107,6 +112,17 @@
 		<dependency>
 			<artifactId>jersey-media-multipart</artifactId>
 			<groupId>org.glassfish.jersey.media</groupId>
+		</dependency>
+		<dependency>
+			<artifactId>javax.json-api</artifactId>
+			<groupId>javax.json</groupId>
+			<version>1.1.4</version>
+		</dependency>
+
+		<dependency>
+			<artifactId>javax.json</artifactId>
+			<groupId>org.glassfish</groupId>
+			<version>1.1.4</version>
 		</dependency>
 
 

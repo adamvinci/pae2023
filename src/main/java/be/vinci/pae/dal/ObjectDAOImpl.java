@@ -52,44 +52,7 @@ public class ObjectDAOImpl implements ObjectDAO {
         } else {
           while (set.next()) {
             ObjetDTO objetDTO = objetFactory.getObjet();
-
-            objetDTO.setIdObjet(Integer.parseInt(set.getString(1)));
-            objetDTO.setGsm(set.getString(2));
-            objetDTO.setPhoto(set.getString(3));
-            objetDTO.setDescription(set.getString(4));
-            objetDTO.setEtat(set.getString(5));
-            if (set.getString(6) != null) {
-              objetDTO.setDate_acceptation(LocalDate.parse(set.getString(6)));
-            }
-            objetDTO.setLocalisation(set.getString(7));
-            if (set.getString(8) != null) {
-              objetDTO.setDate_depot(LocalDate.parse(set.getString(8)));
-            }
-            if (set.getString(9) != null) {
-              objetDTO.setDate_retrait(LocalDate.parse(set.getString(9)));
-            }
-            if (set.getString(10) != null) {
-              objetDTO.setPrix(Double.parseDouble(set.getString(10)));
-            }
-
-            if (set.getString(11) != null) {
-              objetDTO.setDate_vente(LocalDate.parse(set.getString(11)));
-            }
-            if (set.getString(12) != null) {
-              objetDTO.setUtilisateur(Integer.valueOf(set.getString(12)));
-            }
-
-            TypeObjetDTO typeObjetDTO = typeObjetFactory.getTypeObjet();
-            typeObjetDTO.setIdObjet(set.getInt(13));
-            typeObjetDTO.setLibelle(set.getString(14));
-            objetDTO.setTypeObjet(typeObjetDTO);
-
-            DisponibiliteDTO disponibiliteDTO = disponibiliteFactory.getDisponibilite();
-            disponibiliteDTO.setId(set.getInt(15));
-            disponibiliteDTO.setDate(LocalDate.parse(set.getString(16)));
-            disponibiliteDTO.setPlage(set.getString(16));
-            objetDTO.setDisponibilite(disponibiliteDTO);
-
+            setObjetDTOFromResultSet(set, objetDTO);
             objetDTOList.add(objetDTO);
           }
         }
@@ -123,7 +86,129 @@ public class ObjectDAOImpl implements ObjectDAO {
   }
 
   @Override
-  public boolean modifierEtatObjet(String etat, int user) {
-    return true;
+  public ObjetDTO updateObjectState(ObjetDTO objetDTO) {
+    String query = "UPDATE projet.objets SET etat = ?, date_acceptation = ?, "
+        + "date_depot = ?, date_retrait = ?, date_vente = ?"
+        + ", localisation = ?,prix_vente = ? WHERE id_objet = ? RETURNING *";
+    try (PreparedStatement statement = dalService.preparedStatement(query)) {
+      statement.setString(1, objetDTO.getEtat());
+
+      if (objetDTO.getDate_acceptation() != null) {
+        statement.setDate(2, java.sql.Date.valueOf(objetDTO.getDate_acceptation()));
+      } else {
+        statement.setDate(2, null);
+      }
+      if (objetDTO.getDate_depot() != null) {
+        statement.setDate(3, java.sql.Date.valueOf(objetDTO.getDate_depot()));
+      } else {
+        statement.setDate(3, null);
+      }
+      if (objetDTO.getDate_retrait() != null) {
+        statement.setDate(4, java.sql.Date.valueOf(objetDTO.getDate_retrait()));
+      } else {
+        statement.setDate(4, null);
+      }
+      if (objetDTO.getDate_vente() != null) {
+        statement.setDate(5, java.sql.Date.valueOf(objetDTO.getDate_vente()));
+      } else {
+        statement.setDate(5, null);
+      }
+
+      statement.setString(6, objetDTO.getLocalisation());
+      if (objetDTO.getPrix() != null) {
+        statement.setDouble(7, objetDTO.getPrix());
+      } else {
+        statement.setNull(7, java.sql.Types.DOUBLE);
+      }
+
+      statement.setInt(8, objetDTO.getIdObjet());
+      statement.executeQuery();
+
+    } catch (SQLException e) {
+      throw new FatalException(e);
+    }
+    return objetDTO;
   }
+
+  /**
+   * Fill an objetDTO with the resultset of a query.
+   *
+   * @param set      the response of a query.
+   * @param objetDTO object to fill.
+   * @throws SQLException in case of problem with the database
+   */
+  public void setObjetDTOFromResultSet(ResultSet set, ObjetDTO objetDTO) throws SQLException {
+    objetDTO.setIdObjet(Integer.parseInt(set.getString(1)));
+    objetDTO.setGsm(set.getString(2));
+    objetDTO.setPhoto(set.getString(3));
+    objetDTO.setDescription(set.getString(4));
+    objetDTO.setEtat(set.getString(5));
+    if (set.getString(6) != null) {
+      objetDTO.setDate_acceptation(LocalDate.parse(set.getString(6)));
+    }
+    objetDTO.setLocalisation(set.getString(7));
+    if (set.getString(8) != null) {
+      objetDTO.setDate_depot(LocalDate.parse(set.getString(8)));
+    }
+    if (set.getString(9) != null) {
+      objetDTO.setDate_retrait(LocalDate.parse(set.getString(9)));
+    }
+    if (set.getString(10) != null) {
+      objetDTO.setPrix(Double.parseDouble(set.getString(10)));
+    }
+
+    if (set.getString(11) != null) {
+      objetDTO.setDate_vente(LocalDate.parse(set.getString(11)));
+    }
+    if (set.getString(12) != null) {
+      objetDTO.setUtilisateur(Integer.valueOf(set.getString(12)));
+    }
+
+    TypeObjetDTO typeObjetDTO = typeObjetFactory.getTypeObjet();
+    typeObjetDTO.setIdObjet(set.getInt(13));
+    typeObjetDTO.setLibelle(set.getString(14));
+    objetDTO.setTypeObjet(typeObjetDTO);
+
+    DisponibiliteDTO disponibiliteDTO = disponibiliteFactory.getDisponibilite();
+    disponibiliteDTO.setId(set.getInt(15));
+    disponibiliteDTO.setDate(LocalDate.parse(set.getString(16)));
+    disponibiliteDTO.setPlage(set.getString(17));
+    objetDTO.setDisponibilite(disponibiliteDTO);
+  }
+
+  /**
+   * Retrieve the object linked to the id.
+   *
+   * @param id of object to search
+   * @return the object or null
+   */
+  public ObjetDTO getOne(int id) {
+    ObjetDTO objetDTO = objetFactory.getObjet();
+    String query = "SELECT o.id_objet,o.gsm,o.photo,o.description,o.etat,"
+        + "o.date_acceptation,o.localisation,o.date_depot,"
+        + "o.date_retrait,o.prix_vente,"
+        + "o.date_vente,o.utilisateur,tob.id_type,"
+        + "tob.libelle,d.id_disponibilite,d.date_disponibilite,"
+        + "p.plage FROM projet.objets o,projet.disponibilites d "
+        + ",projet.plages_horaires p ,projet.types_objets tob "
+        + "  WHERE id_objet = (?)  ";
+    try (PreparedStatement statement = dalService.preparedStatement(query)) {
+      statement.setInt(1, id);
+      try (ResultSet set = statement.executeQuery()) {
+        // check if resultset is empty (none objet)
+        if (!set.isBeforeFirst()) {
+          return null;
+        } else {
+          while (set.next()) {
+            setObjetDTOFromResultSet(set, objetDTO);
+          }
+
+        }
+      }
+    } catch (SQLException e) {
+      throw new FatalException(e);
+    }
+    return objetDTO;
+  }
+
 }

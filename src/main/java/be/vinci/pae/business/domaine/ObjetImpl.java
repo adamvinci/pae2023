@@ -6,6 +6,7 @@ import be.vinci.pae.business.dto.TypeObjetDTO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Implementation of Object class.
@@ -29,7 +30,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   private String photo;
 
-  private TypeObjetDTO typeObjet;
+  private TypeObjetDTO type;
 
   private String description;
 
@@ -92,12 +93,12 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   @Override
   public TypeObjetDTO getTypeObjet() {
-    return typeObjet;
+    return type;
   }
 
   @Override
-  public void setTypeObjet(TypeObjetDTO typeObjet) {
-    this.typeObjet = typeObjet;
+  public void setTypeObjet(TypeObjetDTO type) {
+    this.type = type;
   }
 
   @Override
@@ -189,5 +190,63 @@ public class ObjetImpl implements Objet, ObjetDTO {
   public void setLocalisation(String localisation) {
     this.localisation = Arrays.stream(POSSIBLE_LOCALISATION).filter(s -> s.equals(localisation))
         .findFirst().orElse(null);
+  }
+
+  @Override
+  public Boolean accepterObjet() {
+    if (!Objects.equals(getEtat(), "proposer")) {
+      return false;
+    }
+    setEtat(POSSIBLE_ETAT[0]);
+    setDate_acceptation(LocalDate.now());
+    return true;
+  }
+
+  @Override
+  public Boolean refuserObjet() {
+    if (!Objects.equals(getEtat(), "proposer")) {
+      return false;
+    }
+    setEtat("refuser");
+    return true;
+  }
+
+  @Override
+  public Boolean deposerEnMagasin() {
+    if (Objects.equals(getEtat(), "accepte") && Objects.equals(getLocalisation(), null)
+        || Objects.equals(getLocalisation(), "Atelier") && Objects.equals(getEtat(), "accepte")) {
+      setLocalisation("Magasin");
+      setDate_depot(LocalDate.now());
+      return true;
+    }
+    return false;
+  }
+
+  @Override
+  public Boolean deposerEnAtelier() {
+    if (Objects.equals(getEtat(), "accepte") && Objects.equals(getLocalisation(), null)) {
+      setLocalisation("Atelier");
+      return true;
+    }
+    return false;
+  }
+
+  @Override
+  public Boolean mettreEnVente() {
+    if (Objects.equals(getEtat(), "accepte") && Objects.equals(getLocalisation(), "Magasin")) {
+      setEtat("en vente");
+      return true;
+    }
+    return false;
+  }
+
+  @Override
+  public Boolean vendreObjet() {
+    if (!Objects.equals(getEtat(), "en vente")) {
+      return false;
+    }
+    setEtat("vendu");
+    setDate_vente(LocalDate.now());
+    return true;
   }
 }

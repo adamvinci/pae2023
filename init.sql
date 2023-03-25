@@ -62,7 +62,7 @@ CREATE TABLE projet.notifications
 (
     id_notification SERIAL PRIMARY KEY,
     objet           integer      NOT NULL references projet.objets (id_objet),
-    message         varchar(500) NOT NULL,
+    message         varchar(500)  NULL,
     type            varchar(50)  NOT NULL
 );
 
@@ -118,7 +118,7 @@ VALUES ('Meuble'),
 INSERT INTO projet.objets(photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente)
 VALUES
     --Meuble
-    ('src/main/java/be/vinci/pae/utils/images/Armoire-closet-g2ae3805b3_640.png', 1, 'Armoire 1', 1, 'accepte', null,'Magasin','2022-07-15','2022-07-23',null),
+    ('src/main/java/be/vinci/pae/utils/images/Armoire-closet-g2ae3805b3_640.png', 1, 'Armoire 1', 1, 'proposer', null,'Magasin',null,null,null),
     ('src/main/java/be/vinci/pae/utils/images/ArmoireCasier-cabinets-2945810_1280.jpg', 1, 'Armoire 2', 1, 'en vente', 8,'Magasin','2022-08-20','2022-08-30',null),
     ('src/main/java/be/vinci/pae/utils/images/Armoire-furniture-40208_1280.png', 1, 'Armoire 3', 1, 'vendu', 5,'Magasin','2022-09-21','2022-10-05','2022-10-09'),
     --Chaise
@@ -150,3 +150,6 @@ VALUES
 --Matelas
 
 --Couverture
+
+UPDATE projet.objets SET date_vente=null, date_depot=null,
+                         date_acceptation=null,utilisateur=1, etat = 'proposer',localisation = null,prix_vente = null WHERE id_objet = 1;

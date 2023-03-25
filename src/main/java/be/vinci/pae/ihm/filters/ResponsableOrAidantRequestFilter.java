@@ -1,6 +1,5 @@
 package be.vinci.pae.ihm.filters;
 
-
 import be.vinci.pae.business.dto.UserDTO;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -10,15 +9,14 @@ import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.ext.Provider;
 
-
 /**
- * ResponsableAuthorizationRequestFilter treat the token send by the  method with the
- * ResponsableAuthorization Annotation.
+ * Verify that the token belong to an 'aidant' or to the 'Responsable'.
  */
 @Singleton
 @Provider
-@ResponsableAuthorization
-public class ResponsableAuthorizationRequestFilter implements ContainerRequestFilter {
+@ResponsableOrAidant
+public class ResponsableOrAidantRequestFilter implements
+    ContainerRequestFilter {
 
   @Inject
   private TokenFilter tokenFilter;
@@ -33,8 +31,8 @@ public class ResponsableAuthorizationRequestFilter implements ContainerRequestFi
   public void filter(ContainerRequestContext requestContext) {
 
     UserDTO authenticatedUser = tokenFilter.tokenFilter(requestContext);
-
-    if (!authenticatedUser.getRole().equals("responsable")) {
+    if (!authenticatedUser.getRole().equals("responsable") && !authenticatedUser.getRole()
+        .equals("aidant")) {
       throw new WebApplicationException("You do not have the required permissions to do this.",
           Status.FORBIDDEN);
     }
@@ -42,5 +40,6 @@ public class ResponsableAuthorizationRequestFilter implements ContainerRequestFi
     requestContext.setProperty("user", authenticatedUser);
 
   }
+
 
 }

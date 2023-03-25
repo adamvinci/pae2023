@@ -5,7 +5,7 @@ import be.vinci.pae.business.dto.UserDTO;
 import java.util.List;
 
 /**
- * UserDAO purpose is to communicate with the database.
+ * UserDAO purpose is to communicate with the users table in the database.
  */
 public interface UserDAO {
 

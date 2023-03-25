@@ -1,16 +1,22 @@
 package be.vinci.pae.ihm;
 
+import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.dto.UserDTO;
+import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.ihm.filters.AnonymousOrAuthorize;
+import be.vinci.pae.ihm.filters.ResponsableAuthorization;
+import be.vinci.pae.ihm.filters.ResponsableOrAidant;
 import be.vinci.pae.utils.MyLogger;
+import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -37,7 +43,8 @@ public class ObjetRessource {
 
   @Inject
   private ObjetUCC objetUCC;
-
+  @Inject
+  private NotificationFactory notificationFactory;
 
   /**
    * Retrieve all the object in the database.
@@ -119,5 +126,180 @@ public class ObjetRessource {
     };
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve picture of object " + id);
     return Response.ok(output).build();
+  }
+
+  /**
+   * Change the state of an object from 'proposer' to 'accepte'.
+   *
+   * @param id of the object to change
+   * @return the changed object
+   */
+  @ResponsableAuthorization
+  @POST
+  @Path("accepterObject/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public ObjetDTO accepterObject(@PathParam("id") int id) {
+    ObjetDTO retrievedObject = objetUCC.getOne(id);
+    if (retrievedObject == null) {
+      throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
+    }
+    NotificationDTO notification = notificationFactory.getNotification();
+    ObjetDTO changedObject = objetUCC.accepterObjet(retrievedObject, notification);
+    if (changedObject == null) {
+      throw new WebApplicationException("Impossible changement, to accept "
+          + "an object it state must be 'proposer' ", 512);
+    }
+    Logger.getLogger(MyLogger.class.getName())
+        .log(Level.INFO, "Acceptation of object : " + id);
+
+    return changedObject;
+  }
+
+  /**
+   * Change the localisation of an object.
+   *
+   * @param id   of the object to modify
+   * @param json contains the localisation
+   * @return the modified object
+   */
+  @ResponsableOrAidant
+  @POST
+  @Path("depositObject/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public ObjetDTO deposerObject(@PathParam("id") int id, JsonNode json) {
+    if (!json.hasNonNull("localisation")) {
+      throw new WebApplicationException("message required", Status.BAD_REQUEST);
+    }
+    String localisation = json.get("localisation").asText();
+
+    if (localisation.isBlank() || localisation.isEmpty()) {
+      throw new WebApplicationException("message required", Status.BAD_REQUEST);
+    }
+    if (!localisation.equals("Magasin") && !localisation.equals("Atelier")) {
+      throw new WebApplicationException(
+          "An object can be deposited either in 'Atelier' or 'Magasin '"
+              + "", Status.BAD_REQUEST);
+    }
+    ObjetDTO retrievedObject = objetUCC.getOne(id);
+    if (retrievedObject == null) {
+      throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
+    }
+
+    ObjetDTO changedObject = objetUCC.depotObject(retrievedObject, localisation);
+    if (changedObject == null) {
+      throw new WebApplicationException(
+          "Impossible changement, to deposite an object it state must be 'accepte'"
+              + "and must not have already a location except if the deposit is for an atelier",
+          Status.UNAUTHORIZED);
+    }
+    Logger.getLogger(MyLogger.class.getName())
+        .log(Level.INFO, "Deposit of object : " + id + " at " + localisation);
+    return changedObject;
+  }
+
+  /**
+   * Change the state of an object to 'en vente'.
+   *
+   * @param id   of the object to modify
+   * @param json contains the price of sell
+   * @return the modified object
+   */
+  @ResponsableOrAidant
+  @POST
+  @Path("misEnVenteObject/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public ObjetDTO misEnVenteObject(@PathParam("id") int id, JsonNode json) {
+    if (!json.hasNonNull("prix")) {
+      throw new WebApplicationException("price required", Status.BAD_REQUEST);
+    }
+    String prix = json.get("prix").asText();
+    if (prix.isBlank() || prix.isEmpty()) {
+      throw new WebApplicationException("price required", Status.BAD_REQUEST);
+    }
+    ObjetDTO retrievedObject = objetUCC.getOne(id);
+    if (retrievedObject == null) {
+      throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
+    }
+
+    if (Double.parseDouble(prix) > 10) {
+      throw new WebApplicationException("The price must be inferior to 10", 512);
+    }
+    retrievedObject.setPrix(Double.parseDouble(prix));
+    ObjetDTO changedObject = objetUCC.mettreEnVente(retrievedObject);
+    if (changedObject == null) {
+      throw new WebApplicationException("Impossible changement, to put an object at"
+          + " sell its statut must be 'accepte' and be deposited in the store",
+          Status.UNAUTHORIZED);
+    }
+    Logger.getLogger(MyLogger.class.getName())
+        .log(Level.INFO, "Put to sale of the object : " + id + " at price " + prix);
+    return changedObject;
+  }
+
+  /**
+   * Change the state of an object to 'vendu'.
+   *
+   * @param id of the object to modify
+   * @return the modified object
+   */
+  @ResponsableOrAidant
+  @POST
+  @Path("vendreObject/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public ObjetDTO vendreObject(@PathParam("id") int id) {
+    ObjetDTO retrievedObject = objetUCC.getOne(id);
+    if (retrievedObject == null) {
+      throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
+    }
+    ObjetDTO changedObject = objetUCC.vendreObject(retrievedObject);
+    if (changedObject == null) {
+      throw new WebApplicationException(
+          "Impossible changement,the object need to be in the state 'en vente'"
+              + "to be sold", Status.UNAUTHORIZED);
+    }
+    Logger.getLogger(MyLogger.class.getName())
+        .log(Level.INFO, "Sale of the object : " + id);
+    return changedObject;
+  }
+
+  /**
+   * Refuse a proposed object.
+   *
+   * @param id   of the object to refuse
+   * @param json containing the reason of refusal
+   * @return the refused object
+   */
+  @ResponsableAuthorization
+  @POST
+  @Path("refuserObject/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public ObjetDTO refuserObject(@PathParam("id") int id, JsonNode json) {
+
+    if (!json.hasNonNull("message")) {
+      throw new WebApplicationException("message required", Status.BAD_REQUEST);
+    }
+    String message = json.get("message").asText();
+
+    if (message.isBlank() || message.isEmpty()) {
+      throw new WebApplicationException("message required", Status.BAD_REQUEST);
+    }
+    ObjetDTO retrievedObject = objetUCC.getOne(id);
+    if (retrievedObject == null) {
+      throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
+    }
+    NotificationDTO notification = notificationFactory.getNotification();
+    ObjetDTO changedObject = objetUCC.refuserObject(retrievedObject, message, notification);
+    if (changedObject == null) {
+      throw new WebApplicationException("\"Impossible changement, to refuse an object "
+          + "it state must be 'proposer'", Status.BAD_REQUEST);
+    }
+    Logger.getLogger(MyLogger.class.getName())
+        .log(Level.INFO, "Refusal of objet : " + id);
+    return changedObject;
   }
 }
