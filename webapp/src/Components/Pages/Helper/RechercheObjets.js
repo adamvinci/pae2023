@@ -10,7 +10,6 @@ const tableEnTete = `
           <th class="rechercheObjetsTh"> Type d'objet </th> 
           <th class="rechercheObjetsTh"> date de dépot </th>
           <th class="rechercheObjetsTh"> Prix de l'objet </th>
-          <th class="rechercheObjetsTh"> Nouveau prix </th>
           <th class="rechercheObjetsTh"> Etat de vente </th>
           <th class="rechercheObjetsTh"> Photo objet </th>
           <th class="rechercheObjetsTh"> </th>
@@ -110,27 +109,47 @@ function homeScreen(){
       data = datas;
       const size = data.length;
 
-      for (let i = 0; i < size;) {
-        dataHtml += `
-        <tr style="font-family: 'Games', sans-serif;">
-          <td class="rechercheObjetsTd">${data[i].type}</td> 
-          <td class="rechercheObjetsTd">${data[i].date_depot}</td>
-          <td class="rechercheObjetsTd">${data[i].prix} €</td>
-          <td class="rechercheObjetsTd"><input type="text" size="1" > <input type="button" value="confirmer" </td>
-          <td class="rechercheObjetsTd">
-            <select>
-              <option value="" disabled selected>Type Objet</option>
-              <option value="vendu">Vendu</option>
-            </select> 
-          </td>  
-          <td class="td"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
-          <td class="rechercheObjetsTd"><input type="button" class="btn btn-info btn-sm" id="details" value="Détails"></td>
-         </tr>`;
-        i += 1
-      }
 
       const tableBody = document.querySelector('.tableData');
-      tableBody.innerHTML += dataHtml;
+      for (let i = 0; i < size;) {
+        dataHtml = `
+    <tr style="font-family: 'Games', sans-serif;">
+      <td class="rechercheObjetsTd">${data[i].type}</td> 
+      <td class="rechercheObjetsTd">${data[i].date_depot}</td>
+      <td class="rechercheObjetsTd" id="prixDonne">`;
+
+        if (data[i].prix) {
+          dataHtml += `${data[i].prix}€`;
+        } else {
+          dataHtml += `<input type="text" size="1" id="prix-${data[i].idObjet}">
+                  <button class="confirmer" data-id="${data[i].idObjet}">Confirmer</button>`;
+        }
+
+        dataHtml += `</td>
+    <td class="rechercheObjetsTd">
+      <select>
+        <option value="" disabled selected>Type Objet</option>
+        <option value="vendu">Vendu</option>
+      </select> 
+    </td>  
+    <td class="td"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
+    <td class="rechercheObjetsTd"><input type="button" class="btn btn-info btn-sm" id="details" value="Détails"></td>
+  </tr>`;
+        i+=1;
+
+        tableBody.innerHTML += dataHtml;
+      }
+
+      const confirmerBtns = document.querySelectorAll('.confirmer');
+      confirmerBtns.forEach(btn => {
+        btn.addEventListener('click', (event) => {
+          const idObjet = event.target.dataset.id;
+          const prixInput = document.querySelector(`#prix-${idObjet}`);
+          const prix = prixInput.value;
+          console.log(`ID de l'objet: ${idObjet}, Prix: ${prix}`);
+          // Faire quelque chose avec l'ID de l'objet et le prix récupérés...
+        });
+      });
       const buttonInfo = document.querySelectorAll('#details');
       buttonInfo.forEach((button) => {
         button.addEventListener("click", event => {
