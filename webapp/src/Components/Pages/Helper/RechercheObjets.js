@@ -1,4 +1,5 @@
 import {clearPage} from "../../../utils/render";
+import {getToken} from "../../../utils/auths";
 
 const tableEnTete = `
   <div style=" justify-content: center; display: flex"><h1>Rechercher d'objet</h1></div>
@@ -24,69 +25,58 @@ function head() {
   const main = document.querySelector('main');
   main.innerHTML += tableEnTete;
 }
+async function getTypeObject() {
 
-const filterRechercheObjet = `
-  <div class="filterRechercheObjet">
-    <form>
-      <h3>Types d'objet</h3>
-      <label>
-        <input type="checkbox" name="Meuble" value="Meuble">
-        Meuble
-      </label>
-      <br>
-      <label>
-        <input type="checkbox" name="Table" value="Table">
-        Table
-      </label>
-      <br>
-      <label>
-        <input type="checkbox" name="Chaise" value="Chaise">
-        Chaise
-      </label>
-      <br>
-      <label>
-        <input type="checkbox" name="Fauteuil" value="Fauteuil">
-        Fauteuil
-      </label>
-      <br>
-      <label>
-        <input type="checkbox" name="Lit/sommier" value="Lit/sommier">
-        Lit/sommier
-      </label>
-      <br>
-      <label>
-        <input type="checkbox" name="Matelas" value="Matelas">
-        Matelas
-      </label>
-      <br>
-      <label>
-        <input type="checkbox" name="Couvertures" value="Couvertures">
-        Couvertures
-      </label>
-      <br>
-      <label>
-        <input type="checkbox" name="Materiel de cuisine" value="Materiel de cuisine">
-        Materiel de cuisine
-      </label>
-      <br>
-      <label>
-        <input type="checkbox" name="Vaisselle" value="Vaisselle">
-        Vaisselle
-      </label>
-      <p>
-        <h3>Prix</h3>
-        $<input type="text" size="1"> jusqu'a <input type="text" size="1">
-      </p>
-      
-      <p>
-        <h3>Date depot</h3>
-        <input type="date" id="date"><br>
-      </p>
-      <p></p>
-      <input type="button" value="Filtrer">
-    </form>
-  </div>
-`
+  const options = {
+    method: 'GET',
+  };
+  const response = await fetch(`${process.env.API_BASE_URL}/objet/typeObjet`,
+      options);
+
+  if (!response.ok) {
+    throw new Error(
+        `fetch error : ${response.status} : ${response.statusText}`);
+  }
+
+  const objets = await response.json();
+  return objets;
+}
+
+async function filtrageObjet() {
+  const typeObjet = await getTypeObject();
+
+  let type = "";
+  type += `<h1>Type d'objet</h1>`;
+  typeObjet.forEach((typee) => {
+    type += `
+      <div id="typeObjet">
+        <label>
+          <input type="checkbox" name="menu" data-value="${typee.libelle}">
+          ${typee.libelle}
+        </label>
+      </div>
+    `;
+  });
+
+  return `
+    <div class="filterRechercheObjet">
+      <form>
+        ${type}
+        <p>
+          <h3>Prix</h3>
+          $<input type="text" size="1"> jusqu'a <input type="text" size="1">
+        </p>
+        <p>
+          <h3>Date depot</h3>
+          <input type="date" id="date"><br>
+        </p>
+        <p></p>
+        <input type="button" value="Filtrer">
+      </form>
+    </div>
+  `;
+}
+
 
 function closePopup() {
   const popup = document.querySelector('.popUpContainer');
@@ -109,12 +99,12 @@ function homeScreen(){
       data = datas;
       const size = data.length;
 
-
       const tableBody = document.querySelector('.tableData');
       for (let i = 0; i < size;) {
         dataHtml = `
     <tr style="font-family: 'Games', sans-serif;">
-      <td class="rechercheObjetsTd">${data[i].type}</td> 
+       <td class="rechercheObjetsTd">${data[i].typeObjet.libelle}</td> 
+      
       <td class="rechercheObjetsTd">${data[i].date_depot}</td>
       <td class="rechercheObjetsTd" id="prixDonne">`;
 
@@ -126,28 +116,78 @@ function homeScreen(){
         }
 
         dataHtml += `</td>
-    <td class="rechercheObjetsTd">
-      <select>
-        <option value="" disabled selected>Type Objet</option>
-        <option value="vendu">Vendu</option>
-      </select> 
-    </td>  
-    <td class="td"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
-    <td class="rechercheObjetsTd"><input type="button" class="btn btn-info btn-sm" id="details" value="Détails"></td>
+      <td class="rechercheObjetsTd">`;
+        if (data[i].etat === "en vente") {
+          dataHtml += `<button  class="buttonVendu" size="1" data-index="${data[i].idObjet}" style="background-color: indianred">Indiquer vendu</button>`;
+        }else{
+          dataHtml += `<p>${data[i].etat}</p>`;
+        }
+        dataHtml += `</td> 
+
+      <td class="td"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
+      <td class="rechercheObjetsTd"><input type="button" class="btn btn-info btn-sm" id="details" value="Détails"></td>
   </tr>`;
         i+=1;
 
         tableBody.innerHTML += dataHtml;
       }
 
+      const venduBtns = document.querySelectorAll('.buttonVendu');
+      venduBtns.forEach(btn => {
+        btn.addEventListener("click",async (event)=> {
+          const val = event.target.getAttribute('data-index');
+          try{
+            const options = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization : getToken()
+              },
+            };
+
+            const rep = await fetch(`${process.env.API_BASE_URL}/objet/vendreObject/${val}`, options);
+
+            if (!rep.ok) throw new Error(`fetch error : ${rep.status} : ${rep.statusText}`);
+            window.location.reload();
+          }
+          catch (err){
+            throw Error(err);
+          }
+
+        });
+      });
+
+
+
       const confirmerBtns = document.querySelectorAll('.confirmer');
       confirmerBtns.forEach(btn => {
-        btn.addEventListener('click', (event) => {
+        btn.addEventListener('click', async (event) => {
           const idObjet = event.target.dataset.id;
           const prixInput = document.querySelector(`#prix-${idObjet}`);
           const prix = prixInput.value;
           console.log(`ID de l'objet: ${idObjet}, Prix: ${prix}`);
           // Faire quelque chose avec l'ID de l'objet et le prix récupérés...
+          try{
+            const options = {
+              method: 'POST',
+              body: JSON.stringify({
+                prix,
+              }),
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization : getToken()
+              },
+            };
+
+
+            const rep = await fetch(`${process.env.API_BASE_URL}/objet/misEnVenteObject/${idObjet}`, options);
+
+            if (!rep.ok) throw new Error(`fetch error : ${rep.status} : ${rep.statusText}`);
+            window.location.reload();
+          }
+          catch (err){
+            throw Error(err);
+          }
         });
       });
       const buttonInfo = document.querySelectorAll('#details');
@@ -185,7 +225,7 @@ function homeScreen(){
               <tbody class="tableData">
                 <tr style="font-family: 'Games', sans-serif;">
                   <td class="rechercheObjetsTd">${objData.localisation}</td> 
-                  <td class="rechercheObjetsTd">${objData.type}</td>
+                  <td class="rechercheObjetsTd">${objData.typeObjet.libelle}</td>
                   <td class="rechercheObjetsTd">${objData.date_depot}</td>
                   <td class="rechercheObjetsTd">${objData.date_vente}</td>
                   <td class="rechercheObjetsTd">${objData.prix_vente}</td>
@@ -216,17 +256,14 @@ function homeScreen(){
   getData();
 }
 
-function filtreObjet(){
-  const main = document.querySelector('main');
-  main.innerHTML += filterRechercheObjet;
 
-}
-
-const RechercheObjets = () => {
+const RechercheObjets =async () =>  {
   clearPage();
-  filtreObjet();
+  const main = document.querySelector('main');
+  const filterRechercheObjet =await filtrageObjet();
+  main.innerHTML += filterRechercheObjet;
   head();
   homeScreen();
   };
-  
+
 export default RechercheObjets;
