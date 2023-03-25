@@ -5,7 +5,8 @@ const tableEnTete = `
     <table class="tableEnTete">
       <thead> 
         <tr> 
-          <th class="objetProposeTh"> Id Objet</th> 
+          <th class="objetProposeTh"> Id Objet</th>
+          <th class="objetProposeTh"> Type d'objet </th>
           <th class="objetProposeTh"> Photo objet </th>
           <th class="objetProposeTh"> Description objet</th>
           <th class="objetProposeTh"> Accepter/refuser proposition</th>
@@ -55,7 +56,8 @@ function table() {
                 if (datas[i].etat === 'proposer') {
                     dataHtml += `
                       <tr style="font-family: 'Games', sans-serif;">
-                        <td class="objetProposeTd">${datas[i].idObjet}</td> 
+                        <td class="objetProposeTd">${datas[i].idObjet}</td>
+                        <td class="objetProposeTd">${datas[i].typeObjet.libelle}</td> 
                         <td class="objetProposeTd"><img src=/api/objet/getPicture/${datas[i].idObjet} alt="photo" width="100px"></td> 
                         <td class="objetProposeTd">${datas[i].description}</td>
                         <td class="objetProposeTd"><button id="accepter" data-index="${datas[i].idObjet}" type="submit" >Accepter</button> <button id="refuser" data-index="${datas[i].idObjet}" type="submit" >Réfuser</button></td>
