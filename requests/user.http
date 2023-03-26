@@ -100,7 +100,7 @@ POST {{baseUrl}}/users/4/confirmHelper
 Authorization: {{jeanJacques}}
 
 ###
-POST {{baseUrl}}/users/4/confirmHelper
+POST {{baseUrl}}/users/3/confirmHelper
 Authorization: {{adrienToken}}
 
 ###
