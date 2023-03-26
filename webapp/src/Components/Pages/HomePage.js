@@ -94,7 +94,7 @@ async function getObjects(){
   const options = {
     method: 'GET',
   };
-  const response = await fetch(`${process.env.API_BASE_URL}/objet`, options);
+  const response = await fetch(`${process.env.API_BASE_URL}/objet/storeObject`, options);
 
   if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
 

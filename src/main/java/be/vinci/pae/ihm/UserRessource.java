@@ -71,7 +71,10 @@ public class UserRessource {
     }
     UserDTO changedUser = userUcc.makeAdmin(userToChange);
     if (changedUser == null) {
-      throw new WebApplicationException("This user can't become an 'aidant'", Status.BAD_REQUEST);
+      throw new WebApplicationException(
+          "This user can't become an 'aidant' because "
+              + "he already has the role 'aidant' or 'responsable'",
+          412);
     }
     return changedUser;
   }

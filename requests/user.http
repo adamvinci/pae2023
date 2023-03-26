@@ -68,7 +68,10 @@ GET  {{baseUrl}}/objet/typeObjet
 GET  {{baseUrl}}/disponibilite
 
 ###
-GET {{baseUrl}}/objet
+GET {{baseUrl}}/disponibilite
+
+###
+GET {{baseUrl}}/objet/storeObject
 
 ###
 GET {{baseUrl}}/objet
@@ -97,7 +100,7 @@ POST {{baseUrl}}/users/4/confirmHelper
 Authorization: {{jeanJacques}}
 
 ###
-POST {{baseUrl}}/users/4/confirmHelper
+POST {{baseUrl}}/users/3/confirmHelper
 Authorization: {{adrienToken}}
 
 ###
