@@ -119,7 +119,8 @@ class UserUccTest {
   @Test
   void testLoginWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
-    assertThrows(FatalException.class, () -> userUcc.login("stevenagbassah@student.vinci.be", "siuuu"));
+    assertThrows(FatalException.class, () -> userUcc.login("stevenagbassah@student.vinci.be",
+        "siuuu"));
 
   }
 
