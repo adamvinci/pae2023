@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 const tableEnTete = `
   <div style=" justify-content: center; display: flex">
     <table class="tableEnTete">
@@ -38,8 +40,9 @@ function table() {
             const response = await fetch(`${process.env.API_BASE_URL}/objet`);
             let dataHtml = ' ';
             if (!response.ok) {
-                throw new Error('Network response was not ok.');
+                Swal.fire((await response.text()).valueOf())
             }
+
 
             const datas = await response.json();
             data = datas;
