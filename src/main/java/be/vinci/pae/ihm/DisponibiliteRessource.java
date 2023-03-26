@@ -31,7 +31,7 @@ public class DisponibiliteRessource {
   @Produces(MediaType.APPLICATION_JSON)
   public List<DisponibiliteDTO> getAllDisp() {
     if (disponibiliteUCC.getDisponibilite() == null) {
-      throw new WebApplicationException("Liste vide", Status.NO_CONTENT);
+      throw new WebApplicationException("No disponibility", Status.NO_CONTENT);
     }
     return disponibiliteUCC.getDisponibilite();
   }

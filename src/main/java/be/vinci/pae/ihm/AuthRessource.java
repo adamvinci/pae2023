@@ -53,19 +53,19 @@ public class AuthRessource {
   @Produces(MediaType.APPLICATION_JSON)
   public ObjectNode login(JsonNode userCredentials) {
     if (!userCredentials.hasNonNull("email") || !userCredentials.hasNonNull("password")) {
-      throw new WebApplicationException("email or password required", Status.BAD_REQUEST);
+      throw new WebApplicationException("Email or password required", Status.BAD_REQUEST);
     }
 
     String email = userCredentials.get("email").asText();
     String password = userCredentials.get("password").asText();
 
     if (email.isBlank() || email.isEmpty() || password.isBlank() || password.isEmpty()) {
-      throw new WebApplicationException("email or password required", Status.BAD_REQUEST);
+      throw new WebApplicationException("Email or password required", Status.BAD_REQUEST);
     }
 
     UserDTO userDTO = userUcc.login(email, password);
     if (userDTO == null) {
-      throw new WebApplicationException("bad credentials", Status.UNAUTHORIZED);
+      throw new WebApplicationException("Bad credentials", Status.UNAUTHORIZED);
     }
 
     String token;
@@ -107,7 +107,7 @@ public class AuthRessource {
     userDTO = userUcc.register(userDTO);
 
     if (userDTO == null) {
-      throw new WebApplicationException("email already exist", Status.CONFLICT);
+      throw new WebApplicationException("This email already exist", Status.CONFLICT);
     }
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Inscription de "
         + userDTO.getEmail());

@@ -57,7 +57,7 @@ public class ObjetRessource {
   public List<ObjetDTO> getAllObject(@Context ContainerRequest request) {
 
     if (objetUCC.getAllObject() == null) {
-      throw new WebApplicationException("Liste vide", Status.NO_CONTENT);
+      throw new WebApplicationException("No object in the database", Status.NO_CONTENT);
     }
     UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
     if (authenticatedUser != null && authenticatedUser.getRole().equals("responsable")) {
@@ -83,7 +83,7 @@ public class ObjetRessource {
   @Produces(MediaType.APPLICATION_JSON)
   public List<ObjetDTO> getObjectFromStore() {
     if (objetUCC.getAllObject() == null) {
-      throw new WebApplicationException("Liste vide", Status.NO_CONTENT);
+      throw new WebApplicationException("No object in the database", Status.NO_CONTENT);
     }
     Logger.getLogger(MyLogger.class.getName())
         .log(Level.INFO, "Retrieve list of object located in store  ");
@@ -101,7 +101,7 @@ public class ObjetRessource {
   @Produces(MediaType.APPLICATION_JSON)
   public List<TypeObjetDTO> getAllObjectType() {
     if (objetUCC.getAllObject() == null) {
-      throw new WebApplicationException("Liste vide", Status.NO_CONTENT);
+      throw new WebApplicationException("No object in the database", Status.NO_CONTENT);
     }
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve the type of object");
     return objetUCC.getAllObjectType();
@@ -119,7 +119,7 @@ public class ObjetRessource {
   @Produces({"image/png", "image/jpg", "image/jpeg"})
   public Response getPicture(@DefaultValue("-1") @PathParam("id") int id) {
     if (id == -1) {
-      throw new WebApplicationException("No content", Status.BAD_REQUEST);
+      throw new WebApplicationException("Id of photo required", Status.BAD_REQUEST);
     }
     String pathPicture = objetUCC.getPicture(id);
     if (pathPicture == null) {
@@ -160,7 +160,7 @@ public class ObjetRessource {
   public ObjetDTO accepterObject(@PathParam("id") int id) {
     ObjetDTO retrievedObject = objetUCC.getOne(id);
     if (retrievedObject == null) {
-      throw new WebApplicationException("this object does not exist", Status.NOT_FOUND);
+      throw new WebApplicationException("This object does not exist", Status.NOT_FOUND);
     }
     NotificationDTO notification = notificationFactory.getNotification();
     ObjetDTO changedObject = objetUCC.accepterObjet(retrievedObject, notification);
@@ -188,12 +188,12 @@ public class ObjetRessource {
   @Produces(MediaType.APPLICATION_JSON)
   public ObjetDTO deposerObject(@PathParam("id") int id, JsonNode json) {
     if (!json.hasNonNull("localisation")) {
-      throw new WebApplicationException("message required", Status.BAD_REQUEST);
+      throw new WebApplicationException("Message required", Status.BAD_REQUEST);
     }
     String localisation = json.get("localisation").asText();
 
     if (localisation.isBlank() || localisation.isEmpty()) {
-      throw new WebApplicationException("message required", Status.BAD_REQUEST);
+      throw new WebApplicationException("Message required", Status.BAD_REQUEST);
     }
     if (!localisation.equals("Magasin") && !localisation.equals("Atelier")) {
       throw new WebApplicationException(
@@ -202,7 +202,7 @@ public class ObjetRessource {
     }
     ObjetDTO retrievedObject = objetUCC.getOne(id);
     if (retrievedObject == null) {
-      throw new WebApplicationException("this object does not exist", Status.NOT_FOUND);
+      throw new WebApplicationException("This object does not exist", Status.NOT_FOUND);
     }
 
     ObjetDTO changedObject = objetUCC.depotObject(retrievedObject, localisation);
@@ -231,15 +231,15 @@ public class ObjetRessource {
   @Produces(MediaType.APPLICATION_JSON)
   public ObjetDTO misEnVenteObject(@PathParam("id") int id, JsonNode json) {
     if (!json.hasNonNull("prix")) {
-      throw new WebApplicationException("price required", Status.BAD_REQUEST);
+      throw new WebApplicationException("Price required", Status.BAD_REQUEST);
     }
     String prix = json.get("prix").asText();
     if (prix.isBlank() || prix.isEmpty()) {
-      throw new WebApplicationException("price required", Status.BAD_REQUEST);
+      throw new WebApplicationException("Price required", Status.BAD_REQUEST);
     }
     ObjetDTO retrievedObject = objetUCC.getOne(id);
     if (retrievedObject == null) {
-      throw new WebApplicationException("this object does not exist", Status.NOT_FOUND);
+      throw new WebApplicationException("This object does not exist", Status.NOT_FOUND);
     }
 
     if (Double.parseDouble(prix) > 10) {
@@ -271,7 +271,7 @@ public class ObjetRessource {
   public ObjetDTO vendreObject(@PathParam("id") int id) {
     ObjetDTO retrievedObject = objetUCC.getOne(id);
     if (retrievedObject == null) {
-      throw new WebApplicationException("this object does not exist", Status.NOT_FOUND);
+      throw new WebApplicationException("This object does not exist", Status.NOT_FOUND);
     }
     ObjetDTO changedObject = objetUCC.vendreObject(retrievedObject);
     if (changedObject == null) {
@@ -280,7 +280,7 @@ public class ObjetRessource {
               + "to be sold", 412);
     }
     Logger.getLogger(MyLogger.class.getName())
-        .log(Level.INFO, "Sale of the object : " + id);
+        .log(Level.INFO, "Sale of object : " + id);
     return changedObject;
   }
 
@@ -299,16 +299,16 @@ public class ObjetRessource {
   public ObjetDTO refuserObject(@PathParam("id") int id, JsonNode json) {
 
     if (!json.hasNonNull("message")) {
-      throw new WebApplicationException("message required", Status.BAD_REQUEST);
+      throw new WebApplicationException("Message required", Status.BAD_REQUEST);
     }
     String message = json.get("message").asText();
 
     if (message.isBlank() || message.isEmpty()) {
-      throw new WebApplicationException("message required", Status.BAD_REQUEST);
+      throw new WebApplicationException("Message required", Status.BAD_REQUEST);
     }
     ObjetDTO retrievedObject = objetUCC.getOne(id);
     if (retrievedObject == null) {
-      throw new WebApplicationException("this object does not exist", Status.NOT_FOUND);
+      throw new WebApplicationException("This object does not exist", Status.NOT_FOUND);
     }
     NotificationDTO notification = notificationFactory.getNotification();
     ObjetDTO changedObject = objetUCC.refuserObject(retrievedObject, message, notification);

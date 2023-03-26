@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { getRememberMe, setAuthenticatedUser, setRememberMe } from '../../utils/auths';
 import { clearPage } from '../../utils/render';
 import Navbar from '../Navbar/Navbar';
@@ -114,7 +115,10 @@ async function onLogin(e) {
 
   const response = await fetch(`${process.env.API_BASE_URL}/auths/login`, options);
 
-  if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
+    if (!response.ok) {
+      Swal.fire((await response.text()).valueOf())
+    }
+
 
   const authenticatedUser = await response.json();
 

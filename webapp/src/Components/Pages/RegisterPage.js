@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { getRememberMe, setRememberMe } from '../../utils/auths';
 import { clearPage } from '../../utils/render';
 import Navbar from '../Navbar/Navbar';
@@ -145,11 +146,9 @@ async function onRegister(e) {
   const response = await fetch(`${process.env.API_BASE_URL}/auths/register`, options);
 
   if (!response.ok) {
-    response.text().then((message) => {
-      const erreur = document.getElementById("msgErreur");
-      erreur.innerText = message;
-    })
+    Swal.fire((await response.text()).valueOf())
   }
+
   await response.json();
 
   Navbar();
