@@ -170,32 +170,33 @@ VALUES ('Meuble'),
 
 INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
                                          role, gsm)
-VALUES ( 'bert.riez@gmail.be', 'Jaune;10.', 'Riez', 'Robert', 'src/main/java/be/vinci/pae/utils/avatar/MrRiez.png', '2023-02-14', 'responsable'
-       ,'0477/96.36.26');
+
+VALUES ( 'bert.riez@gmail.be', '$2a$10$6RwXRaDRBegzqC2Of6.kB.XEcjrGgXD9dTKBxF56PizHZP6g3lS4m', 'Riez', 'Robert', 'src/main/java/be/vinci/pae/utils/avatar/MrRiez.png', '2023-02-14', 'responsable'
+       ,'0477/96.36.26'); /*  mdp = Jaune;10.  */
 
 
 INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
                                          role, gsm)
-VALUES ( 'fred.muise@gmail.be', 'Mauve;7?', 'Muise', 'Alfred', 'src/main/java/be/vinci/pae/utils/avatar/fred.png', '2023-02-14', 'aidant'
-       ,'0476/96.36.26');
+VALUES ( 'fred.muise@gmail.be', '$2a$10$JV1GomnSaWpAXpUMLYO7v.g6Qu.io3Pcyv8iJgi41pZ32.LeCedqy', 'Muise', 'Alfred', 'src/main/java/be/vinci/pae/utils/avatar/fred.png', '2023-02-14', 'aidant'
+       ,'0476/96.36.26'); /*  mdp = Mauve;7?  */
 
 
 
 --3
 INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
                                          role, gsm)
-VALUES ( 'caro.line@hotmail.com', 'mdpusr.2', 'Line', 'Caroline', 'src/main/java/be/vinci/pae/utils/avatar/caro.png', '2023-03-26', 'membre'
-       ,'0487/45.23.79');
+VALUES ( 'caro.line@hotmail.com', '$2a$10$rbfRfQyeOtXkvRfl8muiP.7hV3luGNdboFyK2LAFNWBLuNkR6xOBK', 'Line', 'Caroline', 'src/main/java/be/vinci/pae/utils/avatar/caro.png', '2023-03-26', 'membre'
+       ,'0487/45.23.79'); /*  mdp = mdpusr.2  */
 
 INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
                                          role, gsm)
-VALUES ( 'ach.ile@gmail.com', 'mdpusr.2', 'Ile', 'Achille', 'src/main/java/be/vinci/pae/utils/avatar/achil.png', '2023-03-26', 'membre'
-       ,'0477/65.32.24');
+VALUES ( 'ach.ile@gmail.com', '$2a$10$rbfRfQyeOtXkvRfl8muiP.7hV3luGNdboFyK2LAFNWBLuNkR6xOBK', 'Ile', 'Achille', 'src/main/java/be/vinci/pae/utils/avatar/achil.png', '2023-03-26', 'membre'
+       ,'0477/65.32.24'); /*  mdp = mdpusr.2  */
 
 INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
                                          role, gsm)
-VALUES ( 'bas.ile@gmail.be', 'mdpusr.2', 'Ile', 'Basile', 'src/main/java/be/vinci/pae/utils/avatar/bazz.png', '2023-03-26', 'membre'
-       ,'0485/98.86.42');
+VALUES ( 'bas.ile@gmail.be', '$2a$10$rbfRfQyeOtXkvRfl8muiP.7hV3luGNdboFyK2LAFNWBLuNkR6xOBK', 'Ile', 'Basile', 'src/main/java/be/vinci/pae/utils/avatar/bazz.png', '2023-03-26', 'membre'
+       ,'0485/98.86.42'); /*  mdp = mdpusr.2  */
 
 
 --4
@@ -232,7 +233,11 @@ VALUES
 
 INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
 VALUES
-    (null,'0496 32 16 54','src/main/java/be/vinci/pae/utils/images/Secretaire.png', 1, 'Secrétaire', 8, 'Refuser', null,null,null,null,null,null);
+    (null,'0496 32 16 54','src/main/java/be/vinci/pae/utils/images/Secretaire.png', 1, 'Secrétaire', 8, 'refuser', null,null,null,null,null,null);
+
+
+INSERT INTO projet.notifications(objet,message,type)
+VALUES (3,'Ce meuble est magnifique mais fragile pour l’usage qui en sera fait.',null);
 
 
 INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)

@@ -547,3 +547,161 @@ mars 22, 2023 12:09:30 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: You do not have the required permissions to do this.
 mars 22, 2023 12:09:36 PM be.vinci.pae.utils.WebExceptionMapper toResponse
 INFO: This user does not exist
+mars 26, 2023 2:40:43 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: bad credentials
+mars 26, 2023 2:40:55 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: bad credentials
+mars 26, 2023 2:41:13 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: bad credentials
+mars 26, 2023 2:41:18 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: bad credentials
+mars 26, 2023 2:41:30 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: bad credentials
+mars 26, 2023 2:42:10 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 26, 2023 2:42:11 PM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 26, 2023 2:42:11 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 17
+mars 26, 2023 2:42:11 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 16
+mars 26, 2023 2:42:11 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 3
+mars 26, 2023 2:42:11 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 19
+mars 26, 2023 2:42:11 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 13
+mars 26, 2023 2:42:11 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 9
+mars 26, 2023 2:42:11 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 15
+mars 26, 2023 2:42:11 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 14
+mars 26, 2023 2:42:11 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 2
+mars 26, 2023 2:42:11 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 1
+mars 26, 2023 2:42:11 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 11
+mars 26, 2023 2:42:11 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 8
+mars 26, 2023 2:42:11 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 20
+mars 26, 2023 2:42:11 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 21
+mars 26, 2023 2:42:11 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 10
+mars 26, 2023 2:42:11 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 6
+mars 26, 2023 2:42:11 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 4
+mars 26, 2023 2:42:38 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: bad credentials
+mars 26, 2023 2:42:42 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: bad credentials
+mars 26, 2023 2:43:33 PM be.vinci.pae.ihm.AuthRessource register
+INFO: Inscription de hello@hotmail.be
+mars 26, 2023 2:43:36 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de hello@hotmail.be
+mars 26, 2023 2:43:36 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 26, 2023 2:43:36 PM be.vinci.pae.ihm.AuthRessource getUser
+INFO: Retrieve user from token of hello@hotmail.be
+mars 26, 2023 2:43:36 PM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 26, 2023 2:43:36 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 21
+mars 26, 2023 2:43:36 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 2
+mars 26, 2023 2:43:36 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 13
+mars 26, 2023 2:43:36 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 15
+mars 26, 2023 2:43:36 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 11
+mars 26, 2023 2:43:36 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 3
+mars 26, 2023 2:43:36 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 4
+mars 26, 2023 2:43:36 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 20
+mars 26, 2023 2:43:36 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 10
+mars 26, 2023 2:43:36 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 19
+mars 26, 2023 2:43:36 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 6
+mars 26, 2023 2:43:36 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 16
+mars 26, 2023 2:43:37 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 8
+mars 26, 2023 2:43:37 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 14
+mars 26, 2023 2:43:37 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 17
+mars 26, 2023 2:43:37 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 1
+mars 26, 2023 2:43:37 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 9
+mars 26, 2023 2:46:55 PM be.vinci.pae.ihm.AuthRessource register
+INFO: Inscription de bjr@hotmail.com
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de bjr@hotmail.com
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.AuthRessource getUser
+INFO: Retrieve user from token of bjr@hotmail.com
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 14
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 10
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 17
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 6
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 1
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 16
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 21
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 11
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 20
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 2
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 3
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 13
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 9
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 19
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 4
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 15
+mars 26, 2023 2:47:22 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 8
+mars 26, 2023 2:48:34 PM be.vinci.pae.ihm.AuthRessource register
+INFO: Inscription de user@htomail.com
+mars 26, 2023 2:49:21 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: bad credentials
+mars 26, 2023 2:49:25 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: bad credentials
+mars 26, 2023 2:49:27 PM be.vinci.pae.utils.WebExceptionMapper toResponse
+INFO: bad credentials
+mars 26, 2023 2:49:41 PM be.vinci.pae.ihm.AuthRessource login
+INFO: Connexion de user@htomail.com
+mars 26, 2023 2:49:41 PM be.vinci.pae.ihm.AuthRessource getUser
+INFO: Retrieve user from token of user@htomail.com
+mars 26, 2023 2:49:41 PM be.vinci.pae.ihm.ObjetRessource getAllObject
+INFO: Retrieve list of object located in store from anonymous
+mars 26, 2023 2:49:42 PM be.vinci.pae.ihm.ObjetRessource getAllObjectType
+INFO: Retrieve the type of object
+mars 26, 2023 2:49:42 PM be.vinci.pae.ihm.ObjetRessource getPicture
+INFO: Retrieve picture of object 1
