@@ -151,6 +151,8 @@ VALUES
 
 --Couverture
 
+
+
 -----------------------------------DEMO--------------------------------------------------
 
 --1
@@ -258,3 +260,31 @@ VALUES
     (2,null,'src/main/java/be/vinci/pae/utils/images/bar-890375_1920.jpg', 3, 'Tabouret de bar en cuir', 10, 'proposer', null,'magasin',null,null,null,null);
 
 --6
+
+/* Etats (en format lisible par le client) et comptage du nombre d’objets dans chacun des états */
+
+SELECT o.etat,count(o.id_objet)
+FROM projet.objets o
+GROUP BY o.etat;
+
+
+/* Comptage du nombre d’utilisateurs */
+
+SELECT count(id_utilisateur) AS nombreUtilisateur
+FROM projet.utilisateurs_inscrits;
+
+
+/* Comptage du nombre de types d’objets */
+
+SELECT count(id_type) AS nombreTypeObjets
+FROM projet.types_objets;
+
+/* Comptage des dates de présences */
+
+SELECT count(id_disponibilite) AS nombreTypeObjets
+FROM projet.disponibilites;
+
+
+
+
+----------------------------FIN--DEMO--------------------------------------------------
