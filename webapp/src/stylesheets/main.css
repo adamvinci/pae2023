@@ -2,6 +2,10 @@ body {
     background-color: bisque;
 }
 
+#nomSite{
+    font-family: 'Blackadder ITC';
+}
+
 /*-----AccepterRefuserObjetPage---------------------------------------------------------*/
 
 tableEnTete{

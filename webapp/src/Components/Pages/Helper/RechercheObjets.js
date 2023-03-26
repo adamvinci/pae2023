@@ -232,7 +232,7 @@ function homeScreen(){
                 </tr>
               </thead>
               <tbody class="tableData">
-                <tr style="font-family: 'Games', sans-serif;">
+                <tr style="font-family: ">
                   <td class="rechercheObjetsTd">${objData.localisation}</td> 
                   <td class="rechercheObjetsTd">${objData.typeObjet.libelle}</td>
                   <td class="rechercheObjetsTd">${objData.date_depot}</td>

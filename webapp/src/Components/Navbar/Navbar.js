@@ -22,7 +22,7 @@ function header(){
     <div style="flex-grow: 1;">
       <div style="display: flex; margin-left: 250px;">
         <h1>
-          <span style="background-color: #eee; padding: 20px;">
+          <span style="background-color: #eee; padding: 20px;" id="nomSite">
             DonneMoi
           </span>
         </h1>
