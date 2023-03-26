@@ -1,4 +1,5 @@
 import {clearPage} from "../../../utils/render";
+import {getToken} from "../../../utils/auths";
 
 const tableEnTete = `
    <div style="justify-content: center; display: flex">
@@ -33,7 +34,7 @@ function head() {
 
 function table() {
 
-  let data;
+  const data=[];
   let dataHtml = ' ';
   async function getData() {
     try {
@@ -44,34 +45,72 @@ function table() {
       }
 
       const datas = await response.json();
-      data = datas;
-      console.log(data);
+      let j=0;
+      for (let i = 0; i < datas.length; i+=1) {
+        if(datas[i].etat!=="proposer" && datas[i].etat!=="vendu"){
+          data[j]=datas[i];
+          j+=1;
+        }
+      }
       const size = data.length;
 
       for (let i = 0; i < size;) {
+        const currentLocation = data[i].localisation;
         dataHtml += `
-        <tr style="font-family: 'Games', sans-serif;">
-          <td class="receptionObjetsTd">${data[i].utilisateur}</td> 
-          <td class="receptionObjetsTd">${data[i].typeObjet.libelle}</td>
-          <td class="td"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
-          <td class="receptionObjetsTd">${data[i].description}</td>
-          <td class="receptionObjetsTd">${data[i].date_acceptation}</td>
-          <td class="receptionObjetsTd"> 
-            <select>
-              <option value="" disabled selected>Localisation</option>
-              <option value="magasin">Magasin</option>
-              <option value="atelier">Atelier</option>
-            </select>
-          </td>
-          <td class="receptionObjetsTd">${data[i].date_depot}</td>
-          <td class="receptionObjetsTd">${data[i].prix_vente}</td>
-          <td class="receptionObjetsTd"><input type="button" value="Confirmer"></td>
-          <td class="receptionObjetsTd"><input type="button" value="Modifier"></td>
-         </tr>`;
-        i += 1
+    <tr style="font-family: 'Games', sans-serif;" data-idobjet="${data[i].idObjet}">
+      <td class="receptionObjetsTd">${data[i].utilisateur}</td> 
+      <td class="receptionObjetsTd">${data[i].typeObjet.libelle}</td>
+      <td class="td"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
+      <td class="receptionObjetsTd">${data[i].description}</td>
+      <td class="receptionObjetsTd">${data[i].date_acceptation}</td>
+      <td class="receptionObjetsTd"> 
+        <select>
+          <option value="" disabled ${currentLocation ? '' : 'selected'}>Localisation</option>
+          <option value="magasin" ${currentLocation === 'magasin' ? 'selected' : ''} ${currentLocation === 'magasin' ? 'disabled' : ''}>Magasin</option>
+          <option value="atelier" ${currentLocation === 'atelier' ? 'selected' : ''} ${currentLocation === 'atelier' ? 'disabled' : ''}>Atelier</option>
+        </select>
+      </td>
+      <td class="receptionObjetsTd">${data[i].date_depot}</td>
+      <td class="receptionObjetsTd">${data[i].prix_vente}</td>
+      <td class="receptionObjetsTd"><input type="button" value="Confirmer"></td>
+      <td class="receptionObjetsTd"><input type="button" value="Modifier"></td>
+    </tr>`;
+        i += 1;
       }
       const tableBody = document.querySelector('.tableData');
       tableBody.innerHTML = dataHtml;
+
+// Sélectionnez tous les select dans le corps de la table
+      const selects = document.querySelectorAll('.tableData select');
+// Ajoutez un événement change à chaque select
+      selects.forEach(select => {
+        select.addEventListener('change', async (event) => {
+          event.preventDefault();
+          const idObjet = event.target.closest('tr').dataset.idobjet;
+          const newLocation = event.target.value;
+          try{
+            const options = {
+              method: 'POST',
+              body: JSON.stringify({
+                newLocation,
+              }),
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization : getToken()
+              },
+            };
+
+
+            const rep = await fetch(`${process.env.API_BASE_URL}/objet/depositObject/${idObjet}`, options);
+
+            if (!rep.ok) throw new Error(`fetch error : ${rep.status} : ${rep.statusText}`);
+            window.location.reload();
+          }
+          catch (err){
+            throw Error(err);
+          }
+        });
+      });
 
     } catch (error) {
       throw new Error(error);

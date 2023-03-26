@@ -165,8 +165,6 @@ function homeScreen(){
           const idObjet = event.target.dataset.id;
           const prixInput = document.querySelector(`#prix-${idObjet}`);
           const prix = prixInput.value;
-          console.log(`ID de l'objet: ${idObjet}, Prix: ${prix}`);
-          // Faire quelque chose avec l'ID de l'objet et le prix récupérés...
           try{
             const options = {
               method: 'POST',
@@ -197,7 +195,6 @@ function homeScreen(){
           const objTr = event.target.closest("tr");
           const objIndex = Array.from(objTr.parentNode.children).indexOf(objTr);
           const objData = data[objIndex];
-          console.log(data[objIndex])
           const main = document.querySelector("main");
           const popUp = `
       <div class="popUpContainer">

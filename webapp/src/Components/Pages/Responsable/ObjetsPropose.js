@@ -32,11 +32,12 @@ const ObjetPropose = () => {
 };
 
 function table() {
-    const data = [];
+
 
     async function getData() {
-        try {
 
+        try {
+            const data = [];
             const response = await fetch(`${process.env.API_BASE_URL}/objet`);
             let dataHtml = '';
             if (!response.ok) {
@@ -44,26 +45,26 @@ function table() {
             }
 
             const datas = await response.json();
-            const size = datas.length;
+
             let index = 0;
-            for (let j = 0; j < size; j+=1) {
+            for (let j = 0; j < datas.length; j+=1) {
                 if (datas[j].etat === 'proposer') {
                     data[index] = datas[j];
                     index += 1;
                 }
             }
+            const size = data.length;
             for (let i = 0; i < size; i+=1) {
-                if (datas[i].etat === 'proposer') {
                     dataHtml += `
                       <tr style="font-family: 'Games', sans-serif;">
-                        <td class="objetProposeTd">${datas[i].idObjet}</td>
-                        <td class="objetProposeTd">${datas[i].typeObjet.libelle}</td> 
-                        <td class="objetProposeTd"><img src=/api/objet/getPicture/${datas[i].idObjet} alt="photo" width="100px"></td> 
-                        <td class="objetProposeTd">${datas[i].description}</td>
-                        <td class="objetProposeTd"><button id="accepter" data-index="${datas[i].idObjet}" type="submit" >Accepter</button> <button id="refuser" data-index="${datas[i].idObjet}" type="submit" >Réfuser</button></td>
+                        <td class="objetProposeTd">${data[i].idObjet}</td>
+                        <td class="objetProposeTd">${data[i].typeObjet.libelle}</td> 
+                        <td class="objetProposeTd"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
+                        <td class="objetProposeTd">${data[i].description}</td>
+                        <td class="objetProposeTd"><button id="accepter" data-index="${data[i].idObjet}" type="submit" >Accepter</button> <button id="refuser" data-index="${i}" type="submit" >Réfuser</button></td>
                       </tr>
                     `;
-                }
+
             }
             const tableBody = document.querySelector('.tableData');
             tableBody.innerHTML = dataHtml;
@@ -95,7 +96,6 @@ function table() {
             boutonsRefuser.forEach((button) => {
                 button.addEventListener("click",  (event) => {
                     const vals = event.target.getAttribute('data-index');
-                    const main = document.querySelector("main");
                     const popUp = `
                             <div class="popUpContainer">
                             <div id="formulaireRefuser">
@@ -111,46 +111,29 @@ function table() {
                             </div>
                             </div>
                     `;
+
+                    const main = document.querySelector("main");
                     main.insertAdjacentHTML("beforeend", popUp);
 
                     const titreMessage=document.getElementById("titreMessage");
                     let valeurTitreMessage;
-                    if (!Number.isNaN(data[vals].utilisateur)) {
+                    if (!data[vals].utilisateur) {
                         valeurTitreMessage = `Le propriétaire n'a pas de compte, écrivez le message qui sera envoyé au : ${data[vals].gsm}`;
                     } else {
                         valeurTitreMessage = `Écrivez le message de refus pour l'utilisateur n° : ${data[vals].utilisateur}`;
                     }
                     titreMessage.innerHTML= valeurTitreMessage;
 
+                    const popup = document.querySelector('.popUpContainer');
+                    const form = document.querySelector('#formulaireRefus');
+                    form.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        console.log("Valeur du textarea: ", document.querySelector('#reason').value);
+                        console.log(data[vals])
+                        popup.remove();
 
-                    const formulaire=document.getElementById("formulaireRefus");
-                    formulaire.addEventListener("submit",async (eve)=>{
-                        eve.preventDefault();
-                        const reason=document.getElementById("reason");
-                        const message=reason.value;
-                        try{
-                            const options = {
-                                method: 'POST',
-                                body: JSON.stringify({
-                                    message,
-                                }),
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    Authorization : getToken()
-                                },
-                            };
+                    });
 
-
-                            const rep = await fetch(`${process.env.API_BASE_URL}/objet/refuserObject/${vals}`, options);
-
-                            if (!rep.ok) throw new Error(`fetch error : ${rep.status} : ${rep.statusText}`);
-
-                        }
-                        catch (err){
-                            throw Error(err);
-                        }
-
-                    })
                 });
             })
 
