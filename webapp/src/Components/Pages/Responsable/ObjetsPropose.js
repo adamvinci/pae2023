@@ -126,10 +126,30 @@ function table() {
 
                     const popup = document.querySelector('.popUpContainer');
                     const form = document.querySelector('#formulaireRefus');
-                    form.addEventListener('submit', (e) => {
+                    form.addEventListener('submit', async (e) => {
                         e.preventDefault();
-                        console.log("Valeur du textarea: ", document.querySelector('#reason').value);
-                        console.log(data[vals])
+                        const message=document.querySelector('#reason').value;
+                        try{
+                            const options = {
+                                method: 'POST',
+                                body:JSON.stringify(
+                                    {message},
+                                ),
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    Authorization : getToken()
+                                },
+                            };
+
+
+                            const rep = await fetch(`${process.env.API_BASE_URL}/objet/refuserObject/${data[vals].idObjet}`, options);
+
+                            if (!rep.ok) throw new Error(`fetch error : ${rep.status} : ${rep.statusText}`);
+                            window.location.reload();
+                        }
+                        catch (err){
+                            throw Error(err);
+                        }
                         popup.remove();
 
                     });
