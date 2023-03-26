@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import {clearPage} from "../../../utils/render";
 import {getToken} from "../../../utils/auths";
 
@@ -48,7 +49,7 @@ function table() {
       const response = await fetch(`${process.env.API_BASE_URL}/objet`,opt);
 
       if (!response.ok) {
-        throw new Error('Network response was not ok.');
+          Swal.fire((await response.text()).valueOf())
       }
 
       const datas = await response.json();
@@ -73,8 +74,8 @@ function table() {
       <td class="receptionObjetsTd"> 
         <select>
           <option value="" disabled ${currentLocation ? '' : 'selected'}>Localisation</option>
-          <option value="magasin" ${currentLocation === 'magasin' ? 'selected' : ''} ${currentLocation === 'magasin' ? 'disabled' : ''}>Magasin</option>
-          <option value="atelier" ${currentLocation === 'atelier' ? 'selected' : ''} ${currentLocation === 'atelier' ? 'disabled' : ''}>Atelier</option>
+          <option value="Magasin" ${currentLocation === 'Magasin' ? 'selected' : ''} ${currentLocation === 'Magasin' ? 'disabled' : ''}>Magasin</option>
+          <option value="Atelier" ${currentLocation === 'Atelier' ? 'selected' : ''} ${currentLocation === 'Atelier' ? 'disabled' : ''}>Atelier</option>
         </select>
       </td>
       <td class="receptionObjetsTd">${data[i].date_depot}</td>
@@ -95,12 +96,14 @@ function table() {
           event.preventDefault();
           const idObjet = event.target.closest('tr').dataset.idobjet;
           const newLocation = event.target.value;
+          console.log(newLocation)
           try{
+            const updatedLocalisation = {
+              localisation:newLocation
+            }
             const options = {
               method: 'POST',
-              body: JSON.stringify({
-                newLocation,
-              }),
+              body: JSON.stringify(updatedLocalisation),
               headers: {
                 'Content-Type': 'application/json',
                 Authorization : getToken()
@@ -110,8 +113,12 @@ function table() {
 
             const rep = await fetch(`${process.env.API_BASE_URL}/objet/depositObject/${idObjet}`, options);
 
-            if (!rep.ok) throw new Error(`fetch error : ${rep.status} : ${rep.statusText}`);
-            window.location.reload();
+            if (!rep.ok) {
+                Swal.fire((await rep.text()).valueOf())
+            }
+          else{
+              window.location.reload();
+            }
           }
           catch (err){
             throw Error(err);

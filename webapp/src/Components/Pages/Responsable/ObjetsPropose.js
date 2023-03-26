@@ -1,4 +1,6 @@
+import Swal from "sweetalert2";
 import {getToken} from "../../../utils/auths";
+
 
 const tableEnTete = `
   <div style=" justify-content: center; display: flex">
@@ -48,7 +50,7 @@ function table() {
             const response = await fetch(`${process.env.API_BASE_URL}/objet`,opt);
             let dataHtml = '';
             if (!response.ok) {
-                throw new Error('Network response was not ok.');
+                Swal.fire((await response.text()).valueOf());
             }
 
             const datas = await response.json();
@@ -91,8 +93,10 @@ function table() {
 
                         const rep = await fetch(`${process.env.API_BASE_URL}/objet/accepterObject/${val}`, options);
 
-                        if (!rep.ok) throw new Error(`fetch error : ${rep.status} : ${rep.statusText}`);
-                        window.location.reload();
+                        if (!rep.ok) Swal.fire((await rep.text()).valueOf());
+                        else{
+                            window.location.reload();
+                        }
                     }
                     catch (err){
                         throw Error(err);
@@ -151,8 +155,10 @@ function table() {
 
                             const rep = await fetch(`${process.env.API_BASE_URL}/objet/refuserObject/${data[vals].idObjet}`, options);
 
-                            if (!rep.ok) throw new Error(`fetch error : ${rep.status} : ${rep.statusText}`);
-                            window.location.reload();
+                            if (!rep.ok) Swal.fire((await rep.text()).valueOf());
+                            else{
+                                window.location.reload();
+                            }
                         }
                         catch (err){
                             throw Error(err);

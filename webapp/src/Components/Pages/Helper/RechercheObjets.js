@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import {clearPage} from "../../../utils/render";
 import {getToken} from "../../../utils/auths";
 
@@ -34,8 +35,7 @@ async function getTypeObject() {
       options);
 
   if (!response.ok) {
-    throw new Error(
-        `fetch error : ${response.status} : ${response.statusText}`);
+    Swal.fire((await response.text()).valueOf())
   }
 
   const objets = await response.json();
@@ -99,7 +99,7 @@ function homeScreen(){
       const response = await fetch(`${process.env.API_BASE_URL}/objet`,opt);
 
       if (!response.ok) {
-        throw new Error('Network response was not ok.');
+        Swal.fire((await response.text()).valueOf())
       }
 
       const datas = await response.json();
@@ -154,8 +154,10 @@ function homeScreen(){
 
             const rep = await fetch(`${process.env.API_BASE_URL}/objet/vendreObject/${val}`, options);
 
-            if (!rep.ok) throw new Error(`fetch error : ${rep.status} : ${rep.statusText}`);
-            window.location.reload();
+            if (!rep.ok) Swal.fire((await rep.text()).valueOf())
+            else{
+              window.location.reload();
+            }
           }
           catch (err){
             throw Error(err);
@@ -187,8 +189,10 @@ function homeScreen(){
 
             const rep = await fetch(`${process.env.API_BASE_URL}/objet/misEnVenteObject/${idObjet}`, options);
 
-            if (!rep.ok) throw new Error(`fetch error : ${rep.status} : ${rep.statusText}`);
-            window.location.reload();
+            if (!rep.ok) Swal.fire((await rep.text()).valueOf())
+            else{
+              window.location.reload();
+            }
           }
           catch (err){
             throw Error(err);
