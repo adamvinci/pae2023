@@ -6,7 +6,6 @@ import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.ucc.ObjetUCC;
-import be.vinci.pae.ihm.filters.AnonymousOrAuthorize;
 import be.vinci.pae.ihm.filters.ResponsableAuthorization;
 import be.vinci.pae.ihm.filters.ResponsableOrAidant;
 import be.vinci.pae.utils.MyLogger;
@@ -52,7 +51,7 @@ public class ObjetRessource {
    * @param request request the request container
    * @return a list of object or a WebAppException if there are none.
    */
-  @AnonymousOrAuthorize
+  @ResponsableOrAidant
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public List<ObjetDTO> getAllObject(@Context ContainerRequest request) {
@@ -61,14 +60,33 @@ public class ObjetRessource {
       throw new WebApplicationException("Liste vide", Status.NO_CONTENT);
     }
     UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
-    if (authenticatedUser != null && (authenticatedUser.getRole().equals("responsable")
-        || authenticatedUser.getRole().equals("aidant"))) {
+    if (authenticatedUser != null && authenticatedUser.getRole().equals("responsable")) {
       Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
           "Retrieve the complete list of object from user " + authenticatedUser.getEmail());
       return objetUCC.getAllObject();
     }
+
     Logger.getLogger(MyLogger.class.getName())
-        .log(Level.INFO, "Retrieve list of object located in store from anonymous");
+        .log(Level.INFO, "Retrieve list of object located in store from aidant  "
+            + authenticatedUser.getEmail());
+    return objetUCC.getAllObject().stream()
+        .filter(objetDTO -> objetDTO.getEtat().equals("accepte")).toList();
+  }
+
+  /**
+   * Retrieve the object located in the store.
+   *
+   * @return a list containing these objects
+   */
+  @GET
+  @Path("storeObject")
+  @Produces(MediaType.APPLICATION_JSON)
+  public List<ObjetDTO> getObjectFromStore() {
+    if (objetUCC.getAllObject() == null) {
+      throw new WebApplicationException("Liste vide", Status.NO_CONTENT);
+    }
+    Logger.getLogger(MyLogger.class.getName())
+        .log(Level.INFO, "Retrieve list of object located in store  ");
     return objetUCC.getAllObject().stream()
         .filter(objetDTO -> objetDTO.getLocalisation().equals("Magasin")).toList();
   }
@@ -142,13 +160,13 @@ public class ObjetRessource {
   public ObjetDTO accepterObject(@PathParam("id") int id) {
     ObjetDTO retrievedObject = objetUCC.getOne(id);
     if (retrievedObject == null) {
-      throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
+      throw new WebApplicationException("this object does not exist", Status.NOT_FOUND);
     }
     NotificationDTO notification = notificationFactory.getNotification();
     ObjetDTO changedObject = objetUCC.accepterObjet(retrievedObject, notification);
     if (changedObject == null) {
       throw new WebApplicationException("Impossible changement, to accept "
-          + "an object it state must be 'proposer' ", 512);
+          + "an object it state must be 'proposer' ", 412);
     }
     Logger.getLogger(MyLogger.class.getName())
         .log(Level.INFO, "Acceptation of object : " + id);
@@ -184,7 +202,7 @@ public class ObjetRessource {
     }
     ObjetDTO retrievedObject = objetUCC.getOne(id);
     if (retrievedObject == null) {
-      throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
+      throw new WebApplicationException("this object does not exist", Status.NOT_FOUND);
     }
 
     ObjetDTO changedObject = objetUCC.depotObject(retrievedObject, localisation);
@@ -192,7 +210,7 @@ public class ObjetRessource {
       throw new WebApplicationException(
           "Impossible changement, to deposite an object it state must be 'accepte'"
               + "and must not have already a location except if the deposit is for an atelier",
-          Status.UNAUTHORIZED);
+          412);
     }
     Logger.getLogger(MyLogger.class.getName())
         .log(Level.INFO, "Deposit of object : " + id + " at " + localisation);
@@ -221,18 +239,18 @@ public class ObjetRessource {
     }
     ObjetDTO retrievedObject = objetUCC.getOne(id);
     if (retrievedObject == null) {
-      throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
+      throw new WebApplicationException("this object does not exist", Status.NOT_FOUND);
     }
 
     if (Double.parseDouble(prix) > 10) {
-      throw new WebApplicationException("The price must be inferior to 10", 512);
+      throw new WebApplicationException("The price must be inferior to 10", 412);
     }
     retrievedObject.setPrix(Double.parseDouble(prix));
     ObjetDTO changedObject = objetUCC.mettreEnVente(retrievedObject);
     if (changedObject == null) {
       throw new WebApplicationException("Impossible changement, to put an object at"
           + " sell its statut must be 'accepte' and be deposited in the store",
-          Status.UNAUTHORIZED);
+          412);
     }
     Logger.getLogger(MyLogger.class.getName())
         .log(Level.INFO, "Put to sale of the object : " + id + " at price " + prix);
@@ -253,13 +271,13 @@ public class ObjetRessource {
   public ObjetDTO vendreObject(@PathParam("id") int id) {
     ObjetDTO retrievedObject = objetUCC.getOne(id);
     if (retrievedObject == null) {
-      throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
+      throw new WebApplicationException("this object does not exist", Status.NOT_FOUND);
     }
     ObjetDTO changedObject = objetUCC.vendreObject(retrievedObject);
     if (changedObject == null) {
       throw new WebApplicationException(
           "Impossible changement,the object need to be in the state 'en vente'"
-              + "to be sold", Status.UNAUTHORIZED);
+              + "to be sold", 412);
     }
     Logger.getLogger(MyLogger.class.getName())
         .log(Level.INFO, "Sale of the object : " + id);
@@ -290,13 +308,13 @@ public class ObjetRessource {
     }
     ObjetDTO retrievedObject = objetUCC.getOne(id);
     if (retrievedObject == null) {
-      throw new WebApplicationException("this object does not exist", Status.BAD_REQUEST);
+      throw new WebApplicationException("this object does not exist", Status.NOT_FOUND);
     }
     NotificationDTO notification = notificationFactory.getNotification();
     ObjetDTO changedObject = objetUCC.refuserObject(retrievedObject, message, notification);
     if (changedObject == null) {
       throw new WebApplicationException("\"Impossible changement, to refuse an object "
-          + "it state must be 'proposer'", Status.BAD_REQUEST);
+          + "it state must be 'proposer'", 412);
     }
     Logger.getLogger(MyLogger.class.getName())
         .log(Level.INFO, "Refusal of objet : " + id);
