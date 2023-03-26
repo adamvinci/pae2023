@@ -19,7 +19,10 @@ const confirmHelper = async (e) => {
   };
 
   const response = await fetch(`${process.env.API_BASE_URL}/users/${userID}/confirmHelper`, options);
-  if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
+  if (!response.ok) {
+    Swal.fire((await response.text()).valueOf())
+  }
+
   Swal.fire({
     position: 'top-end',
     icon: 'success',
@@ -62,7 +65,10 @@ const renderUsersTable = async () => {
 
   const response = await fetch(`${process.env.API_BASE_URL}/users`, options);
 
-  if (!response.ok) throw new Error(`fetch error : ${response.status} : ${response.statusText}`);
+  if (!response.ok) {
+    Swal.fire((await response.text()).valueOf())
+  }
+
 
   const users = await response.json();
 

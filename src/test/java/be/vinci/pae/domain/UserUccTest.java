@@ -4,14 +4,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doThrow;
 
 import be.vinci.pae.business.domaine.User;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.dal.UserDAO;
+import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.ApplicationBinderMock;
+import be.vinci.pae.utils.FatalException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,7 @@ class UserUccTest {
   private UserDAO userDAO;
   private User userLeon;
   private User userMemberSteven;
+  private DALTransaction dalService;
 
   private User userLeonHashed;
 
@@ -43,6 +48,7 @@ class UserUccTest {
   void setUp() {
     userUcc = locator.getService(UserUcc.class);
     userDAO = locator.getService(UserDAO.class);
+    dalService = locator.getService(DALTransaction.class);
 
     userMemberSteven = (User) userFactory.getUserDTO();
     userMemberSteven.setEmail("steven.agbassah@student.vinci.be");
@@ -109,9 +115,19 @@ class UserUccTest {
   }
 
 
+  @DisplayName("Test login()  with a FatalException")
+  @Test
+  void testLoginWithFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> userUcc.login("stevenagbassah@student.vinci.be",
+        "siuuu"));
+
+  }
+
+
   @DisplayName("test register with good email")
   @Test
-  void testRegisterWhitGoodemail() {
+  void testRegisterWhitGoodEmail() {
     Mockito.when(userDAO.getOne("leon.kelmendi@student.vinci.be")).thenReturn(null);
     Mockito.when(userDAO.createOne(userLeon)).thenReturn(userLeon);
     assertNotNull(userUcc.register(userLeon));
@@ -120,14 +136,32 @@ class UserUccTest {
 
   @DisplayName("test register with email already exist")
   @Test
-  void testRegisterWhitBademail() {
+  void testRegisterWhitBadEmail() {
     assertNull(userUcc.register(userMemberSteven));
+  }
+
+
+  @DisplayName("Test register  with a FatalException")
+  @Test
+  void testRegisterWithFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> userUcc.register(userLeon));
+
   }
 
   @DisplayName("Test getOne(id) with the good id")
   @Test
   void getOneGoodId() {
     assertEquals(userMemberSteven, userUcc.getOne(1));
+  }
+
+
+  @DisplayName("Test getOne with a FatalException")
+  @Test
+  void testGetOneFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> userUcc.getOne(999));
+
   }
 
 
@@ -150,6 +184,13 @@ class UserUccTest {
     assertEquals(userMemberSteven.getRole(), "aidant");
   }
 
+  @DisplayName("Test makeAdmin with a FatalException")
+  @Test
+  void makeAdminWithFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> userUcc.makeAdmin(userMemberSteven));
+  }
+
   @DisplayName("Test getAll() users with a non-empty list(resultset)")
   @Test
   void getAllUsersNonEmpty() {
@@ -166,6 +207,14 @@ class UserUccTest {
   void getAllUsersEmpty() {
     Mockito.when(userDAO.getAll()).thenReturn(null);
     assertNull(userUcc.getAll(), "Non users in the database");
+  }
+
+
+  @DisplayName("Test getAll with a FatalException")
+  @Test
+  void getAllUsersFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> userUcc.getAll());
   }
 
 
