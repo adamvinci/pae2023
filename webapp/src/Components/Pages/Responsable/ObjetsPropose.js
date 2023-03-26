@@ -1,15 +1,17 @@
 import Swal from "sweetalert2";
+import {getToken} from "../../../utils/auths";
+
 
 const tableEnTete = `
   <div style=" justify-content: center; display: flex">
     <table class="tableEnTete">
       <thead> 
         <tr> 
-          <th class="objetProposeTh"> Id Utilisateur</th> 
+          <th class="objetProposeTh"> Id Objet</th>
+          <th class="objetProposeTh"> Type d'objet </th>
           <th class="objetProposeTh"> Photo objet </th>
           <th class="objetProposeTh"> Description objet</th>
           <th class="objetProposeTh"> Accepter/refuser proposition</th>
-          <th class="objetProposeTh"> Date acceptation</th>
         </tr>
       </thead>
       <tbody class="tableData"> 
@@ -20,9 +22,11 @@ const tableEnTete = `
 function text() {
     const main = document.querySelector('main');
     main.innerHTML = tableEnTete;
+
 }
 
 const ObjetPropose = () => {
+
     text();
     table();
 
@@ -32,63 +36,143 @@ const ObjetPropose = () => {
 function table() {
 
 
-    let data;
-
     async function getData() {
-        try {
 
-            const response = await fetch(`${process.env.API_BASE_URL}/objet`);
-            let dataHtml = ' ';
-            if (!response.ok) {
-                Swal.fire((await response.text()).valueOf())
-            }
+        try {
+            const data = [];
+            const opt = {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization : getToken()
+                },
+            };
+            const response = await fetch(`${process.env.API_BASE_URL}/objet`,opt);
+            let dataHtml = '';
+            if (!response.ok)
+
+                Swal.fire((await response.text()).valueOf());
+
 
 
             const datas = await response.json();
-            data = datas;
 
+            let index = 0;
+            for (let j = 0; j < datas.length; j+=1) {
+                if (datas[j].etat === 'proposer') {
+                    data[index] = datas[j];
+                    index += 1;
+                }
+            }
             const size = data.length;
-
-            for (let i = 0; i < size;) {
-                dataHtml += `
-                  <tr style="font-family: 'Games', sans-serif;">
-                    <td class="objetProposeTd">${data[i].idObjet}</td> 
-                    <td class="objetProposeTd"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
-                    <td class="objetProposeTd">${data[i].description}</td>
-                    <td class="objetProposeTd"><button id="accepter" type="submit" >Accepter</button> <button id="refuser" type="submit" >Réfuser</button></td>
-                    <td class="objetProposeTd">${data[i].date_acceptation}</td>
-                  </tr>
-                `;
-                i += 1
+            for (let i = 0; i < size; i+=1) {
+                    dataHtml += `
+                      <tr style="font-family: 'Games', sans-serif;">
+                        <td class="objetProposeTd">${data[i].idObjet}</td>
+                        <td class="objetProposeTd">${data[i].typeObjet.libelle}</td> 
+                        <td class="objetProposeTd"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
+                        <td class="objetProposeTd">${data[i].description}</td>
+                        <td class="objetProposeTd"><button id="accepter" data-index="${data[i].idObjet}" type="submit" >Accepter</button> <button id="refuser" data-index="${i}" type="submit" >Réfuser</button></td>
+                      </tr>
+                    `;
 
             }
             const tableBody = document.querySelector('.tableData');
             tableBody.innerHTML = dataHtml;
+            const accepterBouton=document.querySelectorAll('#accepter');
+            accepterBouton.forEach(btn=>{
+                btn.addEventListener("click",async (event)=>{
+                    const val = event.target.getAttribute('data-index');
+                    try{
+                        const options = {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization : getToken()
+                            },
+                        };
+
+
+                        const rep = await fetch(`${process.env.API_BASE_URL}/objet/accepterObject/${val}`, options);
+
+                        if (!rep.ok) Swal.fire((await rep.text()).valueOf());
+                        else{
+                            window.location.reload();
+                        }
+                    }
+                    catch (err){
+                        throw Error(err);
+                    }
+                });
+            })
             const boutonsRefuser = document.querySelectorAll('#refuser');
             boutonsRefuser.forEach((button) => {
-                button.addEventListener("click", event => {
-                    event.preventDefault();
-                    console.log("refuser");
+                button.addEventListener("click",  (event) => {
+                    const vals = event.target.getAttribute('data-index');
+                    const popUp = `
+                            <div class="popUpContainer">
+                            <div id="formulaireRefuser">
+                                <h1>Pourquoi l'objet a été refusé ?</h1>
+                                <br>
+                                <br>
+                                <div id="titreMessage"></div>
+                                <form id ="formulaireRefus">
+                                    <textarea  placeholder="Votre message" id="reason"></textarea><br>
+                                    <input type="submit" value="Envoyer" id="refuseObjet">
+                                </form>
+                                
+                            </div>
+                            </div>
+                    `;
+
                     const main = document.querySelector("main");
-                  const popUp = `
-                        <div class="popUpContainer">
-                        <div id="formulaireRefuser">
-                            <h1>Pourquoi l'objet a été refusé ?</h1>
-                            <br>
-                            <br>
-                            <form>
-                                <textarea  placeholder="Votre message" id="reason"></textarea><br>
-                                <input type="submit" value="Envoyer" id="refuseObjet">
-                            </form>
-                        </div>
-                        </div>
-                  `;
-                  main.insertAdjacentHTML("beforeend", popUp);
+                    main.insertAdjacentHTML("beforeend", popUp);
+
+                    const titreMessage=document.getElementById("titreMessage");
+                    let valeurTitreMessage;
+                    if (!data[vals].utilisateur) {
+                        valeurTitreMessage = `Le propriétaire n'a pas de compte, écrivez le message qui sera envoyé au : ${data[vals].gsm}`;
+                    } else {
+                        valeurTitreMessage = `Écrivez le message de refus pour l'utilisateur n° : ${data[vals].utilisateur}`;
+                    }
+                    titreMessage.innerHTML= valeurTitreMessage;
+
+                    const popup = document.querySelector('.popUpContainer');
+                    const form = document.querySelector('#formulaireRefus');
+                    form.addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        const message=document.querySelector('#reason').value;
+                        try{
+                            const options = {
+                                method: 'POST',
+                                body:JSON.stringify(
+                                    {message},
+                                ),
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    Authorization : getToken()
+                                },
+                            };
+
+
+                            const rep = await fetch(`${process.env.API_BASE_URL}/objet/refuserObject/${data[vals].idObjet}`, options);
+
+                            if (!rep.ok) Swal.fire((await rep.text()).valueOf());
+                            else{
+                                window.location.reload();
+                            }
+                        }
+                        catch (err){
+                            throw Error(err);
+                        }
+                        popup.remove();
+
+                    });
 
                 });
             })
 
-        } catch (error) {
+        }catch (error) {
             throw new Error(error);
         }
     }

@@ -119,7 +119,6 @@ async function renderNavbar() {
               <a class="nav-link" href="#" data-uri="/logout">Logout</a>
     </li>
     `;
-    console.log(authenticatedUser?.role);
   }
   else{
     const bouttonCo = document.getElementById('bouttonCo');
