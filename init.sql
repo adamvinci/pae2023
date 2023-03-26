@@ -151,5 +151,105 @@ VALUES
 
 --Couverture
 
-UPDATE projet.objets SET date_vente=null, date_depot=null,
-                         date_acceptation=null,utilisateur=1, etat = 'proposer',localisation = null,prix_vente = null WHERE id_objet = 1;
+-----------------------------------DEMO--------------------------------------------------
+
+--1
+INSERT INTO projet.types_objets(libelle)
+VALUES ('Meuble'),
+       ('Table'),
+       ('Chaise'),
+       ('Fauteuil'),
+       ('Lit/Sommier'),
+       ('Matelas'),
+       ('Couvertures'),
+       ('Materiel de cuisine'),
+       ('Vaiselle');
+
+
+--2
+
+INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
+                                         role, gsm)
+VALUES ( 'bert.riez@gmail.be', 'Jaune;10.', 'Riez', 'Robert', 'src/main/java/be/vinci/pae/utils/avatar/MrRiez.png', '2023-02-14', 'responsable'
+       ,'0477/96.36.26');
+
+
+INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
+                                         role, gsm)
+VALUES ( 'fred.muise@gmail.be', 'Mauve;7?', 'Muise', 'Alfred', 'src/main/java/be/vinci/pae/utils/avatar/fred.png', '2023-02-14', 'aidant'
+       ,'0476/96.36.26');
+
+
+
+--3
+INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
+                                         role, gsm)
+VALUES ( 'caro.line@hotmail.com', 'mdpusr.2', 'Line', 'Caroline', 'src/main/java/be/vinci/pae/utils/avatar/caro.png', '2023-03-26', 'membre'
+       ,'0487/45.23.79');
+
+INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
+                                         role, gsm)
+VALUES ( 'ach.ile@gmail.com', 'mdpusr.2', 'Ile', 'Achille', 'src/main/java/be/vinci/pae/utils/avatar/achil.png', '2023-03-26', 'membre'
+       ,'0477/65.32.24');
+
+INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
+                                         role, gsm)
+VALUES ( 'bas.ile@gmail.be', 'mdpusr.2', 'Ile', 'Basile', 'src/main/java/be/vinci/pae/utils/avatar/bazz.png', '2023-03-26', 'membre'
+       ,'0485/98.86.42');
+
+
+--4
+
+INSERT INTO projet.plages_horaires(plage)
+VALUES ('matin'),
+       ('apres midi');
+
+INSERT INTO projet.disponibilites(date_disponibilite, plage)
+VALUES ('2023-03-4', 1),
+       ('2023-03-4', 2),
+       ('2023-03-11', 1),
+       ('2023-03-11', 2),
+       ('2023-03-18', 1),
+       ('2023-03-18', 2),
+       ('2023-03-25', 1),
+       ('2023-03-25', 2),
+       ('2023-04-1', 1),
+       ('2023-04-1', 2),
+       ('2023-04-15', 1),
+       ('2023-04-15', 2),
+       ('2023-04-22', 1),
+       ('2023-04-22', 2);
+
+--5
+
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+VALUES
+    (3,null,'src/main/java/be/vinci/pae/utils/images/Chaise-wooden-gbe3bb4b3a_1280.png', 3, 'Chaise en bois brut avec cousin beige', 5, 'en vente', 2,'Magasin','2023-03-15','2023-03-18',null,null);
+
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+VALUES
+    (3,null,'src/main/java/be/vinci/pae/utils/images/Fauteuil-sofa-g99f90fab2_1280.jpg', 4, 'Canapé 3 places blanc', 5, 'en vente', 3,'Magasin','2023-03-15','2023-03-18','2023-03-22',null);
+
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+VALUES
+    (null,'0496 32 16 54','src/main/java/be/vinci/pae/utils/images/Secretaire.png', 1, 'Secrétaire', 8, 'Refuser', null,null,null,null,null,null);
+
+
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+VALUES
+    (2,null,'src/main/java/be/vinci/pae/utils/images/Vaisselle-plate-629970_1280.jpg', 9, '100 assiettes blanches', 8, 'accepte', null,'magasin','2023-03-20',null,null,null);
+
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+VALUES
+    (2,null,'src/main/java/be/vinci/pae/utils/images/Fauteuil-couch-g0f519ec38_1280.png', 4, 'Grand canapé 4 places bleu usé', 8, 'accepte', null,'magasin','2023-03-20',null,null,null);
+
+
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+VALUES
+    (2,null,'src/main/java/be/vinci/pae/utils/images/Fauteuil-design-gee14e1707_1280.jpg', 4, 'Fauteuil design très confortable', 10, 'proposer', null,'magasin',null,null,null,null);
+
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+VALUES
+    (2,null,'src/main/java/be/vinci/pae/utils/images/bar-890375_1920.jpg', 3, 'Tabouret de bar en cuir', 10, 'proposer', null,'magasin',null,null,null,null);
+
+--6
