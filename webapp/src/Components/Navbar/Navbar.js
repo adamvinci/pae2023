@@ -93,10 +93,10 @@ async function renderNavbar() {
               <a class="nav-link" href="#" data-uri="/Disponibilités">Disponibilités</a>
     </li>
     <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/ReceptionObjets">ReceptionObjets</a>
+              <a class="nav-link" href="#" data-uri="/ReceptionObjets">Dépôt d'objets</a>
     </li>
     <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/RechercheObjets">RechercheObjets</a>
+              <a class="nav-link" href="#" data-uri="/RechercheObjets">Gérer la vente d'objets</a>
     </li>
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/TableauDeBord">TableauDeBord</a>
@@ -107,7 +107,7 @@ async function renderNavbar() {
       
       member.innerHTML+=`
     <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/ObjetsPropose">ObjetsPropose</a>
+              <a class="nav-link" href="#" data-uri="/ObjetsPropose">Accepter/Refuser objets</a>
     </li>
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/Membres">Membres</a>

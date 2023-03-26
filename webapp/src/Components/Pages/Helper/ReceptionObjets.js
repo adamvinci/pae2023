@@ -10,7 +10,7 @@ const tableEnTete = `
     <table class="tableEnTete">
       <thead> 
         <tr> 
-          <th class="receptionObjetsTh"> Id utilisateur </th> 
+          <th class="receptionObjetsTh"> Id Objet </th> 
           <th class="receptionObjetsTh"> Type d'objet </th>
           <th class="receptionObjetsTh"> Photo objet </th>
           <th class="receptionObjetsTh"> Description </th>
@@ -65,8 +65,8 @@ function table() {
       for (let i = 0; i < size;) {
         const currentLocation = data[i].localisation;
         dataHtml += `
-    <tr style="font-family: 'Games', sans-serif;" data-idobjet="${data[i].idObjet}">
-      <td class="receptionObjetsTd">${data[i].utilisateur}</td> 
+    <tr>
+      <td class="receptionObjetsTd">${data[i].idObjet}</td> 
       <td class="receptionObjetsTd">${data[i].typeObjet.libelle}</td>
       <td class="td"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
       <td class="receptionObjetsTd">${data[i].description}</td>
