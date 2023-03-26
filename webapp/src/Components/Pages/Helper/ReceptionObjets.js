@@ -38,7 +38,14 @@ function table() {
   let dataHtml = ' ';
   async function getData() {
     try {
-      const response = await fetch(`${process.env.API_BASE_URL}/objet`);
+      const opt = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization : getToken()
+        },
+      };
+      const response = await fetch(`${process.env.API_BASE_URL}/objet`,opt);
 
       if (!response.ok) {
         throw new Error('Network response was not ok.');
