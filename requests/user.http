@@ -68,6 +68,9 @@ GET  {{baseUrl}}/objet/typeObjet
 GET  {{baseUrl}}/disponibilite
 
 ###
+GET {{baseUrl}}/disponibilite
+
+###
 GET {{baseUrl}}/objet
 
 ###
