@@ -71,7 +71,7 @@ GET  {{baseUrl}}/disponibilite
 GET {{baseUrl}}/disponibilite
 
 ###
-GET {{baseUrl}}/objet
+GET {{baseUrl}}/objet/storeObject
 
 ###
 GET {{baseUrl}}/objet

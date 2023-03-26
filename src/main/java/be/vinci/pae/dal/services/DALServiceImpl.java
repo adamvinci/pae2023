@@ -55,13 +55,10 @@ public class DALServiceImpl implements DALService, DALTransaction {
     return statement;
   }
 
+
   /**
    * Starts a new transaction by getting a new connection from the database and disabling
    * auto-commit.
-   * <p>
-   * Throws a RuntimeException if a connection has already been acquired.
-   *
-   * @throws FatalException if an SQL exception occurs while starting the transaction.
    */
   @Override
   public void startTransaction() {
@@ -79,10 +76,6 @@ public class DALServiceImpl implements DALService, DALTransaction {
 
   /**
    * Commits the current transaction to the database.
-   * <p>
-   * Throws a RuntimeException if no connection is available. Any SQLException encountered during
-   * the commit will be wrapped in a FatalException and rethrown. At the end, the connection is
-   * closed.
    */
   @Override
   public void commitTransaction() {
@@ -99,11 +92,9 @@ public class DALServiceImpl implements DALService, DALTransaction {
     }
   }
 
+
   /**
    * Rolls back the current transaction associated with the connection.
-   *
-   * @throws RuntimeException if there is no active transaction
-   * @throws FatalException   if a SQL exception occurs during the rollback process
    */
   @Override
   public void rollBackTransaction() {
