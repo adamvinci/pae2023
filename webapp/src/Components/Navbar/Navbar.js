@@ -42,7 +42,7 @@ async function renderNavbar() {
 
   const navadd = `
   <div style=" justify-content: center; display: flex" >
-    <nav class="navbar navbar-expand-lg navbar-light " style="background-color: mediumorchid; border-color: green; border-style: solid">
+    <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #A47148; border: black solid 1px;">
       <div class="container-fluid">
         <button
           class="navbar-toggler"
@@ -119,7 +119,6 @@ async function renderNavbar() {
               <a class="nav-link" href="#" data-uri="/logout">Logout</a>
     </li>
     `;
-    console.log(authenticatedUser?.role);
   }
   else{
     const bouttonCo = document.getElementById('bouttonCo');

@@ -15,4 +15,13 @@ public class FatalException extends WebApplicationException {
   public FatalException(Throwable cause) {
     super(cause);
   }
+
+  /**
+   * Constructs a new FatalException object with the specified cause.
+   *
+   * @param m the message
+   */
+  public FatalException(String m) {
+    super(m);
+  }
 }

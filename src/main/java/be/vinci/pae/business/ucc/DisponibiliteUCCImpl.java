@@ -23,7 +23,23 @@ public class DisponibiliteUCCImpl implements DisponibiliteUCC {
   public List<DisponibiliteDTO> getDisponibilite() {
     try {
       dal.startTransaction();
-      return disponibiliteDAO.getAll();
+      List<DisponibiliteDTO> disponibiliteDTOS = disponibiliteDAO.getAll();
+      dal.commitTransaction();
+      return disponibiliteDTOS;
+
+    } catch (FatalException e) {
+      dal.rollBackTransaction();
+      throw new FatalException(e);
+    }
+
+
+  }
+
+  @Override
+  public DisponibiliteDTO getOne(int id) {
+    try {
+      dal.startTransaction();
+      return disponibiliteDAO.getOne(id);
     } catch (FatalException e) {
       dal.rollBackTransaction();
       throw new FatalException(e);
@@ -32,8 +48,5 @@ public class DisponibiliteUCCImpl implements DisponibiliteUCC {
     }
   }
 
-  @Override
-  public DisponibiliteDTO getOne(int id) {
-    return disponibiliteDAO.getOne(id);
-  }
+
 }
