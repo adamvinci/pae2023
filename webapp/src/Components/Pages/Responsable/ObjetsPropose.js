@@ -49,13 +49,10 @@ function table() {
             };
             const response = await fetch(`${process.env.API_BASE_URL}/objet`,opt);
             let dataHtml = '';
-            if (!response.ok) {
-<<<<<<< HEAD
+            if (!response.ok)
+
                 Swal.fire((await response.text()).valueOf());
-=======
-                Swal.fire((await response.text()).valueOf())
->>>>>>> 37db3f700f5872da57e0f9225f32df9fa390ce12
-            }
+
 
 
             const datas = await response.json();
@@ -175,7 +172,7 @@ function table() {
                 });
             })
 
-        } catch (error) {
+        }catch (error) {
             throw new Error(error);
         }
     }

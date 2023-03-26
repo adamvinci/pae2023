@@ -96,7 +96,6 @@ function table() {
           event.preventDefault();
           const idObjet = event.target.closest('tr').dataset.idobjet;
           const newLocation = event.target.value;
-          console.log(newLocation)
           try{
             const updatedLocalisation = {
               localisation:newLocation
