@@ -15,4 +15,8 @@ public class FatalException extends WebApplicationException {
   public FatalException(Throwable cause) {
     super(cause);
   }
+
+  public FatalException(String m) {
+    super(m);
+  }
 }

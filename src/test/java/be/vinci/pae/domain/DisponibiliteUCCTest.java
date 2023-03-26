@@ -3,6 +3,9 @@ package be.vinci.pae.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 
 import be.vinci.pae.business.dto.DisponibiliteDTO;
 import be.vinci.pae.business.factory.DisponibiliteFactory;
@@ -18,7 +21,6 @@ import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 class DisponibiliteUCCTest {
 
@@ -44,7 +46,7 @@ class DisponibiliteUCCTest {
   @DisplayName("Test getDisponibilite() return null when resultset is empty")
   @Test
   void testGetDisponibiliteReturnNull() {
-    Mockito.when(disponibiliteDAO.getAll()).thenReturn(null);
+    when(disponibiliteDAO.getAll()).thenReturn(null);
     assertNull(disponibiliteUCC.getDisponibilite(), "No disponiblity saved in the database");
   }
 
@@ -52,35 +54,36 @@ class DisponibiliteUCCTest {
   @Test
   void testGetDisponibiliteReturnList() {
     List<DisponibiliteDTO> disponibiliteDTOS = new ArrayList<>();
-    Mockito.when(disponibiliteDAO.getAll()).thenReturn(disponibiliteDTOS);
+    when(disponibiliteDAO.getAll()).thenReturn(disponibiliteDTOS);
     assertEquals(disponibiliteDTOS, disponibiliteUCC.getDisponibilite());
   }
 
   @DisplayName("Test getDisponibilite() with a FatalException")
   @Test
   void testGetDisponibiliteWithFatalException() {
-    Mockito.when(disponibiliteDAO.getAll()).thenThrow(FatalException.class);
-    Mockito.verify(dalTransaction, Mockito.atMostOnce()).rollBackTransaction();
+    doThrow(new FatalException("exception")).doNothing().when(dalTransaction).startTransaction();
+    assertThrows(FatalException.class, () -> disponibiliteUCC.getDisponibilite());
   }
 
   @DisplayName("Test getOneDisponibilite( int id ) return null when id does not exist")
   @Test
   void testGetOneDisponibiliteReturnNull() {
-    Mockito.when(disponibiliteDAO.getOne(1)).thenReturn(null);
+    when(disponibiliteDAO.getOne(1)).thenReturn(null);
     assertNull(disponibiliteUCC.getOne(1), "No object corresponding to the id");
   }
 
   @DisplayName("Test getOneDisponibilite( int id ) return an object when id does  exist")
   @Test
   void testGetOneDisponibiliteReturnDTO() {
-    Mockito.when(disponibiliteDAO.getOne(1)).thenReturn(disponibilite);
+    when(disponibiliteDAO.getOne(1)).thenReturn(disponibilite);
     assertEquals(disponibilite, disponibiliteUCC.getOne(1));
   }
 
   @DisplayName("Test getOneDisponibilite() with a FatalException")
   @Test
   void testGetOneDisponibiliteWithFatalException() {
-    Mockito.when(disponibiliteDAO.getOne(1)).thenThrow(FatalException.class);
-    Mockito.verify(dalTransaction, Mockito.atMostOnce()).rollBackTransaction();
+    doThrow(new FatalException("exception")).doNothing().when(dalTransaction).startTransaction();
+    assertThrows(FatalException.class, () -> disponibiliteUCC.getOne(1));
+
   }
 }
