@@ -6,7 +6,6 @@ import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.ucc.ObjetUCC;
-import be.vinci.pae.ihm.filters.AnonymousOrAuthorize;
 import be.vinci.pae.ihm.filters.ResponsableAuthorization;
 import be.vinci.pae.ihm.filters.ResponsableOrAidant;
 import be.vinci.pae.utils.MyLogger;
@@ -61,7 +60,7 @@ public class ObjetRessource {
       throw new WebApplicationException("Liste vide", Status.NO_CONTENT);
     }
     UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
-    if (authenticatedUser != null && (authenticatedUser.getRole().equals("responsable"))) {
+    if (authenticatedUser != null && authenticatedUser.getRole().equals("responsable")) {
       Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
           "Retrieve the complete list of object from user " + authenticatedUser.getEmail());
       return objetUCC.getAllObject();
@@ -74,6 +73,11 @@ public class ObjetRessource {
         .filter(objetDTO -> objetDTO.getEtat().equals("accepte")).toList();
   }
 
+  /**
+   * Retrieve the object located in the store.
+   *
+   * @return a list containing these objects
+   */
   @GET
   @Path("storeObject")
   @Produces(MediaType.APPLICATION_JSON)
@@ -162,7 +166,7 @@ public class ObjetRessource {
     ObjetDTO changedObject = objetUCC.accepterObjet(retrievedObject, notification);
     if (changedObject == null) {
       throw new WebApplicationException("Impossible changement, to accept "
-          + "an object it state must be 'proposer' ", 512);
+          + "an object it state must be 'proposer' ", 412);
     }
     Logger.getLogger(MyLogger.class.getName())
         .log(Level.INFO, "Acceptation of object : " + id);
@@ -206,7 +210,7 @@ public class ObjetRessource {
       throw new WebApplicationException(
           "Impossible changement, to deposite an object it state must be 'accepte'"
               + "and must not have already a location except if the deposit is for an atelier",
-          512);
+          412);
     }
     Logger.getLogger(MyLogger.class.getName())
         .log(Level.INFO, "Deposit of object : " + id + " at " + localisation);
@@ -239,14 +243,14 @@ public class ObjetRessource {
     }
 
     if (Double.parseDouble(prix) > 10) {
-      throw new WebApplicationException("The price must be inferior to 10", 512);
+      throw new WebApplicationException("The price must be inferior to 10", 412);
     }
     retrievedObject.setPrix(Double.parseDouble(prix));
     ObjetDTO changedObject = objetUCC.mettreEnVente(retrievedObject);
     if (changedObject == null) {
       throw new WebApplicationException("Impossible changement, to put an object at"
           + " sell its statut must be 'accepte' and be deposited in the store",
-          512);
+          412);
     }
     Logger.getLogger(MyLogger.class.getName())
         .log(Level.INFO, "Put to sale of the object : " + id + " at price " + prix);
@@ -273,7 +277,7 @@ public class ObjetRessource {
     if (changedObject == null) {
       throw new WebApplicationException(
           "Impossible changement,the object need to be in the state 'en vente'"
-              + "to be sold", 512);
+              + "to be sold", 412);
     }
     Logger.getLogger(MyLogger.class.getName())
         .log(Level.INFO, "Sale of the object : " + id);
@@ -310,7 +314,7 @@ public class ObjetRessource {
     ObjetDTO changedObject = objetUCC.refuserObject(retrievedObject, message, notification);
     if (changedObject == null) {
       throw new WebApplicationException("\"Impossible changement, to refuse an object "
-          + "it state must be 'proposer'", 512);
+          + "it state must be 'proposer'", 412);
     }
     Logger.getLogger(MyLogger.class.getName())
         .log(Level.INFO, "Refusal of objet : " + id);
