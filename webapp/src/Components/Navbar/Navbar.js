@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { Navbar as BootstrapNavbar } from 'bootstrap';
 import {getAuthenticatedUser,getToken} from '../../utils/auths';
-import Navigate from "../Router/Navigate";
+import HomePage from "../Pages/HomePage";
 
 const Navbar = () => {
   header();
@@ -68,7 +68,9 @@ async function renderNavbar() {
             <li id="registerItem" class="nav-item">
               <a class="nav-link"  href="#" data-uri="/?etat=vendu">Objets vendu </a>
             </li>    
-      
+              <li id="registerItem" class="nav-item">
+              <a class="nav-link"  href="#" data-uri="">Proposer un objet </a>
+            </li>  
           </ul>
         </div>
       </div>
@@ -113,6 +115,9 @@ async function renderNavbar() {
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/Membres">Membres</a>
     </li>
+                <li id="registerItem" class="nav-item">
+              <a class="nav-link"  href="#" data-uri="">Proposer un objet </a>
+            </li>  
     `;
     }
     member.innerHTML+=`
@@ -137,7 +142,7 @@ async function renderNavbar() {
   }
   const buttonTitle = document.querySelector("#nomSite");
   buttonTitle.addEventListener("click",()=>{
-    Navigate("/")
+    HomePage();
   })
       
 }

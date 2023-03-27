@@ -3,7 +3,7 @@ import {clearPage} from "../../../utils/render";
 import {getToken} from "../../../utils/auths";
 
 const tableEnTete = `
-  <div style=" justify-content: center; display: flex"><h1>Rechercher d'objet</h1></div>
+  <div style=" justify-content: center; display: flex"><h1>Gestion de la vente</h1></div>
   <div style=" justify-content: center; display: flex">
   
     <table class="tableEnTete">
@@ -103,7 +103,7 @@ function homeScreen(){
       }
 
       const datas = await response.json();
-      data = datas;
+      data = datas.filter((d)=>d.etat === 'en vente' || (d.etat === 'accepte' && d.localisation ==='Magasin'));
       const size = data.length;
 
       const tableBody = document.querySelector('.tableData');

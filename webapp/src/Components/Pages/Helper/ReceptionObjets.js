@@ -35,7 +35,7 @@ function head() {
 
 function table() {
 
-  const data=[];
+
   let dataHtml = ' ';
   async function getData() {
     try {
@@ -53,13 +53,9 @@ function table() {
       }
 
       const datas = await response.json();
-      let j=0;
-      for (let i = 0; i < datas.length; i+=1) {
-        if(datas[i].etat!=="proposer" && datas[i].etat!=="vendu"){
-          data[j]=datas[i];
-          j+=1;
-        }
-      }
+    console.log(datas)
+      const data = datas.filter((d) =>( d.etat === 'accepte'&& d.localisation === undefined) ||( d.etat === 'accepte' && d.localisation === "Atelier")  )
+
       const size = data.length;
 
       for (let i = 0; i < size;) {
@@ -78,8 +74,8 @@ function table() {
           <option value="Atelier" ${currentLocation === 'Atelier' ? 'selected' : ''} ${currentLocation === 'Atelier' ? 'disabled' : ''}>Atelier</option>
         </select>
       </td>
-      <td class="receptionObjetsTd">${data[i].date_depot}</td>
-      <td class="receptionObjetsTd">${data[i].prix_vente}</td>
+      <td class="receptionObjetsTd">${data[i].date_depot ? data[i].date_depot  : '/' }</td>
+      <td class="receptionObjetsTd">${data[i].prix_vente ? data[i].prix_vente : '/' }</td>
       <td class="receptionObjetsTd"><input type="button" value="Confirmer"></td>
       <td class="receptionObjetsTd"><input type="button" value="Modifier"></td>
     </tr>`;
