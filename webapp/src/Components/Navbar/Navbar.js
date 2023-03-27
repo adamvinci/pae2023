@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { Navbar as BootstrapNavbar } from 'bootstrap';
 import {getAuthenticatedUser,getToken} from '../../utils/auths';
+import Navigate from "../Router/Navigate";
 
 const Navbar = () => {
   header();
@@ -115,8 +116,13 @@ async function renderNavbar() {
     `;
     }
     member.innerHTML+=`
+ 
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/logout">Logout</a>
+    </li>
+    
+    <li class="nav-item">
+              <a class="nav-link" >${authenticatedUser.prenom}</a>
     </li>
     `;
   }
@@ -129,6 +135,10 @@ async function renderNavbar() {
     
 
   }
+  const buttonTitle = document.querySelector("#nomSite");
+  buttonTitle.addEventListener("click",()=>{
+    Navigate("/")
+  })
       
 }
 

@@ -6,7 +6,7 @@ const HomePage = async () => {
   main.innerHTML = `<h3>Welcome to your home page!</h3>`;
   let objets = await getObjects();
   shuffleArray(objets);
-
+  console.log(objets)
   let etat = window.location.search.split("?")[1]?.split("=")[1];
 
   const type = window.location.search.split("?")[2]?.split("=")[1];

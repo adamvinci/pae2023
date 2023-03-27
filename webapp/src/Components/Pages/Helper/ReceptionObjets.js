@@ -72,9 +72,9 @@ function table() {
       <td class="receptionObjetsTd">${data[i].description}</td>
       <td class="receptionObjetsTd">${data[i].date_acceptation}</td>
       <td class="receptionObjetsTd"> 
-        <select>
+        <select data-id =${data[i].idObjet}>
           <option value="" disabled ${currentLocation ? '' : 'selected'}>Localisation</option>
-          <option value="Magasin" ${currentLocation === 'Magasin' ? 'selected' : ''} ${currentLocation === 'Magasin' ? 'disabled' : ''}>Magasin</option>
+          <option  value="Magasin" ${currentLocation === 'Magasin' ? 'selected' : ''} ${currentLocation === 'Magasin' ? 'disabled' : ''}>Magasin</option>
           <option value="Atelier" ${currentLocation === 'Atelier' ? 'selected' : ''} ${currentLocation === 'Atelier' ? 'disabled' : ''}>Atelier</option>
         </select>
       </td>
@@ -94,7 +94,7 @@ function table() {
       selects.forEach(select => {
         select.addEventListener('change', async (event) => {
           event.preventDefault();
-          const idObjet = event.target.closest('tr').dataset.idobjet;
+          const idObjet = event.target.dataset.id;
           const newLocation = event.target.value;
           try{
             const updatedLocalisation = {

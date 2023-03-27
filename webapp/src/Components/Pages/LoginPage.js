@@ -22,14 +22,14 @@ function renderRegisterForm() {
   const email = document.createElement('input');
   email.type = 'text';
   email.id = 'email';
-  email.placeholder = 'email';
+  email.placeholder = 'Email';
   email.required = true;
   email.className = 'form-control mb-3';
   const password = document.createElement('input');
   password.type = 'password';
   password.id = 'password';
   password.required = true;
-  password.placeholder = 'password';
+  password.placeholder = 'Password';
   password.className = 'form-control mb-3';
   const submit = document.createElement('input');
   submit.value = 'Login';
@@ -54,7 +54,8 @@ function renderRegisterForm() {
 
   const connecterLink = document.createElement("a");
   connecterLink.id = "connecterLink";
-  connecterLink.innerText = "pas encore inscrit? inscrivez-vous ici!";
+  connecterLink.innerText = "Pas encore inscrit? Inscrivez-vous ici!";
+  connecterLink.style.cursor = "pointer"
   connecterLink.className = "text-dark mt-3";
   connecterLink.addEventListener("click", () => {
     Navigate("/register")
