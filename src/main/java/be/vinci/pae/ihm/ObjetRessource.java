@@ -88,7 +88,8 @@ public class ObjetRessource {
     Logger.getLogger(MyLogger.class.getName())
         .log(Level.INFO, "Retrieve list of object located in store  ");
     return objetUCC.getAllObject().stream()
-        .filter(objetDTO -> objetDTO.getLocalisation().equals("Magasin")).toList();
+        .filter(objetDTO -> objetDTO.getLocalisation() != null && objetDTO.getLocalisation()
+            .equals("Magasin")).toList();
   }
 
   /**

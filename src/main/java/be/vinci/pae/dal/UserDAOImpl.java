@@ -95,7 +95,11 @@ public class UserDAOImpl implements UserDAO {
       statement.setString(2, user.getPassword());
       statement.setString(3, user.getNom());
       statement.setString(4, user.getPrenom());
-      statement.setString(5, "imageTest");
+      if (userDTO.getImage() != null) {
+        statement.setString(5, userDTO.getImage());
+      } else {
+        statement.setString(5, "");
+      }
       statement.setDate(6, Date.valueOf(LocalDate.now()));
       statement.setString(7, "membre");
       statement.setString(8, user.getGsm());

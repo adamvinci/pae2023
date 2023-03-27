@@ -35,7 +35,7 @@ function head() {
 
 function table() {
 
-  const data=[];
+
   let dataHtml = ' ';
   async function getData() {
     try {
@@ -53,13 +53,9 @@ function table() {
       }
 
       const datas = await response.json();
-      let j=0;
-      for (let i = 0; i < datas.length; i+=1) {
-        if(datas[i].etat!=="proposer" && datas[i].etat!=="vendu"){
-          data[j]=datas[i];
-          j+=1;
-        }
-      }
+    console.log(datas)
+      const data = datas.filter((d) =>( d.etat === 'accepte'&& d.localisation === undefined) ||( d.etat === 'accepte' && d.localisation === "Atelier")  )
+
       const size = data.length;
 
       for (let i = 0; i < size;) {
@@ -72,14 +68,14 @@ function table() {
       <td class="receptionObjetsTd">${data[i].description}</td>
       <td class="receptionObjetsTd">${data[i].date_acceptation}</td>
       <td class="receptionObjetsTd"> 
-        <select>
+        <select data-id =${data[i].idObjet}>
           <option value="" disabled ${currentLocation ? '' : 'selected'}>Localisation</option>
-          <option value="Magasin" ${currentLocation === 'Magasin' ? 'selected' : ''} ${currentLocation === 'Magasin' ? 'disabled' : ''}>Magasin</option>
+          <option  value="Magasin" ${currentLocation === 'Magasin' ? 'selected' : ''} ${currentLocation === 'Magasin' ? 'disabled' : ''}>Magasin</option>
           <option value="Atelier" ${currentLocation === 'Atelier' ? 'selected' : ''} ${currentLocation === 'Atelier' ? 'disabled' : ''}>Atelier</option>
         </select>
       </td>
-      <td class="receptionObjetsTd">${data[i].date_depot}</td>
-      <td class="receptionObjetsTd">${data[i].prix_vente}</td>
+      <td class="receptionObjetsTd">${data[i].date_depot ? data[i].date_depot  : '/' }</td>
+      <td class="receptionObjetsTd">${data[i].prix_vente ? data[i].prix_vente : '/' }</td>
       <td class="receptionObjetsTd"><input type="button" value="Confirmer"></td>
       <td class="receptionObjetsTd"><input type="button" value="Modifier"></td>
     </tr>`;
@@ -94,7 +90,7 @@ function table() {
       selects.forEach(select => {
         select.addEventListener('change', async (event) => {
           event.preventDefault();
-          const idObjet = event.target.closest('tr').dataset.idobjet;
+          const idObjet = event.target.dataset.id;
           const newLocation = event.target.value;
           try{
             const updatedLocalisation = {

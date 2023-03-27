@@ -3,17 +3,17 @@ import {clearPage} from "../../../utils/render";
 import {getToken} from "../../../utils/auths";
 
 const tableEnTete = `
-  <div style=" justify-content: center; display: flex"><h1>Rechercher d'objet</h1></div>
+  <div style=" justify-content: center; display: flex"><h1>Gestion de la vente</h1></div>
   <div style=" justify-content: center; display: flex">
   
     <table class="tableEnTete">
       <thead> 
         <tr> 
+                  <th class="rechercheObjetsTh"> Photo objet </th>
           <th class="rechercheObjetsTh"> Type d'objet </th> 
           <th class="rechercheObjetsTh"> date de dépot </th>
           <th class="rechercheObjetsTh"> Prix de l'objet </th>
           <th class="rechercheObjetsTh"> Etat de vente </th>
-          <th class="rechercheObjetsTh"> Photo objet </th>
           <th class="rechercheObjetsTh"> </th>
         </tr>
       </thead>
@@ -26,57 +26,6 @@ function head() {
   const main = document.querySelector('main');
   main.innerHTML += tableEnTete;
 }
-async function getTypeObject() {
-
-  const options = {
-    method: 'GET',
-  };
-  const response = await fetch(`${process.env.API_BASE_URL}/objet/typeObjet`,
-      options);
-
-  if (!response.ok) {
-    Swal.fire((await response.text()).valueOf())
-  }
-
-  const objets = await response.json();
-  return objets;
-}
-
-async function filtrageObjet() {
-  const typeObjet = await getTypeObject();
-
-  let type = "";
-  type += `<h1>Type d'objet</h1>`;
-  typeObjet.forEach((typee) => {
-    type += `
-      <div id="typeObjet">
-        <label>
-          <input type="checkbox" name="menu" data-value="${typee.libelle}">
-          ${typee.libelle}
-        </label>
-      </div>
-    `;
-  });
-
-  return `
-    <div class="filterRechercheObjet">
-      <form>
-        ${type}
-        <p>
-          <h3>Prix</h3>
-          $<input type="text" size="1"> jusqu'a <input type="text" size="1">
-        </p>
-        <p>
-          <h3>Date depot</h3>
-          <input type="date" id="date"><br>
-        </p>
-        <p></p>
-        <input type="button" value="Filtrer">
-      </form>
-    </div>
-  `;
-}
-
 
 function closePopup() {
   const popup = document.querySelector('.popUpContainer');
@@ -84,6 +33,7 @@ function closePopup() {
     popup.parentNode.removeChild(popup);
   }
 }
+
 function homeScreen(){
   let data;
   let dataHtml = ' ';
@@ -103,39 +53,39 @@ function homeScreen(){
       }
 
       const datas = await response.json();
-      data = datas;
+      data = datas.filter((d)=>d.etat === 'en vente' || (d.etat === 'accepte' && d.localisation ==='Magasin'));
       const size = data.length;
 
       const tableBody = document.querySelector('.tableData');
       for (let i = 0; i < size;) {
         dataHtml = `
         <tr>
+                  <td class="td"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
           <td class="rechercheObjetsTd">${data[i].typeObjet.libelle}</td> 
           <td class="rechercheObjetsTd">${data[i].date_depot}</td>
           <td class="rechercheObjetsTd" id="prixDonne">`;
 
-            if (data[i].prix) {
-              dataHtml += `${data[i].prix}€`;
-            } else {
-              dataHtml += `<input type="text" size="1" style="background-color: beige" id="prix-${data[i].idObjet}">
+        if (data[i].prix) {
+          dataHtml += `${data[i].prix}€`;
+        } else {
+          dataHtml += `<input type="text" size="1" style="background-color: beige" id="prix-${data[i].idObjet}">
                       <button class="confirmer" data-id="${data[i].idObjet}">Confirmer</button>`;
-            }
+        }
 
-            dataHtml += `</td>
+        dataHtml += `</td>
           <td class="rechercheObjetsTd">`;
-            if (data[i].etat === "en vente") {
-              dataHtml += `<button  class="buttonVendu" size="1" data-index="${data[i].idObjet}" style="background-color: indianred">Indiquer vendu</button>`;
-            }else{
-              dataHtml += `<p>${data[i].etat}</p>`;
-            }
-            dataHtml += `</td> 
+        if (data[i].etat === "en vente") {
+          dataHtml += `<button  class="buttonVendu" size="1" data-index="${data[i].idObjet}" style="background-color: indianred">Indiquer vendu</button>`;
+        }else{
+          dataHtml += `<p>${data[i].etat}</p>`;
+        }
+        dataHtml += `</td> 
     
-          <td class="td"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
           <td class="rechercheObjetsTd"><input type="button" class="btn btn-info btn-sm" id="details" value="Détails"></td>
         </tr>`;
-            i+=1;
+        i+=1;
 
-            tableBody.innerHTML += dataHtml;
+        tableBody.innerHTML += dataHtml;
       }
 
       const venduBtns = document.querySelectorAll('.buttonVendu');
@@ -234,9 +184,9 @@ function homeScreen(){
                 <tr>
                   <td class="rechercheObjetsTd">${objData.localisation}</td> 
                   <td class="rechercheObjetsTd">${objData.typeObjet.libelle}</td>
-                  <td class="rechercheObjetsTd">${objData.date_depot}</td>
-                  <td class="rechercheObjetsTd">${objData.date_vente}</td>
-                  <td class="rechercheObjetsTd">${objData.prix} € </td>
+                  <td class="rechercheObjetsTd">${objData.date_depot ? objData.date_depot : '/' }</td>
+                  <td class="rechercheObjetsTd">${objData.date_vente ? objData.date_vente : '/' }</td>
+                  <td class="rechercheObjetsTd">${objData.prix ? `${objData.prix}  € `:'/'} </td>
                   <td class="rechercheObjetsTd">${objData.etat}</td>
                   <td class="rechercheObjetsTd">/</td>
                 </tr>
@@ -264,14 +214,10 @@ function homeScreen(){
   getData();
 }
 
-
-const RechercheObjets =async () =>  {
+const VenteDobjet =async () => {
   clearPage();
-  const main = document.querySelector('main');
-  const filterRechercheObjet =await filtrageObjet();
-  main.innerHTML += filterRechercheObjet;
-  head();
+   head();
   homeScreen();
   };
-
-export default RechercheObjets;
+  
+  export default VenteDobjet;

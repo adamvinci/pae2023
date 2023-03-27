@@ -4,6 +4,7 @@ body {
 
 #nomSite{
     font-family: 'Blackadder ITC';
+    cursor: pointer;
 }
 
 /*-----Accepter----Refuser--objet---------------------------------------------------------*/

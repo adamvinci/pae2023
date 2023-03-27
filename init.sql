@@ -213,10 +213,7 @@ VALUES ('2023-03-4', 1),
        ('2023-03-11', 1),
        ('2023-03-11', 2),
        ('2023-03-18', 1),
-       ('2023-03-18', 2),
-       ('2023-03-25', 1),
        ('2023-03-25', 2),
-       ('2023-04-1', 1),
        ('2023-04-1', 2),
        ('2023-04-15', 1),
        ('2023-04-15', 2),
@@ -225,39 +222,39 @@ VALUES ('2023-03-4', 1),
 
 --5
 
-INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+INSERT INTO projet.objets(localisation,utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,date_acceptation,date_depot,date_vente,date_retrait)
 VALUES
-    (3,null,'src/main/java/be/vinci/pae/utils/images/Chaise-wooden-gbe3bb4b3a_1280.png', 3, 'Chaise en bois brut avec cousin beige', 5, 'en vente', 2,'Magasin','2023-03-15','2023-03-18',null,null);
+    ('Magasin',5,null,'src/main/java/be/vinci/pae/utils/images/Chaise-wooden-gbe3bb4b3a_1280.png', 3, 'Chaise en bois brut avec cousin beige', 5, 'en vente', 2,'2023-03-15','2023-03-18',null,null);
 
-INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+INSERT INTO projet.objets(localisation,utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,date_acceptation,date_depot,date_vente,date_retrait)
 VALUES
-    (3,null,'src/main/java/be/vinci/pae/utils/images/Fauteuil-sofa-g99f90fab2_1280.jpg', 4, 'Canapé 3 places blanc', 5, 'en vente', 3,'Magasin','2023-03-15','2023-03-18','2023-03-22',null);
+    ('Magasin',5,null,'src/main/java/be/vinci/pae/utils/images/Fauteuil-sofa-g99f90fab2_1280.jpg', 4, 'Canapé 3 places blanc', 5, 'vendu', 3,'2023-03-15','2023-03-18','2023-03-22',null);
 
-INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,date_acceptation,date_depot,date_vente,date_retrait)
 VALUES
-    (null,'0496 32 16 54','src/main/java/be/vinci/pae/utils/images/Secretaire.png', 1, 'Secrétaire', 8, 'refuser', null,null,null,null,null,null);
+    (null,'0496 32 16 54','src/main/java/be/vinci/pae/utils/images/Secretaire.png', 1, 'Secrétaire', 6, 'refuser', null,null,null,null,null);
 
 
 INSERT INTO projet.notifications(objet,message,type)
-VALUES (3,'Ce meuble est magnifique mais fragile pour l’usage qui en sera fait.',null);
+VALUES (3,'Ce meuble est magnifique mais fragile pour l’usage qui en sera fait.','refus');
 
 
-INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,date_acceptation,date_depot,date_vente,date_retrait)
 VALUES
-    (2,null,'src/main/java/be/vinci/pae/utils/images/Vaisselle-plate-629970_1280.jpg', 9, '100 assiettes blanches', 8, 'accepte', null,'magasin','2023-03-20',null,null,null);
+    (4,null,'src/main/java/be/vinci/pae/utils/images/Vaisselle-plate-629970_1280.jpg', 9, '100 assiettes blanches', 6, 'accepte', null,'2023-03-20',null,null,null);
 
-INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,date_acceptation,date_depot,date_vente,date_retrait)
 VALUES
-    (2,null,'src/main/java/be/vinci/pae/utils/images/Fauteuil-couch-g0f519ec38_1280.png', 4, 'Grand canapé 4 places bleu usé', 8, 'accepte', null,'magasin','2023-03-20',null,null,null);
+    (4,null,'src/main/java/be/vinci/pae/utils/images/Fauteuil-couch-g0f519ec38_1280.png', 4, 'Grand canapé 4 places bleu usé', 6, 'accepte', null,'2023-03-20',null,null,null);
 
 
-INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,date_acceptation,date_depot,date_vente,date_retrait)
 VALUES
-    (2,null,'src/main/java/be/vinci/pae/utils/images/Fauteuil-design-gee14e1707_1280.jpg', 4, 'Fauteuil design très confortable', 10, 'proposer', null,'magasin',null,null,null,null);
+    (4,null,'src/main/java/be/vinci/pae/utils/images/Fauteuil-design-gee14e1707_1280.jpg', 4, 'Fauteuil design très confortable', 7, 'proposer', null,null,null,null,null);
 
-INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,date_acceptation,date_depot,date_vente,date_retrait)
 VALUES
-    (2,null,'src/main/java/be/vinci/pae/utils/images/bar-890375_1920.jpg', 3, 'Tabouret de bar en cuir', 10, 'proposer', null,'magasin',null,null,null,null);
+    (4,null,'src/main/java/be/vinci/pae/utils/images/bar-890375_1920.jpg', 3, 'Tabouret de bar en cuir', 7, 'proposer', null,null,null,null,null);
 
 --6
 

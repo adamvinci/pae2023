@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { Navbar as BootstrapNavbar } from 'bootstrap';
 import {getAuthenticatedUser,getToken} from '../../utils/auths';
+import HomePage from "../Pages/HomePage";
 
 const Navbar = () => {
   header();
@@ -67,7 +68,9 @@ async function renderNavbar() {
             <li id="registerItem" class="nav-item">
               <a class="nav-link"  href="#" data-uri="/?etat=vendu">Objets vendu </a>
             </li>    
-      
+              <li id="registerItem" class="nav-item">
+              <a class="nav-link"  href="#" data-uri="">Proposer un objet </a>
+            </li>  
           </ul>
         </div>
       </div>
@@ -96,10 +99,10 @@ async function renderNavbar() {
               <a class="nav-link" href="#" data-uri="/ReceptionObjets">Dépôt d'objets</a>
     </li>
     <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/RechercheObjets">Gérer la vente d'objets</a>
+              <a class="nav-link" href="#" data-uri="/TableauDeBord">TableauDeBord</a>
     </li>
     <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/TableauDeBord">TableauDeBord</a>
+              <a class="nav-link" href="#" data-uri="/venteObjet">Gérer la vente d'objets</a>
     </li>
     `;
     }
@@ -112,11 +115,19 @@ async function renderNavbar() {
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/Membres">Membres</a>
     </li>
+                <li id="registerItem" class="nav-item">
+              <a class="nav-link"  href="#" data-uri="">Proposer un objet </a>
+            </li>  
     `;
     }
     member.innerHTML+=`
+ 
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/logout">Logout</a>
+    </li>
+    
+    <li class="nav-item">
+              <a class="nav-link" >${authenticatedUser.prenom}</a>
     </li>
     `;
   }
@@ -129,6 +140,10 @@ async function renderNavbar() {
     
 
   }
+  const buttonTitle = document.querySelector("#nomSite");
+  buttonTitle.addEventListener("click",()=>{
+    HomePage();
+  })
       
 }
 
