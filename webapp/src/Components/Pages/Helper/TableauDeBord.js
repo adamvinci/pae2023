@@ -2,6 +2,7 @@ import Swal from "sweetalert2";
 import {clearPage} from "../../../utils/render";
 import {getToken} from "../../../utils/auths";
 
+
 const tableEnTete = `
    <div style="justify-content: center; display: flex">
       <h1>Réception d'objets</h1>
@@ -30,6 +31,59 @@ function head() {
   const main = document.querySelector('main');
   main.innerHTML += tableEnTete;
 }
+
+async function getTypeObject() {
+
+  const options = {
+    method: 'GET',
+  };
+  const response = await fetch(`${process.env.API_BASE_URL}/objet/typeObjet`,
+      options);
+
+  if (!response.ok) {
+    Swal.fire((await response.text()).valueOf())
+  }
+
+  const objets = await response.json();
+  return objets;
+}
+
+async function filtrageObjet() {
+  const typeObjet = await getTypeObject();
+
+  let type = "";
+  type += `<h1>Type d'objet</h1>`;
+  typeObjet.forEach((typee) => {
+    type += `
+      <div id="typeObjet">
+        <label>
+          <input type="checkbox" name="menu" data-value="${typee.libelle}">
+          ${typee.libelle}
+        </label>
+      </div>
+    `;
+  });
+
+  return `
+    <div class="filterRechercheObjet">
+      <form>
+        ${type}
+        <p>
+          <h3>Prix</h3>
+          $<input type="text" size="1"> jusqu'a <input type="text" size="1">
+        </p>
+        <p>
+          <h3>Date depot</h3>
+          <input type="date" id="date"><br>
+        </p>
+        <p></p>
+        <input type="button" value="Filtrer">
+      </form>
+    </div>
+  `;
+}
+
+
 async function table() {
 
   const opt = {
@@ -49,8 +103,8 @@ async function table() {
   console.log(datas)
 
   const tableBody = document.querySelector('.tableData');
-datas.forEach((objet)=>{
-  tableBody.innerHTML += `
+  datas.forEach((objet)=>{
+    tableBody.innerHTML += `
     <tr>
       <td class="receptionObjetsTd">${objet.idObjet}</td> 
       <td class="receptionObjetsTd">${objet.typeObjet.libelle}</td>
@@ -64,14 +118,20 @@ datas.forEach((objet)=>{
       <td class="receptionObjetsTd">${objet.date_vente ? ` ${objet.date_vente[2]}/${objet.date_vente[1]}/${objet.date_vente[0]}` : '/' }</td>
  
     </tr>`;
-})
+  })
 
 
 }
-const TableauDeBord =async () => {
+
+
+
+const TableauDeBord =async () =>  {
   clearPage();
-   head();
-   table();
+  const main = document.querySelector('main');
+  const filterRechercheObjet =await filtrageObjet();
+  main.innerHTML += filterRechercheObjet;
+  head();
+table();
   };
-  
-  export default TableauDeBord;
+
+export default TableauDeBord;

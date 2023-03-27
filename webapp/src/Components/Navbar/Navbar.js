@@ -99,10 +99,10 @@ async function renderNavbar() {
               <a class="nav-link" href="#" data-uri="/ReceptionObjets">Dépôt d'objets</a>
     </li>
     <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/RechercheObjets">Gérer la vente d'objets</a>
+              <a class="nav-link" href="#" data-uri="/TableauDeBord">TableauDeBord</a>
     </li>
     <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/TableauDeBord">TableauDeBord</a>
+              <a class="nav-link" href="#" data-uri="/venteObjet">Gérer la vente d'objets</a>
     </li>
     `;
     }
