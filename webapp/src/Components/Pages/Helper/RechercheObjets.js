@@ -109,34 +109,33 @@ function homeScreen(){
       const tableBody = document.querySelector('.tableData');
       for (let i = 0; i < size;) {
         dataHtml = `
-    <tr style="font-family: 'Games', sans-serif;">
-       <td class="rechercheObjetsTd">${data[i].typeObjet.libelle}</td> 
-      
-      <td class="rechercheObjetsTd">${data[i].date_depot}</td>
-      <td class="rechercheObjetsTd" id="prixDonne">`;
+        <tr>
+          <td class="rechercheObjetsTd">${data[i].typeObjet.libelle}</td> 
+          <td class="rechercheObjetsTd">${data[i].date_depot}</td>
+          <td class="rechercheObjetsTd" id="prixDonne">`;
 
-        if (data[i].prix) {
-          dataHtml += `${data[i].prix}€`;
-        } else {
-          dataHtml += `<input type="text" size="1" id="prix-${data[i].idObjet}">
-                  <button class="confirmer" data-id="${data[i].idObjet}">Confirmer</button>`;
-        }
+            if (data[i].prix) {
+              dataHtml += `${data[i].prix}€`;
+            } else {
+              dataHtml += `<input type="text" size="1" style="background-color: beige" id="prix-${data[i].idObjet}">
+                      <button class="confirmer" data-id="${data[i].idObjet}">Confirmer</button>`;
+            }
 
-        dataHtml += `</td>
-      <td class="rechercheObjetsTd">`;
-        if (data[i].etat === "en vente") {
-          dataHtml += `<button  class="buttonVendu" size="1" data-index="${data[i].idObjet}" style="background-color: indianred">Indiquer vendu</button>`;
-        }else{
-          dataHtml += `<p>${data[i].etat}</p>`;
-        }
-        dataHtml += `</td> 
+            dataHtml += `</td>
+          <td class="rechercheObjetsTd">`;
+            if (data[i].etat === "en vente") {
+              dataHtml += `<button  class="buttonVendu" size="1" data-index="${data[i].idObjet}" style="background-color: indianred">Indiquer vendu</button>`;
+            }else{
+              dataHtml += `<p>${data[i].etat}</p>`;
+            }
+            dataHtml += `</td> 
+    
+          <td class="td"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
+          <td class="rechercheObjetsTd"><input type="button" class="btn btn-info btn-sm" id="details" value="Détails"></td>
+        </tr>`;
+            i+=1;
 
-      <td class="td"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
-      <td class="rechercheObjetsTd"><input type="button" class="btn btn-info btn-sm" id="details" value="Détails"></td>
-  </tr>`;
-        i+=1;
-
-        tableBody.innerHTML += dataHtml;
+            tableBody.innerHTML += dataHtml;
       }
 
       const venduBtns = document.querySelectorAll('.buttonVendu');
@@ -209,7 +208,7 @@ function homeScreen(){
           const main = document.querySelector("main");
           const popUp = `
       <div class="popUpContainer">
-        <div id="informationContainer">
+        <div id="informationContainer" style="overflow-x: scroll;">
           <div class="photo"> 
             <h1>Photo</h1>
             <img src="/api/objet/getPicture/${objData.idObjet}" alt="Photo" width="100px">
@@ -219,7 +218,7 @@ function homeScreen(){
             <p>${objData.description}</p>
           </div>
           <div class = "detail">
-           <table class="tableEnTete">
+           <table>
               <thead> 
                 <tr> 
                   <th class="rechercheObjetsTh"> Localisation </th> 
@@ -232,7 +231,7 @@ function homeScreen(){
                 </tr>
               </thead>
               <tbody class="tableData">
-                <tr style="font-family: 'Games', sans-serif;">
+                <tr>
                   <td class="rechercheObjetsTd">${objData.localisation}</td> 
                   <td class="rechercheObjetsTd">${objData.typeObjet.libelle}</td>
                   <td class="rechercheObjetsTd">${objData.date_depot}</td>

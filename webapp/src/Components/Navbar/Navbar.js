@@ -22,7 +22,7 @@ function header(){
     <div style="flex-grow: 1;">
       <div style="display: flex; margin-left: 250px;">
         <h1>
-          <span style="background-color: #eee; padding: 20px;">
+          <span style="background-color: #eee; padding: 20px;" id="nomSite">
             DonneMoi
           </span>
         </h1>
@@ -42,7 +42,7 @@ async function renderNavbar() {
 
   const navadd = `
   <div style=" justify-content: center; display: flex" >
-    <nav class="navbar navbar-expand-lg navbar-light " style="background-color: mediumorchid; border-color: green; border-style: solid">
+    <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #A47148; border: black solid 1px;">
       <div class="container-fluid">
         <button
           class="navbar-toggler"
@@ -93,10 +93,10 @@ async function renderNavbar() {
               <a class="nav-link" href="#" data-uri="/Disponibilités">Disponibilités</a>
     </li>
     <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/ReceptionObjets">ReceptionObjets</a>
+              <a class="nav-link" href="#" data-uri="/ReceptionObjets">Dépôt d'objets</a>
     </li>
     <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/RechercheObjets">RechercheObjets</a>
+              <a class="nav-link" href="#" data-uri="/RechercheObjets">Gérer la vente d'objets</a>
     </li>
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/TableauDeBord">TableauDeBord</a>
@@ -107,7 +107,7 @@ async function renderNavbar() {
       
       member.innerHTML+=`
     <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/ObjetsPropose">ObjetsPropose</a>
+              <a class="nav-link" href="#" data-uri="/ObjetsPropose">Accepter/Refuser objets</a>
     </li>
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/Membres">Membres</a>

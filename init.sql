@@ -151,5 +151,140 @@ VALUES
 
 --Couverture
 
-UPDATE projet.objets SET date_vente=null, date_depot=null,
-                         date_acceptation=null,utilisateur=1, etat = 'proposer',localisation = null,prix_vente = null WHERE id_objet = 1;
+
+
+-----------------------------------DEMO--------------------------------------------------
+
+--1
+INSERT INTO projet.types_objets(libelle)
+VALUES ('Meuble'),
+       ('Table'),
+       ('Chaise'),
+       ('Fauteuil'),
+       ('Lit/Sommier'),
+       ('Matelas'),
+       ('Couvertures'),
+       ('Materiel de cuisine'),
+       ('Vaiselle');
+
+
+--2
+
+INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
+                                         role, gsm)
+
+VALUES ( 'bert.riez@gmail.be', '$2a$10$6RwXRaDRBegzqC2Of6.kB.XEcjrGgXD9dTKBxF56PizHZP6g3lS4m', 'Riez', 'Robert', 'src/main/java/be/vinci/pae/utils/avatar/MrRiez.png', '2023-02-14', 'responsable'
+       ,'0477/96.36.26'); /*  mdp = Jaune;10.  */
+
+
+INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
+                                         role, gsm)
+VALUES ( 'fred.muise@gmail.be', '$2a$10$JV1GomnSaWpAXpUMLYO7v.g6Qu.io3Pcyv8iJgi41pZ32.LeCedqy', 'Muise', 'Alfred', 'src/main/java/be/vinci/pae/utils/avatar/fred.png', '2023-02-14', 'aidant'
+       ,'0476/96.36.26'); /*  mdp = Mauve;7?  */
+
+
+
+--3
+INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
+                                         role, gsm)
+VALUES ( 'caro.line@hotmail.com', '$2a$10$rbfRfQyeOtXkvRfl8muiP.7hV3luGNdboFyK2LAFNWBLuNkR6xOBK', 'Line', 'Caroline', 'src/main/java/be/vinci/pae/utils/avatar/caro.png', '2023-03-26', 'membre'
+       ,'0487/45.23.79'); /*  mdp = mdpusr.2  */
+
+INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
+                                         role, gsm)
+VALUES ( 'ach.ile@gmail.com', '$2a$10$rbfRfQyeOtXkvRfl8muiP.7hV3luGNdboFyK2LAFNWBLuNkR6xOBK', 'Ile', 'Achille', 'src/main/java/be/vinci/pae/utils/avatar/achil.png', '2023-03-26', 'membre'
+       ,'0477/65.32.24'); /*  mdp = mdpusr.2  */
+
+INSERT INTO projet.utilisateurs_inscrits(email, mot_de_passe, nom, prenom, image, date_inscription,
+                                         role, gsm)
+VALUES ( 'bas.ile@gmail.be', '$2a$10$rbfRfQyeOtXkvRfl8muiP.7hV3luGNdboFyK2LAFNWBLuNkR6xOBK', 'Ile', 'Basile', 'src/main/java/be/vinci/pae/utils/avatar/bazz.png', '2023-03-26', 'membre'
+       ,'0485/98.86.42'); /*  mdp = mdpusr.2  */
+
+
+--4
+
+INSERT INTO projet.plages_horaires(plage)
+VALUES ('matin'),
+       ('apres midi');
+
+INSERT INTO projet.disponibilites(date_disponibilite, plage)
+VALUES ('2023-03-4', 1),
+       ('2023-03-4', 2),
+       ('2023-03-11', 1),
+       ('2023-03-11', 2),
+       ('2023-03-18', 1),
+       ('2023-03-18', 2),
+       ('2023-03-25', 1),
+       ('2023-03-25', 2),
+       ('2023-04-1', 1),
+       ('2023-04-1', 2),
+       ('2023-04-15', 1),
+       ('2023-04-15', 2),
+       ('2023-04-22', 1),
+       ('2023-04-22', 2);
+
+--5
+
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+VALUES
+    (3,null,'src/main/java/be/vinci/pae/utils/images/Chaise-wooden-gbe3bb4b3a_1280.png', 3, 'Chaise en bois brut avec cousin beige', 5, 'en vente', 2,'Magasin','2023-03-15','2023-03-18',null,null);
+
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+VALUES
+    (3,null,'src/main/java/be/vinci/pae/utils/images/Fauteuil-sofa-g99f90fab2_1280.jpg', 4, 'Canapé 3 places blanc', 5, 'en vente', 3,'Magasin','2023-03-15','2023-03-18','2023-03-22',null);
+
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+VALUES
+    (null,'0496 32 16 54','src/main/java/be/vinci/pae/utils/images/Secretaire.png', 1, 'Secrétaire', 8, 'refuser', null,null,null,null,null,null);
+
+
+INSERT INTO projet.notifications(objet,message,type)
+VALUES (3,'Ce meuble est magnifique mais fragile pour l’usage qui en sera fait.',null);
+
+
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+VALUES
+    (2,null,'src/main/java/be/vinci/pae/utils/images/Vaisselle-plate-629970_1280.jpg', 9, '100 assiettes blanches', 8, 'accepte', null,'magasin','2023-03-20',null,null,null);
+
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+VALUES
+    (2,null,'src/main/java/be/vinci/pae/utils/images/Fauteuil-couch-g0f519ec38_1280.png', 4, 'Grand canapé 4 places bleu usé', 8, 'accepte', null,'magasin','2023-03-20',null,null,null);
+
+
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+VALUES
+    (2,null,'src/main/java/be/vinci/pae/utils/images/Fauteuil-design-gee14e1707_1280.jpg', 4, 'Fauteuil design très confortable', 10, 'proposer', null,'magasin',null,null,null,null);
+
+INSERT INTO projet.objets(utilisateur,gsm,photo, type, description, disponibilite, etat, prix_vente,localisation,date_acceptation,date_depot,date_vente,date_retrait)
+VALUES
+    (2,null,'src/main/java/be/vinci/pae/utils/images/bar-890375_1920.jpg', 3, 'Tabouret de bar en cuir', 10, 'proposer', null,'magasin',null,null,null,null);
+
+--6
+
+/* Etats (en format lisible par le client) et comptage du nombre d’objets dans chacun des états */
+
+SELECT o.etat,count(o.id_objet)
+FROM projet.objets o
+GROUP BY o.etat;
+
+
+/* Comptage du nombre d’utilisateurs */
+
+SELECT count(id_utilisateur) AS nombreUtilisateur
+FROM projet.utilisateurs_inscrits;
+
+
+/* Comptage du nombre de types d’objets */
+
+SELECT count(id_type) AS nombreTypeObjets
+FROM projet.types_objets;
+
+/* Comptage des dates de présences */
+
+SELECT count(id_disponibilite) AS nombreTypeObjets
+FROM projet.disponibilites;
+
+
+
+
+----------------------------FIN--DEMO--------------------------------------------------

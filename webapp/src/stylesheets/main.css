@@ -1,21 +1,24 @@
-main {
+body {
     background-color: bisque;
 }
 
-/*-----AccepterRefuserObjetPage---------------------------------------------------------*/
+#nomSite{
+    font-family: 'Blackadder ITC';
+}
 
-tableEnTete{
+/*-----Accepter----Refuser--objet---------------------------------------------------------*/
+
+.tableEnTete{
     border: 2px solid;
     text-align: center;
     padding: 20px;
     margin: auto;
-    font-size: 40px;
     position: absolute;
+    background-color: white;
 }
 
 .objetProposeTh,.objetProposeTd{
-    border: 1px solid;
-    border-color: black;
+    border: 1px solid black;
     text-align: center;
     padding: 5px;
 }
@@ -116,10 +119,9 @@ button{
     font-size: x-large;
 }
 
-/*--------------------------------RechercheObjets----------------------------------------------------------------------*/
+/*--------------------------------Gere-la-vente-object----------------------------------------------------------------------*/
 .rechercheObjetsTh,.rechercheObjetsTd{
-    border: 1px solid;
-    border-color: black;
+    border: 1px solid black;
     text-align: center;
     padding: 5px;
 }
@@ -136,40 +138,26 @@ button{
     width: 50%;
     height: 50%;
     display: grid;
-    grid-template-areas:
-    "photo description";
-}
-
-.photo {
-    position: absolute;
-    grid-area: photo;
-    width: 100%;
-    height: 100%;
 }
 
 .description {
-    position: absolute;
-    grid-area: description;
-    width: 100%;
-    height: 100%;
+    grid-auto-rows: minmax(50px,auto);
 }
 
 .detail {
-    position: absolute;
-    border: black solid 2px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    border: black solid 1px;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    margin: auto;
 }
 
 #closeButton{
-    position: absolute;
-    bottom: 20%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    border: black solid 1px;
+    grid-column-start:1 ;
+    grid-column-end: 3;
 }
 
-/*--------------------------------ReceptionObjet----------------------------------------------------------------------*/
+/*--------------------------------depot-object----------------------------------------------------------------------*/
 
 .receptionObjetsTh,.receptionObjetsTd{
     border: 1px solid;
