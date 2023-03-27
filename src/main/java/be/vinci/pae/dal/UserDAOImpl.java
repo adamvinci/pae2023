@@ -5,8 +5,10 @@ import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.dal.services.DALService;
 import be.vinci.pae.utils.FatalException;
 import jakarta.inject.Inject;
-
-import java.sql.*;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
