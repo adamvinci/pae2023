@@ -191,7 +191,6 @@ public class ObjetRessource {
       throw new WebApplicationException("Message required", Status.BAD_REQUEST);
     }
     String localisation = json.get("localisation").asText();
-    System.out.println(localisation);
 
     if (localisation.isBlank() || localisation.isEmpty()) {
       throw new WebApplicationException("Message required", Status.BAD_REQUEST);
