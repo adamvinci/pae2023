@@ -54,7 +54,8 @@ public class Main {
   public static void main(String[] args) throws IOException {
     new MyLogger();
     final HttpServer server = startServer();
-    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,String.format("Jersey app started with WADL available at "
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
+        String.format("Jersey app started with WADL available at "
         + "%sapplication.wadl\nHit enter to stop it...", Config.getProperty("BaseUri")));
     System.in.read();
     server.stop();
