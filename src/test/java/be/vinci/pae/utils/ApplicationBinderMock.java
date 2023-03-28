@@ -47,7 +47,7 @@ public class ApplicationBinderMock extends AbstractBinder {
     bind(DisponibiliteUCCImpl.class).to(DisponibiliteUCC.class).in(Singleton.class);
 
     //to avoid calling the UserDataServiceImpl which call the database
-    // but cant ass dev.propreties not initialzied
+    // but cant as dev.propreties not initialzied
     bind(Mockito.mock(UserDAOImpl.class)).to(UserDAO.class);
     bind(Mockito.mock(ObjectDAOImpl.class)).to(ObjectDAO.class);
     bind(Mockito.mock(TypeObjetDAOImpl.class)).to(TypeObjetDAO.class);

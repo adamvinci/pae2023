@@ -5,6 +5,7 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,7 +20,7 @@ public class WebExceptionMapper implements ExceptionMapper<Throwable> {
     exception.printStackTrace();
     if (exception instanceof FatalException) {
       Logger.getLogger(MyLogger.class.getName())
-          .log(Level.INFO, exception.getCause().getMessage());
+          .log(Level.INFO, Arrays.toString(exception.getStackTrace()));
       // Dont return the message in the Response as client doesnt
       // need to know the problem with the database
       return Response.status(Status.INTERNAL_SERVER_ERROR)

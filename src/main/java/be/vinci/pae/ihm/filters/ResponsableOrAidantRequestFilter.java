@@ -19,7 +19,7 @@ public class ResponsableOrAidantRequestFilter implements
     ContainerRequestFilter {
 
   @Inject
-  private TokenFilter tokenFilter;
+  private TokenService tokenService;
 
   /**
    * If the token is valid and the user associated with it is authorized to access the requested
@@ -30,7 +30,7 @@ public class ResponsableOrAidantRequestFilter implements
   @Override
   public void filter(ContainerRequestContext requestContext) {
 
-    UserDTO authenticatedUser = tokenFilter.tokenFilter(requestContext);
+    UserDTO authenticatedUser = tokenService.tokenFilter(requestContext);
     if (!authenticatedUser.getRole().equals("responsable") && !authenticatedUser.getRole()
         .equals("aidant")) {
       throw new WebApplicationException("You do not have the required permissions to do this.",

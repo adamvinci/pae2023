@@ -36,9 +36,9 @@ public class UserUccImpl implements UserUcc {
       }
 
       return userDTO;
-    } catch (FatalException exception) {
+    } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(exception);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -59,7 +59,7 @@ public class UserUccImpl implements UserUcc {
       return userDATA;
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -72,7 +72,7 @@ public class UserUccImpl implements UserUcc {
       return dataService.getOne(id);
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -85,7 +85,7 @@ public class UserUccImpl implements UserUcc {
       return dataService.getAll();
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -103,7 +103,7 @@ public class UserUccImpl implements UserUcc {
       return null;
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }

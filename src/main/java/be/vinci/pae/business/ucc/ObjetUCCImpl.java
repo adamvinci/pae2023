@@ -34,7 +34,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       return dataService.getAllObjet();
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -47,7 +47,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       return typeObjetDAO.getAll();
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -60,7 +60,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       return dataService.getPicture(id);
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -88,7 +88,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       return objetDTO1;
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -117,7 +117,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       return objetDTO1;
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -141,7 +141,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       return dataService.updateObjectState(objetDTO);
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -160,7 +160,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       return dataService.updateObjectState(objetDTO);
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -179,7 +179,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       return dataService.updateObjectState(objetDTO);
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -194,7 +194,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       return dataService.getOne(id);
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }

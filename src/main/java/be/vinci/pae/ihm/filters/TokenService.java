@@ -6,7 +6,7 @@ import jakarta.ws.rs.container.ContainerRequestContext;
 /**
  * Receive the token from different annotation and process it.
  */
-public interface TokenFilter {
+public interface TokenService {
 
   /**
    * Extracts and validates an authentication token from the Authorization header.

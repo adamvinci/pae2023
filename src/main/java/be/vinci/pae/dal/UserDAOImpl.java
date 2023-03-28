@@ -31,7 +31,7 @@ public class UserDAOImpl implements UserDAO {
 
     UserDTO userDTO = userFactory.getUserDTO();
     try (PreparedStatement statement = dalService.preparedStatement(
-        "SELECT id_utilisateur,mot_de_passe,nom" + ",prenom,image,date_inscription,role,gsm"
+        "SELECT, id_utilisateur,mot_de_passe,nom" + ",prenom,image,date_inscription,role,gsm"
             + " FROM projet.utilisateurs_inscrits WHERE email = (?)")) {
       statement.setString(1, email);
       try (ResultSet set = statement.executeQuery()) {

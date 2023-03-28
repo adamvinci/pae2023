@@ -29,7 +29,7 @@ public class DisponibiliteUCCImpl implements DisponibiliteUCC {
 
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     }
 
 
@@ -42,7 +42,7 @@ public class DisponibiliteUCCImpl implements DisponibiliteUCC {
       return disponibiliteDAO.getOne(id);
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }

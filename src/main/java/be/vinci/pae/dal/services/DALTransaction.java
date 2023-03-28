@@ -34,8 +34,5 @@ public interface DALTransaction {
    */
   void rollBackTransaction();
 
-  /**
-   *Closes the current database connection.
-   */
-  void fermerConnexion();
+
 }

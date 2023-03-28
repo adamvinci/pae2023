@@ -197,7 +197,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
     if (!Objects.equals(getEtat(), "proposer")) {
       return false;
     }
-    setEtat(POSSIBLE_ETAT[0]);
+    setEtat("accepte");
     setDate_acceptation(LocalDate.now());
     return true;
   }
