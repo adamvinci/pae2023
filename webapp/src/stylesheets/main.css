@@ -58,67 +58,37 @@ button{
 
 /*------------------------------------------------------------------------------------------------------*/
 #page{
-
     display: flex;
 
 }
-#container{
 
-    white-space: nowrap;
-    overflow: auto ;
-    flex: 3;
-}
 
 #rightC{
    flex: 0.3;
-    height: auto;
+    height: 600px;
     border: 2px solid darkgray;
 
 }
 #typeObjet{
     padding-bottom: 30px;
 }
-.container2 {
-    margin-top:80px ;
-    margin-left:50px ;
-    display: inline-block;
-    text-align: center;
-    border: 2px solid darkgray;
-    padding: 20px;
+#carousel{
+    display: flex;
+    flex: 3;
+    justify-content: center;
 }
-
-
-
-.container2 .title {
+#libelle{
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 10px;
-}
 
-.container2 .subtitle {
+}
+#etat{
     font-size: 16px;
     color: #666;
-}
-.hide {
-    position: fixed;
-    top:35%;
-    left: 30%;
-    width: 40%;
-    height: 20%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-    visibility: hidden;
 }
-#image:hover .hide {
-    visibility: visible;
-    color: white;
-}
-.hideContent{
-    font-size: x-large;
-}
+
+
 
 /*--------------------------------Gere-la-vente-object----------------------------------------------------------------------*/
 .rechercheObjetsTh,.rechercheObjetsTd{

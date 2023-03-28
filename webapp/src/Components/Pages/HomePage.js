@@ -37,29 +37,43 @@ const HomePage = async () => {
   </div>
 `
   })
-  html += "</div><div id=container>";
-  objets.forEach((e) => {
-    html += `
-<div class = "container2">
-<div id = "image">
- <img src=/api/objet/getPicture/${e.idObjet} alt=${e.description}  data-id = ${e.idObjet} width="200" height="200">
- <div class = "title">${e.typeObjet.libelle}</div>
-  <div class = "subtitle">${e.etat}</div>
-  <div class="hide">
-  <div class ="hideContent">
-  
-  <p>Description : ${e.description}</p>
-  ${e.prix ? `<p>Prix : ${e.prix}</p>` : ''}
-  ${e.date_vente
-        ? `<p> Date de vente : Le ${e.date_vente[2]}/ ${e.date_vente[1]}/${e.date_vente[0]} </p>`
-        : ''}
+  html += `</div>
+<div id ="carousel">
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+ <div class="carousel-inner">   
+
+<div class="carousel-item active">
+ <img  class="d-block w-auto " src=/api/objet/getPicture/${objets[0].idObjet} alt=${objets[0].description}  data-id = ${objets[0].idObjet}  >
+ <div class="carousel-caption d-none d-md-block w-auto">
+    <h5 id="libelle">${objets[0].typeObjet.libelle}</h5>
+    <p id="etat">${objets[0].etat}</p>
   </div>
-</div>
-</div>
-</div>
+  </div>
+  `;
+
+
+  objets.slice(1).forEach((e) => {
+
+    html += `
+
+  <div class="carousel-item ">
+ <img  class="d-block w-auto " src=/api/objet/getPicture/${e.idObjet} alt=${e.description}  data-id = ${e.idObjet}  >
+ <div class="carousel-caption d-none d-md-block w-auto">
+    <h5 id="libelle">${e.typeObjet.libelle}</h5>
+    <p id="etat">${e.etat}</p>
+  </div>
+  </div> 
+ 
 `
   })
-  html += '</div></div>'
+  html += ' </div> <a class="carousel-control-prev " href="#carouselExampleControls" role="button" data-slide="prev"> '
+      + '<span  class="carousel-control-prev-icon" aria-hidden="true"></span>   '
+      + '</a> <a class="carousel-control-next" href="" role="button" data-slide="next">'
+      + '<span class="carousel-control-next-icon" aria-hidden="true"></span>  '
+      + '</a>'
+      + '</div>'
+      + ' </div>'
+      + '</div>'
 
   main.innerHTML = html;
 
