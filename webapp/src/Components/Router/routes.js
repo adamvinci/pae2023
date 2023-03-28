@@ -10,6 +10,8 @@ import TableauDeBord from '../Pages/Helper/TableauDeBord';
 import VenteDobjet from '../Pages/Helper/VenteDobjet';
 import Membres from '../Pages/Responsable/Membres';
 import ObjetsPropose from '../Pages/Responsable/ObjetsPropose';
+import UserPage from "../Pages/UserPage";
+
 
 const routes = {
   '/': HomePage,
@@ -25,6 +27,7 @@ const routes = {
   '/venteObjet': VenteDobjet,
   '/Membres': Membres,
   '/ObjetsPropose': ObjetsPropose,
+  '/UserPage': UserPage,
 };
 
 export default routes;
