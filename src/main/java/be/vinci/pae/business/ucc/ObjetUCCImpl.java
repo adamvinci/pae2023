@@ -125,7 +125,7 @@ public class ObjetUCCImpl implements ObjetUCC {
   }
 
   @Override
-  public ObjetDTO depotObject(ObjetDTO objetDTO, String localisation) {
+  public ObjetDTO depotObject(ObjetDTO objetDTO) {
     try {
       dal.startTransaction();
       Objet objet = (Objet) objetDTO;

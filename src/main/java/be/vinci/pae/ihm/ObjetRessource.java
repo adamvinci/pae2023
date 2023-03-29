@@ -211,7 +211,7 @@ public class ObjetRessource {
       throw new WebApplicationException("This object already has a location", Status.BAD_REQUEST);
     }
     retrievedObject.setLocalisation(localisation);
-    ObjetDTO changedObject = objetUCC.depotObject(retrievedObject, localisation);
+    ObjetDTO changedObject = objetUCC.depotObject(retrievedObject);
     if (changedObject == null) {
       throw new WebApplicationException(
           "Impossible changement, to deposite an object it state must be 'accepte'",
