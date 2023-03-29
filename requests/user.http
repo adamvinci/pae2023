@@ -125,12 +125,12 @@ POST {{baseUrl}}/objet/accepterObject/1
 Authorization: {{adrienToken}}
 
 ###
-POST {{baseUrl}}/objet/depositObject/3
+POST {{baseUrl}}/objet/depositObject/1
 Authorization: {{aidantToken}}
 Content-Type: application/json
 
 {
-  "localisation" : "Atelier"
+  "localisation" : "Magasin"
 }
 
 ###

@@ -206,8 +206,8 @@ public class ObjetRessource {
       throw new WebApplicationException("This object does not exist", Status.NOT_FOUND);
     }
     if (retrievedObject.getLocalisation() != null && retrievedObject.getLocalisation()
-        .equals("Magasin") || (retrievedObject.getLocalisation() != null
-        && retrievedObject.getLocalisation().equals("Atelier") && localisation.equals("Atelier"))) {
+        .equals("Magasin") || retrievedObject.getLocalisation() != null
+        && retrievedObject.getLocalisation().equals("Atelier") && localisation.equals("Atelier")) {
       throw new WebApplicationException("This object already has a location", Status.BAD_REQUEST);
     }
     retrievedObject.setLocalisation(localisation);

@@ -118,7 +118,7 @@ public class DALServiceImpl implements DALService, DALTransaction {
    */
   public void fermerConnexion() {
     try {
-      if(conn.get() == null){
+      if (conn.get() == null) {
         throw new FatalException("Connexion null");
       }
       Connection connex = conn.get();

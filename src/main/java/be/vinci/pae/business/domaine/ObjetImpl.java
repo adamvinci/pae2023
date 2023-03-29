@@ -230,12 +230,13 @@ public class ObjetImpl implements Objet, ObjetDTO {
   }
 
   @Override
-  public Boolean deposer(){
-    if(getLocalisation().equals("Magasin")){
+  public Boolean deposer() {
+    if (getLocalisation().equals("Magasin")) {
       return deposerEnMagasin();
     }
     return deposerEnAtelier();
   }
+
   @Override
   public Boolean mettreEnVente() {
     if (Objects.equals(getEtat(), "accepte") && Objects.equals(getLocalisation(), "Magasin")) {

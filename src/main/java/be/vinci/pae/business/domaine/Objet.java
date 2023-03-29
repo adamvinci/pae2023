@@ -24,7 +24,7 @@ public interface Objet extends ObjetDTO {
   Boolean refuserObjet();
 
   /**
-   * Redirect the object to the good method depending on its localisation
+   * Redirect the object to the good method depending on its localisation.
    *
    * @return refuserObjet or accepterObjet
    */
