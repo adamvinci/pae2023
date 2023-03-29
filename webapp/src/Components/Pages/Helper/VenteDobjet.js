@@ -14,7 +14,7 @@ const tableEnTete = `
           <th class="rechercheObjetsTh"> date de dépot </th>
           <th class="rechercheObjetsTh"> Prix de l'objet </th>
           <th class="rechercheObjetsTh"> Etat de vente </th>
-          <th class="rechercheObjetsTh"> </th>
+ 
         </tr>
       </thead>
       <tbody class="tableData"> 
@@ -27,12 +27,7 @@ function head() {
   main.innerHTML += tableEnTete;
 }
 
-function closePopup() {
-  const popup = document.querySelector('.popUpContainer');
-  if (popup) {
-    popup.parentNode.removeChild(popup);
-  }
-}
+
 
 function homeScreen(){
   let data;
@@ -79,10 +74,7 @@ function homeScreen(){
         }else{
           dataHtml += `<p>${data[i].etat}</p>`;
         }
-        dataHtml += `</td> 
-    
-          <td class="rechercheObjetsTd"><input type="button" class="btn btn-info btn-sm" id="details" value="Détails"></td>
-        </tr>`;
+
         i+=1;
 
         tableBody.innerHTML += dataHtml;
@@ -148,64 +140,8 @@ function homeScreen(){
           }
         });
       });
-      const buttonInfo = document.querySelectorAll('#details');
-      buttonInfo.forEach((button) => {
-        button.addEventListener("click", event => {
-          event.preventDefault();
-          const objTr = event.target.closest("tr");
-          const objIndex = Array.from(objTr.parentNode.children).indexOf(objTr);
-          const objData = data[objIndex];
-          const main = document.querySelector("main");
-          const popUp = `
-      <div class="popUpContainer">
-        <div id="informationContainer" style="overflow-x: scroll;">
-          <div class="photo"> 
-            <h1>Photo</h1>
-            <img src="/api/objet/getPicture/${objData.idObjet}" alt="Photo" width="100px">
-          </div>
-          <div class="description">
-            <h1>Description</h1>
-            <p>${objData.description}</p>
-          </div>
-          <div class = "detail">
-           <table>
-              <thead> 
-                <tr> 
-                  <th class="rechercheObjetsTh"> Localisation </th> 
-                  <th class="rechercheObjetsTh"> Type d'objet </th> 
-                  <th class="rechercheObjetsTh"> Date dépot </th>
-                  <th class="rechercheObjetsTh"> Date vente </th>
-                  <th class="rechercheObjetsTh"> Prix de l'objet </th>
-                  <th class="rechercheObjetsTh"> Etat de vente </th>
-                  <th class="rechercheObjetsTh"> Proposes par </th>
-                </tr>
-              </thead>
-              <tbody class="tableData">
-                <tr>
-                  <td class="rechercheObjetsTd">${objData.localisation}</td> 
-                  <td class="rechercheObjetsTd">${objData.typeObjet.libelle}</td>
-                  <td class="rechercheObjetsTd">${objData.date_depot ? objData.date_depot : '/' }</td>
-                  <td class="rechercheObjetsTd">${objData.date_vente ? objData.date_vente : '/' }</td>
-                  <td class="rechercheObjetsTd">${objData.prix ? `${objData.prix}  € `:'/'} </td>
-                  <td class="rechercheObjetsTd">${objData.etat}</td>
-                  <td class="rechercheObjetsTd">/</td>
-                </tr>
-              </tbody>    
-            </table>
-          </div>
-          <div class = "voirPlusObjetUtilisateur"></div>
-          <input type="button" id="closeButton" value="Fermer">
-        </div>
-       
-      </div>
-    `;
-          main.insertAdjacentHTML("beforeend", popUp);
 
-          const popupContainer = document.querySelector('.popUpContainer');
-          const closeButton = popupContainer.querySelector('#closeButton');
-          closeButton.addEventListener('click', closePopup);
-        });
-      })
+
 
     } catch (error) {
       throw new Error(error);
