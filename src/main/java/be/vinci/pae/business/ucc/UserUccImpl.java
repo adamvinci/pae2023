@@ -38,13 +38,13 @@ public class UserUccImpl implements UserUcc {
 
       return userDTO;
     } catch (Exception e) {
-      
+
       try {
         dal.rollBackTransaction();
       } catch (Exception rollbackException) {
         e.addSuppressed(rollbackException);
       }
-      e1=e;
+      e1 = e;
       throw e;
     } finally {
       try {

@@ -205,13 +205,17 @@ public class ObjetRessource {
     if (retrievedObject == null) {
       throw new WebApplicationException("This object does not exist", Status.NOT_FOUND);
     }
-
+    if (retrievedObject.getLocalisation() != null && retrievedObject.getLocalisation()
+        .equals("Magasin") || (retrievedObject.getLocalisation() != null
+        && retrievedObject.getLocalisation().equals("Atelier") && localisation.equals("Atelier"))) {
+      throw new WebApplicationException("This object already has a location", Status.BAD_REQUEST);
+    }
+    retrievedObject.setLocalisation(localisation);
     ObjetDTO changedObject = objetUCC.depotObject(retrievedObject, localisation);
     if (changedObject == null) {
       throw new WebApplicationException(
-          "Impossible changement, to deposite an object it state must be 'accepte'"
-              + "and must not have already a location except if the deposit is for an atelier",
-          412);
+          "Impossible changement, to deposite an object it state must be 'accepte'",
+          Status.PRECONDITION_FAILED);
     }
     Logger.getLogger(MyLogger.class.getName())
         .log(Level.INFO, "Deposit of object : " + id + " at " + localisation);

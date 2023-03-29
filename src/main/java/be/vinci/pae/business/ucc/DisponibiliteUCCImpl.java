@@ -29,7 +29,7 @@ public class DisponibiliteUCCImpl implements DisponibiliteUCC {
     } catch (FatalException e) {
       dal.rollBackTransaction();
       throw e;
-    }finally {
+    } finally {
       dal.commitTransaction();
     }
 

@@ -129,15 +129,11 @@ public class ObjetUCCImpl implements ObjetUCC {
     try {
       dal.startTransaction();
       Objet objet = (Objet) objetDTO;
-      if (localisation.equals("Magasin")) {
-        if (!objet.deposerEnMagasin()) {
-          return null;
-        }
-      } else {
-        if (!objet.deposerEnAtelier()) {
-          return null;
-        }
+
+      if (!objet.deposer()) {
+        return null;
       }
+
       return dataService.updateObjectState(objetDTO);
     } catch (FatalException e) {
       dal.rollBackTransaction();
