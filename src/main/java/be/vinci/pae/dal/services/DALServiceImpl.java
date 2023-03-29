@@ -55,11 +55,11 @@ public class DALServiceImpl implements DALService, DALTransaction {
   }
 
 
+
+
   /**
    * Starts a new transaction by getting a new connection from the database and disabling
    * auto-commit.
-   *
-   * @return
    */
   @Override
   public void startTransaction() {

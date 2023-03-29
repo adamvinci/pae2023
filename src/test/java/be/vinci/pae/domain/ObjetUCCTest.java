@@ -290,7 +290,7 @@ class ObjetUCCTest {
     objetDTO.setEtat("accepte");
     objetDTO.setLocalisation("Magasin");
     Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
- assertEquals(objetDTO, objetUCC.depotObject(objetDTO));
+    assertEquals(objetDTO, objetUCC.depotObject(objetDTO));
   }
 
   @DisplayName("Test depotObject(ObjetDTO objetDTO) with good "
