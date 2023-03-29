@@ -58,6 +58,8 @@ public class DALServiceImpl implements DALService, DALTransaction {
   /**
    * Starts a new transaction by getting a new connection from the database and disabling
    * auto-commit.
+   *
+   * @return
    */
   @Override
   public void startTransaction() {
@@ -71,6 +73,7 @@ public class DALServiceImpl implements DALService, DALTransaction {
     } catch (SQLException exception) {
       throw new FatalException(exception);
     }
+
   }
 
   /**
@@ -115,6 +118,9 @@ public class DALServiceImpl implements DALService, DALTransaction {
    */
   public void fermerConnexion() {
     try {
+      if(conn.get() == null){
+        throw new FatalException("Connexion null");
+      }
       Connection connex = conn.get();
       connex.close();
     } catch (SQLException e) {
@@ -123,5 +129,6 @@ public class DALServiceImpl implements DALService, DALTransaction {
       conn.remove();
     }
   }
+
 
 }

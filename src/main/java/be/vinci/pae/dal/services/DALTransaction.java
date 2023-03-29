@@ -5,14 +5,15 @@ import be.vinci.pae.utils.FatalException;
 /**
  The DALTransaction interface provides methods for managing database transactions.
  */
-public interface DALTransaction {
+public interface DALTransaction  {
 
   /**
-   *Starts a new transaction by getting a new connection from the database
-   *  and disabling auto-commit.
-
-   *Throws a RuntimeException if a connection has already been acquired.
-
+   * Starts a new transaction by getting a new connection from the database and disabling
+   * auto-commit.
+   * <p>
+   * Throws a RuntimeException if a connection has already been acquired.
+   *
+   * @return
    * @throws FatalException if an SQL exception occurs while starting the transaction.
    */
   void startTransaction();
