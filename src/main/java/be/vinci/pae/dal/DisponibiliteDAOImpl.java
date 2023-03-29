@@ -56,7 +56,7 @@ public class DisponibiliteDAOImpl implements DisponibiliteDAO {
   public List<DisponibiliteDTO> getAll() {
     List<DisponibiliteDTO> disponibiliteDTOS = new ArrayList<>();
     try (PreparedStatement statement = dalService.preparedStatement(
-        "SELECT d.id_disponibilite,"
+        "SELECT, d.id_disponibilite,"
             + "d.date_disponibilite,p.plage "
             + "FROM projet.plages_horaires p,"
             + "projet.disponibilites d WHERE d.plage = p.id_plage_horaire ")) {
