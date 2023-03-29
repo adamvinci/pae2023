@@ -1,5 +1,6 @@
 body {
     background-color: bisque;
+
 }
 
 #nomSite{
@@ -76,18 +77,13 @@ button{
     display: flex;
     flex: 3;
     justify-content: center;
-}
-#libelle{
-    font-size: 24px;
-    font-weight: bold;
-
-}
-#etat{
-    font-size: 16px;
-    color: #666;
-
+    align-items: center;
 }
 
+#imgCarousel{
+    width: 1000px;
+    height: 700px   ;
+}
 
 
 /*--------------------------------Gere-la-vente-object----------------------------------------------------------------------*/

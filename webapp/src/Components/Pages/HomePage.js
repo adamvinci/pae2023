@@ -6,6 +6,8 @@ const HomePage = async () => {
   main.innerHTML = `<h3>Welcome to your home page!</h3>`;
   let objets = await getObjects();
   shuffleArray(objets);
+  console.log(objets)
+
   let etat = window.location.search.split("?")[1]?.split("=")[1];
 
   const type = window.location.search.split("?")[2]?.split("=")[1];
@@ -36,44 +38,52 @@ const HomePage = async () => {
           </label>
   </div>
 `
-  })
-  html += `</div>
-<div id ="carousel">
-<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
- <div class="carousel-inner">   
+  });
 
-<div class="carousel-item active">
- <img  class="d-block w-auto " src=/api/objet/getPicture/${objets[0].idObjet} alt=${objets[0].description}  data-id = ${objets[0].idObjet}  >
- <div class="carousel-caption d-none d-md-block w-auto">
-    <h5 id="libelle">${objets[0].typeObjet.libelle}</h5>
-    <p id="etat">${objets[0].etat}</p>
+  html += `</div>
+<div id = "carousel">
+<div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img id = "imgCarousel" class="d-block " src=/api/objet/getPicture/${objets[0].idObjet}  alt=${objets[0].descritpion} >
+            <div class="carousel-caption d-none d-md-block">
+        <h5 >${objets[0].typeObjet.libelle}</h5>
+        <p >${objets[0].etat}</p>
+      </div>
+    </div>
+
+    `
+
+
+      objets.slice(1).forEach((o)=>{
+      html += `      
+         <div class="carousel-item">
+      <img id = "imgCarousel" class="d-block  " src=/api/objet/getPicture/${o.idObjet} alt=${o.description} >
+               <div class="carousel-caption d-none d-md-block">
+        <h5 id="libelle">${o.typeObjet.libelle}</h5>
+        <p id = "etat">${o.etat}</p>
+      </div>
+    </div>
+      `
+})
+
+ html +=`
   </div>
-  </div>
+  <button id = "prevv" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+</div>
+</div>
+
   `;
 
 
-  objets.slice(1).forEach((e) => {
-
-    html += `
-
-  <div class="carousel-item ">
- <img  class="d-block w-auto " src=/api/objet/getPicture/${e.idObjet} alt=${e.description}  data-id = ${e.idObjet}  >
- <div class="carousel-caption d-none d-md-block w-auto">
-    <h5 id="libelle">${e.typeObjet.libelle}</h5>
-    <p id="etat">${e.etat}</p>
-  </div>
-  </div> 
- 
-`
-  })
-  html += ' </div> <a class="carousel-control-prev " href="#carouselExampleControls" role="button" data-slide="prev"> '
-      + '<span  class="carousel-control-prev-icon" aria-hidden="true"></span>   '
-      + '</a> <a class="carousel-control-next" href="" role="button" data-slide="next">'
-      + '<span class="carousel-control-next-icon" aria-hidden="true"></span>  '
-      + '</a>'
-      + '</div>'
-      + ' </div>'
-      + '</div>'
 
   main.innerHTML = html;
 
