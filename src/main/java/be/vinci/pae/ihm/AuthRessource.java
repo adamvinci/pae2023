@@ -3,6 +3,7 @@ package be.vinci.pae.ihm;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.ihm.filters.Authorize;
+import be.vinci.pae.ihm.filters.PictureService;
 import be.vinci.pae.utils.Config;
 import be.vinci.pae.utils.Json;
 import be.vinci.pae.utils.MyLogger;
@@ -51,6 +52,8 @@ public class AuthRessource {
 
   @Inject
   private UserUcc userUcc;
+  @Inject
+  private PictureService pictureService;
 
 
   /**
@@ -157,7 +160,6 @@ public class AuthRessource {
       @FormDataParam("file") FormDataContentDisposition fileDisposition) {
     String fileName = fileDisposition.getFileName();
     String pathToSave = Config.getProperty("pathToUserImage") + fileName;
-    System.out.println(pathToSave);
     try {
       Files.copy(file, Paths.get(pathToSave));
     } catch (IOException e) {
@@ -196,22 +198,9 @@ public class AuthRessource {
       // delete from img if exists
     }
 
-    if (!Files.exists(java.nio.file.Path.of(pathPicture))) {
-      throw new WebApplicationException("Not Found in the server", Status.NOT_FOUND);
-      // delete path in DB
-    }
-    File file = new File(pathPicture);
-    StreamingOutput output = outputStream -> {
-      try (FileInputStream input = new FileInputStream(file)) {
-        int read;
-        byte[] bytes = new byte[1024];
-        while ((read = input.read(bytes)) != -1) {
-          outputStream.write(bytes, 0, read);
-        }
-      }
-    };
+
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve picture of user " + id);
-    return Response.ok(output).build();
+    return pictureService.transformImage(pathPicture);
   }
 
 

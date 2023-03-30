@@ -30,6 +30,8 @@ import be.vinci.pae.dal.UserDAOImpl;
 import be.vinci.pae.dal.services.DALService;
 import be.vinci.pae.dal.services.DALServiceImpl;
 import be.vinci.pae.dal.services.DALTransaction;
+import be.vinci.pae.ihm.filters.PictureService;
+import be.vinci.pae.ihm.filters.PictureServiceImpl;
 import be.vinci.pae.ihm.filters.TokenService;
 import be.vinci.pae.ihm.filters.TokenServiceImpl;
 import jakarta.inject.Singleton;
@@ -64,6 +66,9 @@ public class ApplicationBinder extends AbstractBinder {
 
 
     bind(TokenServiceImpl.class).to(TokenService.class).in(
+        Singleton.class);
+
+    bind(PictureServiceImpl.class).to(PictureService.class).in(
         Singleton.class);
   }
 }

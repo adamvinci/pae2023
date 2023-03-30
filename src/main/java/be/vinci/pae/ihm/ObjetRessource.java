@@ -6,6 +6,7 @@ import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.ucc.ObjetUCC;
+import be.vinci.pae.ihm.filters.PictureService;
 import be.vinci.pae.ihm.filters.ResponsableAuthorization;
 import be.vinci.pae.ihm.filters.ResponsableOrAidant;
 import be.vinci.pae.utils.Config;
@@ -50,6 +51,9 @@ public class ObjetRessource {
   private ObjetUCC objetUCC;
   @Inject
   private NotificationFactory notificationFactory;
+
+  @Inject
+  private PictureService pictureService;
 
   /**
    * Retrieve all the object in the database.
@@ -310,21 +314,9 @@ public class ObjetRessource {
           Status.NOT_FOUND);
     }
 
-    if (!Files.exists(java.nio.file.Path.of(pathPicture))) {
-      throw new WebApplicationException("Not Found in the server", Status.NOT_FOUND);
-    }
-    File file = new File(pathPicture);
-    StreamingOutput output = outputStream -> {
-      try (FileInputStream input = new FileInputStream(file)) {
-        int read;
-        byte[] bytes = new byte[1024];
-        while ((read = input.read(bytes)) != -1) {
-          outputStream.write(bytes, 0, read);
-        }
-      }
-    };
+
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve picture of object " + id);
-    return Response.ok(output).build();
+    return pictureService.transformImage(pathPicture);
   }
 
   /**
