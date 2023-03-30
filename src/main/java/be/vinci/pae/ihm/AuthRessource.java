@@ -85,7 +85,6 @@ public class AuthRessource {
   }
 
 
-
   /**
    * This method registers a new user using the provided userDTO object.
    *
@@ -106,16 +105,9 @@ public class AuthRessource {
     }
     userDTO = userUcc.register(userDTO);
 
-    if (userDTO == null) {
-      throw new WebApplicationException("This email already exist", Status.CONFLICT);
-    }
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Inscription de "
         + userDTO.getEmail());
-
-
-    return  Json.filterPublicJsonView(userDTO, UserDTO.class);
-
-
+    return Json.filterPublicJsonView(userDTO, UserDTO.class);
   }
 
   /**

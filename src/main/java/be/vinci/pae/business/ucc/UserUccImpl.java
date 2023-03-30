@@ -4,6 +4,7 @@ import be.vinci.pae.business.domaine.User;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.dal.services.DALTransaction;
+import be.vinci.pae.utils.ConflictException;
 import be.vinci.pae.utils.FatalException;
 import jakarta.inject.Inject;
 import java.util.List;
@@ -62,10 +63,11 @@ public class UserUccImpl implements UserUcc {
 
   @Override
   public UserDTO register(UserDTO userDTO) {
+    Exception e1 = null;
     try {
       dal.startTransaction();
       if (dataService.getOne(userDTO.getEmail()) != null) {
-        return null;
+        throw new ConflictException("This email already exist");
       }
       User user = (User) userDTO;
 
@@ -73,11 +75,25 @@ public class UserUccImpl implements UserUcc {
 
       UserDTO userDATA = dataService.createOne(user);
       return userDATA;
-    } catch (FatalException e) {
-      dal.rollBackTransaction();
+    } catch (Exception e) {
+
+      try {
+        dal.rollBackTransaction();
+      } catch (Exception rollbackException) {
+        e.addSuppressed(rollbackException);
+      }
+      e1 = e;
       throw e;
     } finally {
-      dal.commitTransaction();
+      try {
+        dal.commitTransaction();
+      } catch (Exception commitException) {
+        if (e1 != null) {
+          e1.addSuppressed(commitException);
+        } else {
+          throw commitException;
+        }
+      }
     }
   }
 

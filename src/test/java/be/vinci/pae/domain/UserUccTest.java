@@ -15,6 +15,7 @@ import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.ApplicationBinderMock;
+import be.vinci.pae.utils.ConflictException;
 import be.vinci.pae.utils.FatalException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -137,7 +138,9 @@ class UserUccTest {
   @DisplayName("test register with email already exist")
   @Test
   void testRegisterWhitBadEmail() {
-    assertNull(userUcc.register(userMemberSteven));
+    assertThrows(ConflictException.class, () -> userUcc.register(userMemberSteven),
+        "This email already exist");
+
   }
 
 

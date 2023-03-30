@@ -3,7 +3,9 @@ package be.vinci.pae.business.domaine;
 import be.vinci.pae.business.dto.DisponibiliteDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
+import be.vinci.pae.utils.BusinessException;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.ws.rs.WebApplicationException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Objects;
@@ -238,12 +240,20 @@ public class ObjetImpl implements Objet, ObjetDTO {
   }
 
   @Override
-  public Boolean mettreEnVente() {
+  public void mettreEnVente() {
     if (Objects.equals(getEtat(), "accepte") && Objects.equals(getLocalisation(), "Magasin")) {
       setEtat("en vente");
-      return true;
+
     }
-    return false;
+    if (!Objects.equals(getEtat(), "accepte")) {
+      throw new BusinessException("Impossible changement, to put an object "
+          + "at sell its statut must be 'accepte'");
+    }
+    if (!Objects.equals(getLocalisation(), "Magasin")) {
+      throw new BusinessException("Impossible changement, to put an object at sell "
+          + "its need to be deposited in the store'");
+    }
+
   }
 
   @Override

@@ -134,7 +134,7 @@ Content-Type: application/json
 }
 
 ###
-POST {{baseUrl}}/objet/misEnVenteObject/1
+POST {{baseUrl}}/objet/misEnVenteObject/6
 Authorization: {{aidantToken}}
 Content-Type: application/json
 

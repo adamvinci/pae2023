@@ -252,11 +252,7 @@ public class ObjetRessource {
     }
     retrievedObject.setPrix(Double.parseDouble(prix));
     ObjetDTO changedObject = objetUCC.mettreEnVente(retrievedObject);
-    if (changedObject == null) {
-      throw new WebApplicationException("Impossible changement, to put an object at"
-          + " sell its statut must be 'accepte' and be deposited in the store",
-          412);
-    }
+
     Logger.getLogger(MyLogger.class.getName())
         .log(Level.INFO, "Put to sale of the object : " + id + " at price " + prix);
     return changedObject;

@@ -49,7 +49,7 @@ public interface Objet extends ObjetDTO {
    *
    * @return True if the object is available for sale; false otherwise.
    */
-  Boolean mettreEnVente();
+  void mettreEnVente();
 
   /**
    * Indicates whether this object has been sold.

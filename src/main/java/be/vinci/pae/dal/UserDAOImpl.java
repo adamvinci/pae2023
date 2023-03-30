@@ -105,6 +105,7 @@ public class UserDAOImpl implements UserDAO {
       statement.setString(8, user.getGsm());
       try (ResultSet set = statement.executeQuery()) {
         if (!set.isBeforeFirst()) {
+
           return null;
         } else {
           while (set.next()) {

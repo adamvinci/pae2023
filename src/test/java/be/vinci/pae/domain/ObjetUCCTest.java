@@ -18,6 +18,7 @@ import be.vinci.pae.dal.ObjectDAO;
 import be.vinci.pae.dal.TypeObjetDAO;
 import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.ApplicationBinderMock;
+import be.vinci.pae.utils.BusinessException;
 import be.vinci.pae.utils.FatalException;
 import java.util.ArrayList;
 import java.util.List;
@@ -315,8 +316,8 @@ class ObjetUCCTest {
   @Test
   void testMettreEnVenteWithABadState() {
     objetDTO.setEtat("proposer");
-    assertNull(objetUCC.mettreEnVente(objetDTO), "The state need to be 'accepte'"
-        + " to put an object at sell");
+    assertThrows(BusinessException.class, () -> objetUCC.mettreEnVente(objetDTO),
+        "to put an object at sell its statut must be 'accepte");
   }
 
   @DisplayName("Test mettreEnVente(ObjetDTO objetDTO) with a good state but bad localisation")
@@ -324,8 +325,8 @@ class ObjetUCCTest {
   void testMettreEnVenteWithAGoodStateBadLocalisation() {
     objetDTO.setEtat("accepte");
     objetDTO.setLocalisation("Atelier");
-    assertNull(objetUCC.mettreEnVente(objetDTO), "The state need to be 'accepte'"
-        + " to put an object at sell");
+    assertThrows(BusinessException.class, () -> objetUCC.mettreEnVente(objetDTO),
+        "to put an object at sell its need to be deposited in the sto");
   }
 
   @DisplayName("Test mettreEnVente(ObjetDTO objetDTO) with good params")
