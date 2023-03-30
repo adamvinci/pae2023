@@ -133,8 +133,6 @@ async function onRegister(e) {
   const password = document.querySelector('#password').value;
   const gsm = document.querySelector('#gsm').value;
 
-
-      const image = fileInput.files[0].name;
       const options = {
         method: 'POST',
         body: {
@@ -143,7 +141,6 @@ async function onRegister(e) {
           nom,
           prenom,
           gsm,
-          image,
         },
 
       };
