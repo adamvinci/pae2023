@@ -167,12 +167,19 @@ public class AuthRessource {
     return Response.ok().build();
   }
 
+  /**
+   * Retrieve the picture of a user.
+   *
+   * @param id of the user
+   * @param request contains the user asking the picture
+   * @return the image
+   */
   @Authorize
   @GET
   @Path("getPicture/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces({"image/png", "image/jpg", "image/jpeg"})
-  public Response getPicture(@DefaultValue("-1") @PathParam("id") int id,
+  public Response getPictureUser(@DefaultValue("-1") @PathParam("id") int id,
       @Context ContainerRequest request) {
     UserDTO userDTO = (UserDTO) request.getProperty("user");
     if (id == -1) {

@@ -300,7 +300,7 @@ public class ObjetRessource {
   @Path("getPicture/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces({"image/png", "image/jpg", "image/jpeg"})
-  public Response getPicture(@DefaultValue("-1") @PathParam("id") int id) {
+  public Response getPictureObject(@DefaultValue("-1") @PathParam("id") int id) {
     if (id == -1) {
       throw new WebApplicationException("Id of photo required", Status.BAD_REQUEST);
     }
@@ -308,12 +308,10 @@ public class ObjetRessource {
     if (pathPicture == null) {
       throw new WebApplicationException("No image for this object in the database",
           Status.NOT_FOUND);
-      // delete from img if exists
     }
 
     if (!Files.exists(java.nio.file.Path.of(pathPicture))) {
       throw new WebApplicationException("Not Found in the server", Status.NOT_FOUND);
-      // delete path in DB
     }
     File file = new File(pathPicture);
     StreamingOutput output = outputStream -> {
