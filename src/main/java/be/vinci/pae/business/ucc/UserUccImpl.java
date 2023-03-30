@@ -49,7 +49,6 @@ public class UserUccImpl implements UserUcc {
 
   @Override
   public UserDTO register(UserDTO userDTO) {
-    Exception e1 = null;
     try {
       dal.startTransaction();
       if (dataService.getOne(userDTO.getEmail()) != null) {
