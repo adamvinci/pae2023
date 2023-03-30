@@ -44,10 +44,9 @@ public interface Objet extends ObjetDTO {
    */
   Boolean deposerEnAtelier();
 
+
   /**
    * Indicates whether this object is available for sale.
-   *
-   * @return True if the object is available for sale; false otherwise.
    */
   void mettreEnVente();
 
