@@ -140,3 +140,11 @@ button{
     text-align: center;
     padding: 5px;
 }
+
+/********************Register Page------------------------------*/
+#radioAvatar label img {
+    border: 2px solid transparent;
+}
+#radioAvatar label.selected img {
+    border: 2px solid blue;
+}

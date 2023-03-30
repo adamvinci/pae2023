@@ -3,11 +3,17 @@ import {clearPage} from '../../utils/render';
 import Navbar from '../Navbar/Navbar';
 import Navigate from '../Router/Navigate';
 
+import avatar1 from '../../img/avatar1.png'
+import avatar2 from '../../img/avatar2.jpg'
+
 const RegisterPage = () => {
   clearPage();
 
+
   renderRegisterForm();
 };
+
+
 
 function renderRegisterForm() {
   const main = document.querySelector('main');
@@ -76,19 +82,71 @@ function renderRegisterForm() {
   form.appendChild(prenom);
   form.appendChild(email);
   form.appendChild(password);
-  form.appendChild(gsm)
-  form.innerHTML +=
-      `<form>
-    <label>Select File</label>
-    <input required name="file" type= "file" /> 
-  </form>
-  `
+  form.appendChild(gsm);
+  const form1 = document.createElement('form');
+  const labelForm1 = document.createElement('label')
+  labelForm1.innerText = "Select File"
+  const inputForm = document.createElement('input')
+  inputForm.type = "file"
+  inputForm.name = "file"
+  inputForm.required = "true"
+  form1.appendChild(labelForm1)
+  form1.appendChild(inputForm);
+  form1.style.display = "none"
+  form.innerHTML +=`
+  <label>
+    <input type="radio" name="pictureType" value="upload">
+  Use file
+  </label>
+  
+  <label>
+    <input type="radio" name="pictureType" value="avatar" checked>
+    Use avatar
+  </label>
+  <div id="radioAvatar">
+    <label id ="firstImg" class="selected">
+      <input type="radio" name="avatar" id = "avatar1.png" value="${avatar1}" style="display:none;" checked>
+      <img src="${avatar1}" alt="avatar1">
+    </label>
+    <label id="secondImg" ">
+      <input type="radio" name="avatar" id = "avatar2.jpg" value="${avatar2}" style="display:none;">
+      <img src="${avatar2}" alt="avatar2">
+    </label>
+  </div>
+
+`
+
+
+  form.appendChild(form1);
   form.appendChild(formCheckWrapper);
   form.appendChild(submit);
   form.appendChild(msgErreur)
   form.appendChild(connecterLink)
   newDiv.appendChild(form);
   main.appendChild(newDiv);
+
+  const labels = document.querySelectorAll('#radioAvatar label');
+  labels.forEach(label => {
+    label.addEventListener('click', () => {
+      labels.forEach(otherLabel => {
+        otherLabel.classList.remove('selected');
+      });
+      label.classList.add('selected');
+    });
+  });
+
+
+  const uploadRadio = document.querySelector('input[value="upload"]');
+  const avatarRadio = document.querySelector('input[value="avatar"]');
+  const divRadio = document.querySelector("#radioAvatar")
+  avatarRadio.addEventListener('change', () => {
+    form1.style.display = 'none';
+    divRadio.style.display = 'block'
+  });
+  uploadRadio.addEventListener('change', () => {
+    form1.style.display = 'block';
+    divRadio.style.display = 'none'
+  });
   newDiv.style.display = "flex";
   newDiv.style.justifyContent = "center";
   newDiv.style.minHeight = "87vh";
@@ -105,6 +163,7 @@ function renderRegisterForm() {
   form.style.boxShadow = "0 8px 24px rgba(0, 32, 63, .45), 0 8px 8px rgba(0, 32, 63, .45)";
   form.style.lineHeight = "2";
   form.addEventListener('submit', onRegister);
+
 }
 
 async function onRegister(e) {
@@ -118,16 +177,32 @@ async function onRegister(e) {
 
   const fileInput = document.querySelector('input[name=file]');
 
-  const formData = new FormData();
-  formData.append('file', fileInput.files[0]);
-  const options1 = {
-    method: 'POST',
-    body: formData
-  };
-  fetch(`${process.env.API_BASE_URL}/auths/upload`, options1);
+  const uploadRadio = document.querySelector('input[name="pictureType"][value="upload"]');
 
-  const image = fileInput.files[0].name;
-  console.log(image)
+
+  let image ;
+  if(uploadRadio.checked){
+    const formData = new FormData();
+    image=fileInput.files[0].name;
+    formData.append('file', fileInput.files[0]);
+    const options1 = {
+      method: 'POST',
+      body: formData
+    };
+    fetch(`${process.env.API_BASE_URL}/auths/upload`, options1);
+  }else{
+    const avatarRadios = document.getElementsByName('avatar');
+    avatarRadios.forEach((avtr)=>{
+      if(avtr.checked){
+
+        image = avtr.id;
+      }
+    });
+
+  }
+
+
+
   const options = {
     method: 'POST',
     body: JSON.stringify({
@@ -156,5 +231,7 @@ async function onRegister(e) {
   Navigate('/login');
 
 }
+
+
 
 export default RegisterPage;

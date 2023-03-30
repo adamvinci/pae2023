@@ -189,6 +189,7 @@ public class AuthRessource {
           Status.UNAUTHORIZED);
     }
     String pathPicture = userUcc.getPicture(id);
+    System.out.println(pathPicture);
     if (pathPicture == null) {
       throw new WebApplicationException("No image for this user in the database",
           Status.NOT_FOUND);
