@@ -61,25 +61,15 @@ public class UserUccImpl implements UserUcc {
 
       UserDTO userDATA = dataService.createOne(user);
       return userDATA;
-    } catch (Exception e) {
+    } catch (FatalException e) {
+      dal.rollBackTransaction();
 
-      try {
-        dal.rollBackTransaction();
-      } catch (Exception rollbackException) {
-        e.addSuppressed(rollbackException);
-      }
-      e1 = e;
       throw e;
     } finally {
-      try {
-        dal.commitTransaction();
-      } catch (Exception commitException) {
-        if (e1 != null) {
-          e1.addSuppressed(commitException);
-        } else {
-          throw commitException;
-        }
-      }
+
+      dal.commitTransaction();
+
+
     }
   }
 
