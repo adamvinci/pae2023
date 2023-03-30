@@ -241,10 +241,6 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   @Override
   public void mettreEnVente() {
-    if (Objects.equals(getEtat(), "accepte") && Objects.equals(getLocalisation(), "Magasin")) {
-      setEtat("en vente");
-
-    }
     if (!Objects.equals(getEtat(), "accepte")) {
       throw new BusinessException("Impossible changement, to put an object "
           + "at sell its statut must be 'accepte'");
@@ -254,6 +250,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
           + "its need to be deposited in the store'");
     }
 
+    setEtat("en vente");
   }
 
   @Override
