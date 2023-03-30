@@ -6,6 +6,7 @@ const HomePage = async () => {
   main.innerHTML = `<h3>Welcome to your home page!</h3>`;
   let objets = await getObjects();
   shuffleArray(objets);
+
   let etat = window.location.search.split("?")[1]?.split("=")[1];
 
   const type = window.location.search.split("?")[2]?.split("=")[1];
@@ -36,32 +37,119 @@ const HomePage = async () => {
           </label>
   </div>
 `
-  })
-  html += "</div><div id=container>";
-  objets.forEach((e) => {
-    html += `
-<div class = "container2">
-<div id = "image">
- <img src=/api/objet/getPicture/${e.idObjet} alt=${e.description}  data-id = ${e.idObjet} width="200" height="200">
- <div class = "title">${e.typeObjet.libelle}</div>
-  <div class = "subtitle">${e.etat}</div>
-  <div class="hide">
-  <div class ="hideContent">
-  
-  <p>Description : ${e.description}</p>
-  ${e.prix ? `<p>Prix : ${e.prix}</p>` : ''}
-  ${e.date_vente
-        ? `<p> Date de vente : Le ${e.date_vente[2]}/ ${e.date_vente[1]}/${e.date_vente[0]} </p>`
-        : ''}
+  });
+
+  html += `</div>
+<div id = "carousel">
+<div id="carouselExampleControls" class="carousel carousel-dark slide"  data-bs-ride="carousel" data-bs-interval="10000000">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img id = "imgCarousel" class="d-block " src=/api/objet/getPicture/${objets[0].idObjet}  data-x = ${0} alt=${objets[0].descritpion} >
+            <div class="carousel-caption d-none d-md-block">
+        <h5 >${objets[0].typeObjet.libelle}</h5>
+        <p >${changeEtatName(objets[0].etat)}</p>
+      </div>
+    </div>
+
+    `
+const objets2 = objets
+
+  objets2.slice(1).forEach((o)=>{
+      html += `      
+         <div class="carousel-item">
+      <img id = "imgCarousel" class="d-block  " src=/api/objet/getPicture/${o.idObjet} data-x = ${objets.indexOf(o)} alt=${o.description} >
+               <div class="carousel-caption d-none d-md-block">
+        <h5 id="libelle">${o.typeObjet.libelle}</h5>
+
+        <p id = "etat">
+  ${changeEtatName(o.etat)}
+</p>
+      </div>
+    </div>
+      `
+})
+
+ html +=`
   </div>
+  <button id="btnCaroussel" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button id="btnCaroussel" class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
 </div>
 </div>
-`
-  })
-  html += '</div></div>'
+
+  `;
+
 
   main.innerHTML = html;
+  console.log(objets)
+  let popup;
+  const img = document.querySelectorAll("#imgCarousel");
+  img.forEach((im)=>{
+    im.addEventListener('click',(e)=>{
+      const id = e.target.dataset.x
+      const objData = objets[id]
+ popup = `
+  <div class="popUpContainer">
+        <div id="informationContainer" style="overflow-x: scroll;">
+          <div class="photo"> 
+            <h1>Photo</h1>
+            <img src="/api/objet/getPicture/${objData.idObjet}" alt="Photo" width="100px">
+          </div>
+          <div class="description">
+            <h1>Description</h1>
+            <p>${objData.description}</p>
+          </div>
+          <div class = "detail">
+           <table>
+              <thead> 
+                <tr> 
+                  <th class="rechercheObjetsTh"> Localisation </th> 
+                  <th class="rechercheObjetsTh"> Type d'objet </th> 
+                  <th class="rechercheObjetsTh"> Date dépot </th>
+                  <th class="rechercheObjetsTh"> Date vente </th>
+                  <th class="rechercheObjetsTh"> Prix de l'objet </th>
+                  <th class="rechercheObjetsTh"> Etat de vente </th>
+                </tr>
+              </thead>
+              <tbody class="tableData">
+                <tr>
+                  <td class="rechercheObjetsTd">${objData.localisation}</td> 
+                  <td class="rechercheObjetsTd">${objData.typeObjet.libelle}</td>
+                  <td class="rechercheObjetsTd">Le ${objData.date_depot[2]}/${objData.date_depot[1]}/${objData.date_depot[0]}  </td>
+                  <td class="rechercheObjetsTd">${objData.date_vente ? ` Le ${objData.date_vente[2]}/${objData.date_vente[1]}/${objData.date_vente[0]} ` : '/'}</td>
+                  <td class="rechercheObjetsTd">${objData.prix
+     ? `${objData.prix}  € ` : '/'} </td>
+                  <td class="rechercheObjetsTd">${objData.etat}</td>
+                </tr>
+              </tbody>    
+            </table>
+          </div>
+          <div class = "fermer"></div>
+          <input type="button" id="closeButton" value="Fermer">
+        </div>
+       
+      </div>
+
+    `
+      const btn=document.querySelectorAll("#btnCaroussel");
+      btn.forEach((btnn)=>{
+        const b = btnn
+        b.style.display = "none"
+        b.onclick = "return false"
+      })
+      main.insertAdjacentHTML("beforeend", popup);
+      const popupContainer = document.querySelector('.popUpContainer');
+      const closeButton = popupContainer.querySelector('#closeButton');
+      closeButton.addEventListener('click', closePopup);
+    })
+  })
+
 
   const t = document.querySelectorAll("input");
   t.forEach((inpt) => {
@@ -86,7 +174,33 @@ const HomePage = async () => {
   })
 
 }
+function closePopup() {
+  const popup = document.querySelector('.popUpContainer');
+  if (popup) {
 
+    popup.parentNode.removeChild(popup);
+  }
+  const btn=document.querySelectorAll("#btnCaroussel");
+  btn.forEach((btnn)=>{
+    const b = btnn
+    b.style.display = "flex"
+  })
+}
+
+function changeEtatName(etat){
+ if (etat === 'accepte') {
+   return  'Accepté'
+ } if (etat === 'refuser') {
+    return 'Refusé'
+ }  if (etat === 'en vente') {
+   return  'En Vente'
+}  if (etat === 'vendu') {
+   return 'Vendu'
+ }
+   return  'Proposé'
+
+
+}
 async function getObjects() {
 
   const options = {

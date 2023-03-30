@@ -110,7 +110,7 @@ async function table() {
       <td class="receptionObjetsTd">${objet.typeObjet.libelle}</td>
       <td class="td"><img src=/api/objet/getPicture/${objet.idObjet} alt="photo" width="100px"></td> 
       <td class="receptionObjetsTd">${objet.description}</td>
-            <td class="receptionObjetsTd">${objet.etat ? objet.etat : '/'}</td>
+            <td class="receptionObjetsTd">${objet.etat ? changeEtatName(objet.etat) : '/'}</td>
       <td class="receptionObjetsTd">${objet.date_acceptation ? ` ${objet.date_acceptation[2]}/${objet.date_acceptation[1]}/${objet.date_acceptation[0]}` : '/' }</td>
           <td class="receptionObjetsTd">${objet.date_depot ? ` ${objet.date_depot[2]}/${objet.date_depot[1]}/${objet.date_depot[0]}` : '/' }</td>
       <td class="receptionObjetsTd"> ${objet.localisation ? objet.localisation  : '/' }</td>
@@ -122,7 +122,20 @@ async function table() {
 
 
 }
+function changeEtatName(etat){
+  if (etat === 'accepte') {
+    return  'Accepté'
+  } if (etat === 'refuser') {
+    return 'Refusé'
+  }  if (etat === 'en vente') {
+    return  'En Vente'
+  }  if (etat === 'vendu') {
+    return 'Vendu'
+  }
+  return  'Proposé'
 
+
+}
 
 
 const TableauDeBord =async () =>  {
