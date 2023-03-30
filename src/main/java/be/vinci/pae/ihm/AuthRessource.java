@@ -21,10 +21,17 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.server.ContainerRequest;
 
 /**
@@ -93,7 +100,7 @@ public class AuthRessource {
    */
   @POST
   @Path("register")
-  @Consumes(MediaType.APPLICATION_JSON)
+  @Consumes({MediaType.APPLICATION_JSON})
   @Produces(MediaType.APPLICATION_JSON)
   public UserDTO register(UserDTO userDTO) {
     if (userDTO.getEmail().equals("") || userDTO.getEmail().isBlank()
@@ -103,12 +110,14 @@ public class AuthRessource {
         || userDTO.getGsm().equals("") || userDTO.getGsm().isBlank()) {
       throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
     }
+
     userDTO = userUcc.register(userDTO);
 
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Inscription de "
         + userDTO.getEmail());
     return Json.filterPublicJsonView(userDTO, UserDTO.class);
   }
+
 
   /**
    * Path to retrieve the user from a token.

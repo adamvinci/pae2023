@@ -27,10 +27,15 @@ import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.StreamingOutput;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.server.ContainerRequest;
 
 /**
@@ -321,4 +326,6 @@ public class ObjetRessource {
         .log(Level.INFO, "Refusal of objet : " + id);
     return changedObject;
   }
+
+
 }

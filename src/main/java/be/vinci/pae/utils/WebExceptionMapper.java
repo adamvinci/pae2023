@@ -17,15 +17,15 @@ public class WebExceptionMapper implements ExceptionMapper<Throwable> {
   @Override
   public Response toResponse(Throwable exception) {
 
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "exception message ", exception);
     if (exception instanceof FatalException) {
-      Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "exception message ", exception);
       // Dont return the message in the Response as client doesnt
       // need to know the problem with the database
       return Response.status(Status.INTERNAL_SERVER_ERROR)
           .entity(exception.getCause()).build();
     }
 
-    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "exception message ", exception);
+
     if (exception instanceof WebApplicationException) {
       return Response.status(((WebApplicationException) exception).getResponse().getStatus())
           .entity(exception.getMessage())
