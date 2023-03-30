@@ -7,5 +7,11 @@ import jakarta.ws.rs.core.Response;
  */
 public interface PictureService {
 
+  /**
+   * Retrieve the image from the project file and send it.
+   *
+   * @param pathPicture to search in the file
+   * @return the picture
+   */
   Response transformImage(String pathPicture);
 }
