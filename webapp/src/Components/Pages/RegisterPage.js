@@ -1,9 +1,7 @@
 import Swal from "sweetalert2";
-import { getRememberMe, setRememberMe } from '../../utils/auths';
-import { clearPage } from '../../utils/render';
+import {clearPage} from '../../utils/render';
 import Navbar from '../Navbar/Navbar';
 import Navigate from '../Router/Navigate';
-
 
 const RegisterPage = () => {
   clearPage();
@@ -14,11 +12,13 @@ const RegisterPage = () => {
 function renderRegisterForm() {
   const main = document.querySelector('main');
   const newDiv = document.createElement("div");
+  newDiv.id = "divForm"
   const form = document.createElement('form');
+  form.id = "form"
   form.className = 'p-5';
   const title = document.createElement('h1');
-  title.innerText="Creer votre compte";
-  title.style.color="#634835";
+  title.innerText = "Creer votre compte";
+  title.style.color = "#634835";
   const email = document.createElement('input');
   email.type = 'text';
   email.id = 'email';
@@ -57,23 +57,10 @@ function renderRegisterForm() {
   const formCheckWrapper = document.createElement('div');
   formCheckWrapper.className = 'mb-3 form-check';
 
-  const rememberme = document.createElement('input');
-  rememberme.type = 'checkbox';
-  rememberme.className = 'form-check-input';
-  rememberme.id = 'rememberme';
-  const remembered = getRememberMe();
-  rememberme.checked = remembered;
-  rememberme.addEventListener('click', onCheckboxClicked);
-
-  const checkLabel = document.createElement('label');
-  checkLabel.htmlFor = 'rememberme';
-  checkLabel.className = 'form-check-label';
-  checkLabel.textContent = 'Remember me';
-
   const msgErreur = document.createElement("h4");
   msgErreur.id = "msgErreur";
   msgErreur.innerText = "";
-  msgErreur.style.color="red";
+  msgErreur.style.color = "red";
 
   const connecterLink = document.createElement("a");
   connecterLink.id = "connecterLink";
@@ -84,41 +71,40 @@ function renderRegisterForm() {
     Navigate("/login")
   })
 
-
-  formCheckWrapper.appendChild(rememberme);
-  formCheckWrapper.appendChild(checkLabel);
   form.appendChild(title);
   form.appendChild(nom);
   form.appendChild(prenom);
   form.appendChild(email);
   form.appendChild(password);
   form.appendChild(gsm)
+  form.innerHTML +=
+      `<form>
+    <label>Select File</label>
+    <input required name="file" type= "file" /> 
+  </form>
+  `
   form.appendChild(formCheckWrapper);
   form.appendChild(submit);
   form.appendChild(msgErreur)
   form.appendChild(connecterLink)
   newDiv.appendChild(form);
   main.appendChild(newDiv);
-  newDiv.style.display="flex";
-  newDiv.style.justifyContent="center";
-  newDiv.style.minHeight="87vh";
-  newDiv.style.alignItems="center";
-  newDiv.style.margin="0";
-  newDiv.style.overflow="hidden";
-  newDiv.style.lineHeight="500%";
-  form.style.position="relative";
-  form.style.minHeight="280px";
-  form.style.width="600px";
-  form.style.maxWidth="100%";
-  form.style.backgroundColor="#f2c491";
-  form.style.borderRadius="10px";
-  form.style.boxShadow="0 8px 24px rgba(0, 32, 63, .45), 0 8px 8px rgba(0, 32, 63, .45)";
-  form.style.lineHeight="2";
+  newDiv.style.display = "flex";
+  newDiv.style.justifyContent = "center";
+  newDiv.style.minHeight = "87vh";
+  newDiv.style.alignItems = "center";
+  newDiv.style.margin = "0";
+  newDiv.style.overflow = "hidden";
+  newDiv.style.lineHeight = "500%";
+  form.style.position = "relative";
+  form.style.minHeight = "280px";
+  form.style.width = "600px";
+  form.style.maxWidth = "100%";
+  form.style.backgroundColor = "#f2c491";
+  form.style.borderRadius = "10px";
+  form.style.boxShadow = "0 8px 24px rgba(0, 32, 63, .45), 0 8px 8px rgba(0, 32, 63, .45)";
+  form.style.lineHeight = "2";
   form.addEventListener('submit', onRegister);
-}
-
-function onCheckboxClicked(e) {
-  setRememberMe(e.target.checked);
 }
 
 async function onRegister(e) {
@@ -130,6 +116,18 @@ async function onRegister(e) {
   const password = document.querySelector('#password').value;
   const gsm = document.querySelector('#gsm').value;
 
+  const fileInput = document.querySelector('input[name=file]');
+
+  const formData = new FormData();
+  formData.append('file', fileInput.files[0]);
+  const options1 = {
+    method: 'POST',
+    body: formData
+  };
+  fetch(`${process.env.API_BASE_URL}/auths/upload`, options1);
+
+  const image = fileInput.files[0].name;
+  console.log(image)
   const options = {
     method: 'POST',
     body: JSON.stringify({
@@ -138,23 +136,25 @@ async function onRegister(e) {
       nom,
       prenom,
       gsm,
+      image
     }),
     headers: {
       'Content-Type': 'application/json',
     },
   };
 
-  const response = await fetch(`${process.env.API_BASE_URL}/auths/register`, options);
+  const response = await fetch(`${process.env.API_BASE_URL}/auths/register`,
+      options);
 
   if (!response.ok) {
     Swal.fire((await response.text()).valueOf())
   }
 
   await response.json();
-
   Navbar();
 
   Navigate('/login');
+
 }
 
 export default RegisterPage;

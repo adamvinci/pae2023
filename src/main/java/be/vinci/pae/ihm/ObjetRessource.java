@@ -8,6 +8,7 @@ import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.ihm.filters.ResponsableAuthorization;
 import be.vinci.pae.ihm.filters.ResponsableOrAidant;
+import be.vinci.pae.utils.Config;
 import be.vinci.pae.utils.MyLogger;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
@@ -27,10 +28,15 @@ import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.StreamingOutput;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.server.ContainerRequest;
 
 /**
@@ -108,44 +114,6 @@ public class ObjetRessource {
     return objetUCC.getAllObjectType();
   }
 
-  /**
-   * Return the picture linked to an object id.
-   *
-   * @param id to search
-   * @return the path of the picture or an exception
-   */
-  @GET
-  @Path("getPicture/{id}")
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces({"image/png", "image/jpg", "image/jpeg"})
-  public Response getPicture(@DefaultValue("-1") @PathParam("id") int id) {
-    if (id == -1) {
-      throw new WebApplicationException("Id of photo required", Status.BAD_REQUEST);
-    }
-    String pathPicture = objetUCC.getPicture(id);
-    if (pathPicture == null) {
-      throw new WebApplicationException("No image for this object in the database",
-          Status.NOT_FOUND);
-      // delete from img if exists
-    }
-
-    if (!Files.exists(java.nio.file.Path.of(pathPicture))) {
-      throw new WebApplicationException("Not Found in the server", Status.NOT_FOUND);
-      // delete path in DB
-    }
-    File file = new File(pathPicture);
-    StreamingOutput output = outputStream -> {
-      try (FileInputStream input = new FileInputStream(file)) {
-        int read;
-        byte[] bytes = new byte[1024];
-        while ((read = input.read(bytes)) != -1) {
-          outputStream.write(bytes, 0, read);
-        }
-      }
-    };
-    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve picture of object " + id);
-    return Response.ok(output).build();
-  }
 
   /**
    * Change the state of an object from 'proposer' to 'accepte'.
@@ -320,6 +288,68 @@ public class ObjetRessource {
     Logger.getLogger(MyLogger.class.getName())
         .log(Level.INFO, "Refusal of objet : " + id);
     return changedObject;
+  }
+
+  /**
+   * Return the picture linked to an object id.
+   *
+   * @param id to search
+   * @return the path of the picture or an exception
+   */
+  @GET
+  @Path("getPicture/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces({"image/png", "image/jpg", "image/jpeg"})
+  public Response getPicture(@DefaultValue("-1") @PathParam("id") int id) {
+    if (id == -1) {
+      throw new WebApplicationException("Id of photo required", Status.BAD_REQUEST);
+    }
+    String pathPicture = objetUCC.getPicture(id);
+    if (pathPicture == null) {
+      throw new WebApplicationException("No image for this object in the database",
+          Status.NOT_FOUND);
+      // delete from img if exists
+    }
+
+    if (!Files.exists(java.nio.file.Path.of(pathPicture))) {
+      throw new WebApplicationException("Not Found in the server", Status.NOT_FOUND);
+      // delete path in DB
+    }
+    File file = new File(pathPicture);
+    StreamingOutput output = outputStream -> {
+      try (FileInputStream input = new FileInputStream(file)) {
+        int read;
+        byte[] bytes = new byte[1024];
+        while ((read = input.read(bytes)) != -1) {
+          outputStream.write(bytes, 0, read);
+        }
+      }
+    };
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve picture of object " + id);
+    return Response.ok(output).build();
+  }
+
+  /**
+   * Upload the photo of an object.
+   *
+   * @param file            the image
+   * @param fileDisposition the file data as a FormDataContentDisposition object, containing the
+   *                        file name and metadata
+   * @return a Response object indicating success or failure of the file upload
+   */
+  @POST
+  @Path("upload")
+  @Consumes(MediaType.MULTIPART_FORM_DATA)
+  public Response uploadFile(@FormDataParam("file") InputStream file,
+      @FormDataParam("file") FormDataContentDisposition fileDisposition) {
+    String fileName = fileDisposition.getFileName();
+    try {
+      Files.copy(file, Paths.get(Config.getProperty("pathToObjectImage") + fileName));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Adding picture of object ");
+    return Response.ok().build();
   }
 
 

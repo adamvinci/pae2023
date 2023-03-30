@@ -116,4 +116,17 @@ public class UserUccImpl implements UserUcc {
     }
 
   }
+
+  @Override
+  public String getPicture(int id) {
+    try {
+      dal.startTransaction();
+      return dataService.getPicture(id);
+    } catch (FatalException e) {
+      dal.rollBackTransaction();
+      throw e;
+    } finally {
+      dal.commitTransaction();
+    }
+  }
 }

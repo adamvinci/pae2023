@@ -52,4 +52,12 @@ public interface UserUcc {
    * @return the userDTO updated
    */
   UserDTO makeAdmin(UserDTO userToChange);
+
+  /**
+   * Ask the db the image of the user.
+   *
+   * @param id linked to an object
+   * @return the path of the picture
+   */
+  String getPicture(int id);
 }
