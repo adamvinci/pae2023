@@ -41,6 +41,8 @@ function header(){
 async function renderNavbar() {
   const authenticatedUser = await getAuthenticatedUser();
 
+
+
   const navadd = `
   <div style=" justify-content: center; display: flex" >
     <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #A47148; border: black solid 1px;">
@@ -88,6 +90,18 @@ async function renderNavbar() {
 
 
   if(getToken()){
+
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization : getToken()
+      },
+    };
+
+    const response = await fetch(`${process.env.API_BASE_URL}/auths/getPicture/${authenticatedUser.id}`, options);
+
+    const img1 = await response.blob();
     const member=document.getElementById('member');
     if(authenticatedUser?.role==='aidant' || authenticatedUser?.role==='responsable'){
     member.innerHTML+=`
@@ -129,6 +143,10 @@ async function renderNavbar() {
     <li class="nav-item">
               <a class="nav-link" >${authenticatedUser.prenom}</a>
     </li>
+    
+       <li class="nav-item">           
+        <a class="nav-link" ><img src=${URL.createObjectURL(img1)}  height="50px" width="100px" alt="s"></a>
+    </li> 
     `;
   }
   else{

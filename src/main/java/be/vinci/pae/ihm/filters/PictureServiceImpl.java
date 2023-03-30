@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.nio.file.Files;
 
+/**
+ * Implementation of {@link PictureService}.
+ */
 public class PictureServiceImpl implements PictureService {
 
   /**
