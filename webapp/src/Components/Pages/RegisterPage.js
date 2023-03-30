@@ -5,7 +5,6 @@ import Navbar from '../Navbar/Navbar';
 import Navigate from '../Router/Navigate';
 
 
-
 const RegisterPage = () => {
   clearPage();
 
@@ -15,9 +14,7 @@ const RegisterPage = () => {
 function renderRegisterForm() {
   const main = document.querySelector('main');
   const newDiv = document.createElement("div");
-  newDiv.id = "divForm"
   const form = document.createElement('form');
-  form.id = "form"
   form.className = 'p-5';
   const title = document.createElement('h1');
   title.innerText="Creer votre compte";
@@ -133,28 +130,31 @@ async function onRegister(e) {
   const password = document.querySelector('#password').value;
   const gsm = document.querySelector('#gsm').value;
 
-      const options = {
-        method: 'POST',
-        body: {
-          email,
-          password,
-          nom,
-          prenom,
-          gsm,
-        },
+  const options = {
+    method: 'POST',
+    body: JSON.stringify({
+      email,
+      password,
+      nom,
+      prenom,
+      gsm,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
 
-      };
-      const response = await fetch(`${process.env.API_BASE_URL}/auths/register`, options);
+  const response = await fetch(`${process.env.API_BASE_URL}/auths/register`, options);
 
-      if (!response.ok) {
-        Swal.fire((await response.text()).valueOf())
-      }
+  if (!response.ok) {
+    Swal.fire((await response.text()).valueOf())
+  }
 
-      await response.json();
-      Navbar();
+  await response.json();
 
-      Navigate('/login');
+  Navbar();
 
+  Navigate('/login');
 }
 
 export default RegisterPage;

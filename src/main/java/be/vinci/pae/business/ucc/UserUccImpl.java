@@ -23,7 +23,6 @@ public class UserUccImpl implements UserUcc {
 
   @Override
   public UserDTO login(String email, String password) {
-    Exception e1 = null;
     try {
       dal.startTransaction();
       UserDTO userDTO = dataService.getOne(email);
@@ -39,24 +38,11 @@ public class UserUccImpl implements UserUcc {
 
       return userDTO;
     } catch (Exception e) {
-
-      try {
-        dal.rollBackTransaction();
-      } catch (Exception rollbackException) {
-        e.addSuppressed(rollbackException);
-      }
-      e1 = e;
+      dal.rollBackTransaction();
       throw e;
     } finally {
-      try {
-        dal.commitTransaction();
-      } catch (Exception commitException) {
-        if (e1 != null) {
-          e1.addSuppressed(commitException);
-        } else {
-          throw commitException;
-        }
-      }
+      dal.commitTransaction();
+
     }
 
   }

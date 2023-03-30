@@ -9,6 +9,7 @@ import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.ihm.filters.ResponsableAuthorization;
 import be.vinci.pae.ihm.filters.ResponsableOrAidant;
 import be.vinci.pae.utils.MyLogger;
+import be.vinci.pae.utils.exception.FatalException;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;

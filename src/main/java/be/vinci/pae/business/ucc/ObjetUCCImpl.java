@@ -8,6 +8,7 @@ import be.vinci.pae.dal.NotificationDAO;
 import be.vinci.pae.dal.ObjectDAO;
 import be.vinci.pae.dal.TypeObjetDAO;
 import be.vinci.pae.dal.services.DALTransaction;
+import be.vinci.pae.utils.exception.BusinessException;
 import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
 import java.util.List;
@@ -145,31 +146,18 @@ public class ObjetUCCImpl implements ObjetUCC {
 
   @Override
   public ObjetDTO mettreEnVente(ObjetDTO objetDTO) {
-    Exception e1 = null;
     try {
       dal.startTransaction();
       Objet objet = (Objet) objetDTO;
       objet.mettreEnVente();
       return dataService.updateObjectState(objetDTO);
-    } catch (Exception e) {
-      try {
-        dal.rollBackTransaction();
-      } catch (Exception rollbackException) {
-        e.addSuppressed(rollbackException);
-      }
-      e1 = e;
+    } catch (FatalException e) {
+      dal.rollBackTransaction();
       throw e;
     } finally {
-      try {
-        dal.commitTransaction();
-      } catch (Exception commitException) {
-        if (e1 != null) {
-          e1.addSuppressed(commitException);
-        } else {
-          throw commitException;
-        }
-      }
+      dal.commitTransaction();
     }
+
 
   }
 
