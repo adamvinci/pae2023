@@ -7,7 +7,7 @@ import be.vinci.pae.business.factory.DisponibiliteFactory;
 import be.vinci.pae.business.factory.ObjetFactory;
 import be.vinci.pae.business.factory.TypeObjetFactory;
 import be.vinci.pae.dal.services.DALService;
-import be.vinci.pae.utils.FatalException;
+import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

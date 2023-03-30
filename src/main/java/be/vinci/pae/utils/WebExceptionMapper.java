@@ -1,5 +1,6 @@
 package be.vinci.pae.utils;
 
+import be.vinci.pae.utils.exception.FatalException;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;

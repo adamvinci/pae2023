@@ -4,8 +4,8 @@ import be.vinci.pae.business.domaine.User;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.dal.services.DALTransaction;
-import be.vinci.pae.utils.ConflictException;
-import be.vinci.pae.utils.FatalException;
+import be.vinci.pae.utils.exception.ConflictException;
+import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
 import java.util.List;
 

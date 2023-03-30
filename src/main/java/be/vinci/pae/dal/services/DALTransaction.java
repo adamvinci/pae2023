@@ -1,6 +1,6 @@
 package be.vinci.pae.dal.services;
 
-import be.vinci.pae.utils.FatalException;
+import be.vinci.pae.utils.exception.FatalException;
 
 /**
  The DALTransaction interface provides methods for managing database transactions.

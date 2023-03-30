@@ -3,7 +3,7 @@ package be.vinci.pae.business.ucc;
 import be.vinci.pae.business.dto.DisponibiliteDTO;
 import be.vinci.pae.dal.DisponibiliteDAO;
 import be.vinci.pae.dal.services.DALTransaction;
-import be.vinci.pae.utils.FatalException;
+import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
 import java.util.List;
 

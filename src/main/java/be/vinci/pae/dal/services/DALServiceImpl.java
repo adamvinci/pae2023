@@ -1,7 +1,7 @@
 package be.vinci.pae.dal.services;
 
 import be.vinci.pae.utils.Config;
-import be.vinci.pae.utils.FatalException;
+import be.vinci.pae.utils.exception.FatalException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

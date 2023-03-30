@@ -1,4 +1,4 @@
-package be.vinci.pae.utils;
+package be.vinci.pae.utils.exception;
 
 import jakarta.ws.rs.WebApplicationException;
 
