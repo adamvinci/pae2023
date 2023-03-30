@@ -18,7 +18,8 @@ import be.vinci.pae.dal.ObjectDAO;
 import be.vinci.pae.dal.TypeObjetDAO;
 import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.ApplicationBinderMock;
-import be.vinci.pae.utils.FatalException;
+import be.vinci.pae.utils.exception.BusinessException;
+import be.vinci.pae.utils.exception.FatalException;
 import java.util.ArrayList;
 import java.util.List;
 import org.glassfish.hk2.api.ServiceLocator;
@@ -267,71 +268,56 @@ class ObjetUCCTest {
     assertThrows(FatalException.class, () -> objetUCC.vendreObject(objetDTO));
   }
 
-  @DisplayName("Test depotObject(ObjetDTO objetDTO, String localisation) with bad state")
+  @DisplayName("Test depotObject(ObjetDTO objetDTO) with bad state")
   @Test
   void testDepotObjectwithBadStateAndLocalisationMagasin() {
     objetDTO.setEtat("proposer");
-    assertNull(objetUCC.depotObject(objetDTO, "Magasin"), "The state must be 'accepted'");
+    objetDTO.setLocalisation("Atelier");
+    assertNull(objetUCC.depotObject(objetDTO), "The state must be 'accepted'");
   }
 
-  @DisplayName("Test depotObject(ObjetDTO objetDTO, String localisation) with bad state")
+  @DisplayName("Test depotObject(ObjetDTO objetDTO) with bad state")
   @Test
   void testDepotObjectwithBadStateAndLocalisationAtelier() {
     objetDTO.setEtat("proposer");
-    assertNull(objetUCC.depotObject(objetDTO, "Atelier"), "The state must be 'accepted'");
+    objetDTO.setLocalisation("Magasin");
+    assertNull(objetUCC.depotObject(objetDTO), "The state must be 'accepted'");
   }
 
-  @DisplayName("Test depotObject(ObjetDTO objetDTO, String localisation) with good "
+  @DisplayName("Test depotObject(ObjetDTO objetDTO) with good "
       + "state and localisation = magasin")
   @Test
   void testDepotObjectwithGoodStateAndLocalisationMagasin() {
     objetDTO.setEtat("accepte");
+    objetDTO.setLocalisation("Magasin");
     Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
-    assertAll(
-        () -> assertEquals(objetDTO, objetUCC.depotObject(objetDTO, "Magasin")),
-        () -> assertEquals(objetDTO.getLocalisation(), "Magasin")
-    );
+    assertEquals(objetDTO, objetUCC.depotObject(objetDTO));
   }
 
-  @DisplayName("Test depotObject(ObjetDTO objetDTO, String localisation) with good "
+  @DisplayName("Test depotObject(ObjetDTO objetDTO) with good "
       + "state and localisation = atelier")
   @Test
   void testDepotObjectwithGoodStateAndLocalisationAtelier() {
     objetDTO.setEtat("accepte");
-    Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
-    assertAll(
-        () -> assertEquals(objetDTO, objetUCC.depotObject(objetDTO, "Atelier")),
-        () -> assertEquals(objetDTO.getLocalisation(), "Atelier")
-    );
-  }
-
-  @DisplayName("Test depotObject(ObjetDTO objetDTO, String localisation) "
-      + "with an already existing location (Atelier)")
-  @Test
-  void testDepotObjectWithTransfertOfLocalisation() {
-    objetDTO.setEtat("accepte");
     objetDTO.setLocalisation("Atelier");
     Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
-
-    assertAll(
-        () -> assertEquals(objetDTO, objetUCC.depotObject(objetDTO, "Magasin")),
-        () -> assertEquals(objetDTO.getLocalisation(), "Magasin")
-    );
+    assertEquals(objetDTO, objetUCC.depotObject(objetDTO));
   }
 
-  @DisplayName("Test depotObject(ObjetDTO objetDTO, String localisation) with a FatalException")
+
+  @DisplayName("Test depotObject(ObjetDTO objetDTO) with a FatalException")
   @Test
   void testDepotObjectWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
-    assertThrows(FatalException.class, () -> objetUCC.depotObject(objetDTO, "Magasin"));
+    assertThrows(FatalException.class, () -> objetUCC.depotObject(objetDTO));
   }
 
   @DisplayName("Test mettreEnVente(ObjetDTO objetDTO) with a bad state")
   @Test
   void testMettreEnVenteWithABadState() {
     objetDTO.setEtat("proposer");
-    assertNull(objetUCC.mettreEnVente(objetDTO), "The state need to be 'accepte'"
-        + " to put an object at sell");
+    assertThrows(BusinessException.class, () -> objetUCC.mettreEnVente(objetDTO),
+        "to put an object at sell its statut must be 'accepte");
   }
 
   @DisplayName("Test mettreEnVente(ObjetDTO objetDTO) with a good state but bad localisation")
@@ -339,8 +325,8 @@ class ObjetUCCTest {
   void testMettreEnVenteWithAGoodStateBadLocalisation() {
     objetDTO.setEtat("accepte");
     objetDTO.setLocalisation("Atelier");
-    assertNull(objetUCC.mettreEnVente(objetDTO), "The state need to be 'accepte'"
-        + " to put an object at sell");
+    assertThrows(BusinessException.class, () -> objetUCC.mettreEnVente(objetDTO),
+        "to put an object at sell its need to be deposited in the sto");
   }
 
   @DisplayName("Test mettreEnVente(ObjetDTO objetDTO) with good params")

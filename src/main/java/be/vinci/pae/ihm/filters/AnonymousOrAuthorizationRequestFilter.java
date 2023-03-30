@@ -21,7 +21,7 @@ import jakarta.ws.rs.ext.Provider;
 public class AnonymousOrAuthorizationRequestFilter implements ContainerRequestFilter {
 
   @Inject
-  private TokenFilter tokenFilter;
+  private TokenService tokenService;
 
   /**
    * If the token is valid and the user associated with it is authorized to access the requested
@@ -35,7 +35,7 @@ public class AnonymousOrAuthorizationRequestFilter implements ContainerRequestFi
     if (token == null) {
       return;
     }
-    UserDTO authenticatedUser = tokenFilter.tokenFilter(requestContext);
+    UserDTO authenticatedUser = tokenService.tokenFilter(requestContext);
     if (authenticatedUser == null) {
       throw new WebApplicationException("You are forbidden to access this resource",
           Status.FORBIDDEN);

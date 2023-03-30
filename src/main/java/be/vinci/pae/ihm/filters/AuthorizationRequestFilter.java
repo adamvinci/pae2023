@@ -18,7 +18,7 @@ import jakarta.ws.rs.ext.Provider;
 public class AuthorizationRequestFilter implements ContainerRequestFilter {
 
   @Inject
-  private TokenFilter tokenFilter;
+  private TokenService tokenService;
 
   /**
    * Verifiy that the content of the token matches the signature.
@@ -28,7 +28,7 @@ public class AuthorizationRequestFilter implements ContainerRequestFilter {
   @Override
   public void filter(ContainerRequestContext requestContext) {
 
-    UserDTO authenticatedUser = tokenFilter.tokenFilter(requestContext);
+    UserDTO authenticatedUser = tokenService.tokenFilter(requestContext);
     if (authenticatedUser == null) {
       requestContext.abortWith(Response.status(Status.FORBIDDEN)
           .entity("You are forbidden to access this resource").build());

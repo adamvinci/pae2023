@@ -13,7 +13,7 @@ import be.vinci.pae.business.ucc.DisponibiliteUCC;
 import be.vinci.pae.dal.DisponibiliteDAO;
 import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.ApplicationBinderMock;
-import be.vinci.pae.utils.FatalException;
+import be.vinci.pae.utils.exception.FatalException;
 import java.util.ArrayList;
 import java.util.List;
 import org.glassfish.hk2.api.ServiceLocator;

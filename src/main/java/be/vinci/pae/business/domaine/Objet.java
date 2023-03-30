@@ -24,6 +24,13 @@ public interface Objet extends ObjetDTO {
   Boolean refuserObjet();
 
   /**
+   * Redirect the object to the good method depending on its localisation.
+   *
+   * @return refuserObjet or accepterObjet
+   */
+  Boolean deposer();
+
+  /**
    * Indicates whether this object has been deposited.
    *
    * @return True if the object has been deposited; false otherwise.
@@ -37,12 +44,11 @@ public interface Objet extends ObjetDTO {
    */
   Boolean deposerEnAtelier();
 
+
   /**
    * Indicates whether this object is available for sale.
-   *
-   * @return True if the object is available for sale; false otherwise.
    */
-  Boolean mettreEnVente();
+  void mettreEnVente();
 
   /**
    * Indicates whether this object has been sold.

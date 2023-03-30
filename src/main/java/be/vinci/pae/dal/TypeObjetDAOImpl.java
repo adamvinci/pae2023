@@ -3,7 +3,7 @@ package be.vinci.pae.dal;
 import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.factory.TypeObjetFactory;
 import be.vinci.pae.dal.services.DALService;
-import be.vinci.pae.utils.FatalException;
+import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

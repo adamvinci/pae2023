@@ -4,7 +4,8 @@ import be.vinci.pae.business.domaine.User;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.dal.services.DALTransaction;
-import be.vinci.pae.utils.FatalException;
+import be.vinci.pae.utils.exception.ConflictException;
+import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
 import java.util.List;
 
@@ -36,12 +37,14 @@ public class UserUccImpl implements UserUcc {
       }
 
       return userDTO;
-    } catch (FatalException exception) {
+    } catch (Exception e) {
       dal.rollBackTransaction();
-      throw new FatalException(exception);
+      throw e;
     } finally {
       dal.commitTransaction();
+
     }
+
   }
 
   @Override
@@ -49,7 +52,7 @@ public class UserUccImpl implements UserUcc {
     try {
       dal.startTransaction();
       if (dataService.getOne(userDTO.getEmail()) != null) {
-        return null;
+        throw new ConflictException("This email already exist");
       }
       User user = (User) userDTO;
 
@@ -59,9 +62,13 @@ public class UserUccImpl implements UserUcc {
       return userDATA;
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+
+      throw e;
     } finally {
+
       dal.commitTransaction();
+
+
     }
   }
 
@@ -72,7 +79,7 @@ public class UserUccImpl implements UserUcc {
       return dataService.getOne(id);
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -85,7 +92,7 @@ public class UserUccImpl implements UserUcc {
       return dataService.getAll();
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -103,7 +110,7 @@ public class UserUccImpl implements UserUcc {
       return null;
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }

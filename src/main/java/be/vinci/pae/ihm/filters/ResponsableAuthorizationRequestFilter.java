@@ -21,7 +21,7 @@ import jakarta.ws.rs.ext.Provider;
 public class ResponsableAuthorizationRequestFilter implements ContainerRequestFilter {
 
   @Inject
-  private TokenFilter tokenFilter;
+  private TokenService tokenService;
 
   /**
    * If the token is valid and the user associated with it is authorized to access the requested
@@ -32,7 +32,7 @@ public class ResponsableAuthorizationRequestFilter implements ContainerRequestFi
   @Override
   public void filter(ContainerRequestContext requestContext) {
 
-    UserDTO authenticatedUser = tokenFilter.tokenFilter(requestContext);
+    UserDTO authenticatedUser = tokenService.tokenFilter(requestContext);
 
     if (!authenticatedUser.getRole().equals("responsable")) {
       throw new WebApplicationException("You do not have the required permissions to do this.",

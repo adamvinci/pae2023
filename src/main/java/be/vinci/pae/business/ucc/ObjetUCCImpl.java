@@ -8,7 +8,7 @@ import be.vinci.pae.dal.NotificationDAO;
 import be.vinci.pae.dal.ObjectDAO;
 import be.vinci.pae.dal.TypeObjetDAO;
 import be.vinci.pae.dal.services.DALTransaction;
-import be.vinci.pae.utils.FatalException;
+import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       return dataService.getAllObjet();
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -47,7 +47,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       return typeObjetDAO.getAll();
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -60,7 +60,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       return dataService.getPicture(id);
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -88,7 +88,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       return objetDTO1;
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -117,7 +117,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       return objetDTO1;
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -125,23 +125,19 @@ public class ObjetUCCImpl implements ObjetUCC {
   }
 
   @Override
-  public ObjetDTO depotObject(ObjetDTO objetDTO, String localisation) {
+  public ObjetDTO depotObject(ObjetDTO objetDTO) {
     try {
       dal.startTransaction();
       Objet objet = (Objet) objetDTO;
-      if (localisation.equals("Magasin")) {
-        if (!objet.deposerEnMagasin()) {
-          return null;
-        }
-      } else {
-        if (!objet.deposerEnAtelier()) {
-          return null;
-        }
+
+      if (!objet.deposer()) {
+        return null;
       }
+
       return dataService.updateObjectState(objetDTO);
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -152,18 +148,15 @@ public class ObjetUCCImpl implements ObjetUCC {
     try {
       dal.startTransaction();
       Objet objet = (Objet) objetDTO;
-
-      if (!objet.mettreEnVente()) {
-        return null;
-      }
-
+      objet.mettreEnVente();
       return dataService.updateObjectState(objetDTO);
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
+
 
   }
 
@@ -179,7 +172,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       return dataService.updateObjectState(objetDTO);
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }
@@ -194,7 +187,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       return dataService.getOne(id);
     } catch (FatalException e) {
       dal.rollBackTransaction();
-      throw new FatalException(e);
+      throw e;
     } finally {
       dal.commitTransaction();
     }

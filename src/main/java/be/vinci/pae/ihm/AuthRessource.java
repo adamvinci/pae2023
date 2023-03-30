@@ -85,7 +85,6 @@ public class AuthRessource {
   }
 
 
-
   /**
    * This method registers a new user using the provided userDTO object.
    *
@@ -94,7 +93,7 @@ public class AuthRessource {
    */
   @POST
   @Path("register")
-  @Consumes(MediaType.APPLICATION_JSON)
+  @Consumes({MediaType.APPLICATION_JSON})
   @Produces(MediaType.APPLICATION_JSON)
   public UserDTO register(UserDTO userDTO) {
     if (userDTO.getEmail().equals("") || userDTO.getEmail().isBlank()
@@ -104,19 +103,14 @@ public class AuthRessource {
         || userDTO.getGsm().equals("") || userDTO.getGsm().isBlank()) {
       throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
     }
+
     userDTO = userUcc.register(userDTO);
 
-    if (userDTO == null) {
-      throw new WebApplicationException("This email already exist", Status.CONFLICT);
-    }
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Inscription de "
         + userDTO.getEmail());
-
-
-    return  Json.filterPublicJsonView(userDTO, UserDTO.class);
-
-
+    return Json.filterPublicJsonView(userDTO, UserDTO.class);
   }
+
 
   /**
    * Path to retrieve the user from a token.

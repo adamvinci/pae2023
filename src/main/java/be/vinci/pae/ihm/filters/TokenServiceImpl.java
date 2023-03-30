@@ -13,9 +13,9 @@ import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.core.Response.Status;
 
 /**
- * Implementation of {@link TokenFilter}.
+ * Implementation of {@link TokenService}.
  */
-public class TokenFilterImpl implements TokenFilter {
+public class TokenServiceImpl implements TokenService {
   private final Algorithm jwtAlgorithm = Algorithm.HMAC256(Config.getProperty("JWTSecret"));
   private final JWTVerifier jwtVerifier = JWT.require(this.jwtAlgorithm).withIssuer("auth0")
       .build();

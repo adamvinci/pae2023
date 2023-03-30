@@ -205,13 +205,17 @@ public class ObjetRessource {
     if (retrievedObject == null) {
       throw new WebApplicationException("This object does not exist", Status.NOT_FOUND);
     }
-
-    ObjetDTO changedObject = objetUCC.depotObject(retrievedObject, localisation);
+    if (retrievedObject.getLocalisation() != null && retrievedObject.getLocalisation()
+        .equals("Magasin") || retrievedObject.getLocalisation() != null
+        && retrievedObject.getLocalisation().equals("Atelier") && localisation.equals("Atelier")) {
+      throw new WebApplicationException("This object already has a location", Status.BAD_REQUEST);
+    }
+    retrievedObject.setLocalisation(localisation);
+    ObjetDTO changedObject = objetUCC.depotObject(retrievedObject);
     if (changedObject == null) {
       throw new WebApplicationException(
-          "Impossible changement, to deposite an object it state must be 'accepte'"
-              + "and must not have already a location except if the deposit is for an atelier",
-          412);
+          "Impossible changement, to deposite an object it state must be 'accepte'",
+          Status.PRECONDITION_FAILED);
     }
     Logger.getLogger(MyLogger.class.getName())
         .log(Level.INFO, "Deposit of object : " + id + " at " + localisation);
@@ -248,11 +252,7 @@ public class ObjetRessource {
     }
     retrievedObject.setPrix(Double.parseDouble(prix));
     ObjetDTO changedObject = objetUCC.mettreEnVente(retrievedObject);
-    if (changedObject == null) {
-      throw new WebApplicationException("Impossible changement, to put an object at"
-          + " sell its statut must be 'accepte' and be deposited in the store",
-          412);
-    }
+
     Logger.getLogger(MyLogger.class.getName())
         .log(Level.INFO, "Put to sale of the object : " + id + " at price " + prix);
     return changedObject;
@@ -321,4 +321,6 @@ public class ObjetRessource {
         .log(Level.INFO, "Refusal of objet : " + id);
     return changedObject;
   }
+
+
 }

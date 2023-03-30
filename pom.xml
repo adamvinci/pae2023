@@ -126,7 +126,8 @@
 		</dependency>
 
 
-	</dependencies>
+
+  </dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

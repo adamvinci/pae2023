@@ -105,7 +105,7 @@ const renderUsersTable = async () => {
       </td>
       `
     } 
-      else {usersTableHTML +=  `<td> Action impossible !</td>`}
+      else {usersTableHTML +=  `<td> Action Impossible </td>`}
       usersTableHTML += `</tr>`
 
       usersTable.innerHTML += usersTableHTML;

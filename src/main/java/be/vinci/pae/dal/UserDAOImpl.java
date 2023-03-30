@@ -3,7 +3,7 @@ package be.vinci.pae.dal;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.dal.services.DALService;
-import be.vinci.pae.utils.FatalException;
+import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -105,6 +105,7 @@ public class UserDAOImpl implements UserDAO {
       statement.setString(8, user.getGsm());
       try (ResultSet set = statement.executeQuery()) {
         if (!set.isBeforeFirst()) {
+
           return null;
         } else {
           while (set.next()) {

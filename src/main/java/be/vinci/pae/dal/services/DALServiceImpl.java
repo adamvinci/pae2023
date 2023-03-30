@@ -1,7 +1,7 @@
 package be.vinci.pae.dal.services;
 
 import be.vinci.pae.utils.Config;
-import be.vinci.pae.utils.FatalException;
+import be.vinci.pae.utils.exception.FatalException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -20,11 +20,7 @@ public class DALServiceImpl implements DALService, DALTransaction {
    * Connect to the database once.
    */
   public DALServiceImpl() {
-    try {
-      Class.forName("org.postgresql.Driver");
-    } catch (ClassNotFoundException e) {
-      throw new RuntimeException(e);
-    }
+
     this.conn = new ThreadLocal<>();
     this.db = initDB();
   }
@@ -48,12 +44,17 @@ public class DALServiceImpl implements DALService, DALTransaction {
   public PreparedStatement preparedStatement(String query) {
     PreparedStatement statement;
     try {
+      if (conn.get() == null) {
+        throw new FatalException("Pas de connexion");
+      }
       statement = conn.get().prepareStatement(query);
     } catch (SQLException e) {
       throw new FatalException(e);
     }
     return statement;
   }
+
+
 
 
   /**
@@ -72,6 +73,7 @@ public class DALServiceImpl implements DALService, DALTransaction {
     } catch (SQLException exception) {
       throw new FatalException(exception);
     }
+
   }
 
   /**
@@ -114,9 +116,11 @@ public class DALServiceImpl implements DALService, DALTransaction {
   /**
    * Closes the current database connection.
    */
-  @Override
   public void fermerConnexion() {
     try {
+      if (conn.get() == null) {
+        throw new FatalException("Connexion null");
+      }
       Connection connex = conn.get();
       connex.close();
     } catch (SQLException e) {
@@ -125,5 +129,6 @@ public class DALServiceImpl implements DALService, DALTransaction {
       conn.remove();
     }
   }
+
 
 }

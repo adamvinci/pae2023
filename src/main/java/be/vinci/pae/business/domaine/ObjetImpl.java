@@ -3,6 +3,7 @@ package be.vinci.pae.business.domaine;
 import be.vinci.pae.business.dto.DisponibiliteDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
+import be.vinci.pae.utils.exception.BusinessException;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -197,7 +198,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
     if (!Objects.equals(getEtat(), "proposer")) {
       return false;
     }
-    setEtat(POSSIBLE_ETAT[0]);
+    setEtat("accepte");
     setDate_acceptation(LocalDate.now());
     return true;
   }
@@ -213,9 +214,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   @Override
   public Boolean deposerEnMagasin() {
-    if (Objects.equals(getEtat(), "accepte") && Objects.equals(getLocalisation(), null)
-        || Objects.equals(getLocalisation(), "Atelier") && Objects.equals(getEtat(), "accepte")) {
-      setLocalisation("Magasin");
+    if (Objects.equals(getEtat(), "accepte")) {
       setDate_depot(LocalDate.now());
       return true;
     }
@@ -224,7 +223,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   @Override
   public Boolean deposerEnAtelier() {
-    if (Objects.equals(getEtat(), "accepte") && Objects.equals(getLocalisation(), null)) {
+    if (Objects.equals(getEtat(), "accepte")) {
       setLocalisation("Atelier");
       return true;
     }
@@ -232,12 +231,25 @@ public class ObjetImpl implements Objet, ObjetDTO {
   }
 
   @Override
-  public Boolean mettreEnVente() {
-    if (Objects.equals(getEtat(), "accepte") && Objects.equals(getLocalisation(), "Magasin")) {
-      setEtat("en vente");
-      return true;
+  public Boolean deposer() {
+    if (getLocalisation().equals("Magasin")) {
+      return deposerEnMagasin();
     }
-    return false;
+    return deposerEnAtelier();
+  }
+
+  @Override
+  public void mettreEnVente() {
+    if (!Objects.equals(getEtat(), "accepte")) {
+      throw new BusinessException("Impossible changement, to put an object "
+          + "at sell its statut must be 'accepte'");
+    }
+    if (!Objects.equals(getLocalisation(), "Magasin")) {
+      throw new BusinessException("Impossible changement, to put an object at sell "
+          + "its need to be deposited in the store'");
+    }
+
+    setEtat("en vente");
   }
 
   @Override
