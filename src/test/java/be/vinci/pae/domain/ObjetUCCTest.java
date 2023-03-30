@@ -18,7 +18,7 @@ import be.vinci.pae.dal.ObjectDAO;
 import be.vinci.pae.dal.TypeObjetDAO;
 import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.ApplicationBinderMock;
-import be.vinci.pae.utils.BusinessException;
+import be.vinci.pae.utils.exception.BusinessException;
 import be.vinci.pae.utils.exception.FatalException;
 import java.util.ArrayList;
 import java.util.List;
