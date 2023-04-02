@@ -130,6 +130,49 @@ async function renderNavbar() {
               <a class="nav-link" >${authenticatedUser.prenom}</a>
     </li>
     `;
+    const bouttonCo = document.getElementById('bouttonCo');
+    bouttonCo.innerHTML =`
+  <div class="notification-container">
+    <button class="notification-button" id="notification-btn">
+      <span class="notification-icon"><i class="fa fa-bell"></i></span>
+      <span class="notification-text">Notification</span>
+      <span class="notification-count" id="notification-count">3</span>
+    </button>
+    <div class="notification-dropdown" id="notification-dropdown">
+      <ul>
+        <li class="notification-item unread">Nouvelle notification 1</li>
+        <li class="notification-item read">Notification lue 1</li>
+        <li class="notification-item unread">Nouvelle notification 2</li>
+        <li class="notification-item unread">Nouvelle notification 3</li>
+        <li class="notification-item read">Notification lue 2</li>
+      </ul>
+    </div>
+  </div>    
+`;
+
+    const notificationBtn = document.getElementById("notification-btn");
+    const notificationDropdown = document.getElementById("notification-dropdown");
+
+    notificationBtn.addEventListener("click", () => {
+      notificationDropdown.classList.toggle("show");
+
+      if (notificationDropdown.classList.contains("show")) {
+        document.getElementById("notification-count").innerHTML = "0";
+        const unreadNotifications = document.querySelectorAll(".unread");
+
+        unreadNotifications.forEach((n) => {
+          n.classList.remove("unread");
+        });
+
+        const notificationItems = document.querySelectorAll(".notification-item");
+
+        notificationItems.forEach((item) => {
+          item.addEventListener("click", () => {
+            item.classList.remove("unread");
+          });
+        });
+      }
+    });
   }
   else{
     const bouttonCo = document.getElementById('bouttonCo');

@@ -140,3 +140,70 @@ button{
     text-align: center;
     padding: 5px;
 }
+/*-------------------------------notification------------------------------------------------------------*/
+.notification-container {
+    float:right;
+    display: inline-block;
+}
+
+.notification-button {
+    background-color: #fff;
+    border: none;
+    color: #555;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.notification-icon {
+    margin-right: 10px;
+}
+
+.notification-text {
+    margin-right: 10px;
+}
+
+.notification-count {
+    background-color: #f00;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-size: 12px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.notification-dropdown {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 50px;
+    right: 0;
+    min-width: 200px;
+    display: none;
+}
+
+.notification-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-item.unread {
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+.notification-item.read {
+    color: #999;
+}
+
+.notification-dropdown.show {
+    display: block;
+}
