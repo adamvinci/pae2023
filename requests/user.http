@@ -146,6 +146,10 @@ Content-Type: application/json
 POST {{baseUrl}}/objet/vendreObject/1
 Authorization: {{aidantToken}}
 
+###
+GET {{baseUrl}}/auths/getPicture/14
+Authorization: {{adrienToken}}
+
 
 
 

@@ -40,7 +40,7 @@ public interface UserUcc {
    * Registers a new user.
    *
    * @param userDTO the UserDTO object containing the user's details to be registered
-   * @return the UserDTO object of the newly registered user, or null if the email already exists
+   * @return the UserDTO object of the newly registered user
    */
   UserDTO register(UserDTO userDTO);
 
@@ -52,4 +52,12 @@ public interface UserUcc {
    * @return the userDTO updated
    */
   UserDTO makeAdmin(UserDTO userToChange);
+
+  /**
+   * Ask the db the image of the user.
+   *
+   * @param id linked to an object
+   * @return the path of the picture
+   */
+  String getPicture(int id);
 }

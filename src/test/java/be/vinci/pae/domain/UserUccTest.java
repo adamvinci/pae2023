@@ -220,5 +220,27 @@ class UserUccTest {
     assertThrows(FatalException.class, () -> userUcc.getAll());
   }
 
+  @DisplayName("Test getPicture() return null for an non existent id")
+  @Test
+  void testGetPictureReturnNull() {
+    Mockito.when(userDAO.getPicture(1)).thenReturn(null);
+    assertNull(userUcc.getPicture(1), "This user  does not exist");
+  }
+
+  @DisplayName("Test getPicture() return  a string for an  existent id")
+  @Test
+  void testGetPictureReturnPathToPicture() {
+    Mockito.when(userDAO.getPicture(1)).thenReturn("Path To Picture");
+    assertEquals("Path To Picture", userUcc.getPicture(1));
+
+  }
+
+  @DisplayName("Test getPicture()  with a FatalException")
+  @Test
+  void testGetPictureWithFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> userUcc.getPicture(1));
+
+  }
 
 }

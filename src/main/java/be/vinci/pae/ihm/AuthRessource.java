@@ -3,6 +3,7 @@ package be.vinci.pae.ihm;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.ihm.filters.Authorize;
+import be.vinci.pae.ihm.filters.PictureService;
 import be.vinci.pae.utils.Config;
 import be.vinci.pae.utils.Json;
 import be.vinci.pae.utils.MyLogger;
@@ -14,17 +15,26 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.glassfish.jersey.server.ContainerRequest;
 
 /**
@@ -39,6 +49,8 @@ public class AuthRessource {
 
   @Inject
   private UserUcc userUcc;
+  @Inject
+  private PictureService pictureService;
 
 
   /**
@@ -103,7 +115,7 @@ public class AuthRessource {
         || userDTO.getGsm().equals("") || userDTO.getGsm().isBlank()) {
       throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
     }
-
+    userDTO.setImage(Config.getProperty("pathToUserImage") + userDTO.getImage());
     userDTO = userUcc.register(userDTO);
 
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Inscription de "
@@ -129,5 +141,65 @@ public class AuthRessource {
     return Json.filterPublicJsonView(userDTO, UserDTO.class);
 
   }
+
+  /**
+   * Upload the avatar image of a user.
+   *
+   * @param file            the image
+   * @param fileDisposition the file data as a FormDataContentDisposition object, containing the
+   *                        file name and metadata
+   * @return a Response object indicating success or failure of the file upload
+   */
+  @POST
+  @Path("upload")
+  @Consumes(MediaType.MULTIPART_FORM_DATA)
+  public Response uploadFile(@FormDataParam("file") InputStream file,
+      @FormDataParam("file") FormDataContentDisposition fileDisposition) {
+    String fileName = fileDisposition.getFileName();
+    String pathToSave = Config.getProperty("pathToUserImage") + fileName;
+    try {
+      Files.copy(file, Paths.get(pathToSave));
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Adding avatar");
+    return Response.ok().build();
+  }
+
+  /**
+   * Retrieve the picture of a user.
+   *
+   * @param id of the user
+   * @param request contains the user asking the picture
+   * @return the image
+   */
+  @Authorize
+  @GET
+  @Path("getPicture/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces({"image/png", "image/jpg", "image/jpeg"})
+  public Response getPictureUser(@DefaultValue("-1") @PathParam("id") int id,
+      @Context ContainerRequest request) {
+    UserDTO userDTO = (UserDTO) request.getProperty("user");
+    if (id == -1) {
+      throw new WebApplicationException("Id of photo required", Status.BAD_REQUEST);
+    }
+    if (userDTO.getId() != id && userDTO.getRole().equals("membre")) {
+      throw new WebApplicationException("You cant acces avatar from other user",
+          Status.UNAUTHORIZED);
+    }
+    String pathPicture = userUcc.getPicture(id);
+    System.out.println(pathPicture);
+    if (pathPicture == null) {
+      throw new WebApplicationException("No image for this user in the database",
+          Status.NOT_FOUND);
+      // delete from img if exists
+    }
+
+
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve picture of user " + id);
+    return pictureService.transformImage(pathPicture);
+  }
+
 
 }

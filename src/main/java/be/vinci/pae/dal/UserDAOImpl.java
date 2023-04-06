@@ -95,8 +95,8 @@ public class UserDAOImpl implements UserDAO {
       statement.setString(2, user.getPassword());
       statement.setString(3, user.getNom());
       statement.setString(4, user.getPrenom());
-      if (userDTO.getImage() != null) {
-        statement.setString(5, userDTO.getImage());
+      if (user.getImage() != null) {
+        statement.setString(5, user.getImage());
       } else {
         statement.setString(5, "");
       }
@@ -182,6 +182,28 @@ public class UserDAOImpl implements UserDAO {
     } catch (SQLException e) {
       throw new FatalException(e);
     }
+  }
+
+  @Override
+  public String getPicture(int id) {
+    String path = null;
+    String query = "SELECT image FROM projet.utilisateurs_inscrits WHERE id_utilisateur = (?)";
+    try (PreparedStatement statement = dalService.preparedStatement(query)) {
+      statement.setInt(1, id);
+      try (ResultSet set = statement.executeQuery()) {
+        // check if resultset is empty (none objet)
+        if (!set.isBeforeFirst()) {
+          return null;
+        } else {
+          while (set.next()) {
+            path = set.getString(1);
+          }
+        }
+      }
+    } catch (SQLException e) {
+      throw new FatalException(e);
+    }
+    return path;
   }
 
   /**

@@ -51,6 +51,14 @@ public interface UserDAO {
    * @return true if the update has succeed.
    */
   boolean update(UserDTO userToChange);
+
+  /**
+   * Retrieve the path of the image of the user in the DB.
+   *
+   * @param id linked to an object
+   * @return the path of the picture or null
+   */
+  String getPicture(int id);
 }
 
 
