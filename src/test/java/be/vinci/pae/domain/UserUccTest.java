@@ -20,6 +20,7 @@ import be.vinci.pae.utils.exception.FatalException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.junit.jupiter.api.BeforeEach;
@@ -192,6 +193,13 @@ class UserUccTest {
   void makeAdminWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
     assertThrows(FatalException.class, () -> userUcc.makeAdmin(userMemberSteven));
+  }
+
+  @DisplayName("Test makeAdmin with a Conflict")
+  @Test
+  void makeAdminWithConflictException() {
+    doThrow(new NoSuchElementException("exception")).when(userDAO).update(userMemberSteven);
+    assertThrows(ConflictException.class, () -> userUcc.makeAdmin(userMemberSteven));
   }
 
   @DisplayName("Test getAll() users with a non-empty list(resultset)")
