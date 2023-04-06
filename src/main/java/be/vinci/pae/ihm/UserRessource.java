@@ -50,15 +50,25 @@ public class UserRessource {
     return users;
   }
 
+  /**
+   * Get the corresponding users.
+   *
+   * @param id to search
+   * @return the user
+   */
   @GET
   @Path("/{id}")
   @Produces(MediaType.APPLICATION_JSON)
   @ResponsableOrAidant
-  public UserDTO getOneUser(@PathParam("id") int id){
+  public UserDTO getOneUser(@PathParam("id") int id) {
     if (id == -1) {
       throw new WebApplicationException("Id of photo required", Status.BAD_REQUEST);
     }
-    return Json.filterPublicJsonView(userUcc.getOne(id),UserDTO.class);
+    UserDTO userDTO = userUcc.getOne(id);
+    if (userDTO == null) {
+      throw new WebApplicationException("No user for this id", Status.NOT_FOUND);
+    }
+    return Json.filterPublicJsonView(userDTO, UserDTO.class);
   }
 
   /**
