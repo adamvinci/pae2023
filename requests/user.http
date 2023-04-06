@@ -59,7 +59,7 @@ Content-Type: application/json
 ###
 GET {{baseUrl}}/auths/user
 Content-Type: application/json
-Authorization:{{jeanJacques}}
+Authorization:{{memberToken}}
 
 ###
 GET  {{baseUrl}}/objet/typeObjet
@@ -104,6 +104,10 @@ POST {{baseUrl}}/users/3/confirmHelper
 Authorization: {{adrienToken}}
 
 ###
+POST {{baseUrl}}/users/4/confirmHelper
+Authorization: {{adrienToken}}
+
+###
 POST {{baseUrl}}/users/7/confirmHelper
 Authorization: {{adrienToken}}
 
@@ -112,7 +116,7 @@ POST {{baseUrl}}/users/1/confirmHelper
 Authorization: {{adrienToken}}
 
 ###
-POST {{baseUrl}}/objet/refuserObject/1
+POST {{baseUrl}}/objet/refuserObject/7
 Authorization: {{adrienToken}}
 Content-Type: application/json
 
@@ -121,11 +125,11 @@ Content-Type: application/json
 }
 
 ###
-POST {{baseUrl}}/objet/accepterObject/1
+POST {{baseUrl}}/objet/accepterObject/6
 Authorization: {{adrienToken}}
 
 ###
-POST {{baseUrl}}/objet/depositObject/1
+POST {{baseUrl}}/objet/depositObject/6
 Authorization: {{aidantToken}}
 Content-Type: application/json
 
@@ -134,7 +138,7 @@ Content-Type: application/json
 }
 
 ###
-POST {{baseUrl}}/objet/misEnVenteObject/4
+POST {{baseUrl}}/objet/misEnVenteObject/6
 Authorization: {{aidantToken}}
 Content-Type: application/json
 
@@ -143,7 +147,7 @@ Content-Type: application/json
 }
 
 ###
-POST {{baseUrl}}/objet/vendreObject/1
+POST {{baseUrl}}/objet/vendreObject/6
 Authorization: {{aidantToken}}
 
 ###

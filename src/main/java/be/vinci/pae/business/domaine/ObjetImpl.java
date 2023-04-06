@@ -52,6 +52,16 @@ public class ObjetImpl implements Objet, ObjetDTO {
 
   private String localisation;
 
+  private int noVersion;
+
+  public int getNoVersion() {
+    return noVersion;
+  }
+
+  public void setNoVersion(int noVersion) {
+    this.noVersion = noVersion;
+  }
+
   @Override
   public int getIdObjet() {
     return idObjet;

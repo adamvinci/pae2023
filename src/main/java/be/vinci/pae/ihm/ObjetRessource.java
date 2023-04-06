@@ -108,8 +108,8 @@ public class ObjetRessource {
   @Path("typeObjet")
   @Produces(MediaType.APPLICATION_JSON)
   public List<TypeObjetDTO> getAllObjectType() {
-    if (objetUCC.getAllObject() == null) {
-      throw new WebApplicationException("No object in the database", Status.NO_CONTENT);
+    if (objetUCC.getAllObjectType() == null) {
+      throw new WebApplicationException("No type of object in the database", Status.NO_CONTENT);
     }
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve the type of object");
     return objetUCC.getAllObjectType();
@@ -310,7 +310,6 @@ public class ObjetRessource {
       throw new WebApplicationException("No image for this object in the database",
           Status.NOT_FOUND);
     }
-
 
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve picture of object " + id);
     return pictureService.transformImage(pathPicture);

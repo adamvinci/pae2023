@@ -84,13 +84,11 @@ public class ObjetUCCImpl implements ObjetUCC {
         dataServiceNotification.linkNotifToUser(notificationCreated.getId(),
             objetDTO1.getUtilisateur());
       }
-
+      dal.commitTransaction();
       return objetDTO1;
-    } catch (FatalException e) {
+    } catch (Exception e) {
       dal.rollBackTransaction();
       throw e;
-    } finally {
-      dal.commitTransaction();
     }
 
   }
@@ -113,13 +111,11 @@ public class ObjetUCCImpl implements ObjetUCC {
         dataServiceNotification.linkNotifToUser(notificationCreated.getId(),
             objetDTO1.getUtilisateur());
       }
-
+      dal.commitTransaction();
       return objetDTO1;
-    } catch (FatalException e) {
+    } catch (Exception e) {
       dal.rollBackTransaction();
       throw e;
-    } finally {
-      dal.commitTransaction();
     }
 
   }
@@ -133,13 +129,12 @@ public class ObjetUCCImpl implements ObjetUCC {
       if (!objet.deposer()) {
         return null;
       }
-
-      return dataService.updateObjectState(objetDTO);
-    } catch (FatalException e) {
+      ObjetDTO objetDTO1 =dataService.updateObjectState(objetDTO);
+      dal.commitTransaction();
+      return objetDTO1;
+    } catch (Exception e) {
       dal.rollBackTransaction();
       throw e;
-    } finally {
-      dal.commitTransaction();
     }
   }
 
@@ -149,12 +144,12 @@ public class ObjetUCCImpl implements ObjetUCC {
       dal.startTransaction();
       Objet objet = (Objet) objetDTO;
       objet.mettreEnVente();
-      return dataService.updateObjectState(objetDTO);
-    } catch (FatalException e) {
+      ObjetDTO objetDTO1 =dataService.updateObjectState(objetDTO);
+      dal.commitTransaction();
+      return objetDTO1;
+    } catch (Exception e) {
       dal.rollBackTransaction();
       throw e;
-    } finally {
-      dal.commitTransaction();
     }
 
 
@@ -168,13 +163,12 @@ public class ObjetUCCImpl implements ObjetUCC {
       if (!objet.vendreObjet()) {
         return null;
       }
-
-      return dataService.updateObjectState(objetDTO);
-    } catch (FatalException e) {
+      ObjetDTO objetDTO1 =dataService.updateObjectState(objetDTO);
+      dal.commitTransaction();
+      return objetDTO1;
+    } catch (Exception e) {
       dal.rollBackTransaction();
       throw e;
-    } finally {
-      dal.commitTransaction();
     }
 
 

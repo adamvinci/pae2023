@@ -105,14 +105,14 @@ public class UserUccImpl implements UserUcc {
       User user = (User) userToChange;
       if (user.changeToAdmin()) {
         dataService.update(userToChange);
+        userToChange.setVersion(userToChange.getVersion()+1);
+        dal.commitTransaction();
         return userToChange;
       }
       return null;
-    } catch (FatalException e) {
+    } catch (Exception e) {
       dal.rollBackTransaction();
       throw e;
-    } finally {
-      dal.commitTransaction();
     }
 
   }
