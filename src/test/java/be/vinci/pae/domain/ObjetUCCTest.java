@@ -259,8 +259,8 @@ class ObjetUCCTest {
   void testRefuserPropositionWithConflictException() {
     objetDTO.setEtat("proposer");
     doThrow(new NoSuchElementException("exception")).when(objectDAO).updateObjectState(objetDTO);
-    assertThrows(ConflictException.class, () -> objetUCC.refuserObject(objetDTO, "message"
-        , notificationDTO));
+    assertThrows(ConflictException.class, () -> objetUCC.refuserObject(objetDTO,
+        "message", notificationDTO));
   }
 
   @DisplayName("Test vendreObject(ObjetDTO objetDTO) with a bad state")

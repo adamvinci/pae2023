@@ -54,6 +54,7 @@ button{
 
 }
 
+
 #formulaireRefuser {
     background-color: white;
     border-radius: 10px;
@@ -61,7 +62,8 @@ button{
 }
 
 
-/*------------------------------------------------------------------------------------------------------*/
+
+/*--------------------------------------------HomePage----------------------------------------------------------*/
 #page{
     display: flex;
 
@@ -98,10 +100,7 @@ button{
     padding: 5px;
 }
 
-.filterRechercheObjet{
-    border: black solid 2px;
-    position: fixed;
-}
+
 
 #informationContainer {
     position: relative;
@@ -132,6 +131,7 @@ button{
     grid-column-end: 3;
 }
 
+
 /*--------------------------------depot-object----------------------------------------------------------------------*/
 
 .receptionObjetsTh,.receptionObjetsTd{
@@ -141,6 +141,8 @@ button{
     padding: 5px;
 }
 
+
+
 /********************Register Page------------------------------*/
 #radioAvatar label img {
     border: 2px solid transparent;
@@ -148,3 +150,44 @@ button{
 #radioAvatar label.selected img {
     border: 2px solid blue;
 }
+
+/*****************************Tableau de bord*****************/
+
+#pageTb{
+    display: flex;
+   gap: 100px;
+}
+#tableData {
+    flex: 3;
+
+}
+#tableData h1 {
+    text-align: center;
+}
+
+.filterRechercheObjet{
+    flex: 0.3;
+
+    border: 2px solid darkgray;
+    height: auto;
+}
+#informationContainerTb{
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 70%;
+    height: 50%;
+
+}
+#buttonDetail{
+    cursor: pointer;
+}
+#buttonDetail:hover{
+    font-size: large;
+}
+.photoPopup{
+    margin-top: 60px;
+}
+

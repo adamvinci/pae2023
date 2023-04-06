@@ -4,6 +4,7 @@ package be.vinci.pae.ihm;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.ihm.filters.ResponsableAuthorization;
+import be.vinci.pae.ihm.filters.ResponsableOrAidant;
 import be.vinci.pae.utils.Json;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
@@ -49,6 +50,16 @@ public class UserRessource {
     return users;
   }
 
+  @GET
+  @Path("/{id}")
+  @Produces(MediaType.APPLICATION_JSON)
+  @ResponsableOrAidant
+  public UserDTO getOneUser(@PathParam("id") int id){
+    if (id == -1) {
+      throw new WebApplicationException("Id of photo required", Status.BAD_REQUEST);
+    }
+    return Json.filterPublicJsonView(userUcc.getOne(id),UserDTO.class);
+  }
 
   /**
    * Change the role of a user to make him "aidant".
