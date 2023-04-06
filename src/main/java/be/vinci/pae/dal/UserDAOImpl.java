@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 /**
@@ -181,7 +182,7 @@ public class UserDAOImpl implements UserDAO {
       statement.setInt(10, userToChange.getVersion());
       try (ResultSet rs = statement.executeQuery()) {
         if (!rs.isBeforeFirst()) {
-          throw new ConflictException("Bad version number, retry");
+          throw new NoSuchElementException();
         } else {
           return true;
 
@@ -217,18 +218,19 @@ public class UserDAOImpl implements UserDAO {
   /**
    * init a UserDto from resultset got from the database (to pass the cpd duplications check).
    *
-   * @param userDTO  the user in which the data will be added
-   * @param email    the email we have to search in the database or the email corresponding to the
-   *                 id in the database
-   * @param id       the id we have to search in the database or the id corresponding to the email
-   *                 in the database
-   * @param password the password corresponding to the email/id in the database
-   * @param nom      the name corresponding to the email/id in the database
-   * @param prenom   the prenom corresponding to the email/id in the database
-   * @param image    the image corresponding to the email/id in the database
-   * @param date     the date corresponding to the email/id in the database
-   * @param role     the role corresponding to the email/id in the database
-   * @param gsm      the gsm corresponding to the email/id in the database
+   * @param userDTO   the user in which the data will be added
+   * @param email     the email we have to search in the database or the email corresponding to the
+   *                  id in the database
+   * @param id        the id we have to search in the database or the id corresponding to the email
+   *                  in the database
+   * @param password  the password corresponding to the email/id in the database
+   * @param nom       the name corresponding to the email/id in the database
+   * @param prenom    the prenom corresponding to the email/id in the database
+   * @param image     the image corresponding to the email/id in the database
+   * @param date      the date corresponding to the email/id in the database
+   * @param role      the role corresponding to the email/id in the database
+   * @param gsm       the gsm corresponding to the email/id in the database
+   * @param noVersion the version number of the current row
    */
   public void initUser(UserDTO userDTO, String email, String password, String nom, String prenom,
       String image, LocalDate date, String role, String gsm, int id, int noVersion) {

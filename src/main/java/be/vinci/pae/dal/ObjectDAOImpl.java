@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Implementation of {@link ObjectDAO}.
@@ -90,7 +91,8 @@ public class ObjectDAOImpl implements ObjectDAO {
   public ObjetDTO updateObjectState(ObjetDTO objetDTO) {
     String query = "UPDATE projet.objets SET etat = ?, date_acceptation = ?, "
         + "date_depot = ?, date_retrait = ?, date_vente = ?"
-        + ", localisation = ?,prix_vente = ? , version = version+1 WHERE id_objet = ? AND version = ? RETURNING *";
+        + ", localisation = ?,prix_vente = ? , version = version+1 WHERE id_objet = ? "
+        + "AND version = ? RETURNING *";
     try (PreparedStatement statement = dalService.preparedStatement(query)) {
       statement.setString(1, objetDTO.getEtat());
 
@@ -126,7 +128,7 @@ public class ObjectDAOImpl implements ObjectDAO {
       statement.setInt(9, objetDTO.getNoVersion());
       try (ResultSet rs = statement.executeQuery()) {
         if (!rs.isBeforeFirst()) {
-          throw new ConflictException("Bad version number, retry");
+          throw new NoSuchElementException();
         }
       }
 

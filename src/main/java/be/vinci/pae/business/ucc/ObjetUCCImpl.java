@@ -8,9 +8,11 @@ import be.vinci.pae.dal.NotificationDAO;
 import be.vinci.pae.dal.ObjectDAO;
 import be.vinci.pae.dal.TypeObjetDAO;
 import be.vinci.pae.dal.services.DALTransaction;
+import be.vinci.pae.utils.exception.ConflictException;
 import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Implementation of {@link ObjetUCC}.
@@ -87,6 +89,9 @@ public class ObjetUCCImpl implements ObjetUCC {
       dal.commitTransaction();
       return objetDTO1;
     } catch (Exception e) {
+      if(e instanceof NoSuchElementException){
+        throw new ConflictException("Bad version number, retry");
+      }
       dal.rollBackTransaction();
       throw e;
     }
@@ -114,6 +119,9 @@ public class ObjetUCCImpl implements ObjetUCC {
       dal.commitTransaction();
       return objetDTO1;
     } catch (Exception e) {
+      if(e instanceof NoSuchElementException){
+        throw new ConflictException("Bad version number, retry");
+      }
       dal.rollBackTransaction();
       throw e;
     }
@@ -129,10 +137,13 @@ public class ObjetUCCImpl implements ObjetUCC {
       if (!objet.deposer()) {
         return null;
       }
-      ObjetDTO objetDTO1 =dataService.updateObjectState(objetDTO);
+      ObjetDTO objetDTO1 = dataService.updateObjectState(objetDTO);
       dal.commitTransaction();
       return objetDTO1;
     } catch (Exception e) {
+      if(e instanceof NoSuchElementException){
+        throw new ConflictException("Bad version number, retry");
+      }
       dal.rollBackTransaction();
       throw e;
     }
@@ -144,10 +155,13 @@ public class ObjetUCCImpl implements ObjetUCC {
       dal.startTransaction();
       Objet objet = (Objet) objetDTO;
       objet.mettreEnVente();
-      ObjetDTO objetDTO1 =dataService.updateObjectState(objetDTO);
+      ObjetDTO objetDTO1 = dataService.updateObjectState(objetDTO);
       dal.commitTransaction();
       return objetDTO1;
     } catch (Exception e) {
+      if(e instanceof NoSuchElementException){
+        throw new ConflictException("Bad version number, retry");
+      }
       dal.rollBackTransaction();
       throw e;
     }
@@ -163,10 +177,13 @@ public class ObjetUCCImpl implements ObjetUCC {
       if (!objet.vendreObjet()) {
         return null;
       }
-      ObjetDTO objetDTO1 =dataService.updateObjectState(objetDTO);
+      ObjetDTO objetDTO1 = dataService.updateObjectState(objetDTO);
       dal.commitTransaction();
       return objetDTO1;
     } catch (Exception e) {
+      if(e instanceof NoSuchElementException){
+        throw new ConflictException("Bad version number, retry");
+      }
       dal.rollBackTransaction();
       throw e;
     }
