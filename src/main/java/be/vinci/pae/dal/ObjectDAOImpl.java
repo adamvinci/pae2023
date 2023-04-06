@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Implementation of {@link ObjectDAO}.
@@ -40,7 +41,7 @@ public class ObjectDAOImpl implements ObjectDAO {
             + "o.date_retrait,o.prix_vente,"
             + "o.date_vente,o.utilisateur,tob.id_type,"
             + "tob.libelle,d.id_disponibilite,d.date_disponibilite,"
-            + "p.plage FROM projet.objets o,projet.disponibilites d "
+            + "p.plage,o.version FROM projet.objets o,projet.disponibilites d "
             + ",projet.plages_horaires p ,projet.types_objets tob "
             + "WHERE  tob.id_type = o.type  "
             + "AND o.disponibilite = d.id_disponibilite AND d.plage = p.id_plage_horaire";
@@ -89,7 +90,8 @@ public class ObjectDAOImpl implements ObjectDAO {
   public ObjetDTO updateObjectState(ObjetDTO objetDTO) {
     String query = "UPDATE projet.objets SET etat = ?, date_acceptation = ?, "
         + "date_depot = ?, date_retrait = ?, date_vente = ?"
-        + ", localisation = ?,prix_vente = ? WHERE id_objet = ? RETURNING *";
+        + ", localisation = ?,prix_vente = ? , version = version+1 WHERE id_objet = ? "
+        + "AND version = ? RETURNING *";
     try (PreparedStatement statement = dalService.preparedStatement(query)) {
       statement.setString(1, objetDTO.getEtat());
 
@@ -122,11 +124,17 @@ public class ObjectDAOImpl implements ObjectDAO {
       }
 
       statement.setInt(8, objetDTO.getIdObjet());
-      statement.executeQuery();
+      statement.setInt(9, objetDTO.getNoVersion());
+      try (ResultSet rs = statement.executeQuery()) {
+        if (!rs.isBeforeFirst()) {
+          throw new NoSuchElementException();
+        }
+      }
 
     } catch (SQLException e) {
       throw new FatalException(e);
     }
+    objetDTO.setNoVersion(objetDTO.getNoVersion() + 1);
     return objetDTO;
   }
 
@@ -174,6 +182,7 @@ public class ObjectDAOImpl implements ObjectDAO {
     disponibiliteDTO.setDate(LocalDate.parse(set.getString(16)));
     disponibiliteDTO.setPlage(set.getString(17));
     objetDTO.setDisponibilite(disponibiliteDTO);
+    objetDTO.setNoVersion(set.getInt(18));
   }
 
   /**
@@ -189,7 +198,7 @@ public class ObjectDAOImpl implements ObjectDAO {
         + "o.date_retrait,o.prix_vente,"
         + "o.date_vente,o.utilisateur,tob.id_type,"
         + "tob.libelle,d.id_disponibilite,d.date_disponibilite,"
-        + "p.plage FROM projet.objets o,projet.disponibilites d "
+        + "p.plage,o.version FROM projet.objets o,projet.disponibilites d "
         + ",projet.plages_horaires p ,projet.types_objets tob "
         + "  WHERE id_objet = (?)  ";
     try (PreparedStatement statement = dalService.preparedStatement(query)) {

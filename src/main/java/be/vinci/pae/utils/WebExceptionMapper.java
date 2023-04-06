@@ -19,6 +19,7 @@ public class WebExceptionMapper implements ExceptionMapper<Throwable> {
   public Response toResponse(Throwable exception) {
 
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "exception message ", exception);
+
     if (exception instanceof FatalException) {
       // Dont return the message in the Response as client doesnt
       // need to know the problem with the database

@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 /**
@@ -31,7 +32,7 @@ public class UserDAOImpl implements UserDAO {
 
     UserDTO userDTO = userFactory.getUserDTO();
     try (PreparedStatement statement = dalService.preparedStatement(
-        "SELECT id_utilisateur,mot_de_passe,nom" + ",prenom,image,date_inscription,role,gsm"
+        "SELECT id_utilisateur,mot_de_passe,nom" + ",prenom,image,date_inscription,role,gsm,version"
             + " FROM projet.utilisateurs_inscrits WHERE email = (?)")) {
       statement.setString(1, email);
       try (ResultSet set = statement.executeQuery()) {
@@ -43,7 +44,7 @@ public class UserDAOImpl implements UserDAO {
             initUser(userDTO, email, set.getString(2), set.getString(3), set.getString(4),
                 set.getString(5), set.getDate(6).toLocalDate(), set.getString(7),
                 set.getString(8),
-                set.getInt(1));
+                set.getInt(1), set.getInt(9));
           }
         }
       }
@@ -59,7 +60,7 @@ public class UserDAOImpl implements UserDAO {
   public UserDTO getOne(int id) {
     UserDTO userDTO = userFactory.getUserDTO();
     try (PreparedStatement statement = dalService.preparedStatement(
-        "SELECT email,mot_de_passe,nom" + ",prenom,image,date_inscription,role,gsm"
+        "SELECT email,mot_de_passe,nom" + ",prenom,image,date_inscription,role,gsm,version"
             + " FROM projet.utilisateurs_inscrits WHERE id_utilisateur = (?)")) {
       statement.setInt(1, id);
       try (ResultSet set = statement.executeQuery()) {
@@ -70,7 +71,7 @@ public class UserDAOImpl implements UserDAO {
             initUser(userDTO, set.getString(1), set.getString(2), set.getString(3),
                 set.getString(4), set.getString(5), set.getDate(6).toLocalDate(),
                 set.getString(7),
-                set.getString(8), id);
+                set.getString(8), id, set.getInt(9));
 
           }
         }
@@ -90,7 +91,7 @@ public class UserDAOImpl implements UserDAO {
 
     try (PreparedStatement statement = dalService.preparedStatement(
         "INSERT INTO projet.utilisateurs_inscrits VALUES "
-            + "(DEFAULT,?,?,?,?,?,?,?,?) RETURNING *;")) {
+            + "(DEFAULT,?,?,?,?,?,?,?,?,?) RETURNING *;")) {
       statement.setString(1, user.getEmail());
       statement.setString(2, user.getPassword());
       statement.setString(3, user.getNom());
@@ -103,6 +104,7 @@ public class UserDAOImpl implements UserDAO {
       statement.setDate(6, Date.valueOf(LocalDate.now()));
       statement.setString(7, "membre");
       statement.setString(8, user.getGsm());
+      statement.setInt(9, 1);
       try (ResultSet set = statement.executeQuery()) {
         if (!set.isBeforeFirst()) {
 
@@ -112,7 +114,7 @@ public class UserDAOImpl implements UserDAO {
             initUser(userDTO, set.getString(2), set.getString(3), set.getString(4),
                 set.getString(5), set.getString(6), set.getDate(7).toLocalDate(),
                 set.getString(8),
-                set.getString(9), set.getInt(1));
+                set.getString(9), set.getInt(1), set.getInt(10));
 
           }
         }
@@ -129,7 +131,8 @@ public class UserDAOImpl implements UserDAO {
   public List<UserDTO> getAll() {
     ArrayList<UserDTO> usersList = new ArrayList<>();
     try (PreparedStatement statement = dalService.preparedStatement(
-        "SELECT email,mot_de_passe,nom" + ",prenom,image,date_inscription,role,gsm,id_utilisateur"
+        "SELECT email,mot_de_passe,nom"
+            + ",prenom,image,date_inscription,role,gsm,id_utilisateur,version"
             + " FROM projet.utilisateurs_inscrits")) {
       try (ResultSet set = statement.executeQuery()) {
         if (!set.isBeforeFirst()) {
@@ -140,7 +143,7 @@ public class UserDAOImpl implements UserDAO {
             initUser(userDTO, set.getString(1), set.getString(2), set.getString(3),
                 set.getString(4), set.getString(5), set.getDate(6).toLocalDate(),
                 set.getString(7),
-                set.getString(8), set.getInt(9));
+                set.getString(8), set.getInt(9), set.getInt(10));
             usersList.add(userDTO);
           }
         }
@@ -163,8 +166,8 @@ public class UserDAOImpl implements UserDAO {
             + " ,mot_de_passe = ?"
             + " ,date_inscription = ?"
             + " ,gsm = ?"
-            + " ,image = ?"
-            + " WHERE id_utilisateur = ? RETURNING *")) {
+            + " ,image = ? ,version = version+1"
+            + " WHERE id_utilisateur = ? AND version = ? RETURNING *")) {
 
       statement.setString(1, userToChange.getRole());
       statement.setString(2, userToChange.getEmail());
@@ -175,10 +178,15 @@ public class UserDAOImpl implements UserDAO {
       statement.setString(7, userToChange.getGsm());
       statement.setString(8, userToChange.getImage());
       statement.setInt(9, userToChange.getId());
+      statement.setInt(10, userToChange.getVersion());
       try (ResultSet rs = statement.executeQuery()) {
-        System.out.println("");
+        if (!rs.isBeforeFirst()) {
+          throw new NoSuchElementException();
+        } else {
+          return true;
+
+        }
       }
-      return true;
     } catch (SQLException e) {
       throw new FatalException(e);
     }
@@ -209,21 +217,22 @@ public class UserDAOImpl implements UserDAO {
   /**
    * init a UserDto from resultset got from the database (to pass the cpd duplications check).
    *
-   * @param userDTO  the user in which the data will be added
-   * @param email    the email we have to search in the database or the email corresponding to the
-   *                 id in the database
-   * @param id       the id we have to search in the database or the id corresponding to the email
-   *                 in the database
-   * @param password the password corresponding to the email/id in the database
-   * @param nom      the name corresponding to the email/id in the database
-   * @param prenom   the prenom corresponding to the email/id in the database
-   * @param image    the image corresponding to the email/id in the database
-   * @param date     the date corresponding to the email/id in the database
-   * @param role     the role corresponding to the email/id in the database
-   * @param gsm      the gsm corresponding to the email/id in the database
+   * @param userDTO   the user in which the data will be added
+   * @param email     the email we have to search in the database or the email corresponding to the
+   *                  id in the database
+   * @param id        the id we have to search in the database or the id corresponding to the email
+   *                  in the database
+   * @param password  the password corresponding to the email/id in the database
+   * @param nom       the name corresponding to the email/id in the database
+   * @param prenom    the prenom corresponding to the email/id in the database
+   * @param image     the image corresponding to the email/id in the database
+   * @param date      the date corresponding to the email/id in the database
+   * @param role      the role corresponding to the email/id in the database
+   * @param gsm       the gsm corresponding to the email/id in the database
+   * @param noVersion the version number of the current row
    */
   public void initUser(UserDTO userDTO, String email, String password, String nom, String prenom,
-      String image, LocalDate date, String role, String gsm, int id) {
+      String image, LocalDate date, String role, String gsm, int id, int noVersion) {
     userDTO.setEmail(email);
     userDTO.setPassword(password);
     userDTO.setNom(nom);
@@ -233,5 +242,6 @@ public class UserDAOImpl implements UserDAO {
     userDTO.setRole(role);
     userDTO.setGsm(gsm);
     userDTO.setId(id);
+    userDTO.setVersion(noVersion);
   }
 }

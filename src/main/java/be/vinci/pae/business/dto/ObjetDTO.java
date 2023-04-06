@@ -10,6 +10,20 @@ import java.time.LocalDate;
 public interface ObjetDTO {
 
   /**
+   * Returns the version of this object.
+   *
+   * @return the version of this object
+   */
+  int getNoVersion();
+
+  /**
+   * Sets the version of this object.
+   *
+   * @param noVersion of this object
+   */
+  void setNoVersion(int noVersion);
+
+  /**
    * Returns the ID of this object.
    *
    * @return the ID of this object
