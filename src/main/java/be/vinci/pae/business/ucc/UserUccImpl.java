@@ -112,7 +112,7 @@ public class UserUccImpl implements UserUcc {
       }
       return null;
     } catch (Exception e) {
-      if(e instanceof NoSuchElementException){
+      if (e instanceof NoSuchElementException) {
         throw new ConflictException("Bad version number, retry");
       }
       dal.rollBackTransaction();

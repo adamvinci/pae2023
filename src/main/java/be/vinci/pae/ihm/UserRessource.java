@@ -66,7 +66,6 @@ public class UserRessource {
       throw new WebApplicationException("No content", Status.BAD_REQUEST);
     }
     UserDTO userToChange = userUcc.getOne(id);
-  userToChange.setVersion(9);
     if (userToChange == null) {
       throw new WebApplicationException("This user does not exist", Status.BAD_REQUEST);
     }

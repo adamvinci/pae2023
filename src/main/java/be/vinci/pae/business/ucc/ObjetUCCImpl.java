@@ -89,7 +89,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       dal.commitTransaction();
       return objetDTO1;
     } catch (Exception e) {
-      if(e instanceof NoSuchElementException){
+      if (e instanceof NoSuchElementException) {
         throw new ConflictException("Bad version number, retry");
       }
       dal.rollBackTransaction();
@@ -119,7 +119,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       dal.commitTransaction();
       return objetDTO1;
     } catch (Exception e) {
-      if(e instanceof NoSuchElementException){
+      if (e instanceof NoSuchElementException) {
         throw new ConflictException("Bad version number, retry");
       }
       dal.rollBackTransaction();
@@ -141,7 +141,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       dal.commitTransaction();
       return objetDTO1;
     } catch (Exception e) {
-      if(e instanceof NoSuchElementException){
+      if (e instanceof NoSuchElementException) {
         throw new ConflictException("Bad version number, retry");
       }
       dal.rollBackTransaction();
@@ -159,7 +159,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       dal.commitTransaction();
       return objetDTO1;
     } catch (Exception e) {
-      if(e instanceof NoSuchElementException){
+      if (e instanceof NoSuchElementException) {
         throw new ConflictException("Bad version number, retry");
       }
       dal.rollBackTransaction();
@@ -181,7 +181,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       dal.commitTransaction();
       return objetDTO1;
     } catch (Exception e) {
-      if(e instanceof NoSuchElementException){
+      if (e instanceof NoSuchElementException) {
         throw new ConflictException("Bad version number, retry");
       }
       dal.rollBackTransaction();
