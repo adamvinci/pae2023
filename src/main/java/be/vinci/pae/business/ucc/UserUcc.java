@@ -40,7 +40,7 @@ public interface UserUcc {
    * Registers a new user.
    *
    * @param userDTO the UserDTO object containing the user's details to be registered
-   * @return the UserDTO object of the newly registered user, or null if the email already exists
+   * @return the UserDTO object of the newly registered user
    */
   UserDTO register(UserDTO userDTO);
 
