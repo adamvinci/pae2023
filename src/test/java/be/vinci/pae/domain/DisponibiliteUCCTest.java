@@ -13,6 +13,7 @@ import be.vinci.pae.business.ucc.DisponibiliteUCC;
 import be.vinci.pae.dal.DisponibiliteDAO;
 import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.ApplicationBinderMock;
+import be.vinci.pae.utils.exception.ConflictException;
 import be.vinci.pae.utils.exception.FatalException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 class DisponibiliteUCCTest {
 
@@ -84,6 +86,29 @@ class DisponibiliteUCCTest {
   void testGetOneDisponibiliteWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalTransaction).startTransaction();
     assertThrows(FatalException.class, () -> disponibiliteUCC.getOne(1));
+
+  }
+
+  @DisplayName("Test createDisponibilitu() with a FatalException")
+  @Test
+  void testCreateDisponibiliteWithFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalTransaction).startTransaction();
+    assertThrows(FatalException.class, () -> disponibiliteUCC.createOne(disponibilite));
+
+  }
+  @DisplayName("Test createDisponibilitu() with a already existing disponibility")
+  @Test
+  void testCreateDisponibiliteAlreadyExisting() {
+    Mockito.when(disponibiliteDAO.disponibilityExist(disponibilite)).thenReturn(true);
+    assertThrows(ConflictException.class, () -> disponibiliteUCC.createOne(disponibilite));
+
+  }
+
+  @DisplayName("Test createDisponibilitu() with no problem")
+  @Test
+  void testCreateDisponibilite() {
+    Mockito.when(disponibiliteDAO.createOne(disponibilite)).thenReturn(disponibilite);
+    assertEquals(disponibilite,disponibiliteUCC.createOne(disponibilite));
 
   }
 }
