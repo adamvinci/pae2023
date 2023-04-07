@@ -1,193 +1,247 @@
 body {
-    background-color: bisque;
+  background-color: bisque;
 
 }
 
-#nomSite{
-    font-family: 'Blackadder ITC';
-    cursor: pointer;
+#nomSite {
+  font-family: 'Blackadder ITC';
+  cursor: pointer;
 }
 
 /*-----Accepter----Refuser--objet---------------------------------------------------------*/
 
-.tableEnTete{
-    border: 2px solid;
-    text-align: center;
-    padding: 20px;
-    margin: auto;
-    position: absolute;
-    background-color: white;
+.tableEnTete {
+  border: 2px solid;
+  text-align: center;
+  padding: 20px;
+  margin: auto;
+  position: absolute;
+  background-color: white;
 }
 
-.objetProposeTh,.objetProposeTd{
-    border: 1px solid black;
-    text-align: center;
-    padding: 5px;
+.objetProposeTh, .objetProposeTd {
+  border: 1px solid black;
+  text-align: center;
+  padding: 5px;
 }
 
-button{
-    border-radius: 5px;
+button {
+  border-radius: 5px;
 }
 
-#accepter{
-    background-color: green;
+#accepter {
+  background-color: green;
 }
 
-#refuser{
-    background-color: red;
+#refuser {
+  background-color: red;
 }
 
 /*-------used--On--RechercherObjets*/
 
 .popUpContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  right: 0;
 
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 
-    background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 
 }
 
 
 #formulaireRefuser {
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
 }
-
 
 
 /*--------------------------------------------HomePage----------------------------------------------------------*/
-#page{
-    display: flex;
+#page {
+  display: flex;
 
 }
 
 
-#rightC{
-   flex: 0.3;
-    height: 600px;
-    border: 2px solid darkgray;
+#rightC {
+  flex: 0.3;
+  height: 600px;
+  border: 2px solid darkgray;
 
 }
-#typeObjet{
-    padding-bottom: 30px;
-}
-#carousel{
-    display: flex;
-    flex: 3;
-    justify-content: center;
-    align-items: center;
+
+#typeObjet {
+  padding-bottom: 30px;
 }
 
-#imgCarousel{
-    width: 100%;
-    height: 700px;
-    cursor: pointer;
+#carousel {
+  display: flex;
+  flex: 3;
+  justify-content: center;
+  align-items: center;
+}
+
+#imgCarousel {
+  width: 100%;
+  height: 700px;
+  cursor: pointer;
 }
 
 
 /*--------------------------------Gere-la-vente-object----------------------------------------------------------------------*/
-.rechercheObjetsTh,.rechercheObjetsTd{
-    border: 1px solid black;
-    text-align: center;
-    padding: 5px;
+.rechercheObjetsTh, .rechercheObjetsTd {
+  border: 1px solid black;
+  text-align: center;
+  padding: 5px;
 }
 
 
-
 #informationContainer {
-    position: relative;
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
-    width: 70%;
-    height: 50%;
-    display: grid;
+  position: relative;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 70%;
+  height: 50%;
+  display: grid;
 
 
 }
 
 .description {
-    grid-auto-rows: minmax(50px,auto);
+  grid-auto-rows: minmax(50px, auto);
 }
 
 .detail {
-    border: black solid 1px;
-    grid-column-start: 1;
-    grid-column-end: 3;
-    margin: auto;
+  border: black solid 1px;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  margin: auto;
 }
 
-#closeButton{
-    border: black solid 1px;
-    grid-column-start:1 ;
-    grid-column-end: 3;
+#closeButton {
+  border: black solid 1px;
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 
 
 /*--------------------------------depot-object----------------------------------------------------------------------*/
 
-.receptionObjetsTh,.receptionObjetsTd{
-    border: 1px solid;
-    border-color: black;
-    text-align: center;
-    padding: 5px;
+.receptionObjetsTh, .receptionObjetsTd {
+  border: 1px solid;
+  border-color: black;
+  text-align: center;
+  padding: 5px;
 }
-
 
 
 /********************Register Page------------------------------*/
 #radioAvatar label img {
-    border: 2px solid transparent;
+  border: 2px solid transparent;
 }
+
 #radioAvatar label.selected img {
-    border: 2px solid blue;
+  border: 2px solid blue;
 }
 
 /*****************************Tableau de bord*****************/
 
-#pageTb{
-    display: flex;
-   gap: 100px;
+#pageTb {
+  display: flex;
+  gap: 100px;
 }
+
 #tableData {
-    flex: 3;
+  flex: 3;
 
 }
+
 #tableData h1 {
-    text-align: center;
+  text-align: center;
 }
 
-.filterRechercheObjet{
-    flex: 0.3;
+.filterRechercheObjet {
+  flex: 0.3;
 
-    border: 2px solid darkgray;
-    height: auto;
-}
-#informationContainerTb{
-    display: flex;
-    justify-content: center;
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
-    width: 70%;
-    height: 50%;
-
-}
-#buttonDetail{
-    cursor: pointer;
-}
-#buttonDetail:hover{
-    font-size: large;
-}
-.photoPopup{
-    margin-top: 60px;
+  border: 2px solid darkgray;
+  height: auto;
 }
 
+#informationContainerTb {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 70%;
+  height: 50%;
+
+}
+
+#buttonDetail {
+  cursor: pointer;
+}
+
+#buttonDetail:hover {
+  font-size: large;
+}
+
+.photoPopup {
+  margin-top: 60px;
+}
+
+/*****Disponibilite page ***********/
+
+#disponibilitePage {
+  display: flex;
+
+  justify-content: center;
+
+}
+
+#disponibiliteForm {
+  display: block;
+  border: 1px solid black;
+  padding: 50px ;
+  height: 500px;
+
+}
+
+#disponibiliteTitle {
+  text-align: center;
+  border: 1px solid black;
+
+}
+#disponibiliteTable{
+
+  padding-top: 100px;
+
+
+}
+#disponibiliteTablle{
+  text-align: center;
+}
+#disponibiliteTablle ,th,td{
+  border: 1px solid black;
+  padding: 0 50px;
+
+}
+#disponibiliteFormBtnG{
+display: flex;
+  justify-content: center;
+  padding-top: 40px;
+
+}
+
+#disponibiliteFormBtn input[type=submit]{
+  border-radius: 12px;
+  width: 500px;
+  height: 70px;
+}

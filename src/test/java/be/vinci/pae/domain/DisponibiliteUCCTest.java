@@ -96,6 +96,7 @@ class DisponibiliteUCCTest {
     assertThrows(FatalException.class, () -> disponibiliteUCC.createOne(disponibilite));
 
   }
+
   @DisplayName("Test createDisponibilitu() with a already existing disponibility")
   @Test
   void testCreateDisponibiliteAlreadyExisting() {
@@ -108,7 +109,7 @@ class DisponibiliteUCCTest {
   @Test
   void testCreateDisponibilite() {
     Mockito.when(disponibiliteDAO.createOne(disponibilite)).thenReturn(disponibilite);
-    assertEquals(disponibilite,disponibiliteUCC.createOne(disponibilite));
+    assertEquals(disponibilite, disponibiliteUCC.createOne(disponibilite));
 
   }
 }

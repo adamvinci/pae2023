@@ -164,7 +164,7 @@ POST {{baseUrl}}/disponibilite
 Content-Type: application/json
 
 {
-  "date": "2023-02-25",
-  "plage": "apres midi"
+  "date": "2023-11-07",
+  "plage": "matin"
 }
 
