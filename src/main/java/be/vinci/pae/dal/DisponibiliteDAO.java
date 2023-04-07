@@ -22,4 +22,28 @@ public interface DisponibiliteDAO {
    * @return a list of availability or else null
    */
   List<DisponibiliteDTO> getAll();
+
+  /**
+   * Verify if this disponibility already exist or not.
+   *
+   * @param disponibiliteDTO to verify
+   * @return the disponiblity or null
+   */
+  boolean disponibilityExist(DisponibiliteDTO disponibiliteDTO);
+
+  /**
+   * Create one disponibilty.
+   *
+   * @param disponibiliteDTO to create
+   * @return the created disponibility
+   */
+  DisponibiliteDTO createOne(DisponibiliteDTO disponibiliteDTO);
+
+  /**
+   * Return the id of the plage.
+   *
+   * @param plage to get the id from
+   * @return the id to use as a foreign key
+   */
+  int getPlageId(String plage);
 }

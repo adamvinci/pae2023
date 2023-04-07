@@ -92,23 +92,13 @@ async function renderNavbar() {
 
   if(getToken()){
 
-    const options = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization : getToken()
-      },
-    };
 
-    const response = await fetch(`${process.env.API_BASE_URL}/auths/getPicture/${authenticatedUser.id}`, options);
-
-    const img1 = await response.blob();
     const member=document.getElementById('member');
     if(authenticatedUser?.role==='aidant' || authenticatedUser?.role==='responsable'){
     member.innerHTML+=`
     
     <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/Disponibilités">Disponibilités</a>
+              <a class="nav-link" href="#" data-uri="/Disponibilites">Disponibilités</a>
     </li>
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/ReceptionObjets">Dépôt d'objets</a>
@@ -145,9 +135,7 @@ async function renderNavbar() {
               <a class="nav-link" >${authenticatedUser.prenom}</a>
     </li>
     
-       <li class="nav-item">           
-        <a class="nav-link" ><img src=${URL.createObjectURL(img1)}  height="50px" width="100px" alt="s"></a>
-    </li> 
+
     `;
   }
   else{

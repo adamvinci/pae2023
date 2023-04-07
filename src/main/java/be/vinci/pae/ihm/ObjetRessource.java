@@ -158,12 +158,12 @@ public class ObjetRessource {
   @Produces(MediaType.APPLICATION_JSON)
   public ObjetDTO deposerObject(@PathParam("id") int id, JsonNode json) {
     if (!json.hasNonNull("localisation")) {
-      throw new WebApplicationException("Message required", Status.BAD_REQUEST);
+      throw new WebApplicationException("localisation required", Status.BAD_REQUEST);
     }
     String localisation = json.get("localisation").asText();
 
     if (localisation.isBlank() || localisation.isEmpty()) {
-      throw new WebApplicationException("Message required", Status.BAD_REQUEST);
+      throw new WebApplicationException("localisation required", Status.BAD_REQUEST);
     }
     if (!localisation.equals("Magasin") && !localisation.equals("Atelier")) {
       throw new WebApplicationException(

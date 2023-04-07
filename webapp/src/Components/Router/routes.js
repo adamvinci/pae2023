@@ -4,7 +4,7 @@ import LoginPage from '../Pages/LoginPage';
 import RegisterPage from '../Pages/RegisterPage';
 
 import ObjetsProposer from '../Pages/ObjetProposerPage';
-import Disponibilités from '../Pages/Helper/Disponibilités';
+import Disponibilites from '../Pages/Helper/Disponibilites';
 import ReceptionObjets from '../Pages/Helper/ReceptionObjets';
 import TableauDeBord from '../Pages/Helper/TableauDeBord';
 import VenteDobjet from '../Pages/Helper/VenteDobjet';
@@ -19,7 +19,7 @@ const routes = {
   '/register': RegisterPage,
   '/logout': Logout,
   '/ObjetProposer': ObjetsProposer,
-  '/Disponibilités': Disponibilités,
+  '/Disponibilites': Disponibilites,
   '/ReceptionObjets': ReceptionObjets,
   '/TableauDeBord': TableauDeBord,
   '/venteObjet': VenteDobjet,
