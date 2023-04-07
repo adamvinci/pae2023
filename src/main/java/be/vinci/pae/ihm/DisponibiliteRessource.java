@@ -2,14 +2,19 @@ package be.vinci.pae.ihm;
 
 import be.vinci.pae.business.dto.DisponibiliteDTO;
 import be.vinci.pae.business.ucc.DisponibiliteUCC;
+import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -34,5 +39,24 @@ public class DisponibiliteRessource {
       throw new WebApplicationException("No disponibility", Status.NO_CONTENT);
     }
     return disponibiliteUCC.getDisponibilite();
+  }
+
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public DisponibiliteDTO createOne(DisponibiliteDTO disponibiliteDTO) {
+    if (disponibiliteDTO.getDate() == null) {
+      throw new WebApplicationException("date required", Status.BAD_REQUEST);
+    }
+    if (disponibiliteDTO.getPlage() == null || disponibiliteDTO.getPlage().equals("")) {
+      throw new WebApplicationException("plage horaire required", Status.BAD_REQUEST);
+    }
+    if (!disponibiliteDTO.getPlage().equals("matin") && !disponibiliteDTO.getPlage()
+        .equals("apres midi")) {
+      throw new WebApplicationException("The plage can either be 'matin' or 'apres midi'",
+          Status.BAD_REQUEST);
+    }
+
+    return disponibiliteUCC.createOne(disponibiliteDTO);
   }
 }

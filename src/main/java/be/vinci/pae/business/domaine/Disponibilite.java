@@ -1,6 +1,7 @@
 package be.vinci.pae.business.domaine;
 
 import be.vinci.pae.business.dto.DisponibiliteDTO;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.LocalDate;
 
 /**
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 public class Disponibilite implements DisponibiliteDTO {
 
   private int id;
+
   private LocalDate date;
 
   private String plage;

@@ -159,4 +159,12 @@ Authorization: {{adrienToken}}
 GET {{baseUrl}}/users/1
 Authorization: {{aidantToken}}
 
+###
+POST {{baseUrl}}/disponibilite
+Content-Type: application/json
+
+{
+  "date": "2023-02-25",
+  "plage": "apres midi"
+}
 

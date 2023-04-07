@@ -1,6 +1,7 @@
 package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.dto.DisponibiliteDTO;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -23,4 +24,13 @@ public interface DisponibiliteUCC {
    * @return the disponibility
    */
   DisponibiliteDTO getOne(int id);
+
+
+  /**
+   * Create one disponibilty.
+   *
+   * @param disponibiliteDTO to create
+   * @return the created disponibility
+   */
+  DisponibiliteDTO createOne(DisponibiliteDTO disponibiliteDTO);
 }
