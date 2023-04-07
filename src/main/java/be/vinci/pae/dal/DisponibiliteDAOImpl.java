@@ -1,7 +1,6 @@
 package be.vinci.pae.dal;
 
 import be.vinci.pae.business.dto.DisponibiliteDTO;
-import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.factory.DisponibiliteFactory;
 import be.vinci.pae.dal.services.DALService;
 import be.vinci.pae.utils.exception.FatalException;
@@ -10,7 +9,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +104,8 @@ public class DisponibiliteDAOImpl implements DisponibiliteDAO {
 
   @Override
   public DisponibiliteDTO createOne(DisponibiliteDTO disponibiliteDTO) {
-    String query = "INSERT INTO projet.disponibilites(date_disponibilite, plage) VALUES (?,?) RETURNING *";
+    String query = "INSERT INTO projet.disponibilites(date_disponibilite, plage) "
+        + "VALUES (?,?) RETURNING *";
     try (PreparedStatement statement = dalService.preparedStatement(query)) {
       statement.setDate(1, Date.valueOf(disponibiliteDTO.getDate()));
       statement.setInt(2, getPlageId(disponibiliteDTO.getPlage()));

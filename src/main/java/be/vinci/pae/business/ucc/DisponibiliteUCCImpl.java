@@ -6,7 +6,6 @@ import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.exception.ConflictException;
 import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
-import java.time.LocalDate;
 import java.util.List;
 
 /**

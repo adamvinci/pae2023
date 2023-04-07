@@ -2,7 +2,6 @@ package be.vinci.pae.ihm;
 
 import be.vinci.pae.business.dto.DisponibiliteDTO;
 import be.vinci.pae.business.ucc.DisponibiliteUCC;
-import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.Consumes;
@@ -12,9 +11,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -41,6 +38,12 @@ public class DisponibiliteRessource {
     return disponibiliteUCC.getDisponibilite();
   }
 
+  /**
+   * Create a disponibility.
+   *
+   * @param disponibiliteDTO containing the date and plage to insert
+   * @return the disponibility created
+   */
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)

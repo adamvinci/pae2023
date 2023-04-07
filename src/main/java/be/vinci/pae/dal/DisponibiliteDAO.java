@@ -1,7 +1,6 @@
 package be.vinci.pae.dal;
 
 import be.vinci.pae.business.dto.DisponibiliteDTO;
-import java.time.LocalDate;
 import java.util.List;
 
 /**
