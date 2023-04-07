@@ -57,7 +57,7 @@ public class DisponibiliteRessource {
     if (disponibiliteDTO.getDate() == null) {
       throw new WebApplicationException("Date required", Status.BAD_REQUEST);
     }
-    if(disponibiliteDTO.getDate().getDayOfWeek() != DayOfWeek.SATURDAY){
+    if (disponibiliteDTO.getDate().getDayOfWeek() != DayOfWeek.SATURDAY) {
       throw new WebApplicationException("The date has to be a sunday", Status.BAD_REQUEST);
     }
     if (disponibiliteDTO.getPlage() == null || disponibiliteDTO.getPlage().equals("")) {
