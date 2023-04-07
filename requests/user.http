@@ -155,6 +155,8 @@ GET {{baseUrl}}/auths/getPicture/14
 Authorization: {{adrienToken}}
 
 
-
+###
+GET {{baseUrl}}/users/1
+Authorization: {{aidantToken}}
 
 

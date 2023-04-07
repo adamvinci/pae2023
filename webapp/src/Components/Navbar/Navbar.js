@@ -4,6 +4,7 @@ import {getAuthenticatedUser,getToken} from '../../utils/auths';
 import HomePage from "../Pages/HomePage";
 
 const Navbar = () => {
+
   header();
   renderNavbar();
 };
