@@ -73,7 +73,7 @@ public class Main {
     JobDetail jobDetail = JobBuilder.newJob(MyJob.class).withIdentity("H", "group1").build();
     Trigger trigger = TriggerBuilder.newTrigger().withIdentity("simpleTrigger", "group1")
         .withSchedule(
-            SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(10).repeatForever())
+            SimpleScheduleBuilder.simpleSchedule().withIntervalInHours(24).repeatForever())
         .build();
     scheduler.scheduleJob(jobDetail, trigger);
     final HttpServer server = startServer();
