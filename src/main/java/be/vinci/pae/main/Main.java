@@ -54,11 +54,13 @@ public class Main {
     return GrizzlyHttpServerFactory.createHttpServer(URI.create(Config.getProperty("BaseUri")), rc);
   }
 
+
   /**
    * This is the main method which starts the Jersey application.
    *
    * @param args an array of command-line arguments for the application
    * @throws IOException IOException if an I/O error occurs while reading input from the console
+   * @throws SchedulerException if an error occurs while initialzing the scheduler
    */
   public static void main(String[] args) throws IOException, SchedulerException {
     new MyLogger();

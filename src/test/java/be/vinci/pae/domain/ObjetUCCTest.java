@@ -432,7 +432,8 @@ class ObjetUCCTest {
     objetDTO.setEtat("en vente");
     objetDTO.setDate_depot(LocalDate.of(2022, Month.APRIL, 1));
     objetDTOList.add(objetDTO);
-
     Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
+    objetUCC.retirerObjetVente(objetDTOList);
+    assertEquals("retirer",objetDTO.getEtat());
   }
 }

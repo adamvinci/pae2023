@@ -57,6 +57,8 @@ public interface Objet extends ObjetDTO {
    */
   Boolean vendreObjet();
 
-
+  /**
+   * Indicates whether this object is removable from sale.
+   */
   void retirerVente();
 }
