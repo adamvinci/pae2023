@@ -2,9 +2,9 @@ package be.vinci.pae.main;
 
 import be.vinci.pae.utils.ApplicationBinder;
 import be.vinci.pae.utils.Config;
-import be.vinci.pae.utils.scheduler.MyJob;
 import be.vinci.pae.utils.MyLogger;
 import be.vinci.pae.utils.WebExceptionMapper;
+import be.vinci.pae.utils.scheduler.MyJob;
 import be.vinci.pae.utils.scheduler.MyJobFactory;
 import java.io.IOException;
 import java.net.URI;
@@ -60,22 +60,21 @@ public class Main {
    * This is the main method which starts the Jersey application.
    *
    * @param args an array of command-line arguments for the application
-   * @throws IOException IOException if an I/O error occurs while reading input from the console
+   * @throws IOException        IOException if an I/O error occurs while reading input from the
+   *                            console
    * @throws SchedulerException if an error occurs while initialzing the scheduler
    */
   public static void main(String[] args) throws IOException, SchedulerException {
     new MyLogger();
-    JobDetail jobDetail = JobBuilder.newJob(MyJob.class).withIdentity("H", "group1").build();
 
+    Scheduler scheduler = new StdSchedulerFactory().getScheduler();
+    scheduler.setJobFactory(new MyJobFactory());
+    scheduler.start();
+    JobDetail jobDetail = JobBuilder.newJob(MyJob.class).withIdentity("H", "group1").build();
     Trigger trigger = TriggerBuilder.newTrigger().withIdentity("simpleTrigger", "group1")
         .withSchedule(
             SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(10).repeatForever())
         .build();
-    Scheduler scheduler = new StdSchedulerFactory().getScheduler();
-    scheduler.setJobFactory(new MyJobFactory());
-    scheduler.start();
-    scheduler.getContext()
-        .put("com.sun.jersey.spi.container.ContainerRequestFilters", new ApplicationBinder());
     scheduler.scheduleJob(jobDetail, trigger);
     final HttpServer server = startServer();
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,

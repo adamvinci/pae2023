@@ -26,7 +26,6 @@ public class MyJob implements Job {
    */
   @Override
   public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-    System.out.println("dzedze");
     List<ObjetDTO> objetDTOList = objetUCC.getAllObject().stream()
         .filter(objetDTO -> objetDTO.getEtat().equals("en vente"))
         .filter(objetDTO -> {
