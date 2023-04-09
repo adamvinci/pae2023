@@ -282,7 +282,8 @@ public class ObjetImpl implements Objet, ObjetDTO {
     long daysBetween = ChronoUnit.DAYS.between(getDate_depot(), LocalDate.now());
     if (daysBetween < 30) {
       throw new BusinessException(
-          "Impossible changement, to remove an object from sell it must be deposited for more than 30days");
+          "Impossible changement, to remove an object from "
+              + "sell it must be deposited for more than 30days");
     }
     setEtat("retirer");
     setDate_retrait(LocalDate.now());

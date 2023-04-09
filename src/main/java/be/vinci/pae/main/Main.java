@@ -2,7 +2,7 @@ package be.vinci.pae.main;
 
 import be.vinci.pae.utils.ApplicationBinder;
 import be.vinci.pae.utils.Config;
-import be.vinci.pae.utils.Job.MyJob;
+import be.vinci.pae.utils.job.MyJob;
 import be.vinci.pae.utils.MyLogger;
 import be.vinci.pae.utils.WebExceptionMapper;
 import java.io.IOException;

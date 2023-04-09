@@ -1,4 +1,4 @@
-package be.vinci.pae.utils.Job;
+package be.vinci.pae.utils.job;
 
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.ucc.ObjetUCC;

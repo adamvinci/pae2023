@@ -12,8 +12,6 @@ import be.vinci.pae.utils.MyLogger;
 import be.vinci.pae.utils.exception.ConflictException;
 import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.logging.Level;
@@ -218,7 +216,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       for (ObjetDTO objetDTO : listObjectToDelete) {
         Objet objet = (Objet) objetDTO;
         objet.retirerVente();
-       dataService.updateObjectState(objetDTO);
+        dataService.updateObjectState(objetDTO);
         Logger.getLogger(MyLogger.class.getName())
             .log(Level.INFO,
                 "Object " + objetDTO.getIdObjet() + " removed from sell");
@@ -230,7 +228,6 @@ public class ObjetUCCImpl implements ObjetUCC {
       throw e;
     }
   }
-
 
 
 }
