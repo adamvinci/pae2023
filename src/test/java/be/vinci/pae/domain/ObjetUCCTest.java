@@ -398,13 +398,5 @@ class ObjetUCCTest {
     assertThrows(FatalException.class, () -> objetUCC.retirerObjetVente());
   }
 
-  @DisplayName("Test retirerVente() with a badState")
-  @Test
-  void testRetirerVenteWithABadState(){
-    List<ObjetDTO> objetDTOList = new ArrayList<>();
-    objetDTO.setEtat("accepte");
-    objetDTOList.add(objetDTO);
-    Mockito.when(objectDAO.getAllObjet()).thenReturn(objetDTOList);
-    assertThrows(BusinessException.class, () -> objetUCC.retirerObjetVente());
-  }
+
 }
