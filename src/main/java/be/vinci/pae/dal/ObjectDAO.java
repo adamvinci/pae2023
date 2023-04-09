@@ -38,4 +38,6 @@ public interface ObjectDAO {
    * @return the objectDTO
    */
   ObjetDTO getOne(int id);
+
+
 }

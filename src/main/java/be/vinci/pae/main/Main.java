@@ -1,7 +1,9 @@
 package be.vinci.pae.main;
 
+import be.vinci.pae.business.ucc.ObjetUCCImpl;
 import be.vinci.pae.utils.ApplicationBinder;
 import be.vinci.pae.utils.Config;
+import be.vinci.pae.utils.Job.MyJob;
 import be.vinci.pae.utils.MyLogger;
 import be.vinci.pae.utils.WebExceptionMapper;
 import java.io.IOException;
@@ -12,6 +14,14 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.SimpleScheduleBuilder;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
+import org.quartz.impl.StdSchedulerFactory;
 
 /**
  * Launch the webserver and initialize the .propreties file.
@@ -51,8 +61,16 @@ public class Main {
    * @param args an array of command-line arguments for the application
    * @throws IOException IOException if an I/O error occurs while reading input from the console
    */
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws IOException, SchedulerException {
     new MyLogger();
+    JobDetail jobDetail = JobBuilder.newJob(MyJob.class).withIdentity("H","group1").build();
+
+    Trigger trigger = TriggerBuilder.newTrigger().withIdentity("simpleTrigger","group1")
+        .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(10).repeatForever()).build();
+    Scheduler scheduler = new StdSchedulerFactory().getScheduler();
+    scheduler.start();
+    scheduler.getContext().put("com.sun.jersey.spi.container.ContainerRequestFilters", new ApplicationBinder());
+    scheduler.scheduleJob(jobDetail,trigger);
     final HttpServer server = startServer();
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
         String.format("Jersey app started with WADL available at "

@@ -8,11 +8,16 @@ import be.vinci.pae.dal.NotificationDAO;
 import be.vinci.pae.dal.ObjectDAO;
 import be.vinci.pae.dal.TypeObjetDAO;
 import be.vinci.pae.dal.services.DALTransaction;
+import be.vinci.pae.utils.MyLogger;
 import be.vinci.pae.utils.exception.ConflictException;
 import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Implementation of {@link ObjetUCC}.
@@ -204,4 +209,35 @@ public class ObjetUCCImpl implements ObjetUCC {
     }
 
   }
+
+  @Override
+  public void retirerObjetVente() {
+    List<ObjetDTO> listObjectToDelete = getAllObject().stream()
+        .filter(objetDTO -> objetDTO.getEtat().equals("en vente"))
+        .filter(objetDTO -> {
+          long daysBetween = ChronoUnit.DAYS.between(objetDTO.getDate_depot(), LocalDate.now());
+          return daysBetween >= 30;
+        })
+        .toList();
+    try {
+      dal.startTransaction();
+      for (ObjetDTO objetDTO : listObjectToDelete) {
+        System.out.println(objetDTO.getIdObjet());
+        Objet objet = (Objet) objetDTO;
+        objet.retirerVente();
+        dataService.updateObjectState(objetDTO);
+        Logger.getLogger(MyLogger.class.getName())
+            .log(Level.INFO,
+                "Object " + objetDTO.getIdObjet() + " removed from sell");
+      }
+
+      dal.commitTransaction();
+    } catch (Exception e) {
+      dal.rollBackTransaction();
+      throw e;
+    }
+  }
+
+
+
 }

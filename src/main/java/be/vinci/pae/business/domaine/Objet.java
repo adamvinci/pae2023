@@ -56,4 +56,7 @@ public interface Objet extends ObjetDTO {
    * @return True if the object has been sold; false otherwise.
    */
   Boolean vendreObjet();
+
+
+  void retirerVente();
 }

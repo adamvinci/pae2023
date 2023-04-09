@@ -85,4 +85,9 @@ public interface ObjetUCC {
    * @return the object found.
    */
   ObjetDTO getOne(int id);
+
+  /**
+   * Each day verify if an object older than 30days need to be removed from sell.
+   */
+  void retirerObjetVente();
 }

@@ -390,4 +390,21 @@ class ObjetUCCTest {
     doThrow(new NoSuchElementException("exception")).when(objectDAO).updateObjectState(objetDTO);
     assertThrows(ConflictException.class, () -> objetUCC.mettreEnVente(objetDTO));
   }
+
+  @DisplayName("Test retirerVente() with a FatalException")
+  @Test
+  void testRetirerVenteWithAFatalException(){
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> objetUCC.retirerObjetVente());
+  }
+
+  @DisplayName("Test retirerVente() with a badState")
+  @Test
+  void testRetirerVenteWithABadState(){
+    List<ObjetDTO> objetDTOList = new ArrayList<>();
+    objetDTO.setEtat("accepte");
+    objetDTOList.add(objetDTO);
+    Mockito.when(objectDAO.getAllObjet()).thenReturn(objetDTOList);
+    assertThrows(BusinessException.class, () -> objetUCC.retirerObjetVente());
+  }
 }
