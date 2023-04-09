@@ -6,7 +6,6 @@ import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.utils.exception.BusinessException;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Objects;
@@ -281,7 +280,7 @@ public class ObjetImpl implements Objet, ObjetDTO {
           "Impossible changement, to remove an object from sell it state must be 'en vente'");
     }
     long daysBetween = ChronoUnit.DAYS.between(getDate_depot(), LocalDate.now());
-    if (daysBetween< 30) {
+    if (daysBetween < 30) {
       throw new BusinessException(
           "Impossible changement, to remove an object from sell it must be deposited for more than 30days");
     }

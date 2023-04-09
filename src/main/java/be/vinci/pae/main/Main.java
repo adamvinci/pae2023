@@ -1,6 +1,5 @@
 package be.vinci.pae.main;
 
-import be.vinci.pae.business.ucc.ObjetUCCImpl;
 import be.vinci.pae.utils.ApplicationBinder;
 import be.vinci.pae.utils.Config;
 import be.vinci.pae.utils.Job.MyJob;
@@ -63,18 +62,21 @@ public class Main {
    */
   public static void main(String[] args) throws IOException, SchedulerException {
     new MyLogger();
-    JobDetail jobDetail = JobBuilder.newJob(MyJob.class).withIdentity("H","group1").build();
+    JobDetail jobDetail = JobBuilder.newJob(MyJob.class).withIdentity("H", "group1").build();
 
-    Trigger trigger = TriggerBuilder.newTrigger().withIdentity("simpleTrigger","group1")
-        .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(10).repeatForever()).build();
+    Trigger trigger = TriggerBuilder.newTrigger().withIdentity("simpleTrigger", "group1")
+        .withSchedule(
+            SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(10).repeatForever())
+        .build();
     Scheduler scheduler = new StdSchedulerFactory().getScheduler();
     scheduler.start();
-    scheduler.getContext().put("com.sun.jersey.spi.container.ContainerRequestFilters", new ApplicationBinder());
-    scheduler.scheduleJob(jobDetail,trigger);
+    scheduler.getContext()
+        .put("com.sun.jersey.spi.container.ContainerRequestFilters", new ApplicationBinder());
+    scheduler.scheduleJob(jobDetail, trigger);
     final HttpServer server = startServer();
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
         String.format("Jersey app started with WADL available at "
-        + "%sapplication.wadl\nHit enter to stop it...", Config.getProperty("BaseUri")));
+            + "%sapplication.wadl\nHit enter to stop it...", Config.getProperty("BaseUri")));
     System.in.read();
     server.stop();
   }

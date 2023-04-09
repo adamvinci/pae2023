@@ -21,6 +21,9 @@ import be.vinci.pae.utils.ApplicationBinderMock;
 import be.vinci.pae.utils.exception.BusinessException;
 import be.vinci.pae.utils.exception.ConflictException;
 import be.vinci.pae.utils.exception.FatalException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -393,10 +396,32 @@ class ObjetUCCTest {
 
   @DisplayName("Test retirerVente() with a FatalException")
   @Test
-  void testRetirerVenteWithAFatalException(){
+  void testRetirerVenteWithAFatalException() {
+    List<ObjetDTO> objetDTOS = new ArrayList<>();
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
-    assertThrows(FatalException.class, () -> objetUCC.retirerObjetVente());
+    assertThrows(FatalException.class, () -> objetUCC.retirerObjetVente(objetDTOS));
   }
 
+  @DisplayName("Test retirerVente() with a badState")
+  @Test
+  void testRetirerVenteWithABadState() {
+    List<ObjetDTO> objetDTOList = new ArrayList<>();
+    objetDTO.setEtat("accepte");
+    objetDTOList.add(objetDTO);
+    assertThrows(BusinessException.class, () -> objetUCC.retirerObjetVente(objetDTOList),
+        "Impossible changement, to remove an object from sell "
+            + "it state must be 'en vente'Impossible changement, to remove an object from sell it state must be 'en vente'");
+  }
+
+  @DisplayName("Test retirerVente() with a good state but bad date")
+  @Test
+  void testRetirerVenteWithAGoodStateAndBadDate() {
+    List<ObjetDTO> objetDTOList = new ArrayList<>();
+    objetDTO.setEtat("en vente");
+    objetDTO.setDate_depot(LocalDate.now());
+    objetDTOList.add(objetDTO);
+    assertThrows(BusinessException.class, () -> objetUCC.retirerObjetVente(objetDTOList),
+        "Impossible changement, to remove an object from sell it must be deposited for more than 30days");
+  }
 
 }

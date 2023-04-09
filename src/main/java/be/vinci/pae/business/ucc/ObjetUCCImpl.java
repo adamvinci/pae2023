@@ -211,21 +211,14 @@ public class ObjetUCCImpl implements ObjetUCC {
   }
 
   @Override
-  public void retirerObjetVente() {
-    List<ObjetDTO> listObjectToDelete = getAllObject().stream()
-        .filter(objetDTO -> objetDTO.getEtat().equals("en vente"))
-        .filter(objetDTO -> {
-          long daysBetween = ChronoUnit.DAYS.between(objetDTO.getDate_depot(), LocalDate.now());
-          return daysBetween >= 30;
-        })
-        .toList();
+  public void retirerObjetVente(List<ObjetDTO> listObjectToDelete) {
+
     try {
       dal.startTransaction();
       for (ObjetDTO objetDTO : listObjectToDelete) {
-        System.out.println(objetDTO.getIdObjet());
         Objet objet = (Objet) objetDTO;
         objet.retirerVente();
-        dataService.updateObjectState(objetDTO);
+       dataService.updateObjectState(objetDTO);
         Logger.getLogger(MyLogger.class.getName())
             .log(Level.INFO,
                 "Object " + objetDTO.getIdObjet() + " removed from sell");
