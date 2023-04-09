@@ -1,4 +1,4 @@
-package be.vinci.pae.utils.job;
+package be.vinci.pae.utils.scheduler;
 
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.ucc.ObjetUCC;

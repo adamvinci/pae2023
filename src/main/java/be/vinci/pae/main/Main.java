@@ -2,9 +2,10 @@ package be.vinci.pae.main;
 
 import be.vinci.pae.utils.ApplicationBinder;
 import be.vinci.pae.utils.Config;
-import be.vinci.pae.utils.job.MyJob;
+import be.vinci.pae.utils.scheduler.MyJob;
 import be.vinci.pae.utils.MyLogger;
 import be.vinci.pae.utils.WebExceptionMapper;
+import be.vinci.pae.utils.scheduler.MyJobFactory;
 import java.io.IOException;
 import java.net.URI;
 import java.util.logging.Level;
@@ -71,6 +72,7 @@ public class Main {
             SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(10).repeatForever())
         .build();
     Scheduler scheduler = new StdSchedulerFactory().getScheduler();
+    scheduler.setJobFactory(new MyJobFactory());
     scheduler.start();
     scheduler.getContext()
         .put("com.sun.jersey.spi.container.ContainerRequestFilters", new ApplicationBinder());

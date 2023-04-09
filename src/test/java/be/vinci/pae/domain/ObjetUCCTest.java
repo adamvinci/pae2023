@@ -434,6 +434,6 @@ class ObjetUCCTest {
     objetDTOList.add(objetDTO);
     Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
     objetUCC.retirerObjetVente(objetDTOList);
-    assertEquals("retirer",objetDTO.getEtat());
+    assertEquals("retirer", objetDTO.getEtat());
   }
 }
