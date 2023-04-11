@@ -106,6 +106,9 @@ async function renderNavbar() {
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/TableauDeBord">TableauDeBord</a>
     </li>
+      <li class="nav-item">
+              <a class="nav-link" href="#" data-uri="/Statistiques">Statistiques</a>
+    </li>
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/venteObjet">Gérer la vente d'objets</a>
     </li>
