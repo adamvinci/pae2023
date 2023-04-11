@@ -10,6 +10,7 @@ import TableauDeBord from '../Pages/Helper/TableauDeBord';
 import VenteDobjet from '../Pages/Helper/VenteDobjet';
 import Membres from '../Pages/Responsable/Membres';
 import ObjetsPropose from '../Pages/Responsable/ObjetsPropose';
+import StatistiquePage from '../Pages/Helper/StatistiquesObjet'
 
 const routes = {
   '/': HomePage,
@@ -25,6 +26,7 @@ const routes = {
   '/venteObjet': VenteDobjet,
   '/Membres': Membres,
   '/ObjetsPropose': ObjetsPropose,
+  '/Statistiques' : StatistiquePage
 };
 
 export default routes;

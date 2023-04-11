@@ -67,17 +67,11 @@ public class ObjetRessource {
       throw new WebApplicationException("No object in the database", Status.NO_CONTENT);
     }
     UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
-    if (authenticatedUser != null && authenticatedUser.getRole().equals("responsable")) {
-      Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
-          "Retrieve the complete list of object from user " + authenticatedUser.getEmail());
-      return objetUCC.getAllObject();
-    }
 
-    Logger.getLogger(MyLogger.class.getName())
-        .log(Level.INFO, "Retrieve list of object located in store from aidant  "
-            + authenticatedUser.getEmail());
-    return objetUCC.getAllObject().stream()
-        .filter(objetDTO -> objetDTO.getEtat().equals("accepte")).toList();
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
+        "Retrieve the complete list of object from user " + authenticatedUser.getEmail());
+    return objetUCC.getAllObject();
+
   }
 
   /**
