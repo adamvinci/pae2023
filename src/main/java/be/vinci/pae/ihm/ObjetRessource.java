@@ -68,9 +68,9 @@ public class ObjetRessource {
     }
     UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
 
-      Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
-          "Retrieve the complete list of object from user " + authenticatedUser.getEmail());
-      return objetUCC.getAllObject();
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
+        "Retrieve the complete list of object from user " + authenticatedUser.getEmail());
+    return objetUCC.getAllObject();
 
   }
 
