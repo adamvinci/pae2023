@@ -56,4 +56,9 @@ public interface Objet extends ObjetDTO {
    * @return True if the object has been sold; false otherwise.
    */
   Boolean vendreObjet();
+
+  /**
+   * Indicates whether this object is removable from sale.
+   */
+  void retirerVente();
 }

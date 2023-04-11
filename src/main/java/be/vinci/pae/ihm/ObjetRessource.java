@@ -96,7 +96,7 @@ public class ObjetRessource {
         .log(Level.INFO, "Retrieve list of object located in store  ");
     return objetUCC.getAllObject().stream()
         .filter(objetDTO -> objetDTO.getLocalisation() != null && objetDTO.getLocalisation()
-            .equals("Magasin")).toList();
+            .equals("Magasin") && objetDTO.getDate_retrait() == null).toList();
   }
 
   /**
