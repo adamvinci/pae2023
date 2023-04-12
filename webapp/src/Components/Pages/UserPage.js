@@ -27,9 +27,7 @@ const UserPage = async () => {
                         <div class="d-flex flex-column align-items-center text-center">
                             <img src=${URL.createObjectURL(img)} alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
                             <div class="mt-3">
-                                <h4>John Doe</h4>
-                                <p class="text-secondary mb-1">Full Stack Developer</p>
-                                <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+                                <h4>${loggedUser.prenom} ${loggedUser.nom}</h4>
                             </div>
                         </div>
                     </div>
