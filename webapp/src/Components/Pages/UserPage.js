@@ -1,9 +1,12 @@
-import { getAuthenticatedUser } from "../../utils/auths";
+import Swal from "sweetalert2";
+import { getAuthenticatedUser, getToken } from "../../utils/auths";
 
+
+let userID;
 const UserPage = async () => {
-  const main = document.querySelector('main');
   const loggedUser = await getAuthenticatedUser();
-  console.log(loggedUser);
+  userID = loggedUser.id;
+  const main = document.querySelector('main');
   main.innerHTML = `<div class="container">
     <div class="main-body">
         <div class="row">
@@ -29,7 +32,7 @@ const UserPage = async () => {
                                 <h6 class="mb-0">Nom</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="text" class="form-control" value="${loggedUser.nom}">
+                                <input id="userName" type="text" class="form-control" value="${loggedUser.nom}">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -37,7 +40,7 @@ const UserPage = async () => {
                                 <h6 class="mb-0">Prénom</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="text" class="form-control" value="${loggedUser.prenom}">
+                                <input id="userFirstName" type="text" class="form-control" value="${loggedUser.prenom}">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -45,7 +48,7 @@ const UserPage = async () => {
                                 <h6 class="mb-0">Email</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="text" class="form-control" value="${loggedUser.email}">
+                                <input id="userEmail" type="text" class="form-control" value="${loggedUser.email}">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -53,7 +56,7 @@ const UserPage = async () => {
                                 <h6 class="mb-0">GSM</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="text" class="form-control" value="${loggedUser.gsm}">
+                                <input id="userGsm" type="text" class="form-control" value="${loggedUser.gsm}">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -76,7 +79,7 @@ const UserPage = async () => {
                         <div class="row">
                             <div class="col-sm-3"></div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="button" class="btn btn-primary px-4" value="Sauvegarder les changements">
+                                <input id="saveButton" type="button" class="btn btn-primary px-4" value="Sauvegarder les changements">
                             </div>
                         </div>
                     </div>
@@ -86,6 +89,46 @@ const UserPage = async () => {
     </div>
 </div>`;
 
+const saveButton = document.querySelector('#saveButton');
+saveButton.addEventListener('click', updateUser)
+
 };
 
+
+async function updateUser(e) {  
+    e.preventDefault();
+    const nom = document.querySelector('#userName').value;
+    const prenom = document.querySelector('#userFirstName').value;
+    const email = document.querySelector('#userEmail').value;
+    const gsm = document.querySelector('#userGsm').value;
+    const options = {
+        method: 'PUT',
+        body: JSON.stringify({
+            nom,
+            prenom,
+            email,
+            gsm
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization : getToken()
+        },
+      };
+    
+      const response = await fetch(`${process.env.API_BASE_URL}/users/${userID}`, options);
+      if (!response.ok) {
+        Swal.fire((await response.text()).valueOf())
+      }
+    
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: "Votre profil a été modifié avec succès",
+        showConfirmButton: false,
+        timer: 1500
+      })
+      UserPage(); // eslint-disable-line no-use-before-define
+
+    
+}
 export default UserPage;

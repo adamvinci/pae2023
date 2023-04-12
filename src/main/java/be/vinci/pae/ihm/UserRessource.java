@@ -133,6 +133,7 @@ public class UserRessource {
     String name = newUsersData.get("nom").asText();
     String firstName = newUsersData.get("prenom").asText();
     String gsm = newUsersData.get("gsm").asText();
+    System.out.println("ici" + email + gsm + name + firstName);
 
     if (email.isBlank() || email.isEmpty() || name.isBlank() || name.isEmpty()
         || firstName.isBlank() || firstName.isEmpty() || gsm.isBlank() || gsm.isEmpty()) {
