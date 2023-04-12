@@ -192,5 +192,6 @@ Content-Type: application/json
   "nom": "Lebron",
   "prenom": "James",
   "email": "lebron.james@nba.be",
-  "gsm": "            "
+  "gsm": "            ",
+  "image" : "efzerkogj"
 }

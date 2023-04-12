@@ -1,8 +1,8 @@
 import Swal from "sweetalert2";
 import { getAuthenticatedUser, getToken } from "../../utils/auths";
 
-
 let userID;
+
 const UserPage = async () => {
   const loggedUser = await getAuthenticatedUser();
   userID = loggedUser.id;
@@ -28,6 +28,10 @@ const UserPage = async () => {
                             <img src=${URL.createObjectURL(img)} alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
                             <div class="mt-3">
                                 <h4>${loggedUser.prenom} ${loggedUser.nom}</h4>
+                                <form>
+                                    <label>Modifier la photo</label>
+                                    <input type="file" name="myImage" accept=".png, .jpg, .jpeg"/>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -110,13 +114,28 @@ async function updateUser(e) {
     const prenom = document.querySelector('#userFirstName').value;
     const email = document.querySelector('#userEmail').value;
     const gsm = document.querySelector('#userGsm').value;
+    const fileInput = document.querySelector('input[name=myImage]');
+    let img;
+
+    if(fileInput.files[0] !== undefined){
+        img = fileInput.files[0].name;
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+        const options1 = {
+            method: 'POST',
+            body: formData
+        };
+        fetch(`${process.env.API_BASE_URL}/auths/upload`, options1);
+    }
+
     const options = {
         method: 'PUT',
         body: JSON.stringify({
             nom,
             prenom,
             email,
-            gsm
+            gsm,
+            image: img
         }),
         headers: {
           'Content-Type': 'application/json',

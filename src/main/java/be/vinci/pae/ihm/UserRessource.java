@@ -6,6 +6,7 @@ import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.ihm.filters.Authorize;
 import be.vinci.pae.ihm.filters.ResponsableAuthorization;
 import be.vinci.pae.ihm.filters.ResponsableOrAidant;
+import be.vinci.pae.utils.Config;
 import be.vinci.pae.utils.Json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -133,7 +134,6 @@ public class UserRessource {
     String name = newUsersData.get("nom").asText();
     String firstName = newUsersData.get("prenom").asText();
     String gsm = newUsersData.get("gsm").asText();
-    System.out.println("ici" + email + gsm + name + firstName);
 
     if (email.isBlank() || email.isEmpty() || name.isBlank() || name.isEmpty()
         || firstName.isBlank() || firstName.isEmpty() || gsm.isBlank() || gsm.isEmpty()) {
@@ -143,6 +143,10 @@ public class UserRessource {
     UserDTO userToChange = userUcc.getOne(id);
     if (userToChange == null) {
       throw new WebApplicationException("This user does not exist", Status.BAD_REQUEST);
+    }
+    if (newUsersData.hasNonNull("image")) {
+      userToChange.setImage(
+          Config.getProperty("pathToUserImage") + newUsersData.get("image").asText());
     }
     UserDTO changedUser = userUcc.update(userToChange, newUsersData);
     return changedUser;
