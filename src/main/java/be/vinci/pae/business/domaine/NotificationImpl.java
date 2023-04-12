@@ -12,6 +12,7 @@ public class NotificationImpl implements NotificationDTO {
   private int object;
   private String message;
   private String type;
+  private Boolean lue;
 
   private static final String[] POSSIBLE_TYPE = {"acceptation", "refus", "alerteProposition"};
 
@@ -41,6 +42,14 @@ public class NotificationImpl implements NotificationDTO {
 
   public String getType() {
     return type;
+  }
+
+  public Boolean getLue() {
+    return lue;
+  }
+
+  public void setLue(Boolean lue) {
+    this.lue = lue;
   }
 
   public void setType(String type) {

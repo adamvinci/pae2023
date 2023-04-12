@@ -3,6 +3,7 @@ package be.vinci.pae.business.ucc;
 import be.vinci.pae.business.dto.DisponibiliteDTO;
 import be.vinci.pae.dal.DisponibiliteDAO;
 import be.vinci.pae.dal.services.DALTransaction;
+import be.vinci.pae.utils.exception.ConflictException;
 import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
 import java.util.List;
@@ -50,4 +51,19 @@ public class DisponibiliteUCCImpl implements DisponibiliteUCC {
   }
 
 
+  @Override
+  public DisponibiliteDTO createOne(DisponibiliteDTO disponibiliteDTO1) {
+    try {
+      dal.startTransaction();
+      if (disponibiliteDAO.disponibilityExist(disponibiliteDTO1)) {
+        throw new ConflictException("This disponibilty already exist");
+      }
+      DisponibiliteDTO disponibiliteDTO = disponibiliteDAO.createOne(disponibiliteDTO1);
+      dal.commitTransaction();
+      return disponibiliteDTO;
+    } catch (FatalException e) {
+      dal.rollBackTransaction();
+      throw e;
+    }
+  }
 }

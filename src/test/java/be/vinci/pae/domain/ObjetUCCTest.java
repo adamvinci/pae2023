@@ -19,9 +19,13 @@ import be.vinci.pae.dal.TypeObjetDAO;
 import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.ApplicationBinderMock;
 import be.vinci.pae.utils.exception.BusinessException;
+import be.vinci.pae.utils.exception.ConflictException;
 import be.vinci.pae.utils.exception.FatalException;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.junit.jupiter.api.BeforeEach;
@@ -110,6 +114,7 @@ class ObjetUCCTest {
 
   }
 
+
   @DisplayName("Test getPicture() return null for an non existent id")
   @Test
   void testGetPictureReturnNull() {
@@ -197,6 +202,14 @@ class ObjetUCCTest {
 
   }
 
+  @DisplayName("Test accepterObject with a ConflictException")
+  @Test
+  void testAccepterPropositionWithConflictException() {
+    objetDTO.setEtat("proposer");
+    doThrow(new NoSuchElementException("exception")).when(objectDAO).updateObjectState(objetDTO);
+    assertThrows(ConflictException.class, () -> objetUCC.accepterObjet(objetDTO, notificationDTO));
+  }
+
   @DisplayName("Test refuserObject(ObjetDTO objetDTO, String message,"
       + " NotificationDTO notification) with a bad state")
   @Test
@@ -243,6 +256,15 @@ class ObjetUCCTest {
         () -> objetUCC.refuserObject(objetDTO, "refus", notificationDTO));
   }
 
+  @DisplayName("Test refuserObject with a ConflictException")
+  @Test
+  void testRefuserPropositionWithConflictException() {
+    objetDTO.setEtat("proposer");
+    doThrow(new NoSuchElementException("exception")).when(objectDAO).updateObjectState(objetDTO);
+    assertThrows(ConflictException.class, () -> objetUCC.refuserObject(objetDTO,
+        "message", notificationDTO));
+  }
+
   @DisplayName("Test vendreObject(ObjetDTO objetDTO) with a bad state")
   @Test
   void testVendreObjectWithBadState() {
@@ -266,6 +288,14 @@ class ObjetUCCTest {
   void testVendreObjectWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
     assertThrows(FatalException.class, () -> objetUCC.vendreObject(objetDTO));
+  }
+
+  @DisplayName("Test vendreObject with a ConflictException")
+  @Test
+  void testVendreObjectWithConflictException() {
+    objetDTO.setEtat("en vente");
+    doThrow(new NoSuchElementException("exception")).when(objectDAO).updateObjectState(objetDTO);
+    assertThrows(ConflictException.class, () -> objetUCC.vendreObject(objetDTO));
   }
 
   @DisplayName("Test depotObject(ObjetDTO objetDTO) with bad state")
@@ -312,6 +342,15 @@ class ObjetUCCTest {
     assertThrows(FatalException.class, () -> objetUCC.depotObject(objetDTO));
   }
 
+  @DisplayName("Test depotObject with a ConflictException")
+  @Test
+  void testDepotObjectWithConflictException() {
+    objetDTO.setEtat("accepte");
+    objetDTO.setLocalisation("Atelier");
+    doThrow(new NoSuchElementException("exception")).when(objectDAO).updateObjectState(objetDTO);
+    assertThrows(ConflictException.class, () -> objetUCC.depotObject(objetDTO));
+  }
+
   @DisplayName("Test mettreEnVente(ObjetDTO objetDTO) with a bad state")
   @Test
   void testMettreEnVenteWithABadState() {
@@ -343,5 +382,58 @@ class ObjetUCCTest {
   void testMettreEnVenteWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
     assertThrows(FatalException.class, () -> objetUCC.mettreEnVente(objetDTO));
+  }
+
+  @DisplayName("Test mettreEnVente with a ConflictException")
+  @Test
+  void testMettreEnVenteObjectWithConflictException() {
+    objetDTO.setEtat("accepte");
+    objetDTO.setLocalisation("Magasin");
+    doThrow(new NoSuchElementException("exception")).when(objectDAO).updateObjectState(objetDTO);
+    assertThrows(ConflictException.class, () -> objetUCC.mettreEnVente(objetDTO));
+  }
+
+  @DisplayName("Test retirerVente() with a FatalException")
+  @Test
+  void testRetirerVenteWithAFatalException() {
+    List<ObjetDTO> objetDTOS = new ArrayList<>();
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> objetUCC.retirerObjetVente(objetDTOS));
+  }
+
+  @DisplayName("Test retirerVente() with a badState")
+  @Test
+  void testRetirerVenteWithABadState() {
+    List<ObjetDTO> objetDTOList = new ArrayList<>();
+    objetDTO.setEtat("accepte");
+    objetDTOList.add(objetDTO);
+    assertThrows(BusinessException.class, () -> objetUCC.retirerObjetVente(objetDTOList),
+        "Impossible changement, to remove an object from sell "
+            + "it state must be 'en vente'Impossible changement, "
+            + "to remove an object from sell it state must be 'en vente'");
+  }
+
+  @DisplayName("Test retirerVente() with a good state but bad date")
+  @Test
+  void testRetirerVenteWithAGoodStateAndBadDate() {
+    List<ObjetDTO> objetDTOList = new ArrayList<>();
+    objetDTO.setEtat("en vente");
+    objetDTO.setDate_depot(LocalDate.now());
+    objetDTOList.add(objetDTO);
+    assertThrows(BusinessException.class, () -> objetUCC.retirerObjetVente(objetDTOList),
+        "Impossible changement, to remove an object "
+            + "from sell it must be deposited for more than 30days");
+  }
+
+  @DisplayName("Test retirerVente() with a good state and good date")
+  @Test
+  void testRetirerVenteWithAGoodStateAndGoodDate() {
+    List<ObjetDTO> objetDTOList = new ArrayList<>();
+    objetDTO.setEtat("en vente");
+    objetDTO.setDate_depot(LocalDate.of(2022, Month.APRIL, 1));
+    objetDTOList.add(objetDTO);
+    Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
+    objetUCC.retirerObjetVente(objetDTOList);
+    assertEquals("retirer", objetDTO.getEtat());
   }
 }

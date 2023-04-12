@@ -11,6 +11,20 @@ import java.time.LocalDate;
 public interface UserDTO {
 
   /**
+   * Return the version of the row.
+   *
+   * @return the version of the row
+   */
+  int getVersion();
+
+  /**
+   * Set the version of the row.
+   *
+   * @param version the version of the row
+   */
+  void setVersion(int version);
+
+  /**
    * Returns the ID of the user.
    *
    * @return the ID of the user

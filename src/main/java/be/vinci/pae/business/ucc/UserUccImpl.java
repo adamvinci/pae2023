@@ -8,6 +8,7 @@ import be.vinci.pae.utils.exception.ConflictException;
 import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 /**
@@ -105,15 +106,31 @@ public class UserUccImpl implements UserUcc {
       User user = (User) userToChange;
       if (user.changeToAdmin()) {
         dataService.update(userToChange);
+        userToChange.setVersion(userToChange.getVersion() + 1);
+        dal.commitTransaction();
         return userToChange;
       }
       return null;
+    } catch (Exception e) {
+      if (e instanceof NoSuchElementException) {
+        throw new ConflictException("Bad version number, retry");
+      }
+      dal.rollBackTransaction();
+      throw e;
+    }
+
+  }
+
+  @Override
+  public String getPicture(int id) {
+    try {
+      dal.startTransaction();
+      return dataService.getPicture(id);
     } catch (FatalException e) {
       dal.rollBackTransaction();
       throw e;
     } finally {
       dal.commitTransaction();
     }
-
   }
 }

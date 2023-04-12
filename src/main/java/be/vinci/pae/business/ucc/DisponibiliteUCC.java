@@ -23,4 +23,13 @@ public interface DisponibiliteUCC {
    * @return the disponibility
    */
   DisponibiliteDTO getOne(int id);
+
+
+  /**
+   * Create one disponibilty.
+   *
+   * @param disponibiliteDTO to create
+   * @return the created disponibility
+   */
+  DisponibiliteDTO createOne(DisponibiliteDTO disponibiliteDTO);
 }

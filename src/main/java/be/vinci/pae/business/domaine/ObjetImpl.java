@@ -6,6 +6,7 @@ import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.utils.exception.BusinessException;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -51,6 +52,16 @@ public class ObjetImpl implements Objet, ObjetDTO {
   private Double prix;
 
   private String localisation;
+
+  private int noVersion;
+
+  public int getNoVersion() {
+    return noVersion;
+  }
+
+  public void setNoVersion(int noVersion) {
+    this.noVersion = noVersion;
+  }
 
   @Override
   public int getIdObjet() {
@@ -260,5 +271,21 @@ public class ObjetImpl implements Objet, ObjetDTO {
     setEtat("vendu");
     setDate_vente(LocalDate.now());
     return true;
+  }
+
+  @Override
+  public void retirerVente() {
+    if (!Objects.equals(getEtat(), "en vente")) {
+      throw new BusinessException(
+          "Impossible changement, to remove an object from sell it state must be 'en vente'");
+    }
+    long daysBetween = ChronoUnit.DAYS.between(getDate_depot(), LocalDate.now());
+    if (daysBetween < 30) {
+      throw new BusinessException(
+          "Impossible changement, to remove an object from "
+              + "sell it must be deposited for more than 30days");
+    }
+    setEtat("retirer");
+    setDate_retrait(LocalDate.now());
   }
 }

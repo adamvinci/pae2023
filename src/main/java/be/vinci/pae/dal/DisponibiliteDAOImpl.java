@@ -5,6 +5,7 @@ import be.vinci.pae.business.factory.DisponibiliteFactory;
 import be.vinci.pae.dal.services.DALService;
 import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -78,6 +79,73 @@ public class DisponibiliteDAOImpl implements DisponibiliteDAO {
       throw new FatalException(e);
     }
     return disponibiliteDTOS;
+  }
+
+  @Override
+  public boolean disponibilityExist(DisponibiliteDTO disponibiliteDTO) {
+    String query = "SELECT id_disponibilite "
+        + "FROM projet.disponibilites"
+        + " WHERE date_disponibilite = (?) AND plage = (?)";
+
+    try (PreparedStatement statement = dalService.preparedStatement(query)) {
+      statement.setDate(1, Date.valueOf(disponibiliteDTO.getDate()));
+      statement.setInt(2, getPlageId(disponibiliteDTO.getPlage()));
+      try (ResultSet set = statement.executeQuery()) {
+        // check if resultset is empty (disponibility does not exist)
+        if (!set.isBeforeFirst()) {
+          return false;
+        }
+      }
+    } catch (SQLException e) {
+      throw new FatalException(e);
+    }
+    return true;
+  }
+
+  @Override
+  public DisponibiliteDTO createOne(DisponibiliteDTO disponibiliteDTO) {
+    String query = "INSERT INTO projet.disponibilites(date_disponibilite, plage) "
+        + "VALUES (?,?) RETURNING *";
+    try (PreparedStatement statement = dalService.preparedStatement(query)) {
+      statement.setDate(1, Date.valueOf(disponibiliteDTO.getDate()));
+      statement.setInt(2, getPlageId(disponibiliteDTO.getPlage()));
+      try (ResultSet set = statement.executeQuery()) {
+        if (!set.isBeforeFirst()) {
+          return null;
+        } else {
+          while (set.next()) {
+            disponibiliteDTO.setId(set.getInt(1));
+          }
+        }
+      }
+
+    } catch (SQLException e) {
+      throw new FatalException(e);
+    }
+    return disponibiliteDTO;
+  }
+
+  @Override
+  public int getPlageId(String plage) {
+    String query = "SELECT id_plage_horaire"
+        + " FROM projet.plages_horaires "
+        + "WHERE plage = (?)";
+    int id = 0;
+    try (PreparedStatement statement = dalService.preparedStatement(query)) {
+      statement.setString(1, plage);
+      try (ResultSet set = statement.executeQuery()) {
+        if (!set.isBeforeFirst()) {
+          return -1;
+        } else {
+          while (set.next()) {
+            id = set.getInt(1);
+          }
+        }
+      }
+    } catch (SQLException e) {
+      throw new FatalException(e);
+    }
+    return id;
   }
 }
 

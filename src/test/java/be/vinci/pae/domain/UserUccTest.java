@@ -20,6 +20,7 @@ import be.vinci.pae.utils.exception.FatalException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.junit.jupiter.api.BeforeEach;
@@ -194,6 +195,13 @@ class UserUccTest {
     assertThrows(FatalException.class, () -> userUcc.makeAdmin(userMemberSteven));
   }
 
+  @DisplayName("Test makeAdmin with a Conflict")
+  @Test
+  void makeAdminWithConflictException() {
+    doThrow(new NoSuchElementException("exception")).when(userDAO).update(userMemberSteven);
+    assertThrows(ConflictException.class, () -> userUcc.makeAdmin(userMemberSteven));
+  }
+
   @DisplayName("Test getAll() users with a non-empty list(resultset)")
   @Test
   void getAllUsersNonEmpty() {
@@ -220,5 +228,27 @@ class UserUccTest {
     assertThrows(FatalException.class, () -> userUcc.getAll());
   }
 
+  @DisplayName("Test getPicture() return null for an non existent id")
+  @Test
+  void testGetPictureReturnNull() {
+    Mockito.when(userDAO.getPicture(1)).thenReturn(null);
+    assertNull(userUcc.getPicture(1), "This user  does not exist");
+  }
+
+  @DisplayName("Test getPicture() return  a string for an  existent id")
+  @Test
+  void testGetPictureReturnPathToPicture() {
+    Mockito.when(userDAO.getPicture(1)).thenReturn("Path To Picture");
+    assertEquals("Path To Picture", userUcc.getPicture(1));
+
+  }
+
+  @DisplayName("Test getPicture()  with a FatalException")
+  @Test
+  void testGetPictureWithFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> userUcc.getPicture(1));
+
+  }
 
 }

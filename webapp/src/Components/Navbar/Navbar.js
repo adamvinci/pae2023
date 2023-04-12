@@ -4,6 +4,7 @@ import {getAuthenticatedUser,getToken} from '../../utils/auths';
 import HomePage from "../Pages/HomePage";
 
 const Navbar = () => {
+
   header();
   renderNavbar();
 };
@@ -40,6 +41,8 @@ function header(){
 
 async function renderNavbar() {
   const authenticatedUser = await getAuthenticatedUser();
+
+
 
   const navadd = `
   <div style=" justify-content: center; display: flex" >
@@ -88,18 +91,23 @@ async function renderNavbar() {
 
 
   if(getToken()){
+
+
     const member=document.getElementById('member');
     if(authenticatedUser?.role==='aidant' || authenticatedUser?.role==='responsable'){
     member.innerHTML+=`
     
     <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/Disponibilités">Disponibilités</a>
+              <a class="nav-link" href="#" data-uri="/Disponibilites">Disponibilités</a>
     </li>
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/ReceptionObjets">Dépôt d'objets</a>
     </li>
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/TableauDeBord">TableauDeBord</a>
+    </li>
+      <li class="nav-item">
+              <a class="nav-link" href="#" data-uri="/Statistiques">Statistiques</a>
     </li>
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/venteObjet">Gérer la vente d'objets</a>
@@ -129,6 +137,8 @@ async function renderNavbar() {
     <li class="nav-item">
               <a class="nav-link" >${authenticatedUser.prenom}</a>
     </li>
+    
+
     `;
     const bouttonCo = document.getElementById('bouttonCo');
     bouttonCo.innerHTML =`

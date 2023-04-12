@@ -10,6 +10,7 @@ import java.time.LocalDate;
 public class Disponibilite implements DisponibiliteDTO {
 
   private int id;
+
   private LocalDate date;
 
   private String plage;

@@ -13,7 +13,7 @@ import org.mindrot.jbcrypt.BCrypt;
  * Implementation of User.
  */
 @JsonInclude(Include.NON_DEFAULT)
-public class  UserImpl implements User {
+public class UserImpl implements User {
 
   @JsonView(Public.class)
   private static final String[] POSSIBLE_ROLE = {"responsable", "aidant", "membre"};
@@ -35,7 +35,16 @@ public class  UserImpl implements User {
   private String role;
   @JsonView(Public.class)
   private String gsm;
+  @JsonView(Public.class)
+  private int version;
 
+  public int getVersion() {
+    return version;
+  }
+
+  public void setVersion(int version) {
+    this.version = version;
+  }
 
   @Override
   public Integer getId() {

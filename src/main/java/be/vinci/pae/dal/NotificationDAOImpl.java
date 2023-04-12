@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implementation of {@link NotificationDAO}.
@@ -83,5 +85,30 @@ public class NotificationDAOImpl implements NotificationDAO {
     notificationDTO.setObject(object);
     notificationDTO.setMessage(message);
     notificationDTO.setType(type);
+  }
+
+  public List<NotificationDTO> findNotificationsByUser(int userId) {
+    try (PreparedStatement statement = dalService.preparedStatement(
+          "SELECT n.id_notification, n.objet, n.message, n.type, nu.lue " +
+              "FROM projet.notifications n " +
+              "JOIN projet.notifications_utilisateurs nu ON n.id_notification = nu.notification " +
+              "WHERE nu.utilisateur_notifie = ? " +
+              "ORDER BY n.id_notification DESC")){
+      statement.setInt(1, userId);
+      ResultSet rs = statement.executeQuery();
+      List<NotificationDTO> notifications = new ArrayList<>();
+      while (rs.next()) {
+        NotificationDTO notification = notificationFactory.getNotification();
+        notification.setId(rs.getInt("id_notification"));
+        notification.setObject(rs.getInt("objet"));
+        notification.setMessage(rs.getString("message"));
+        notification.setType(rs.getString("type"));
+        notification.setLue(rs.getBoolean("lue"));
+        notifications.add(notification);
+      }
+      return notifications;
+    } catch (SQLException e) {
+      throw new FatalException(e);
+    }
   }
 }
