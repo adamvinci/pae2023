@@ -137,7 +137,8 @@ public class UserRessource {
 
     if (email.isBlank() || email.isEmpty() || name.isBlank() || name.isEmpty()
         || firstName.isBlank() || firstName.isEmpty() || gsm.isBlank() || gsm.isEmpty()) {
-      throw new WebApplicationException("Last name, first name, email or gsm required", Status.BAD_REQUEST);
+      throw new WebApplicationException("Last name, first name, email or gsm required",
+          Status.BAD_REQUEST);
     }
     UserDTO userToChange = userUcc.getOne(id);
     if (userToChange == null) {
