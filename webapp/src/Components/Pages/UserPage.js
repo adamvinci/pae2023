@@ -7,6 +7,17 @@ const UserPage = async () => {
   const loggedUser = await getAuthenticatedUser();
   userID = loggedUser.id;
   const main = document.querySelector('main');
+
+  const options = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization : getToken()
+    },
+  };
+
+  const response = await fetch(`${process.env.API_BASE_URL}/auths/getPicture/${userID}`, options);
+  const img = await response.blob();
   main.innerHTML = `<div class="container">
     <div class="main-body">
         <div class="row">
@@ -14,7 +25,7 @@ const UserPage = async () => {
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="${loggedUser.image}" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                            <img src=${URL.createObjectURL(img)} alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
                             <div class="mt-3">
                                 <h4>John Doe</h4>
                                 <p class="text-secondary mb-1">Full Stack Developer</p>
