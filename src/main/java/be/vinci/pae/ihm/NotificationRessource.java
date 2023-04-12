@@ -43,7 +43,13 @@ public class NotificationRessource {
   @Path("/{id}")
   @Produces(MediaType.APPLICATION_JSON)
   public List<NotificationDTO> getAllNotificationsUser(@DefaultValue("-1") @PathParam("id") int id) {
-    return null;
+
+    if(notificationUCC.getAllNotificationByUser(id)==null){
+      return null;
+    }
+    Logger.getLogger(MyLogger.class.getName())
+        .log(Level.INFO, "get all notifications of user : " + id);
+    return notificationUCC.getAllNotificationByUser(id);
   }
 
 }
