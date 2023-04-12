@@ -10,7 +10,12 @@ import TableauDeBord from '../Pages/Helper/TableauDeBord';
 import VenteDobjet from '../Pages/Helper/VenteDobjet';
 import Membres from '../Pages/Responsable/Membres';
 import ObjetsPropose from '../Pages/Responsable/ObjetsPropose';
+<<<<<<< HEAD
 import StatistiquePage from '../Pages/Helper/StatistiquesObjet'
+=======
+import UserPage from "../Pages/UserPage";
+
+>>>>>>> 13a46b8c525838b1c9487eb7a0bf1123e24e6305
 
 const routes = {
   '/': HomePage,
@@ -26,7 +31,11 @@ const routes = {
   '/venteObjet': VenteDobjet,
   '/Membres': Membres,
   '/ObjetsPropose': ObjetsPropose,
+<<<<<<< HEAD
   '/Statistiques' : StatistiquePage
+=======
+  '/UserPage': UserPage,
+>>>>>>> 13a46b8c525838b1c9487eb7a0bf1123e24e6305
 };
 
 export default routes;
