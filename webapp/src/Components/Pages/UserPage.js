@@ -1,5 +1,9 @@
-const UserPage = () => {
+import { getAuthenticatedUser } from "../../utils/auths";
+
+const UserPage = async () => {
   const main = document.querySelector('main');
+  const loggedUser = await getAuthenticatedUser();
+  console.log(loggedUser);
   main.innerHTML = `<div class="container">
     <div class="main-body">
         <div class="row">
@@ -7,7 +11,7 @@ const UserPage = () => {
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                            <img src="${loggedUser.image}" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
                             <div class="mt-3">
                                 <h4>John Doe</h4>
                                 <p class="text-secondary mb-1">Full Stack Developer</p>
@@ -22,10 +26,18 @@ const UserPage = () => {
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Full Name</h6>
+                                <h6 class="mb-0">Nom</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="text" class="form-control" value="John Doe">
+                                <input type="text" class="form-control" value="${loggedUser.nom}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Prénom</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input type="text" class="form-control" value="${loggedUser.prenom}">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -33,37 +45,38 @@ const UserPage = () => {
                                 <h6 class="mb-0">Email</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="text" class="form-control" value="john@example.com">
+                                <input type="text" class="form-control" value="${loggedUser.email}">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Phone</h6>
+                                <h6 class="mb-0">GSM</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="text" class="form-control" value="(239) 816-9029">
+                                <input type="text" class="form-control" value="${loggedUser.gsm}">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Mobile</h6>
+                                <h6 class="mb-0">Rôle</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="text" class="form-control" value="(320) 380-4539">
+                            <input type="text" class="form-control" value="${loggedUser.role}" disabled="disabled">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Address</h6>
+                                <h6 class="mb-0">Date d'inscription </h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="text" class="form-control" value="Bay Area, San Francisco, CA">
+                                <input type="text" class="form-control" value="${loggedUser.dateInscription}" disabled="disabled">
                             </div>
                         </div>
+                    
                         <div class="row">
                             <div class="col-sm-3"></div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="button" class="btn btn-primary px-4" value="Save Changes">
+                                <input type="button" class="btn btn-primary px-4" value="Sauvegarder les changements">
                             </div>
                         </div>
                     </div>
