@@ -1,12 +1,13 @@
 package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.dto.UserDTO;
+import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 
 
 /**
- * UserUcc acts  as an orchestrator to allow {@link be.vinci.pae.ihm.AuthRessource} and
- * {@link be.vinci.pae.dal.UserDAO} layers to communicate.
+ * UserUcc acts  as an orchestrator to allow {@link be.vinci.pae.ihm.AuthRessource} and {@link
+ * be.vinci.pae.dal.UserDAO} layers to communicate.
  */
 public interface UserUcc {
 
@@ -60,4 +61,14 @@ public interface UserUcc {
    * @return the path of the picture
    */
   String getPicture(int id);
+
+
+  /**
+   * Update an user with new informations.
+   *
+   * @param userToChange the business object of the user who has to be changed
+   * @param newUsersData the potentially new user's informations
+   * @return the userDTO updated
+   */
+  UserDTO update(UserDTO userToChange, JsonNode newUsersData);
 }

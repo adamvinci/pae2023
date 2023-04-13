@@ -3,15 +3,20 @@ package be.vinci.pae.ihm;
 
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.ucc.UserUcc;
+import be.vinci.pae.ihm.filters.Authorize;
 import be.vinci.pae.ihm.filters.ResponsableAuthorization;
 import be.vinci.pae.ihm.filters.ResponsableOrAidant;
+import be.vinci.pae.utils.Config;
 import be.vinci.pae.utils.Json;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -74,7 +79,7 @@ public class UserRessource {
   /**
    * Change the role of a user to make him "aidant".
    *
-   * @param id of the object
+   * @param id of the user
    * @return a json object with the modified user.
    */
   @POST
@@ -86,6 +91,7 @@ public class UserRessource {
     if (id == -1) {
       throw new WebApplicationException("No content", Status.BAD_REQUEST);
     }
+
     UserDTO userToChange = userUcc.getOne(id);
     if (userToChange == null) {
       throw new WebApplicationException("This user does not exist", Status.BAD_REQUEST);
@@ -97,6 +103,53 @@ public class UserRessource {
               + "he already has the role 'aidant' or 'responsable'",
           412);
     }
+    return changedUser;
+  }
+
+
+  /**
+   * Update the informations of an user.
+   *
+   * @param id of the user
+   * @param newUsersData the new informations that the user typed in.
+   * @return a json object with the modified user.
+   */
+  @PUT
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/{id}")
+  @Authorize
+  public UserDTO update(JsonNode newUsersData,
+      @DefaultValue("-1") @PathParam("id") int id) {
+    if (id == -1) {
+      throw new WebApplicationException("No content", Status.BAD_REQUEST);
+    }
+
+    if (!newUsersData.hasNonNull("nom") || !newUsersData.hasNonNull("prenom")
+        || !newUsersData.hasNonNull("email") || !newUsersData.hasNonNull("gsm")) {
+      throw new WebApplicationException("Last name, first name, email and gsm required",
+          Status.BAD_REQUEST);
+    }
+
+    String email = newUsersData.get("email").asText();
+    String name = newUsersData.get("nom").asText();
+    String firstName = newUsersData.get("prenom").asText();
+    String gsm = newUsersData.get("gsm").asText();
+
+    if (email.isBlank() || email.isEmpty() || name.isBlank() || name.isEmpty()
+        || firstName.isBlank() || firstName.isEmpty() || gsm.isBlank() || gsm.isEmpty()) {
+      throw new WebApplicationException("Last name, first name, email and gsm required",
+          Status.BAD_REQUEST);
+    }
+    UserDTO userToChange = userUcc.getOne(id);
+    if (userToChange == null) {
+      throw new WebApplicationException("This user does not exist", Status.BAD_REQUEST);
+    }
+    if (newUsersData.hasNonNull("image")) {
+      userToChange.setImage(
+          Config.getProperty("pathToUserImage") + newUsersData.get("image").asText());
+    }
+    UserDTO changedUser = userUcc.update(userToChange, newUsersData);
     return changedUser;
   }
 }

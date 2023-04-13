@@ -6,6 +6,7 @@ import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.exception.ConflictException;
 import be.vinci.pae.utils.exception.FatalException;
+import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -133,4 +134,27 @@ public class UserUccImpl implements UserUcc {
       dal.commitTransaction();
     }
   }
+
+  @Override
+  public UserDTO update(UserDTO userToChange, JsonNode newUsersData) {
+    try {
+      dal.startTransaction();
+      userToChange.setEmail(newUsersData.get("email").asText());
+      userToChange.setGsm(newUsersData.get("gsm").asText());
+      userToChange.setNom(newUsersData.get("nom").asText());
+      userToChange.setPrenom(newUsersData.get("prenom").asText());
+      dataService.update(userToChange);
+      userToChange.setVersion(userToChange.getVersion() + 1);
+      dal.commitTransaction();
+      return userToChange;
+    } catch (Exception e) {
+      if (e instanceof NoSuchElementException) {
+        throw new ConflictException("Bad version number, retry");
+      }
+      dal.rollBackTransaction();
+      throw e;
+    }
+  }
+
+
 }

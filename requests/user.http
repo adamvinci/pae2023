@@ -169,3 +169,29 @@ Content-Type: application/json
 }
 
 
+
+###
+PUT {{baseUrl}}/users/2
+Authorization: {{memberToken}}
+Content-Type: application/json
+
+{
+  "nom": "Lebron",
+  "prenom": "James",
+  "email": "lebron.james@nba.be",
+  "gsm": "019849784-474"
+}
+
+
+###
+PUT {{baseUrl}}/users/2
+Authorization: {{memberToken}}
+Content-Type: application/json
+
+{
+  "nom": "Lebron",
+  "prenom": "James",
+  "email": "lebron.james@nba.be",
+  "gsm": "            ",
+  "image" : "efzerkogj"
+}
