@@ -111,6 +111,7 @@ public class UserRessource {
    * Update the informations of an user.
    *
    * @param id of the user
+   * @param newUsersData the new informations that the user typed in.
    * @return a json object with the modified user.
    */
   @PUT
