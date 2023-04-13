@@ -17,6 +17,9 @@ import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.ApplicationBinderMock;
 import be.vinci.pae.utils.exception.ConflictException;
 import be.vinci.pae.utils.exception.FatalException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +90,8 @@ class UserUccTest {
 
     Mockito.when(userDAO.getOne(1)).thenReturn(userMemberSteven);
     Mockito.when(userDAO.getOne("steven.agbassah@student.vinci.be")).thenReturn(userMemberSteven);
+
+
   }
 
   @DisplayName("Test login(String email, String password) w ith good email and good password")
@@ -250,5 +255,37 @@ class UserUccTest {
     assertThrows(FatalException.class, () -> userUcc.getPicture(1));
 
   }
+
+
+  @DisplayName("Test update with a Conflict")
+  @Test
+  void updateWithAConflict() {
+    ObjectMapper objectMapper = new ObjectMapper();
+    JsonNode userData = objectMapper.createObjectNode();
+    ((ObjectNode) userData).put("nom", "Lebron");
+    ((ObjectNode) userData).put("prenom", "James");
+    ((ObjectNode) userData).put("email", "lebron.james@nba.be");
+    ((ObjectNode) userData).put("gsm", "123");
+    doThrow(new NoSuchElementException("exception")).when(userDAO).update(userMemberSteven);
+    assertThrows(ConflictException.class, () -> userUcc.update(userMemberSteven, userData));
+  }
+
+
+  @DisplayName("Test update ")
+  @Test
+  void TestUpdate() {
+    ObjectMapper objectMapper = new ObjectMapper();
+    JsonNode userData = objectMapper.createObjectNode();
+    ((ObjectNode) userData).put("nom", "Lebron");
+    ((ObjectNode) userData).put("prenom", "James");
+    ((ObjectNode) userData).put("email", "lebron.james@nba.be");
+    ((ObjectNode) userData).put("gsm", "123");
+
+    assertEquals(userMemberSteven.getNom(), "Agbassah");
+    assertNotNull(userUcc.update(userMemberSteven, userData));
+    assertEquals(userMemberSteven.getNom(), "Lebron");
+  }
+
+
 
 }
