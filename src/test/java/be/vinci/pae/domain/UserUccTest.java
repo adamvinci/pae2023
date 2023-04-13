@@ -273,7 +273,7 @@ class UserUccTest {
 
   @DisplayName("Test update ")
   @Test
-  void TestUpdate() {
+  void testUpdate() {
     ObjectMapper objectMapper = new ObjectMapper();
     JsonNode userData = objectMapper.createObjectNode();
     ((ObjectNode) userData).put("nom", "Lebron");
@@ -284,6 +284,19 @@ class UserUccTest {
     assertEquals(userMemberSteven.getNom(), "Agbassah");
     assertNotNull(userUcc.update(userMemberSteven, userData));
     assertEquals(userMemberSteven.getNom(), "Lebron");
+  }
+
+  @DisplayName("Test update with a FatalException")
+  @Test
+  void updateWithFatalException() {
+    ObjectMapper objectMapper = new ObjectMapper();
+    JsonNode userData = objectMapper.createObjectNode();
+    ((ObjectNode) userData).put("nom", "Lebron");
+    ((ObjectNode) userData).put("prenom", "James");
+    ((ObjectNode) userData).put("email", "lebron.james@nba.be");
+    ((ObjectNode) userData).put("gsm", "123");
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> userUcc.update(userMemberSteven, userData));
   }
 
 
