@@ -126,7 +126,7 @@ public class UserRessource {
 
     if (!newUsersData.hasNonNull("nom") || !newUsersData.hasNonNull("prenom")
         || !newUsersData.hasNonNull("email") || !newUsersData.hasNonNull("gsm")) {
-      throw new WebApplicationException("Last name, first name, email or gsm required",
+      throw new WebApplicationException("Last name, first name, email and gsm required",
           Status.BAD_REQUEST);
     }
 
@@ -137,7 +137,7 @@ public class UserRessource {
 
     if (email.isBlank() || email.isEmpty() || name.isBlank() || name.isEmpty()
         || firstName.isBlank() || firstName.isEmpty() || gsm.isBlank() || gsm.isEmpty()) {
-      throw new WebApplicationException("Last name, first name, email or gsm required",
+      throw new WebApplicationException("Last name, first name, email and gsm required",
           Status.BAD_REQUEST);
     }
     UserDTO userToChange = userUcc.getOne(id);

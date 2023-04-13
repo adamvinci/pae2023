@@ -40,12 +40,13 @@ const UserPage = async () => {
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-body">
+                    <form id="userForm">
                         <div class="row mb-3">
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Nom</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input id="userName" type="text" class="form-control" value="${loggedUser.nom}">
+                                <input id="userName" type="text" class="form-control" value="${loggedUser.nom}" required>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -53,7 +54,7 @@ const UserPage = async () => {
                                 <h6 class="mb-0">Prénom</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input id="userFirstName" type="text" class="form-control" value="${loggedUser.prenom}">
+                                <input id="userFirstName" type="text" class="form-control" value="${loggedUser.prenom}" required>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -61,7 +62,7 @@ const UserPage = async () => {
                                 <h6 class="mb-0">Email</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input id="userEmail" type="text" class="form-control" value="${loggedUser.email}">
+                                <input id="userEmail" type="text" class="form-control" value="${loggedUser.email}" required>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -69,7 +70,7 @@ const UserPage = async () => {
                                 <h6 class="mb-0">GSM</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input id="userGsm" type="text" class="form-control" value="${loggedUser.gsm}">
+                                <input id="userGsm" type="text" class="form-control" value="${loggedUser.gsm}" required>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -92,9 +93,10 @@ const UserPage = async () => {
                         <div class="row">
                             <div class="col-sm-3"></div>
                             <div class="col-sm-9 text-secondary">
-                                <input id="saveButton" type="button" class="btn btn-primary px-4" value="Sauvegarder les changements">
+                                <button id="saveButton" type="submit" class="btn btn-primary px-4">Sauvegarder les changements</button>
                             </div>
                         </div>
+                    </form>
                     </div>
                 </div>
             </div>
@@ -102,8 +104,8 @@ const UserPage = async () => {
     </div>
 </div>`;
 
-const saveButton = document.querySelector('#saveButton');
-saveButton.addEventListener('click', updateUser)
+const userForm = document.querySelector('#userForm');
+userForm.addEventListener('submit', updateUser)
 
 };
 
@@ -146,7 +148,7 @@ async function updateUser(e) {
       const response = await fetch(`${process.env.API_BASE_URL}/users/${userID}`, options);
       if (!response.ok) {
         Swal.fire((await response.text()).valueOf())
-      }
+      }else{
     
       Swal.fire({
         position: 'top-end',
@@ -155,6 +157,7 @@ async function updateUser(e) {
         showConfirmButton: false,
         timer: 1500
       })
+    }
       UserPage(); // eslint-disable-line no-use-before-define
 
     
