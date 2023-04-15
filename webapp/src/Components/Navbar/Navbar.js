@@ -74,6 +74,9 @@ async function renderNavbar() {
               <li id="registerItem" class="nav-item">
               <a class="nav-link"  href="#" data-uri="">Proposer un objet </a>
             </li>  
+            <li id="registerItem" class="nav-item">
+              <a class="nav-link"  href="#" data-uri="/UserPage">UserPage</a>
+            </li>  
           </ul>
         </div>
       </div>
