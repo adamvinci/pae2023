@@ -1,20 +1,14 @@
 package be.vinci.pae.ihm;
 
 import be.vinci.pae.business.dto.NotificationDTO;
+import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.ucc.NotificationUCC;
 import be.vinci.pae.utils.MyLogger;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DefaultValue;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -40,7 +34,7 @@ public class NotificationRessource {
   private NotificationFactory notificationFactory;
 
   @GET
-  @Path("/{id}")
+  @Path("/userNotifications/{id}")
   @Produces(MediaType.APPLICATION_JSON)
   public List<NotificationDTO> getAllNotificationsUser(@DefaultValue("-1") @PathParam("id") int id) {
 
@@ -52,4 +46,28 @@ public class NotificationRessource {
     return notificationUCC.getAllNotificationByUser(id);
   }
 
+  @POST
+  @Path("/marquerRead/{id}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public NotificationDTO markRead(@DefaultValue("-1") @PathParam("id") int id,JsonNode json){
+    if (!json.hasNonNull("utilisateur")) {
+      throw new WebApplicationException("utilisateur required", Status.BAD_REQUEST);
+    }
+    int utilisateur = json.get("utilisateur").intValue();
+
+    if (utilisateur<=0) {
+      throw new WebApplicationException("utilisateur required", Status.BAD_REQUEST);
+    }
+    NotificationDTO retrievedNotification = notificationUCC.getOne(id);
+    if (retrievedNotification == null) {
+      throw new WebApplicationException("This utilisateur does not exist", Status.NOT_FOUND);
+    }
+    NotificationDTO changedNotification = notificationUCC.setLueNotification(retrievedNotification,utilisateur);
+    if (changedNotification == null) {
+      throw new WebApplicationException("\"Impossible changement, to Lue an notification ", 412);
+    }
+    Logger.getLogger(MyLogger.class.getName())
+            .log(Level.INFO, "Mark Read the Notification : " + id + " for the user : "+utilisateur);
+    return changedNotification;
+  }
 }

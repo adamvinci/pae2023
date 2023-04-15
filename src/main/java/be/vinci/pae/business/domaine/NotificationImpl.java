@@ -2,6 +2,7 @@ package be.vinci.pae.business.domaine;
 
 import be.vinci.pae.business.dto.NotificationDTO;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Implementation of {@link NotificationDTO}.
@@ -54,5 +55,8 @@ public class NotificationImpl implements NotificationDTO {
 
   public void setType(String type) {
     this.type = Arrays.stream(POSSIBLE_TYPE).filter(s -> s.equals(type)).findFirst().orElse(null);
+  }
+  public void setLueTrue(){
+    setLue(true);
   }
 }
