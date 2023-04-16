@@ -143,49 +143,87 @@ async function renderNavbar() {
     
 
     `;
-    const bouttonCo = document.getElementById('bouttonCo');
-    bouttonCo.innerHTML =`
-  <div class="notification-container">
-    <button class="notification-button" id="notification-btn">
-      <span class="notification-icon"><i class="fa fa-bell"></i></span>
-      <span class="notification-text">Notification</span>
-      <span class="notification-count" id="notification-count">3</span>
-    </button>
-    <div class="notification-dropdown" id="notification-dropdown">
-      <ul>
-        <li class="notification-item unread">Nouvelle notification 1</li>
-        <li class="notification-item read">Notification lue 1</li>
-        <li class="notification-item unread">Nouvelle notification 2</li>
-        <li class="notification-item unread">Nouvelle notification 3</li>
-        <li class="notification-item read">Notification lue 2</li>
-      </ul>
-    </div>
-  </div>    
-`;
+    let notifications=[];
+    const boutNotif =()=> {
 
-    const notificationBtn = document.getElementById("notification-btn");
-    const notificationDropdown = document.getElementById("notification-dropdown");
+      const nonLues = notifications.filter(notification => !notification.lue);
+      let nbNonLues = nonLues.length;
+      const bouttonCo = document.getElementById('bouttonCo');
+      bouttonCo.innerHTML = `
+        <div class="notification-container">
+          <button class="notification-button" id="notification-btn">
+            <span class="notification-icon"><i class="fa fa-bell"></i></span>
+            <span class="notification-text">Notification</span>
+            <span class="notification-count" id="notification-count">${nbNonLues}</span>
+          </button>
+          <div class="notification-dropdown" id="notification-dropdown">
+          <ul id="notification-list"></ul>
+          </div>
+        </div>
+        `;
 
-    notificationBtn.addEventListener("click", () => {
-      notificationDropdown.classList.toggle("show");
+      const notificationBtn = document.getElementById("notification-btn");
+      const notificationDropdown = document.getElementById("notification-dropdown");
+      const notificationList = document.getElementById("notification-list");
 
-      if (notificationDropdown.classList.contains("show")) {
-        document.getElementById("notification-count").innerHTML = "0";
-        const unreadNotifications = document.querySelectorAll(".unread");
+      notificationBtn.addEventListener("click", async () => {
+        notificationDropdown.classList.toggle("show");
 
-        unreadNotifications.forEach((n) => {
-          n.classList.remove("unread");
-        });
+        if (notificationDropdown.classList.contains("show")) {
 
-        const notificationItems = document.querySelectorAll(".notification-item");
+          notificationList.innerHTML = notifications.map(notification => {
+            const isRead = notification.lue;
+            const classList = isRead ? "notification-item read" : "notification-item unread";
+            return `<li class="${classList}" data-notification-id="${notification.id}">${notification.message}</li>`;
+          }).join('');
 
-        notificationItems.forEach((item) => {
-          item.addEventListener("click", () => {
-            item.classList.remove("unread");
+          // Appel API pour marquer la notification comme lue lorsque l'utilisateur clique dessus
+          const notificationItems = document.querySelectorAll(".notification-item");
+
+          notificationItems.forEach((item) => {
+            item.addEventListener("click", async () => {
+              if (!item.classList.contains("read")) {
+                const {dataset: {notificationId}} = item;
+                const utilisateur = authenticatedUser?.id;
+                const options = {
+                  method: 'POST',
+                  body: JSON.stringify({
+                    utilisateur,
+                  }),
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                };
+
+
+                const response = await fetch(`${process.env.API_BASE_URL}/notification/marquerRead/${notificationId}`, options);
+
+                const updatedNotification = await response.json();
+                if (updatedNotification != null) {
+                  const notificationIndex = notifications.findIndex(notification => notification.id === updatedNotification.id);
+                  if (notificationIndex !== -1) {
+                    notifications[notificationIndex].lue = true;
+                  }
+                  const notificationCount = document.getElementById("notification-count");
+                  nbNonLues-=1;
+                  notificationCount.innerText = nbNonLues;
+                  item.classList.remove("unread");
+                  item.classList.add("read");
+
+                }
+              }
+            });
           });
-        });
-      }
-    });
+        }
+      });
+    }
+    const recupererMessages= async()=>{
+      const responsee = await fetch(`${process.env.API_BASE_URL}/notification/userNotifications/${authenticatedUser?.id}`);
+      notifications = await responsee.json();
+      boutNotif();
+    }
+    recupererMessages();
+
   }
   else{
     const bouttonCo = document.getElementById('bouttonCo');
