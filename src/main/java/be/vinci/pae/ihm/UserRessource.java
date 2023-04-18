@@ -110,7 +110,7 @@ public class UserRessource {
   /**
    * Update the informations of an user.
    *
-   * @param id of the user
+   * @param id           of the user
    * @param newUsersData the new informations that the user typed in.
    * @return a json object with the modified user.
    */
@@ -135,6 +135,24 @@ public class UserRessource {
     String name = newUsersData.get("nom").asText();
     String firstName = newUsersData.get("prenom").asText();
     String gsm = newUsersData.get("gsm").asText();
+    String password = newUsersData.get("password").asText();
+    String confirmPassword = newUsersData.get("confirmPassword").asText();
+
+    if (newUsersData.hasNonNull("password") && (password.isBlank() || password.isEmpty())) {
+      throw new WebApplicationException("Can't replace your password by a blank/empty password",
+          Status.BAD_REQUEST);
+    }
+
+    if (password.isBlank() != confirmPassword.isBlank()) {
+      throw new WebApplicationException(
+          "If you want to change your password, the 3 related inputs must be filled",
+          Status.BAD_REQUEST);
+    }
+
+    if (!password.equals(confirmPassword)) {
+      throw new WebApplicationException("The new password and its confirmation are not the same.",
+          Status.BAD_REQUEST);
+    }
 
     if (email.isBlank() || email.isEmpty() || name.isBlank() || name.isEmpty()
         || firstName.isBlank() || firstName.isEmpty() || gsm.isBlank() || gsm.isEmpty()) {

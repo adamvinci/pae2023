@@ -143,6 +143,11 @@ public class UserUccImpl implements UserUcc {
       userToChange.setGsm(newUsersData.get("gsm").asText());
       userToChange.setNom(newUsersData.get("nom").asText());
       userToChange.setPrenom(newUsersData.get("prenom").asText());
+      String password = newUsersData.get("password").asText();
+      User user = (User) userToChange;
+      if (!password.isEmpty() && !password.isBlank()) {
+        userToChange.setPassword(user.hashPassword(password));
+      }
       dataService.update(userToChange);
       userToChange.setVersion(userToChange.getVersion() + 1);
       dal.commitTransaction();

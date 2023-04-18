@@ -142,21 +142,6 @@ async function updateUser(e) {
     const confirmPassword = document.querySelector('#confirmPassword').value;
     const fileInput = document.querySelector('input[name=myImage]');
 
-    if(password !== confirmPassword) {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: "Les deux mots de passe ne sont pas identiques",
-            showConfirmButton: true,
-          });
-        }else{
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: "Les deux mots de passe sont identiques",
-            showConfirmButton: true,
-          })
-
     let img;
 
     if(fileInput.files[0] !== undefined){
@@ -179,6 +164,7 @@ async function updateUser(e) {
             gsm,
             image: img,
             password,
+            confirmPassword 
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -199,9 +185,7 @@ async function updateUser(e) {
         timer: 1500
       })
     }
-}
-      UserPage(); // eslint-disable-line no-use-before-define
-
-    
+    UserPage(); // eslint-disable-line no-use-before-define
+  
 }
 export default UserPage;
