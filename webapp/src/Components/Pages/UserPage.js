@@ -1,10 +1,16 @@
 import Swal from "sweetalert2";
 import { getAuthenticatedUser, getToken } from "../../utils/auths";
+import Navigate from "../Router/Navigate";
+
 
 let userID;
 
 const UserPage = async () => {
   const loggedUser = await getAuthenticatedUser();
+  if(loggedUser === undefined) {
+    Navigate('/');
+    return;
+  }
   userID = loggedUser.id;
   const main = document.querySelector('main');
 
@@ -70,7 +76,23 @@ const UserPage = async () => {
                                 <h6 class="mb-0">GSM</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input id="userGsm" type="text" class="form-control" value="${loggedUser.gsm}" required>
+                                <input id="userGsm" type="number" class="form-control" value="${loggedUser.gsm}" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Nouveau mot de passe </h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input id="userPassword" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Confimer nouveau mot de passe</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input id="confirmPassword" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -116,7 +138,25 @@ async function updateUser(e) {
     const prenom = document.querySelector('#userFirstName').value;
     const email = document.querySelector('#userEmail').value;
     const gsm = document.querySelector('#userGsm').value;
+    const password = document.querySelector('#userPassword').value;
+    const confirmPassword = document.querySelector('#confirmPassword').value;
     const fileInput = document.querySelector('input[name=myImage]');
+
+    if(password !== confirmPassword) {
+        Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: "Les deux mots de passe ne sont pas identiques",
+            showConfirmButton: true,
+          });
+        }else{
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: "Les deux mots de passe sont identiques",
+            showConfirmButton: true,
+          })
+
     let img;
 
     if(fileInput.files[0] !== undefined){
@@ -137,7 +177,8 @@ async function updateUser(e) {
             prenom,
             email,
             gsm,
-            image: img
+            image: img,
+            password,
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -158,6 +199,7 @@ async function updateUser(e) {
         timer: 1500
       })
     }
+}
       UserPage(); // eslint-disable-line no-use-before-define
 
     
