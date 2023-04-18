@@ -128,6 +128,7 @@ const Membres = async () => {
   const user = await getAuthenticatedUser();
   if(user === undefined ||  user.role !== "responsable" ) {
     Navigate('/');
+    return;
   }
   const main = document.querySelector('main');
   main.innerHTML = `<h3>Listes utilisateurs</h3>`;
