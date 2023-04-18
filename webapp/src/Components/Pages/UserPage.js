@@ -81,6 +81,22 @@ const UserPage = async () => {
                         </div>
                         <div class="row mb-3">
                             <div class="col-sm-3">
+                                <h6 class="mb-0">Nouveau mot de passe </h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input id="password" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Confimer nouveau mot de passe</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input id="confirmPassword" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
                                 <h6 class="mb-0">Rôle</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
