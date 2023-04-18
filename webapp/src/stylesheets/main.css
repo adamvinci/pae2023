@@ -88,9 +88,11 @@ button {
 }
 
 #imgCarousel {
-  width: 100%;
+  width: auto;
   height: 700px;
   cursor: pointer;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 
