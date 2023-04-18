@@ -184,14 +184,12 @@ async function renderNavbar() {
             item.addEventListener("click", async () => {
               if (!item.classList.contains("read")) {
                 const {dataset: {notificationId}} = item;
-                const utilisateur = authenticatedUser?.id;
                 const options = {
                   method: 'POST',
-                  body: JSON.stringify({
-                    utilisateur,
-                  }),
+                  body: JSON.stringify({}),
                   headers: {
                     'Content-Type': 'application/json',
+                    Authorization : getToken(),
                   },
                 };
 
@@ -218,6 +216,7 @@ async function renderNavbar() {
       });
     }
     const recupererMessages= async()=>{
+
       const responsee = await fetch(`${process.env.API_BASE_URL}/notification/userNotifications/${authenticatedUser?.id}`);
       notifications = await responsee.json();
       boutNotif();
