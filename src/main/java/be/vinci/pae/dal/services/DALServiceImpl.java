@@ -55,8 +55,6 @@ public class DALServiceImpl implements DALService, DALTransaction {
   }
 
 
-
-
   /**
    * Starts a new transaction by getting a new connection from the database and disabling
    * auto-commit.
@@ -84,7 +82,7 @@ public class DALServiceImpl implements DALService, DALTransaction {
     try {
       Connection connex = null;
       if ((connex = conn.get()) == null) {
-        throw new FatalException("Pas de connexion");
+        return;
       }
       connex.commit();
     } catch (SQLException e) {
