@@ -37,10 +37,12 @@ public class NotificationRessource {
 
   @Authorize
   @GET
-  @Path("/userNotifications/{id}")
+  @Path("/userNotifications")
   @Produces(MediaType.APPLICATION_JSON)
-  public List<NotificationDTO> getAllNotificationsUser(@DefaultValue("-1") @PathParam("id") int id) {
+  public List<NotificationDTO> getAllNotificationsUser(@Context ContainerRequest request) {
 
+    UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
+    int id= authenticatedUser.getId();
     if(notificationUCC.getAllNotificationByUser(id)==null){
       return null;
     }

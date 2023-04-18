@@ -216,8 +216,15 @@ async function renderNavbar() {
       });
     }
     const recupererMessages= async()=>{
-
-      const responsee = await fetch(`${process.env.API_BASE_URL}/notification/userNotifications/${authenticatedUser?.id}`);
+      const optionsGET = {
+        method: 'GET',
+        body: JSON.stringify(),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: getToken(),
+        },
+      };
+      const responsee = await fetch(`${process.env.API_BASE_URL}/notification/userNotifications`,optionsGET);
       notifications = await responsee.json();
       boutNotif();
     }
