@@ -159,7 +159,7 @@ async function renderNavbar() {
           <div class="notification-dropdown" id="notification-dropdown">
           <ul id="notification-list"></ul>
           </div>
-        </div>
+        </div>  
         `;
 
       const notificationBtn = document.getElementById("notification-btn");

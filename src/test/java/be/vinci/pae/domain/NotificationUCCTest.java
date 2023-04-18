@@ -1,10 +1,11 @@
 package be.vinci.pae.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doThrow;
 
 import be.vinci.pae.business.dto.NotificationDTO;
-import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.ucc.NotificationUCC;
 import be.vinci.pae.dal.NotificationDAO;
@@ -21,6 +22,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 class NotificationUCCTest {
+
   private ServiceLocator locator = ServiceLocatorUtilities.bind(new ApplicationBinderMock());
   private NotificationUCC notificationUCC;
   private NotificationDAO notificationDAO;
@@ -30,45 +32,51 @@ class NotificationUCCTest {
 
   @BeforeEach
   void setUp() {
-    notificationUCC=locator.getService(NotificationUCC.class);
-    notificationDAO=locator.getService(NotificationDAO.class);
-    notificationFactory=locator.getService(NotificationFactory.class);
-    notificationDTO=notificationFactory.getNotification();
-    dalService=locator.getService(DALTransaction.class);
+    notificationUCC = locator.getService(NotificationUCC.class);
+    notificationDAO = locator.getService(NotificationDAO.class);
+    notificationFactory = locator.getService(NotificationFactory.class);
+    notificationDTO = notificationFactory.getNotification();
+    dalService = locator.getService(DALTransaction.class);
   }
 
   @DisplayName("Test getAllNotificationsByUser(int) return null when resultset is null")
   @Test
-  public void testGetAllNotificationsByUserReturnNull(){
+  public void testGetAllNotificationsByUserReturnNull() {
     Mockito.when(notificationDAO.findNotificationsByUser(1)).thenReturn(null);
-    assertNull(notificationUCC.getAllNotificationByUser(1),"No notifications in the database");
+    assertNull(notificationUCC.getAllNotificationByUser(1), "No notifications in the database");
   }
+
   @DisplayName("Test getAllNotificationsByUser(int) return list when resultset is not null")
   @Test
-  public void testGetAllNotificationsByUserReturnList(){
+  public void testGetAllNotificationsByUserReturnList() {
     List<NotificationDTO> notificationDTOList = new ArrayList<>();
     Mockito.when(notificationDAO.findNotificationsByUser(1)).thenReturn(notificationDTOList);
     assertEquals(notificationDTOList, notificationUCC.getAllNotificationByUser(1));
   }
+
   @DisplayName("Test getAllNotificationsByUser(int)  with a FatalException")
   @Test
   void testGetAllNotificationsByUserWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
     assertThrows(FatalException.class, () -> notificationUCC.getAllNotificationByUser(1));
   }
+
   @DisplayName("Test SetLueNotification(NotificationDTO,int)  with good params")
   @Test
-  void testSetLueNotificationWithGoodParams(){
+  void testSetLueNotificationWithGoodParams() {
     int utilisateur = 1;
     notificationDTO.setLue(true);
-    Mockito.when(notificationDAO.setLueNotification(notificationDTO,utilisateur)).thenReturn(notificationDTO);
-    assertEquals(notificationDTO, notificationUCC.setLueNotification(notificationDTO,utilisateur));
+    Mockito.when(notificationDAO.setLueNotification(notificationDTO, utilisateur))
+        .thenReturn(notificationDTO);
+    assertEquals(notificationDTO, notificationUCC.setLueNotification(notificationDTO, utilisateur));
   }
+  
   @DisplayName("Test setLueNotification(NotificationDTO,int) with a FatalException")
   @Test
   void testSetLueNotificationWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
-    assertThrows(FatalException.class, () -> notificationUCC.setLueNotification(notificationDTO,1));
+    assertThrows(FatalException.class,
+        () -> notificationUCC.setLueNotification(notificationDTO, 1));
   }
 
 }

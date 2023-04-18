@@ -20,12 +20,13 @@ public interface NotificationDAO {
    * Insert a row in notification_utilisateur.
    *
    * @param idNotif to link with the user
-   * @param idUser to alert
+   * @param idUser  to alert
    */
   void linkNotifToUser(int idNotif, int idUser);
 
   public List<NotificationDTO> findNotificationsByUser(int userId);
 
-  public NotificationDTO setLueNotification(NotificationDTO notificationDTO,int utilisateur);
+  public NotificationDTO setLueNotification(NotificationDTO notificationDTO, int utilisateur);
+
   public NotificationDTO getOne(int id);
 }

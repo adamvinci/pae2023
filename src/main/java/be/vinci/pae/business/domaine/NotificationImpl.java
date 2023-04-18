@@ -2,20 +2,18 @@ package be.vinci.pae.business.domaine;
 
 import be.vinci.pae.business.dto.NotificationDTO;
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * Implementation of {@link NotificationDTO}.
  */
 public class NotificationImpl implements NotificationDTO {
 
+  private static final String[] POSSIBLE_TYPE = {"acceptation", "refus", "alerteProposition"};
   private int id;
   private int object;
   private String message;
   private String type;
   private Boolean lue;
-
-  private static final String[] POSSIBLE_TYPE = {"acceptation", "refus", "alerteProposition"};
 
   public Integer getId() {
     return id;
@@ -45,6 +43,10 @@ public class NotificationImpl implements NotificationDTO {
     return type;
   }
 
+  public void setType(String type) {
+    this.type = Arrays.stream(POSSIBLE_TYPE).filter(s -> s.equals(type)).findFirst().orElse(null);
+  }
+
   public Boolean getLue() {
     return lue;
   }
@@ -53,10 +55,4 @@ public class NotificationImpl implements NotificationDTO {
     this.lue = lue;
   }
 
-  public void setType(String type) {
-    this.type = Arrays.stream(POSSIBLE_TYPE).filter(s -> s.equals(type)).findFirst().orElse(null);
-  }
-  public void setLueTrue(){
-    setLue(true);
-  }
 }

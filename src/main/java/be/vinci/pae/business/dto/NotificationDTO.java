@@ -66,5 +66,6 @@ public interface NotificationDTO {
   void setType(String type);
 
   Boolean getLue();
+  
   void setLue(Boolean lue);
 }
