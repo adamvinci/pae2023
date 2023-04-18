@@ -88,6 +88,7 @@ function renderRegisterForm() {
   labelForm1.innerText = "Select File"
   const inputForm = document.createElement('input')
   inputForm.type = "file"
+  inputForm.accept ="image/*"
   inputForm.name = "file"
   inputForm.required = "true"
   form1.appendChild(labelForm1)
