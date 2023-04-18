@@ -8,6 +8,8 @@ import be.vinci.pae.utils.exception.ConflictException;
 import be.vinci.pae.utils.exception.FatalException;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.core.Response.Status;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -136,14 +138,18 @@ public class UserUccImpl implements UserUcc {
   }
 
   @Override
-  public UserDTO update(UserDTO userToChange, JsonNode newUsersData) {
+  public UserDTO update(UserDTO newUser) {
     try {
+      UserDTO userToChange = getOne(newUser.getId());
+      if (userToChange == null) {
+        throw new WebApplicationException("This user does not exist", Status.BAD_REQUEST);
+      }
       dal.startTransaction();
-      userToChange.setEmail(newUsersData.get("email").asText());
-      userToChange.setGsm(newUsersData.get("gsm").asText());
-      userToChange.setNom(newUsersData.get("nom").asText());
-      userToChange.setPrenom(newUsersData.get("prenom").asText());
-      String password = newUsersData.get("password").asText();
+      userToChange.setEmail(newUser.getEmail());
+      userToChange.setGsm(newUser.getGsm());
+      userToChange.setNom(newUser.getNom());
+      userToChange.setPrenom(newUser.getPrenom());
+      String password = newUser.getPassword();
       User user = (User) userToChange;
       if (!password.isEmpty() && !password.isBlank()) {
         userToChange.setPassword(user.hashPassword(password));

@@ -66,9 +66,8 @@ public interface UserUcc {
   /**
    * Update an user with new informations.
    *
-   * @param userToChange the business object of the user who has to be changed
-   * @param newUsersData the potentially new user's informations
+   * @param newUser an user with the potentially new user's information
    * @return the userDTO updated
    */
-  UserDTO update(UserDTO userToChange, JsonNode newUsersData);
+  UserDTO update(UserDTO newUser);
 }

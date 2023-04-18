@@ -2,6 +2,7 @@ package be.vinci.pae.ihm;
 
 
 import be.vinci.pae.business.dto.UserDTO;
+import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.ihm.filters.Authorize;
 import be.vinci.pae.ihm.filters.ResponsableAuthorization;
@@ -36,6 +37,9 @@ public class UserRessource {
 
   @Inject
   private UserUcc userUcc;
+
+  @Inject
+  private UserFactory userFactory;
 
 
   /**
@@ -138,6 +142,12 @@ public class UserRessource {
     String password = newUsersData.get("password").asText();
     String confirmPassword = newUsersData.get("confirmPassword").asText();
 
+    if (email.isBlank() || email.isEmpty() || name.isBlank() || name.isEmpty()
+        || firstName.isBlank() || firstName.isEmpty() || gsm.isBlank() || gsm.isEmpty()) {
+      throw new WebApplicationException("Last name, first name, email and gsm required",
+          Status.BAD_REQUEST);
+    }
+
     if (newUsersData.hasNonNull("password") && (password.isBlank() || password.isEmpty())) {
       throw new WebApplicationException("Can't replace your password by a blank/empty password",
           Status.BAD_REQUEST);
@@ -154,20 +164,22 @@ public class UserRessource {
           Status.BAD_REQUEST);
     }
 
-    if (email.isBlank() || email.isEmpty() || name.isBlank() || name.isEmpty()
-        || firstName.isBlank() || firstName.isEmpty() || gsm.isBlank() || gsm.isEmpty()) {
-      throw new WebApplicationException("Last name, first name, email and gsm required",
-          Status.BAD_REQUEST);
-    }
     UserDTO userToChange = userUcc.getOne(id);
-    if (userToChange == null) {
-      throw new WebApplicationException("This user does not exist", Status.BAD_REQUEST);
-    }
-    if (newUsersData.hasNonNull("image")) {
-      userToChange.setImage(
-          Config.getProperty("pathToUserImage") + newUsersData.get("image").asText());
-    }
-    UserDTO changedUser = userUcc.update(userToChange, newUsersData);
+
+
+    UserDTO newUser = userFactory.getUserDTO();
+    newUser.setEmail(email);
+    newUser.setPrenom(firstName);
+    newUser.setNom(name);
+    newUser.setGsm(gsm);
+    newUser.setId(id);
+    newUser.setPassword(password);
+
+//    if (newUsersData.hasNonNull("image")) {
+//      userToChange.setImage(
+//          Config.getProperty("pathToUserImage") + newUsersData.get("image").asText());
+//    }
+    UserDTO changedUser = userUcc.update(newUser);
     return changedUser;
   }
 }
