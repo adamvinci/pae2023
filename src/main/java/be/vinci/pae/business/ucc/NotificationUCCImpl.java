@@ -33,8 +33,7 @@ public class NotificationUCCImpl implements NotificationUCC {
   public NotificationDTO setLueNotification(NotificationDTO notificationDTO, int utilisateur){
     try {
       dal.startTransaction();
-      NotificationImpl notification=(NotificationImpl) notificationDTO;
-      notification.setLueTrue();
+      notificationDTO.setLue(true);
       return dataService.setLueNotification(notificationDTO,utilisateur);
     } catch (FatalException e) {
       dal.rollBackTransaction();

@@ -2,8 +2,10 @@ package be.vinci.pae.ihm;
 
 import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
+import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.ucc.NotificationUCC;
+import be.vinci.pae.ihm.filters.Authorize;
 import be.vinci.pae.utils.MyLogger;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
@@ -33,6 +35,7 @@ public class NotificationRessource {
   @Inject
   private NotificationFactory notificationFactory;
 
+  @Authorize
   @GET
   @Path("/userNotifications/{id}")
   @Produces(MediaType.APPLICATION_JSON)
@@ -46,18 +49,15 @@ public class NotificationRessource {
     return notificationUCC.getAllNotificationByUser(id);
   }
 
+  @Authorize
   @POST
   @Path("/marquerRead/{id}")
   @Produces(MediaType.APPLICATION_JSON)
-  public NotificationDTO markRead(@DefaultValue("-1") @PathParam("id") int id,JsonNode json){
-    if (!json.hasNonNull("utilisateur")) {
-      throw new WebApplicationException("utilisateur required", Status.BAD_REQUEST);
-    }
-    int utilisateur = json.get("utilisateur").intValue();
+  public NotificationDTO markRead(@DefaultValue("-1") @PathParam("id") int id,@Context ContainerRequest request){
 
-    if (utilisateur<=0) {
-      throw new WebApplicationException("utilisateur required", Status.BAD_REQUEST);
-    }
+    UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
+    int utilisateur= authenticatedUser.getId();
+
     NotificationDTO retrievedNotification = notificationUCC.getOne(id);
     if (retrievedNotification == null) {
       throw new WebApplicationException("This utilisateur does not exist", Status.NOT_FOUND);
