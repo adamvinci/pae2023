@@ -257,49 +257,51 @@ class UserUccTest {
   }
 
 
+  @DisplayName("Test update with a Conflict")
+  @Test
+  void updateWithAConflict() {
+    UserDTO user = userFactory.getUserDTO();
+    user.setNom("Lebron");
+    user.setPrenom("James");
+    user.setEmail("lebron.james@nba.be");
+    user.setGsm("123");
+    user.setId(1);
+    user.setPassword("bm");
+    doThrow(new NoSuchElementException("exception")).when(userDAO).update(userMemberSteven);
+    assertThrows(ConflictException.class, () -> userUcc.update(user));
+  }
 
-//  @DisplayName("Test update with a Conflict")
-//  @Test
-//  void updateWithAConflict() {
-//    ObjectMapper objectMapper = new ObjectMapper();
-//    JsonNode userData = objectMapper.createObjectNode();
-//    ((ObjectNode) userData).put("nom", "Lebron");
-//    ((ObjectNode) userData).put("prenom", "James");
-//    ((ObjectNode) userData).put("email", "lebron.james@nba.be");
-//    ((ObjectNode) userData).put("gsm", "123");
-//    doThrow(new NoSuchElementException("exception")).when(userDAO).update(userMemberSteven);
-//    assertThrows(ConflictException.class, () -> userUcc.update(userMemberSteven, userData));
-//  }
-//
-//
-//  @DisplayName("Test update ")
-//  @Test
-//  void testUpdate() {
-//    ObjectMapper objectMapper = new ObjectMapper();
-//    JsonNode userData = objectMapper.createObjectNode();
-//    ((ObjectNode) userData).put("nom", "Lebron");
-//    ((ObjectNode) userData).put("prenom", "James");
-//    ((ObjectNode) userData).put("email", "lebron.james@nba.be");
-//    ((ObjectNode) userData).put("gsm", "123");
-//
-//    assertEquals(userMemberSteven.getNom(), "Agbassah");
-//    assertNotNull(userUcc.update(userMemberSteven, userData));
-//    assertEquals(userMemberSteven.getNom(), "Lebron");
-//  }
-//
-//  @DisplayName("Test update with a FatalException")
-//  @Test
-//  void updateWithFatalException() {
-//    ObjectMapper objectMapper = new ObjectMapper();
-//    JsonNode userData = objectMapper.createObjectNode();
-//    ((ObjectNode) userData).put("nom", "Lebron");
-//    ((ObjectNode) userData).put("prenom", "James");
-//    ((ObjectNode) userData).put("email", "lebron.james@nba.be");
-//    ((ObjectNode) userData).put("gsm", "123");
-//    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
-//    assertThrows(FatalException.class, () -> userUcc.update(userMemberSteven, userData));
-//  }
-//
-//
-//
+
+  @DisplayName("Test update ")
+  @Test
+  void testUpdate() {
+    UserDTO user = userFactory.getUserDTO();
+    user.setNom("Lebron");
+    user.setPrenom("James");
+    user.setEmail("lebron.james@nba.be");
+    user.setGsm("123");
+    user.setId(1);
+    user.setPassword("bm");
+
+    assertEquals(userMemberSteven.getNom(), "Agbassah");
+    assertNotNull(userUcc.update(user));
+    assertEquals(userMemberSteven.getNom(), "Lebron");
+  }
+
+  @DisplayName("Test update with a FatalException")
+  @Test
+  void updateWithFatalException() {
+    UserDTO user = userFactory.getUserDTO();
+    user.setNom("Lebron");
+    user.setPrenom("James");
+    user.setEmail("lebron.james@nba.be");
+    user.setGsm("123");
+    user.setId(1);
+    user.setPassword("bm");
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> userUcc.update(user));
+  }
+
+
+
 }
