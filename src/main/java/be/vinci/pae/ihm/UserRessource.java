@@ -148,7 +148,7 @@ public class UserRessource {
           Status.BAD_REQUEST);
     }
 
-    if (newUsersData.hasNonNull("password") && (password.isBlank() || password.isEmpty())) {
+    if (!password.equals("") && (password.isBlank() || password.isEmpty())) {
       throw new WebApplicationException("Can't replace your password by a blank/empty password",
           Status.BAD_REQUEST);
     }
