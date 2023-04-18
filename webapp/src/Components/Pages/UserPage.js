@@ -1,10 +1,16 @@
 import Swal from "sweetalert2";
 import { getAuthenticatedUser, getToken } from "../../utils/auths";
+import Navigate from "../Router/Navigate";
+
 
 let userID;
 
 const UserPage = async () => {
   const loggedUser = await getAuthenticatedUser();
+  if(loggedUser === undefined) {
+    Navigate('/');
+    return;
+  }
   userID = loggedUser.id;
   const main = document.querySelector('main');
 
