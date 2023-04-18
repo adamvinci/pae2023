@@ -97,11 +97,11 @@ public class NotificationDAOImpl implements NotificationDAO {
    */
   public List<NotificationDTO> findNotificationsByUser(int userId) {
     try (PreparedStatement statement = dalService.preparedStatement(
-        "SELECT n.id_notification, n.objet, n.message, n.type, nu.lue " +
-            "FROM projet.notifications n " +
-            "JOIN projet.notifications_utilisateurs nu ON n.id_notification = nu.notification " +
-            "WHERE nu.utilisateur_notifie = ? " +
-            "ORDER BY n.id_notification DESC")) {
+        "SELECT n.id_notification, n.objet, n.message, n.type, nu.lue "
+            + "FROM projet.notifications n "
+            + "JOIN projet.notifications_utilisateurs nu ON n.id_notification = nu.notification "
+            + "WHERE nu.utilisateur_notifie = ? "
+            + "ORDER BY n.id_notification DESC")) {
       statement.setInt(1, userId);
       ResultSet rs = statement.executeQuery();
       List<NotificationDTO> notifications = new ArrayList<>();

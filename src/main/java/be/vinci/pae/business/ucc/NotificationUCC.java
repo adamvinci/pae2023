@@ -14,7 +14,7 @@ public interface NotificationUCC {
    * @param user The identifier of the user for which to retrieve notifications.
    * @return A list of NotificationDTO containing the user's notifications.
    */
-  public List<NotificationDTO> getAllNotificationByUser(int user);
+  List<NotificationDTO> getAllNotificationByUser(int user);
 
   /**
    * Marks a notification as read for a given user.
@@ -23,7 +23,7 @@ public interface NotificationUCC {
    * @param utilisateur     The identifier of the user marking the notification as read.
    * @return The updated NotificationDTO.
    */
-  public NotificationDTO setLueNotification(NotificationDTO notificationDTO, int utilisateur);
+  NotificationDTO setLueNotification(NotificationDTO notificationDTO, int utilisateur);
 
   /**
    * Retrieves a notification by its identifier.
