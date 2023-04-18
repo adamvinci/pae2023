@@ -152,8 +152,7 @@ public class NotificationDAOImpl implements NotificationDAO {
    * Retrieves a notification by its identifier.
    *
    * @param id The identifier of the notification to retrieve.
-   * @return The NotificationDTO corresponding to the given identifier, or null if no result is
-   * returned.
+   * @return The NotificationDTO corresponding to the given identifier, or null
    * @throws FatalException if a SQLException occurs while accessing the database.
    */
   public NotificationDTO getOne(int id) {

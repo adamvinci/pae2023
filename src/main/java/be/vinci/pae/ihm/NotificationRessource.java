@@ -41,7 +41,6 @@ public class NotificationRessource {
    *
    * @param request The ContainerRequest object representing the incoming HTTP request.
    * @return A list of NotificationDTO objects representing all notifications for the authenticated
-   * user. Returns null if no notifications are found for the user.
    * @throws FatalException if a SQLException occurs while accessing the database.
    */
   @Authorize

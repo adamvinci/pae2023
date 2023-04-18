@@ -24,9 +24,9 @@ public interface NotificationDAO {
    */
   void linkNotifToUser(int idNotif, int idUser);
 
-  public List<NotificationDTO> findNotificationsByUser(int userId);
+  List<NotificationDTO> findNotificationsByUser(int userId);
 
-  public NotificationDTO setLueNotification(NotificationDTO notificationDTO, int utilisateur);
+  NotificationDTO setLueNotification(NotificationDTO notificationDTO, int utilisateur);
 
-  public NotificationDTO getOne(int id);
+  NotificationDTO getOne(int id);
 }
