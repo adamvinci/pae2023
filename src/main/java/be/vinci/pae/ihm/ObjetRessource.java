@@ -321,7 +321,8 @@ public class ObjetRessource {
   @POST
   @Path("upload")
   @Consumes(MediaType.MULTIPART_FORM_DATA)
-  public Response uploadFile(@FormDataParam("file") InputStream file,
+  @Produces(MediaType.TEXT_PLAIN)
+  public String uploadFile(@FormDataParam("file") InputStream file,
       @FormDataParam("file") FormDataContentDisposition fileDisposition) {
     String fileName = fileDisposition.getFileName();
     String pathToSave = Config.getProperty("pathToObjectImage");
@@ -333,7 +334,7 @@ public class ObjetRessource {
       throw new RuntimeException(e);
     }
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Adding picture of object ");
-    return Response.ok().build();
+    return pathToSave;
   }
 
 

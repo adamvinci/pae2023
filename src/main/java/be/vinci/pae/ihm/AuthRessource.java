@@ -118,7 +118,8 @@ public class AuthRessource {
       throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
     }
     if (!Files.exists(java.nio.file.Path.of(userDTO.getImage()))) {
-      throw new WebApplicationException("this image is not saved ", Status.BAD_REQUEST);
+      throw new WebApplicationException("this image is not stored in the server ",
+          Status.BAD_REQUEST);
     }
     userDTO = userUcc.register(userDTO);
 
