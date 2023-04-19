@@ -292,6 +292,28 @@ class UserUccTest {
     assertEquals(userMemberSteven.getNom(), "Lebron");
   }
 
+  @DisplayName("Test update with wrong actual password")
+  @Test
+  void updateWrongPassword() {
+    UserDTO user = userFactory.getUserDTO();
+    user.setNom("Lebron");
+    user.setPrenom("James");
+    user.setEmail("lebron.james@nba.be");
+    user.setGsm("123");
+    user.setId(2);
+    user.setPassword("bm");
+
+    UserDTO user2 = userFactory.getUserDTO();
+    user2.setNom("Non");
+    user2.setPrenom("existing");
+    user2.setEmail("non.existing@error.be");
+    user2.setGsm("123");
+    user2.setId(2);
+    user2.setPassword("bm");
+
+    assertThrows(FatalException.class, () -> userUcc.update(user,"124*"));
+  }
+
   @DisplayName("Test update with a FatalException")
   @Test
   void updateWithFatalException() {
@@ -316,14 +338,6 @@ class UserUccTest {
     user.setGsm("123");
     user.setId(100);
     user.setPassword("bm");
-
-    UserDTO user2 = userFactory.getUserDTO();
-    user2.setNom("Non");
-    user2.setPrenom("existing");
-    user2.setEmail("non.existing@error.be");
-    user2.setGsm("123");
-    user2.setId(100);
-    user2.setPassword("bm");
 
     Mockito.when(userDAO.getOne(100)).thenReturn(null);
     assertThrows(WebApplicationException.class, () -> userUcc.update(user,"123*"));
