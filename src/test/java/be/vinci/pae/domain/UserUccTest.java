@@ -292,6 +292,38 @@ class UserUccTest {
     assertEquals(userMemberSteven.getNom(), "Lebron");
   }
 
+  @DisplayName("Test update without changes on the image ")
+  @Test
+  void testUpdateWithoutImageChanges() {
+    UserDTO user = userFactory.getUserDTO();
+    user.setNom("Lebron");
+    user.setPrenom("James");
+    user.setEmail("lebron.james@nba.be");
+    user.setGsm("123");
+    user.setId(1);
+    user.setPassword("bm");
+
+    assertEquals(userMemberSteven.getNom(), "Agbassah");
+    assertNotNull(userUcc.update(user, "123*"));
+    assertEquals(userMemberSteven.getNom(), "Lebron");
+  }
+
+  @DisplayName("Test update withtout changes on the password ")
+  @Test
+  void testUpdateWithoutPasswordChanges() {
+    UserDTO user = userFactory.getUserDTO();
+    user.setNom("Lebron");
+    user.setPrenom("James");
+    user.setEmail("lebron.james@nba.be");
+    user.setGsm("123");
+    user.setId(1);
+    user.setImage("blablabla");
+
+    assertEquals(userMemberSteven.getNom(), "Agbassah");
+    assertNotNull(userUcc.update(user, "123*"));
+    assertEquals(userMemberSteven.getNom(), "Lebron");
+  }
+
   @DisplayName("Test update with wrong actual password")
   @Test
   void updateWrongPassword() {
@@ -302,14 +334,6 @@ class UserUccTest {
     user.setGsm("123");
     user.setId(2);
     user.setPassword("bm");
-
-    UserDTO user2 = userFactory.getUserDTO();
-    user2.setNom("Non");
-    user2.setPrenom("existing");
-    user2.setEmail("non.existing@error.be");
-    user2.setGsm("123");
-    user2.setId(2);
-    user2.setPassword("bm");
 
     assertThrows(FatalException.class, () -> userUcc.update(user, "124*"));
   }

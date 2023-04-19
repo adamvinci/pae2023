@@ -155,7 +155,7 @@ public class UserUccImpl implements UserUcc {
       if (newUser.getImage() != null) {
         userToChange.setImage(newUser.getImage());
       }
-      if (!password.isEmpty() && !password.isBlank()) {
+      if (password != null && !password.isEmpty() && !password.isBlank()) {
         userToChange.setPassword(user.hashPassword(password));
       }
       dataService.update(userToChange);
