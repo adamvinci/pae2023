@@ -9,6 +9,7 @@ import be.vinci.pae.ihm.filters.ResponsableAuthorization;
 import be.vinci.pae.ihm.filters.ResponsableOrAidant;
 import be.vinci.pae.utils.Config;
 import be.vinci.pae.utils.Json;
+import be.vinci.pae.utils.MyLogger;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
@@ -24,7 +25,10 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
+import java.io.File;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * UserRessource retrieve the request  process by Grizzly and treat it.
@@ -155,7 +159,7 @@ public class UserRessource {
 
     if (password.isBlank() != confirmPassword.isBlank()) {
       throw new WebApplicationException(
-          "If you want to change your password, the 3 related inputs must be filled",
+          "Don't forget to confirm your password !",
           Status.BAD_REQUEST);
     }
 
@@ -166,7 +170,6 @@ public class UserRessource {
 
     UserDTO userToChange = userUcc.getOne(id);
 
-
     UserDTO newUser = userFactory.getUserDTO();
     newUser.setEmail(email);
     newUser.setPrenom(firstName);
@@ -175,10 +178,19 @@ public class UserRessource {
     newUser.setId(id);
     newUser.setPassword(password);
 
-//    if (newUsersData.hasNonNull("image")) {
-//      userToChange.setImage(
-//          Config.getProperty("pathToUserImage") + newUsersData.get("image").asText());
-//    }
+    if (newUsersData.hasNonNull("image")) {
+      File oldAvatar = new File(userToChange.getImage());
+      String[] parts = oldAvatar.toString().split("\\\\");
+      String fileName = parts[parts.length - 1];
+      if(!fileName.equals("avatar1.png") && !fileName.equals("avatar2.png")){
+        if(oldAvatar.delete()){
+          Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Deleted picture "+oldAvatar);
+        }
+
+      }
+      newUser.setImage(
+          Config.getProperty("pathToUserImage") + newUsersData.get("image").asText());
+    }
     UserDTO changedUser = userUcc.update(newUser);
     return changedUser;
   }

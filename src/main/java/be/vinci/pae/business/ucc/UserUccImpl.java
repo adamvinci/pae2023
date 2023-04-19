@@ -151,6 +151,9 @@ public class UserUccImpl implements UserUcc {
       userToChange.setPrenom(newUser.getPrenom());
       String password = newUser.getPassword();
       User user = (User) userToChange;
+      if (newUser.getImage() != null) {
+        userToChange.setImage(newUser.getImage());
+      }
       if (!password.isEmpty() && !password.isBlank()) {
         userToChange.setPassword(user.hashPassword(password));
       }

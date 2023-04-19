@@ -84,7 +84,7 @@ const UserPage = async () => {
                                 <h6 class="mb-0">Nouveau mot de passe </h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input id="userPassword" type="text" class="form-control">
+                                <input id="userPassword" type="password" class="form-control">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -92,7 +92,7 @@ const UserPage = async () => {
                                 <h6 class="mb-0">Confimer nouveau mot de passe</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input id="confirmPassword" type="text" class="form-control">
+                                <input id="confirmPassword" type="password" class="form-control">
                             </div>
                         </div>
                         <div class="row mb-3">
