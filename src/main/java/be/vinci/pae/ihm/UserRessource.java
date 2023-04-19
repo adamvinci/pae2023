@@ -198,8 +198,8 @@ public class UserRessource {
     }
     UserDTO changedUser;
     try {
-       changedUser = userUcc.update(newUser, actualPassword);
-    } catch (BusinessException e){
+      changedUser = userUcc.update(newUser, actualPassword);
+    } catch (BusinessException e) {
       throw new WebApplicationException(e.getMessage(), Status.UNAUTHORIZED);
     }
     return changedUser;
