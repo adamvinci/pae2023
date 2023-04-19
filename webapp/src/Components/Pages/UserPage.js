@@ -1,10 +1,16 @@
 import Swal from "sweetalert2";
 import { getAuthenticatedUser, getToken } from "../../utils/auths";
+import Navigate from "../Router/Navigate";
+
 
 let userID;
 
 const UserPage = async () => {
   const loggedUser = await getAuthenticatedUser();
+  if(loggedUser === undefined) {
+    Navigate('/');
+    return;
+  }
   userID = loggedUser.id;
   const main = document.querySelector('main');
 
@@ -70,7 +76,23 @@ const UserPage = async () => {
                                 <h6 class="mb-0">GSM</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input id="userGsm" type="text" class="form-control" value="${loggedUser.gsm}" required>
+                                <input id="userGsm" type="number" class="form-control" value="${loggedUser.gsm}" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Nouveau mot de passe </h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input id="userPassword" type="password" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Confimer nouveau mot de passe</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input id="confirmPassword" type="password" class="form-control">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -105,18 +127,43 @@ const UserPage = async () => {
 </div>`;
 
 const userForm = document.querySelector('#userForm');
-userForm.addEventListener('submit', updateUser)
+userForm.addEventListener('submit', checkPassword)
 
 };
 
-
-async function updateUser(e) {  
+function checkPassword(e){
     e.preventDefault();
+    Swal.fire({
+        title: '<strong>Entrez votre mot de passe actuel pour confirmer les changements </strong>',
+        icon: 'info',
+        html:
+          '<input id="password" type="password" class="form-control">',
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText:
+          '<i class="fa fa-thumbs-up"></i> Confirmer',
+        cancelButtonText:
+          '<i class="fa fa-thumbs-down"> Annuler </i>',
+        }).then((result) => {
+            if (result.isConfirmed) {
+              updateUser();
+            } 
+      })
+}
+
+
+async function updateUser() {  
     const nom = document.querySelector('#userName').value;
     const prenom = document.querySelector('#userFirstName').value;
     const email = document.querySelector('#userEmail').value;
     const gsm = document.querySelector('#userGsm').value;
+    const password = document.querySelector('#userPassword').value;
+    const confirmPassword = document.querySelector('#confirmPassword').value;
     const fileInput = document.querySelector('input[name=myImage]');
+    const actualPassword = document.querySelector('#password').value;
+
+
     let img;
 
     if(fileInput.files[0] !== undefined){
@@ -137,7 +184,10 @@ async function updateUser(e) {
             prenom,
             email,
             gsm,
-            image: img
+            image: img,
+            password,
+            confirmPassword,
+            actualPassword
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -158,8 +208,7 @@ async function updateUser(e) {
         timer: 1500
       })
     }
-      UserPage(); // eslint-disable-line no-use-before-define
-
-    
+    UserPage(); // eslint-disable-line no-use-before-define
+  
 }
 export default UserPage;
