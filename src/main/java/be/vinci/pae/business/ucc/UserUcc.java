@@ -1,7 +1,6 @@
 package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.dto.UserDTO;
-import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 
 

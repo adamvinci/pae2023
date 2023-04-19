@@ -6,7 +6,6 @@ import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.exception.ConflictException;
 import be.vinci.pae.utils.exception.FatalException;
-import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response.Status;
