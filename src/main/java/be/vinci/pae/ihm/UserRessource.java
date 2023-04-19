@@ -182,9 +182,10 @@ public class UserRessource {
       File oldAvatar = new File(userToChange.getImage());
       String[] parts = oldAvatar.toString().split("\\\\");
       String fileName = parts[parts.length - 1];
-      if (!fileName.equals("avatar1.png") && !fileName.equals("avatar2.png") && oldAvatar.delete()) {
-          Logger.getLogger(MyLogger.class.getName())
-              .log(Level.INFO, "Deleted picture " + oldAvatar);
+      if (!fileName.equals("avatar1.png") && !fileName.equals("avatar2.png")
+          && oldAvatar.delete()) {
+        Logger.getLogger(MyLogger.class.getName())
+            .log(Level.INFO, "Deleted picture " + oldAvatar);
       }
       newUser.setImage(
           Config.getProperty("pathToUserImage") + newUsersData.get("image").asText());
