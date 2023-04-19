@@ -66,7 +66,8 @@ public interface UserUcc {
    * Update an user with new informations.
    *
    * @param newUser an user with the potentially new user's information
+   * @param actualPassword is the password that the user has provided to confirm the changes
    * @return the userDTO updated
    */
-  UserDTO update(UserDTO newUser);
+  UserDTO update(UserDTO newUser, String actualPassword);
 }

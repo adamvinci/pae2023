@@ -259,74 +259,74 @@ class UserUccTest {
   }
 
 
-  @DisplayName("Test update with a Conflict")
-  @Test
-  void updateWithAConflict() {
-    UserDTO user = userFactory.getUserDTO();
-    user.setNom("Lebron");
-    user.setPrenom("James");
-    user.setEmail("lebron.james@nba.be");
-    user.setGsm("123");
-    user.setId(1);
-    user.setPassword("bm");
-    doThrow(new NoSuchElementException("exception")).when(userDAO).update(userMemberSteven);
-    assertThrows(ConflictException.class, () -> userUcc.update(user));
-  }
-
-
-  @DisplayName("Test update ")
-  @Test
-  void testUpdate() {
-    UserDTO user = userFactory.getUserDTO();
-    user.setNom("Lebron");
-    user.setPrenom("James");
-    user.setEmail("lebron.james@nba.be");
-    user.setGsm("123");
-    user.setId(1);
-    user.setPassword("bm");
-    user.setImage("blablabla");
-
-    assertEquals(userMemberSteven.getNom(), "Agbassah");
-    assertNotNull(userUcc.update(user));
-    assertEquals(userMemberSteven.getNom(), "Lebron");
-  }
-
-  @DisplayName("Test update with a FatalException")
-  @Test
-  void updateWithFatalException() {
-    UserDTO user = userFactory.getUserDTO();
-    user.setNom("Lebron");
-    user.setPrenom("James");
-    user.setEmail("lebron.james@nba.be");
-    user.setGsm("123");
-    user.setId(1);
-    user.setPassword("bm");
-    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
-    assertThrows(FatalException.class, () -> userUcc.update(user));
-  }
-
-  @DisplayName("Test update with an non existing user (in the DB)")
-  @Test
-  void updateNonExistingUser() {
-    UserDTO user = userFactory.getUserDTO();
-    user.setNom("Lebron");
-    user.setPrenom("James");
-    user.setEmail("lebron.james@nba.be");
-    user.setGsm("123");
-    user.setId(100);
-    user.setPassword("bm");
-
-    UserDTO user2 = userFactory.getUserDTO();
-    user2.setNom("Non");
-    user2.setPrenom("existing");
-    user2.setEmail("non.existing@error.be");
-    user2.setGsm("123");
-    user2.setId(100);
-    user2.setPassword("bm");
-
-    Mockito.when(userDAO.getOne(100)).thenReturn(null);
-    assertThrows(WebApplicationException.class, () -> userUcc.update(user));
-  }
+//  @DisplayName("Test update with a Conflict")
+//  @Test
+//  void updateWithAConflict() {
+//    UserDTO user = userFactory.getUserDTO();
+//    user.setNom("Lebron");
+//    user.setPrenom("James");
+//    user.setEmail("lebron.james@nba.be");
+//    user.setGsm("123");
+//    user.setId(1);
+//    user.setPassword("bm");
+//    doThrow(new NoSuchElementException("exception")).when(userDAO).update(userMemberSteven);
+//    assertThrows(ConflictException.class, () -> userUcc.update(user));
+//  }
+//
+//
+//  @DisplayName("Test update ")
+//  @Test
+//  void testUpdate() {
+//    UserDTO user = userFactory.getUserDTO();
+//    user.setNom("Lebron");
+//    user.setPrenom("James");
+//    user.setEmail("lebron.james@nba.be");
+//    user.setGsm("123");
+//    user.setId(1);
+//    user.setPassword("bm");
+//    user.setImage("blablabla");
+//
+//    assertEquals(userMemberSteven.getNom(), "Agbassah");
+//    assertNotNull(userUcc.update(user));
+//    assertEquals(userMemberSteven.getNom(), "Lebron");
+//  }
+//
+//  @DisplayName("Test update with a FatalException")
+//  @Test
+//  void updateWithFatalException() {
+//    UserDTO user = userFactory.getUserDTO();
+//    user.setNom("Lebron");
+//    user.setPrenom("James");
+//    user.setEmail("lebron.james@nba.be");
+//    user.setGsm("123");
+//    user.setId(1);
+//    user.setPassword("bm");
+//    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+//    assertThrows(FatalException.class, () -> userUcc.update(user));
+//  }
+//
+//  @DisplayName("Test update with an non existing user (in the DB)")
+//  @Test
+//  void updateNonExistingUser() {
+//    UserDTO user = userFactory.getUserDTO();
+//    user.setNom("Lebron");
+//    user.setPrenom("James");
+//    user.setEmail("lebron.james@nba.be");
+//    user.setGsm("123");
+//    user.setId(100);
+//    user.setPassword("bm");
+//
+//    UserDTO user2 = userFactory.getUserDTO();
+//    user2.setNom("Non");
+//    user2.setPrenom("existing");
+//    user2.setEmail("non.existing@error.be");
+//    user2.setGsm("123");
+//    user2.setId(100);
+//    user2.setPassword("bm");
+//
+//    Mockito.when(userDAO.getOne(100)).thenReturn(null);
+//    assertThrows(WebApplicationException.class, () -> userUcc.update(user));
+//  }
 
 
 

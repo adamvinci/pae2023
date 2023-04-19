@@ -127,13 +127,33 @@ const UserPage = async () => {
 </div>`;
 
 const userForm = document.querySelector('#userForm');
-userForm.addEventListener('submit', updateUser)
+userForm.addEventListener('submit', checkPassword)
 
 };
 
-
-async function updateUser(e) {  
+function checkPassword(e){
     e.preventDefault();
+    Swal.fire({
+        title: '<strong>Entrez votre mot de passe actuel pour confirmer les changements </strong>',
+        icon: 'info',
+        html:
+          '<input id="password" type="password" class="form-control">',
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: false,
+        confirmButtonText:
+          '<i class="fa fa-thumbs-up"></i> Confirmer',
+        cancelButtonText:
+          '<i class="fa fa-thumbs-down"> Annuler </i>',
+        }).then((result) => {
+            if (result.isConfirmed) {
+              updateUser();
+            } 
+      })
+}
+
+
+async function updateUser() {  
     const nom = document.querySelector('#userName').value;
     const prenom = document.querySelector('#userFirstName').value;
     const email = document.querySelector('#userEmail').value;
@@ -141,6 +161,8 @@ async function updateUser(e) {
     const password = document.querySelector('#userPassword').value;
     const confirmPassword = document.querySelector('#confirmPassword').value;
     const fileInput = document.querySelector('input[name=myImage]');
+    const actualPassword = document.querySelector('#password').value;
+
 
     let img;
 
@@ -164,7 +186,8 @@ async function updateUser(e) {
             gsm,
             image: img,
             password,
-            confirmPassword 
+            confirmPassword,
+            actualPassword
         }),
         headers: {
           'Content-Type': 'application/json',

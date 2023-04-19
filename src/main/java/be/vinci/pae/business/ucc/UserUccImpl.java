@@ -4,6 +4,7 @@ import be.vinci.pae.business.domaine.User;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.dal.services.DALTransaction;
+import be.vinci.pae.utils.exception.BusinessException;
 import be.vinci.pae.utils.exception.ConflictException;
 import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
@@ -137,19 +138,23 @@ public class UserUccImpl implements UserUcc {
   }
 
   @Override
-  public UserDTO update(UserDTO newUser) {
+  public UserDTO update(UserDTO newUser, String actualPassword) {
     try {
       UserDTO userToChange = getOne(newUser.getId());
       if (userToChange == null) {
-        throw new WebApplicationException("This user does not exist", Status.BAD_REQUEST);
+        throw new FatalException("This user do not exists");
       }
       dal.startTransaction();
+      User user = (User) userToChange;
+      if (!user.checkPassword(actualPassword)) {
+        throw new FatalException("Wrong password");
+      }
       userToChange.setEmail(newUser.getEmail());
       userToChange.setGsm(newUser.getGsm());
       userToChange.setNom(newUser.getNom());
       userToChange.setPrenom(newUser.getPrenom());
       String password = newUser.getPassword();
-      User user = (User) userToChange;
+
       if (newUser.getImage() != null) {
         userToChange.setImage(newUser.getImage());
       }

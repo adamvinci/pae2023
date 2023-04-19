@@ -1,6 +1,7 @@
 package be.vinci.pae.ihm;
 
 
+import be.vinci.pae.business.domaine.User;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.business.ucc.UserUcc;
@@ -10,6 +11,7 @@ import be.vinci.pae.ihm.filters.ResponsableOrAidant;
 import be.vinci.pae.utils.Config;
 import be.vinci.pae.utils.Json;
 import be.vinci.pae.utils.MyLogger;
+import be.vinci.pae.utils.exception.BusinessException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
@@ -145,6 +147,7 @@ public class UserRessource {
     String gsm = newUsersData.get("gsm").asText();
     String password = newUsersData.get("password").asText();
     String confirmPassword = newUsersData.get("confirmPassword").asText();
+    String actualPassword = newUsersData.get("actualPassword").asText();
 
     if (email.isBlank() || email.isEmpty() || name.isBlank() || name.isEmpty()
         || firstName.isBlank() || firstName.isEmpty() || gsm.isBlank() || gsm.isEmpty()) {
@@ -168,8 +171,6 @@ public class UserRessource {
           Status.BAD_REQUEST);
     }
 
-    UserDTO userToChange = userUcc.getOne(id);
-
     UserDTO newUser = userFactory.getUserDTO();
     newUser.setEmail(email);
     newUser.setPrenom(firstName);
@@ -177,6 +178,11 @@ public class UserRessource {
     newUser.setGsm(gsm);
     newUser.setId(id);
     newUser.setPassword(password);
+
+    UserDTO userToChange = userUcc.getOne(id);
+    if (userToChange == null) {
+      throw new WebApplicationException("This user does not exist", Status.BAD_REQUEST);
+    }
 
     if (newUsersData.hasNonNull("image")) {
       File oldAvatar = new File(userToChange.getImage());
@@ -190,7 +196,12 @@ public class UserRessource {
       newUser.setImage(
           Config.getProperty("pathToUserImage") + newUsersData.get("image").asText());
     }
-    UserDTO changedUser = userUcc.update(newUser);
+    UserDTO changedUser;
+    try {
+       changedUser = userUcc.update(newUser, actualPassword);
+    } catch (BusinessException e){
+      throw new WebApplicationException(e.getMessage(), Status.UNAUTHORIZED);
+    }
     return changedUser;
   }
 }
