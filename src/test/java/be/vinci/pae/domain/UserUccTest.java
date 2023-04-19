@@ -311,7 +311,7 @@ class UserUccTest {
     user2.setId(2);
     user2.setPassword("bm");
 
-    assertThrows(FatalException.class, () -> userUcc.update(user,"124*"));
+    assertThrows(FatalException.class, () -> userUcc.update(user, "124*"));
   }
 
   @DisplayName("Test update with a FatalException")
@@ -340,9 +340,8 @@ class UserUccTest {
     user.setPassword("bm");
 
     Mockito.when(userDAO.getOne(100)).thenReturn(null);
-    assertThrows(WebApplicationException.class, () -> userUcc.update(user,"123*"));
+    assertThrows(WebApplicationException.class, () -> userUcc.update(user, "123*"));
   }
-
 
 
 }

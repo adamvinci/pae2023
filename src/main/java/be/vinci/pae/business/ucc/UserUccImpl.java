@@ -4,12 +4,9 @@ import be.vinci.pae.business.domaine.User;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.dal.services.DALTransaction;
-import be.vinci.pae.utils.exception.BusinessException;
 import be.vinci.pae.utils.exception.ConflictException;
 import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.core.Response.Status;
 import java.util.List;
 import java.util.NoSuchElementException;
 
