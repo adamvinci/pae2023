@@ -64,4 +64,8 @@ public interface NotificationDTO {
    * @param type The new type of this notification.
    */
   void setType(String type);
+
+  Boolean getLue();
+  
+  void setLue(Boolean lue);
 }

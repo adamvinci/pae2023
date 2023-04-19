@@ -9,6 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Implementation of {@link NotificationDAO}.
@@ -84,4 +87,102 @@ public class NotificationDAOImpl implements NotificationDAO {
     notificationDTO.setMessage(message);
     notificationDTO.setType(type);
   }
+
+  /**
+   * Retrieves a list of notifications for a given user.
+   *
+   * @param userId The identifier of the user for whom to retrieve notifications.
+   * @return A list of NotificationDTO objects representing the notifications for the user.
+   * @throws FatalException if a SQLException occurs while accessing the database.
+   */
+  public List<NotificationDTO> findNotificationsByUser(int userId) {
+    try (PreparedStatement statement = dalService.preparedStatement(
+        "SELECT n.id_notification, n.objet, n.message, n.type, nu.lue "
+            + "FROM projet.notifications n "
+            + "JOIN projet.notifications_utilisateurs nu ON n.id_notification = nu.notification "
+            + "WHERE nu.utilisateur_notifie = ? "
+            + "ORDER BY n.id_notification DESC")) {
+      statement.setInt(1, userId);
+      ResultSet rs = statement.executeQuery();
+      List<NotificationDTO> notifications = new ArrayList<>();
+      while (rs.next()) {
+        NotificationDTO notification = notificationFactory.getNotification();
+        notification.setId(rs.getInt("id_notification"));
+        notification.setObject(rs.getInt("objet"));
+        notification.setMessage(rs.getString("message"));
+        notification.setType(rs.getString("type"));
+        notification.setLue(rs.getBoolean("lue"));
+        notifications.add(notification);
+      }
+      return notifications;
+    } catch (SQLException e) {
+      throw new FatalException(e);
+    }
+  }
+
+  /**
+   * Marks a notification as read for a given user.
+   *
+   * @param notificationDTO The notification to mark as read.
+   * @param utilisateur     The identifier of the user marking the notification as read.
+   * @return The updated NotificationDTO after marking the notification as read.
+   * @throws NoSuchElementException if no result is returned from the database update.
+   * @throws FatalException         if a SQLException occurs while accessing the database.
+   */
+  public NotificationDTO setLueNotification(NotificationDTO notificationDTO, int utilisateur) {
+    try (PreparedStatement statement = dalService.preparedStatement(
+        "UPDATE projet.notifications_utilisateurs SET lue = ? "
+            + " WHERE notification = ? "
+            + "AND utilisateur_notifie = ? RETURNING *")) {
+      statement.setBoolean(1, notificationDTO.getLue());
+      statement.setInt(2, notificationDTO.getId());
+      statement.setInt(3, utilisateur);
+      try (ResultSet rs = statement.executeQuery()) {
+        if (!rs.isBeforeFirst()) {
+          throw new NoSuchElementException();
+        }
+      }
+    } catch (SQLException e) {
+      throw new FatalException(e);
+    }
+    return notificationDTO;
+  }
+
+  /**
+   * Retrieves a notification by its identifier.
+   *
+   * @param id The identifier of the notification to retrieve.
+   * @return The NotificationDTO corresponding to the given identifier, or null
+   * @throws FatalException if a SQLException occurs while accessing the database.
+   */
+  public NotificationDTO getOne(int id) {
+    NotificationDTO notificationDTO = notificationFactory.getNotification();
+    String query = "SELECT n.id_notification, n.objet, n.message, n.type, nu.lue "
+        + "FROM projet.notifications n "
+        + "JOIN projet.notifications_utilisateurs nu "
+        + "ON n.id_notification = nu.notification "
+        + "WHERE n.id_notification = ?";
+    try (PreparedStatement statement = dalService.preparedStatement(query)) {
+      statement.setInt(1, id);
+      try (ResultSet set = statement.executeQuery()) {
+        if (!set.isBeforeFirst()) {
+          // Si aucun résultat n'est retourné, retourner null
+          return null;
+        } else {
+          // Sinon, parcourir le résultat pour récupérer les informations de la notification
+          while (set.next()) {
+            notificationDTO.setId(set.getInt("id_notification"));
+            notificationDTO.setObject(set.getInt("objet"));
+            notificationDTO.setMessage(set.getString("message"));
+            notificationDTO.setType(set.getString("type"));
+            notificationDTO.setLue(set.getBoolean("lue"));
+          }
+        }
+      }
+    } catch (SQLException e) {
+      throw new FatalException(e);
+    }
+    return notificationDTO;
+  }
+
 }

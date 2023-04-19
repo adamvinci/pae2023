@@ -8,12 +8,12 @@ import java.util.Arrays;
  */
 public class NotificationImpl implements NotificationDTO {
 
+  private static final String[] POSSIBLE_TYPE = {"acceptation", "refus", "alerteProposition"};
   private int id;
   private int object;
   private String message;
   private String type;
-
-  private static final String[] POSSIBLE_TYPE = {"acceptation", "refus", "alerteProposition"};
+  private Boolean lue;
 
   public Integer getId() {
     return id;
@@ -46,4 +46,13 @@ public class NotificationImpl implements NotificationDTO {
   public void setType(String type) {
     this.type = Arrays.stream(POSSIBLE_TYPE).filter(s -> s.equals(type)).findFirst().orElse(null);
   }
+
+  public Boolean getLue() {
+    return lue;
+  }
+
+  public void setLue(Boolean lue) {
+    this.lue = lue;
+  }
+
 }

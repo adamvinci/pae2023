@@ -1,6 +1,7 @@
 package be.vinci.pae.dal;
 
 import be.vinci.pae.business.dto.NotificationDTO;
+import java.util.List;
 
 /**
  * NotificationDAO purpose is to communicate with the notification table in the database.
@@ -19,7 +20,13 @@ public interface NotificationDAO {
    * Insert a row in notification_utilisateur.
    *
    * @param idNotif to link with the user
-   * @param idUser to alert
+   * @param idUser  to alert
    */
   void linkNotifToUser(int idNotif, int idUser);
+
+  List<NotificationDTO> findNotificationsByUser(int userId);
+
+  NotificationDTO setLueNotification(NotificationDTO notificationDTO, int utilisateur);
+
+  NotificationDTO getOne(int id);
 }

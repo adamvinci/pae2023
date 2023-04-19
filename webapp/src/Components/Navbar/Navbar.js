@@ -143,6 +143,93 @@ async function renderNavbar() {
     
 
     `;
+    let notifications=[];
+    const boutNotif =()=> {
+
+      const nonLues = notifications.filter(notification => !notification.lue);
+      let nbNonLues = nonLues.length;
+      const bouttonCo = document.getElementById('bouttonCo');
+      bouttonCo.innerHTML = `
+        <div class="notification-container">
+          <button class="notification-button" id="notification-btn">
+            <span class="notification-icon"><i class="fa fa-bell"></i></span>
+            <span class="notification-text">Notification</span>
+            <span class="notification-count" id="notification-count">${nbNonLues}</span>
+          </button>
+          <div class="notification-dropdown" id="notification-dropdown">
+          <ul id="notification-list"></ul>
+          </div>
+        </div>  
+        `;
+
+      const notificationBtn = document.getElementById("notification-btn");
+      const notificationDropdown = document.getElementById("notification-dropdown");
+      const notificationList = document.getElementById("notification-list");
+
+      notificationBtn.addEventListener("click", async () => {
+        notificationDropdown.classList.toggle("show");
+
+        if (notificationDropdown.classList.contains("show")) {
+
+          notificationList.innerHTML = notifications.map(notification => {
+            const isRead = notification.lue;
+            const classList = isRead ? "notification-item read" : "notification-item unread";
+            return `<li class="${classList}" data-notification-id="${notification.id}">${notification.message}</li>`;
+          }).join('');
+
+          // Appel API pour marquer la notification comme lue lorsque l'utilisateur clique dessus
+          const notificationItems = document.querySelectorAll(".notification-item");
+
+          notificationItems.forEach((item) => {
+            item.addEventListener("click", async () => {
+              if (!item.classList.contains("read")) {
+                const {dataset: {notificationId}} = item;
+                const options = {
+                  method: 'POST',
+                  body: JSON.stringify({}),
+                  headers: {
+                    'Content-Type': 'application/json',
+                    Authorization : getToken(),
+                  },
+                };
+
+
+                const response = await fetch(`${process.env.API_BASE_URL}/notification/marquerRead/${notificationId}`, options);
+
+                const updatedNotification = await response.json();
+                if (updatedNotification != null) {
+                  const notificationIndex = notifications.findIndex(notification => notification.id === updatedNotification.id);
+                  if (notificationIndex !== -1) {
+                    notifications[notificationIndex].lue = true;
+                  }
+                  const notificationCount = document.getElementById("notification-count");
+                  nbNonLues-=1;
+                  notificationCount.innerText = nbNonLues;
+                  item.classList.remove("unread");
+                  item.classList.add("read");
+
+                }
+              }
+            });
+          });
+        }
+      });
+    }
+    const recupererMessages= async()=>{
+      const optionsGET = {
+        method: 'GET',
+        body: JSON.stringify(),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: getToken(),
+        },
+      };
+      const responsee = await fetch(`${process.env.API_BASE_URL}/notification/userNotifications`,optionsGET);
+      notifications = await responsee.json();
+      boutNotif();
+    }
+    recupererMessages();
+
   }
   else{
     const bouttonCo = document.getElementById('bouttonCo');
