@@ -307,9 +307,9 @@ class UserUccTest {
     assertEquals(userMemberSteven.getNom(), "Lebron");
   }
 
-  @DisplayName("Test update without changes on the password ")
+  @DisplayName("Test update with a bad new password (blank or empty) ")
   @Test
-  void testUpdateWithoutPasswordChanges() {
+  void testUpdateBadNewPassword() {
     UserDTO user = userFactory.getUserDTO();
     user.setNom("Lebron");
     user.setPrenom("James");
@@ -317,6 +317,7 @@ class UserUccTest {
     user.setGsm("123");
     user.setId(1);
     user.setImage("blablabla");
+    user.setPassword("  ");
 
     assertEquals(userMemberSteven.getNom(), "Agbassah");
     assertNotNull(userUcc.update(user, "123*"));
