@@ -268,7 +268,6 @@ class UserUccTest {
     user.setEmail("lebron.james@nba.be");
     user.setGsm("123");
     user.setId(1);
-    User user1 = (User) user;
     user.setPassword("bm");
     doThrow(new NoSuchElementException("exception")).when(userDAO).update(userMemberSteven);
     assertThrows(ConflictException.class, () -> userUcc.update(user, "123*"));
@@ -308,7 +307,7 @@ class UserUccTest {
     assertEquals(userMemberSteven.getNom(), "Lebron");
   }
 
-  @DisplayName("Test update withtout changes on the password ")
+  @DisplayName("Test update without changes on the password ")
   @Test
   void testUpdateWithoutPasswordChanges() {
     UserDTO user = userFactory.getUserDTO();
@@ -332,7 +331,7 @@ class UserUccTest {
     user.setPrenom("James");
     user.setEmail("lebron.james@nba.be");
     user.setGsm("123");
-    user.setId(2);
+    user.setId(1);
     user.setPassword("bm");
 
     assertThrows(FatalException.class, () -> userUcc.update(user, "124*"));
