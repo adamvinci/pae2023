@@ -20,6 +20,7 @@ import be.vinci.pae.utils.exception.FatalException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import jakarta.ws.rs.WebApplicationException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -282,6 +284,7 @@ class UserUccTest {
     user.setGsm("123");
     user.setId(1);
     user.setPassword("bm");
+    user.setImage("blablabla");
 
     assertEquals(userMemberSteven.getNom(), "Agbassah");
     assertNotNull(userUcc.update(user));
@@ -300,6 +303,29 @@ class UserUccTest {
     user.setPassword("bm");
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
     assertThrows(FatalException.class, () -> userUcc.update(user));
+  }
+
+  @DisplayName("Test update with an non existing user (in the DB)")
+  @Test
+  void updateNonExistingUser() {
+    UserDTO user = userFactory.getUserDTO();
+    user.setNom("Lebron");
+    user.setPrenom("James");
+    user.setEmail("lebron.james@nba.be");
+    user.setGsm("123");
+    user.setId(100);
+    user.setPassword("bm");
+
+    UserDTO user2 = userFactory.getUserDTO();
+    user2.setNom("Non");
+    user2.setPrenom("existing");
+    user2.setEmail("non.existing@error.be");
+    user2.setGsm("123");
+    user2.setId(100);
+    user2.setPassword("bm");
+
+    Mockito.when(userDAO.getOne(100)).thenReturn(null);
+    assertThrows(WebApplicationException.class, () -> userUcc.update(user));
   }
 
 
