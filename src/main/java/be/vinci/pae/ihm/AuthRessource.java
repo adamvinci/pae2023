@@ -31,6 +31,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -112,10 +113,14 @@ public class AuthRessource {
         || userDTO.getPassword().equals("") || userDTO.getPassword().isBlank()
         || userDTO.getNom().equals("") || userDTO.getNom().isBlank()
         || userDTO.getPrenom().equals("") || userDTO.getPrenom().isBlank()
-        || userDTO.getGsm().equals("") || userDTO.getGsm().isBlank()) {
+        || userDTO.getGsm().equals("") || userDTO.getGsm().isBlank() || userDTO.getImage().isBlank()
+        || userDTO.getImage().equals("")) {
       throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
     }
-    userDTO.setImage(Config.getProperty("pathToUserImage") + userDTO.getImage());
+    if (!Files.exists(java.nio.file.Path.of(userDTO.getImage()))) {
+      throw new WebApplicationException("this image is not stored in the server ",
+          Status.BAD_REQUEST);
+    }
     userDTO = userUcc.register(userDTO);
 
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Inscription de "
@@ -153,23 +158,27 @@ public class AuthRessource {
   @POST
   @Path("upload")
   @Consumes(MediaType.MULTIPART_FORM_DATA)
-  public Response uploadFile(@FormDataParam("file") InputStream file,
+  @Produces(MediaType.TEXT_PLAIN)
+  public String uploadFile(@FormDataParam("file") InputStream file,
       @FormDataParam("file") FormDataContentDisposition fileDisposition) {
     String fileName = fileDisposition.getFileName();
-    String pathToSave = Config.getProperty("pathToUserImage") + fileName;
+    String pathToSave = Config.getProperty("pathToUserImage");
+    String newFileName = UUID.randomUUID() + "." + fileName;
+    pathToSave += newFileName;
+
     try {
       Files.copy(file, Paths.get(pathToSave));
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Adding avatar");
-    return Response.ok().build();
+    return pathToSave;
   }
 
   /**
    * Retrieve the picture of a user.
    *
-   * @param id of the user
+   * @param id      of the user
    * @param request contains the user asking the picture
    * @return the image
    */
@@ -194,7 +203,6 @@ public class AuthRessource {
           Status.NOT_FOUND);
       // delete from img if exists
     }
-
 
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve picture of user " + id);
     return pictureService.transformImage(pathPicture);
