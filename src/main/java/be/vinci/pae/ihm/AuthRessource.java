@@ -120,8 +120,7 @@ public class AuthRessource {
     if (!Files.exists(java.nio.file.Path.of(userDTO.getImage()))) {
       throw new WebApplicationException("this image is not saved ", Status.BAD_REQUEST);
     }
-      userDTO = userUcc.register(userDTO);
-
+    userDTO = userUcc.register(userDTO);
 
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Inscription de "
         + userDTO.getEmail());
