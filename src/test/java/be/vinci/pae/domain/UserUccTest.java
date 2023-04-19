@@ -307,9 +307,9 @@ class UserUccTest {
     assertEquals(userMemberSteven.getNom(), "Lebron");
   }
 
-  @DisplayName("Test update with a bad new password (blank or empty) ")
+  @DisplayName("Test update with a blank new password")
   @Test
-  void testUpdateBadNewPassword() {
+  void testUpdateBlankPassword() {
     UserDTO user = userFactory.getUserDTO();
     user.setNom("Lebron");
     user.setPrenom("James");
@@ -318,6 +318,39 @@ class UserUccTest {
     user.setId(1);
     user.setImage("blablabla");
     user.setPassword("  ");
+
+    assertEquals(userMemberSteven.getNom(), "Agbassah");
+    assertNotNull(userUcc.update(user, "123*"));
+    assertEquals(userMemberSteven.getNom(), "Lebron");
+  }
+
+  @DisplayName("Test update with a empty new password")
+  @Test
+  void testUpdateEmptyPassword() {
+    UserDTO user = userFactory.getUserDTO();
+    user.setNom("Lebron");
+    user.setPrenom("James");
+    user.setEmail("lebron.james@nba.be");
+    user.setGsm("123");
+    user.setId(1);
+    user.setImage("blablabla");
+    user.setPassword("");
+
+    assertEquals(userMemberSteven.getNom(), "Agbassah");
+    assertNotNull(userUcc.update(user, "123*"));
+    assertEquals(userMemberSteven.getNom(), "Lebron");
+  }
+
+  @DisplayName("Test update with a null new password")
+  @Test
+  void testUpdateNullPassword() {
+    UserDTO user = userFactory.getUserDTO();
+    user.setNom("Lebron");
+    user.setPrenom("James");
+    user.setEmail("lebron.james@nba.be");
+    user.setGsm("123");
+    user.setId(1);
+    user.setImage("blablabla");
 
     assertEquals(userMemberSteven.getNom(), "Agbassah");
     assertNotNull(userUcc.update(user, "123*"));
