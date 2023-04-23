@@ -44,7 +44,6 @@ public interface ObjectDAO {
    *
    *@param objet the object to insert
    *@return the object with its generated ID, or null if the insertion failed
-   *@throws FatalException if a SQL exception occurs
    */
   ObjetDTO createObjet(ObjetDTO objet);
 }
