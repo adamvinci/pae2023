@@ -386,6 +386,17 @@ public class ObjetRessource {
     return Response.ok().build();
   }
 
+
+  /**
+   * Updates an object with the specified ID in the database using the information provided in a
+   * JSON payload.
+   *
+   * @param idObject the ID of the object to be updated
+   * @param json     the JSON payload containing the new information for the object
+   * @return the updated object as an ObjetDTO object
+   * @throws WebApplicationException if the JSON payload is missing required information
+   */
+
   @PUT
   @Path("updateObject/{id}")
   @Produces(MediaType.APPLICATION_JSON)
@@ -420,6 +431,4 @@ public class ObjetRessource {
 
     return objectSelectionner;
   }
-
-
 }

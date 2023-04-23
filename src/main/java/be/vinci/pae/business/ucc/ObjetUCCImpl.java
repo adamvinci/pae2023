@@ -268,14 +268,14 @@ public class ObjetUCCImpl implements ObjetUCC {
     try {
       dal.startTransaction();
 
-      if (photo.isBlank() || photo.isEmpty() || photo == null) {
+      if (photo.isBlank() || photo.isEmpty()) {
         photo = objetDTO.getPhoto();
 
       } else {
         photo = "src/main/java/be/vinci/pae/utils/images/" + photo;
       }
 
-      if (description.isBlank() || description.isEmpty() || description == null) {
+      if (description.isBlank() || description.isEmpty()) {
         description = objetDTO.getDescription();
       }
 

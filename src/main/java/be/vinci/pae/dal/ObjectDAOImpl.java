@@ -255,13 +255,25 @@ public class ObjectDAOImpl implements ObjectDAO {
     return objet;
   }
 
+  /**
+   * Updates an object with the specified description, type, and photo in the database.
+   *
+   * @param objetDTO     the object to be updated
+   * @param description  the new description of the object
+   * @param typeObjetDTO the new type of the object
+   * @param photo        the new photo of the object
+   * @return the updated object as an ObjetDTO object
+   * @throws FatalException         if there is an error with the database
+   * @throws NoSuchElementException if the specified object cannot be found in the database
+   */
+
   public ObjetDTO updateObject(ObjetDTO objetDTO, String description, TypeObjetDTO typeObjetDTO,
       String photo) {
 
     ObjetDTO objetDTO1 = objetFactory.getObjet();
-    String query =
-        "UPDATE projet.objets SET description = ? , type = CAST(? AS INTEGER), photo = ?, version = version +1  WHERE id_objet = ?"
-            + "AND version = ? RETURNING *";
+    String query = "UPDATE projet.objets SET description = ? , type = CAST(? AS INTEGER), "
+        + "photo = ?, version = version +1  WHERE id_objet = ?"
+        + "AND version = ? RETURNING *";
 
     try (PreparedStatement statement = dalService.preparedStatement(query)) {
       statement.setString(1, description);
