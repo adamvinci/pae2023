@@ -93,4 +93,20 @@ public interface ObjetUCC {
    * @param objetDTOS contains the object 'en vente'
    */
   void retirerObjetVente(List<ObjetDTO> objetDTOS);
+
+  /**
+   *Adds an object represented by the given ObjectDTO to the system.
+   *
+   *@param objet the ObjectDTO representing the object to be added
+   *@return the ObjectDTO representing the added object
+   */
+  ObjetDTO ajouterObjet(ObjetDTO objet);
+
+  /**
+   *Retrieves a TypeObjetDTO object corresponding to the specified ID.
+   *
+   *@param id the ID of the TypeObjetDTO to retrieve.
+   *@return the TypeObjetDTO object with the specified ID.
+   */
+  TypeObjetDTO getOneType(int id);
 }

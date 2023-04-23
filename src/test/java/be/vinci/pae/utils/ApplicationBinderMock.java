@@ -6,6 +6,8 @@ import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.factory.NotificationFactoryImpl;
 import be.vinci.pae.business.factory.ObjetFactory;
 import be.vinci.pae.business.factory.ObjetFactoryImpl;
+import be.vinci.pae.business.factory.TypeObjetFactory;
+import be.vinci.pae.business.factory.TypeObjetFactoryImpl;
 import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.business.factory.UserFactoryImpl;
 import be.vinci.pae.business.ucc.DisponibiliteUCC;
@@ -59,6 +61,7 @@ public class ApplicationBinderMock extends AbstractBinder {
 
     bind(UserFactoryImpl.class).to(UserFactory.class).in(Singleton.class);
     bind(ObjetFactoryImpl.class).to(ObjetFactory.class).in(Singleton.class);
+    bind(TypeObjetFactoryImpl.class).to(TypeObjetFactory.class).in(Singleton.class);
     bind(DisponibiliteFactoryImpl.class).to(DisponibiliteFactory.class).in(Singleton.class);
     bind(NotificationFactoryImpl.class).to(NotificationFactory.class).in(Singleton.class);
     bind(Mockito.mock(DALServiceImpl.class)).to(DALTransaction.class);

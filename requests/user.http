@@ -168,6 +168,15 @@ Content-Type: application/json
   "plage": "matin"
 }
 
+###
+POST {{baseUrl}}/objet/ajouterObjet
+Content-Type: application/json
+
+{
+  "description": "de",
+  "photo": "d"
+}
+
 
 
 ###

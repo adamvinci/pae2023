@@ -12,6 +12,7 @@ import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.factory.ObjetFactory;
+import be.vinci.pae.business.factory.TypeObjetFactory;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.dal.NotificationDAO;
 import be.vinci.pae.dal.ObjectDAO;
@@ -42,6 +43,8 @@ class ObjetUCCTest {
 
   private ObjetUCC objetUCC;
   private ObjectDAO objectDAO;
+  private TypeObjetDTO typeObjetDTO;
+  private TypeObjetFactory typeFactory;
   private ObjetDTO objetDTO;
   private ObjetFactory objetFactory;
   private NotificationFactory notificationFactory;
@@ -58,11 +61,14 @@ class ObjetUCCTest {
     objectDAO = locator.getService(ObjectDAO.class);
     typeObjetDAO = locator.getService(TypeObjetDAO.class);
     objetFactory = locator.getService(ObjetFactory.class);
+    typeFactory = locator.getService(TypeObjetFactory.class);
     notificationFactory = locator.getService(NotificationFactory.class);
     notificationDAO = locator.getService(NotificationDAO.class);
     objetDTO = objetFactory.getObjet();
     notificationDTO = notificationFactory.getNotification();
     dalService = locator.getService(DALTransaction.class);
+    typeObjetDTO = typeFactory.getTypeObjet();
+
 
   }
 
@@ -157,6 +163,28 @@ class ObjetUCCTest {
   void testGetOneObjectWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
     assertThrows(FatalException.class, () -> objetUCC.getOne(1));
+
+  }
+
+  @DisplayName("Test  getOneType(int id) with a non-existent id")
+  @Test
+  void testGetOneTypeWithBadId() {
+    Mockito.when(typeObjetDAO.getOne(1)).thenReturn(null);
+    assertNull(objetUCC.getOneType(1), "This id doesnt exist");
+  }
+
+  @DisplayName("Test  getOneType(int id) with a =existent id")
+  @Test
+  void testGetOneTypeWithGoodId() {
+    Mockito.when(typeObjetDAO.getOne(1)).thenReturn(typeObjetDTO);
+    assertEquals(typeObjetDTO, objetUCC.getOneType(1));
+  }
+
+  @DisplayName("Test getOneType(int id)  with a FatalException")
+  @Test
+  void testGetOneTypeObjectWithFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> objetUCC.getOneType(1));
 
   }
 
@@ -436,4 +464,19 @@ class ObjetUCCTest {
     objetUCC.retirerObjetVente(objetDTOList);
     assertEquals("retirer", objetDTO.getEtat());
   }
+
+  @DisplayName("Test AjouterObjet() with a good object")
+  @Test
+  void testAjouterObjet() {
+    objetUCC.ajouterObjet(objetDTO);
+  }
+
+  @DisplayName("Test ajouterObjet() with a FatalException")
+  @Test
+  void testAjouterObjetWithFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> objetUCC.ajouterObjet(objetDTO));
+
+  }
+
 }

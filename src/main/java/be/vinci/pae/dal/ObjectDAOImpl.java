@@ -220,5 +220,40 @@ public class ObjectDAOImpl implements ObjectDAO {
     return objetDTO;
   }
 
+  @Override
+  public ObjetDTO createObjet(ObjetDTO objet) {
+
+    try (PreparedStatement statement = dalService.preparedStatement(
+        "INSERT INTO projet.objets VALUES "
+            + "(DEFAULT,?,?,?,?,?,?,?,NULL,NULL,NULL,NULL,NULL,NULL,?) RETURNING *;")) {
+      if (objet.getUtilisateur() == null) {
+        statement.setNull(1, java.sql.Types.INTEGER);
+      } else {
+        statement.setInt(1, objet.getUtilisateur());
+      }
+      statement.setString(2, objet.getGsm());
+      statement.setString(3, objet.getPhoto());
+      statement.setInt(4, objet.getTypeObjet().getIdObjet());
+      statement.setString(5, objet.getDescription());
+      statement.setInt(6, objet.getDisponibilite().getId());
+      statement.setString(7, objet.getEtat());
+      statement.setInt(8, 1);
+      try (ResultSet set = statement.executeQuery()) {
+        if (!set.isBeforeFirst()) {
+
+          return null;
+        } else {
+          while (set.next()) {
+            objet.setIdObjet(set.getInt(1));
+
+          }
+        }
+      }
+    } catch (SQLException e) {
+      throw new FatalException(e);
+    }
+    return objet;
+  }
+
 
 }

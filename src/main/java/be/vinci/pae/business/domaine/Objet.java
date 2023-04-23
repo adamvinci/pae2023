@@ -61,4 +61,9 @@ public interface Objet extends ObjetDTO {
    * Indicates whether this object is removable from sale.
    */
   void retirerVente();
+
+  /**
+   * initiates the state of an object to be proposed during an addition.
+   */
+  void initierEtat();
 }

@@ -39,5 +39,11 @@ public interface ObjectDAO {
    */
   ObjetDTO getOne(int id);
 
-
+  /**
+   *Inserts a new object into the project database.
+   *
+   *@param objet the object to insert
+   *@return the object with its generated ID, or null if the insertion failed
+   */
+  ObjetDTO createObjet(ObjetDTO objet);
 }
