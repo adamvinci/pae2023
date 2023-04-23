@@ -148,7 +148,7 @@ public class ObjetRessource {
     System.out.println("dezdzdz");
     if (objet.getDescription().isBlank() || objet.getDescription().isEmpty()
         || objet.getPhoto().isBlank() || objet.getPhoto().isEmpty()) {
-        throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
+      throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
     }
     objet.setPhoto(Config.getProperty("pathToObjectImage") + objet.getPhoto());
 
