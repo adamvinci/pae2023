@@ -70,7 +70,7 @@ class NotificationUCCTest {
         .thenReturn(notificationDTO);
     assertEquals(notificationDTO, notificationUCC.setLueNotification(notificationDTO, utilisateur));
   }
-  
+
   @DisplayName("Test setLueNotification(NotificationDTO,int) with a FatalException")
   @Test
   void testSetLueNotificationWithFatalException() {
@@ -78,5 +78,22 @@ class NotificationUCCTest {
     assertThrows(FatalException.class,
         () -> notificationUCC.setLueNotification(notificationDTO, 1));
   }
+
+  @DisplayName("Test GetOne(int id) with a Success return")
+  @Test
+  void testGetOneWithSuccess() {
+    int id = 1;
+    Mockito.when(notificationDAO.getOne(id)).thenReturn(notificationDTO);
+    assertEquals(notificationDTO, notificationUCC.getOne(id));
+  }
+
+  @DisplayName("Test GetOne(int id) with a FatalException")
+  @Test
+  void testGetOneWithFatalException() {
+    int id = 1;
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> notificationUCC.getOne(id));
+  }
+
 
 }
