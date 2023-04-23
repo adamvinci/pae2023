@@ -99,7 +99,6 @@ public interface ObjetUCC {
    *
    *@param objet the ObjectDTO representing the object to be added
    *@return the ObjectDTO representing the added object
-   *@throws FatalException if there is a fatal error while adding the object
    */
   ObjetDTO ajouterObjet(ObjetDTO objet);
 
@@ -108,7 +107,6 @@ public interface ObjetUCC {
    *
    *@param id the ID of the TypeObjetDTO to retrieve.
    *@return the TypeObjetDTO object with the specified ID.
-   *@throws FatalException if an error occurs while retrieving the TypeObjetDTO object.
    */
   TypeObjetDTO getOneType(int id);
 }
