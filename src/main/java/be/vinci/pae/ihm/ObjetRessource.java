@@ -115,7 +115,7 @@ public class ObjetRessource {
    *@param id the id of the TypeObjetDTO instance to retrieve
    *@return a TypeObjetDTO object in JSON format
    *@throws WebApplicationException if the id is -1 or if the requested TypeObjetDTO instance does
-   * not exist on the server
+   *        not exist on the server
    */
   @GET
   @Path("/typeObjet/{id}")
@@ -133,7 +133,8 @@ public class ObjetRessource {
   }
 
   /**
-   *Adds the provided object to the system and returns the added object with its ID and photo path set.
+   *Adds the provided object to the system and returns the added object with
+   * its ID and photo path set.
    *
    *@param objet the object to add to the system
    *@return the added object with its ID and photo path set
@@ -143,15 +144,15 @@ public class ObjetRessource {
   @Path("ajouterObjet")
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public ObjetDTO ajouterObjet(ObjetDTO objet){
+  public ObjetDTO ajouterObjet(ObjetDTO objet) {
     System.out.println("dezdzdz");
     if (objet.getDescription().isBlank() || objet.getDescription().isEmpty()
-    || objet.getPhoto().isBlank() || objet.getPhoto().isEmpty()){
-      throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
+        || objet.getPhoto().isBlank() || objet.getPhoto().isEmpty()) {
+        throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
     }
     objet.setPhoto(Config.getProperty("pathToObjectImage") + objet.getPhoto());
 
-    objet= objetUCC.ajouterObjet(objet);
+    objet = objetUCC.ajouterObjet(objet);
 
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "ajout de l'objet : "
         + objet.getDescription());

@@ -63,7 +63,7 @@ public interface Objet extends ObjetDTO {
   void retirerVente();
 
   /**
-   * initiates the state of an object to be proposed during an addition
+   * initiates the state of an object to be proposed during an addition.
    */
   void initierEtat();
 }

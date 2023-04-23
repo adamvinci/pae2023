@@ -440,7 +440,7 @@ class ObjetUCCTest {
   @DisplayName("Test AjouterObjet() with a good object")
   @Test
   void testAjouterObjet() {
-   objetUCC.ajouterObjet(objetDTO);
+    objetUCC.ajouterObjet(objetDTO);
   }
 
   @DisplayName("Test ajouterObjet() with a FatalException")

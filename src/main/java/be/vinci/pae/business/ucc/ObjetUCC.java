@@ -97,7 +97,7 @@ public interface ObjetUCC {
   /**
    *Adds an object represented by the given ObjectDTO to the system.
    *
-   *@param objetDTO the ObjectDTO representing the object to be added
+   *@param objet the ObjectDTO representing the object to be added
    *@return the ObjectDTO representing the added object
    *@throws FatalException if there is a fatal error while adding the object
    */

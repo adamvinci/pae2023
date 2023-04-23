@@ -288,13 +288,14 @@ public class ObjetImpl implements Objet, ObjetDTO {
     setEtat("retirer");
     setDate_retrait(LocalDate.now());
   }
+
   @Override
   public void initierEtat() {
-    if (getEtat()!=null) {
+    if (getEtat() != null) {
       throw new BusinessException(
           "Impossible changement, to be created the etat must be null ");
     }
-      setEtat("proposer");
+    setEtat("proposer");
 
   }
 }

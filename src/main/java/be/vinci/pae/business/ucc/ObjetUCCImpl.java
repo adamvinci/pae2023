@@ -233,15 +233,15 @@ public class ObjetUCCImpl implements ObjetUCC {
   public ObjetDTO ajouterObjet(ObjetDTO objetDTO) {
     try {
       dal.startTransaction();
-      Objet objet= (Objet) objetDTO;
+      Objet objet = (Objet) objetDTO;
       objet.initierEtat();
-      ObjetDTO objetDATA= dataService.createObjet(objetDTO);
+      ObjetDTO objetDATA = dataService.createObjet(objetDTO);
       return objetDATA;
-    }catch (FatalException e) {
+    } catch (FatalException e) {
       dal.rollBackTransaction();
 
       throw e;
-    }finally {
+    } finally {
       dal.commitTransaction();
     }
   }
