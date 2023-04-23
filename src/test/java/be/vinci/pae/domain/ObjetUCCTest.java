@@ -436,4 +436,19 @@ class ObjetUCCTest {
     objetUCC.retirerObjetVente(objetDTOList);
     assertEquals("retirer", objetDTO.getEtat());
   }
+
+  @DisplayName("Test AjouterObjet() with a good object")
+  @Test
+  void testAjouterObjet() {
+   objetUCC.ajouterObjet(objetDTO);
+  }
+
+  @DisplayName("Test ajouterObjet() with a FatalException")
+  @Test
+  void testAjouterObjetWithFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> objetUCC.ajouterObjet(objetDTO));
+
+  }
+
 }

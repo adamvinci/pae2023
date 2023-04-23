@@ -9,6 +9,7 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
@@ -43,6 +44,30 @@ public class DisponibiliteRessource {
         .log(Level.INFO, "Retrieving of disponibiltiy list");
     return disponibiliteUCC.getDisponibilite();
   }
+
+  /**
+   *Retrieves a single DisponibiliteDTO by its id.
+   *
+   *@param id the id of the DisponibiliteDTO to retrieve.
+   *@return the DisponibiliteDTO with the specified id.
+   *@throws WebApplicationException if the id is -1 or the DisponibiliteDTO is not found.
+   */
+  @GET
+  @Path("/{id}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public DisponibiliteDTO getOneDisp(@PathParam("id") int id) {
+    if (id == -1) {
+      throw new WebApplicationException("Id of photo required", Status.BAD_REQUEST);
+    }
+    DisponibiliteDTO disponibiliteDTO = disponibiliteUCC.getOne(id);
+    if (disponibiliteDTO == null) {
+      throw new WebApplicationException("dispo invalide",
+          Status.NOT_FOUND);
+    }
+    return disponibiliteDTO;
+  }
+
+
 
   /**
    * Create a disponibility.

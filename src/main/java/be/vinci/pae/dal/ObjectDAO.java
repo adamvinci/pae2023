@@ -1,5 +1,6 @@
 package be.vinci.pae.dal;
 
+import be.vinci.pae.business.domaine.Objet;
 import be.vinci.pae.business.dto.ObjetDTO;
 import java.util.List;
 
@@ -39,5 +40,12 @@ public interface ObjectDAO {
    */
   ObjetDTO getOne(int id);
 
-
+  /**
+   *Inserts a new object into the project database.
+   *
+   *@param objet the object to insert
+   *@return the object with its generated ID, or null if the insertion failed
+   *@throws FatalException if a SQL exception occurs
+   */
+  ObjetDTO createObjet(ObjetDTO objet);
 }

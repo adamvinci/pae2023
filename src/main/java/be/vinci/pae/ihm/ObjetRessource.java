@@ -109,6 +109,57 @@ public class ObjetRessource {
     return objetUCC.getAllObjectType();
   }
 
+  /**
+   *Retrieves a single instance of TypeObjetDTO with the specified id from the server.
+   *
+   *@param id the id of the TypeObjetDTO instance to retrieve
+   *@return a TypeObjetDTO object in JSON format
+   *@throws WebApplicationException if the id is -1 or if the requested TypeObjetDTO instance does
+   * not exist on the server
+   */
+  @GET
+  @Path("/typeObjet/{id}")
+  @Produces(MediaType.APPLICATION_JSON)
+  public TypeObjetDTO getOneType(@PathParam("id") int id) {
+    if (id == -1) {
+      throw new WebApplicationException("Id of type required", Status.BAD_REQUEST);
+    }
+    TypeObjetDTO typeObjetDTO = objetUCC.getOneType(id);
+    if (typeObjetDTO == null) {
+      throw new WebApplicationException("type invalide",
+          Status.NOT_FOUND);
+    }
+    return typeObjetDTO;
+  }
+
+  /**
+   *Adds the provided object to the system and returns the added object with its ID and photo path set.
+   *
+   *@param objet the object to add to the system
+   *@return the added object with its ID and photo path set
+   *@throws WebApplicationException if any required fields are missing or empty
+   */
+  @POST
+  @Path("ajouterObjet")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public ObjetDTO ajouterObjet(ObjetDTO objet){
+    System.out.println("dezdzdz");
+    if (objet.getDescription().isBlank() || objet.getDescription().isEmpty()
+    || objet.getPhoto().isBlank() || objet.getPhoto().isEmpty()){
+      throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
+    }
+    objet.setPhoto(Config.getProperty("pathToObjectImage") + objet.getPhoto());
+
+    objet= objetUCC.ajouterObjet(objet);
+
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "ajout de l'objet : "
+        + objet.getDescription());
+
+    return objet;
+
+  }
+
 
   /**
    * Change the state of an object from 'proposer' to 'accepte'.

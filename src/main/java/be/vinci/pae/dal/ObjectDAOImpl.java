@@ -1,5 +1,6 @@
 package be.vinci.pae.dal;
 
+import be.vinci.pae.business.domaine.Objet;
 import be.vinci.pae.business.dto.DisponibiliteDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
@@ -9,6 +10,7 @@ import be.vinci.pae.business.factory.TypeObjetFactory;
 import be.vinci.pae.dal.services.DALService;
 import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -218,6 +220,41 @@ public class ObjectDAOImpl implements ObjectDAO {
       throw new FatalException(e);
     }
     return objetDTO;
+  }
+
+  @Override
+  public ObjetDTO createObjet(ObjetDTO objet) {
+
+    try (PreparedStatement statement = dalService.preparedStatement(
+        "INSERT INTO projet.objets VALUES "
+            + "(DEFAULT,?,?,?,?,?,?,?,NULL,NULL,NULL,NULL,NULL,NULL,?) RETURNING *;")) {
+      if (objet.getUtilisateur() == null) {
+        statement.setNull(1, java.sql.Types.INTEGER);
+      } else {
+        statement.setInt(1, objet.getUtilisateur());
+      }
+      statement.setString(2, objet.getGsm());
+      statement.setString(3, objet.getPhoto());
+      statement.setInt(4, objet.getTypeObjet().getIdObjet());
+      statement.setString(5, objet.getDescription());
+      statement.setInt(6, objet.getDisponibilite().getId());
+      statement.setString(7, objet.getEtat());
+      statement.setInt(8, 1);
+      try (ResultSet set = statement.executeQuery()) {
+        if (!set.isBeforeFirst()) {
+
+          return null;
+        } else {
+          while (set.next()) {
+            objet.setIdObjet(set.getInt(1));
+
+          }
+        }
+      }
+    } catch (SQLException e) {
+      throw new FatalException(e);
+    }
+    return objet;
   }
 
 

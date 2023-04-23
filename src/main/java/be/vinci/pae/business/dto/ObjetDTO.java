@@ -1,12 +1,13 @@
 package be.vinci.pae.business.dto;
 
+import be.vinci.pae.business.domaine.ObjetImpl;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.LocalDate;
 
 /**
  * The different Object on the website.
  */
-@JsonDeserialize(as = Object.class)
+@JsonDeserialize(as = ObjetImpl.class)
 public interface ObjetDTO {
 
   /**

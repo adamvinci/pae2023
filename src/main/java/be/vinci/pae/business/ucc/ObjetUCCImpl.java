@@ -229,5 +229,35 @@ public class ObjetUCCImpl implements ObjetUCC {
     }
   }
 
+  @Override
+  public ObjetDTO ajouterObjet(ObjetDTO objetDTO) {
+    try {
+      dal.startTransaction();
+      Objet objet= (Objet) objetDTO;
+      objet.initierEtat();
+      ObjetDTO objetDATA= dataService.createObjet(objetDTO);
+      return objetDATA;
+    }catch (FatalException e) {
+      dal.rollBackTransaction();
+
+      throw e;
+    }finally {
+      dal.commitTransaction();
+    }
+  }
+
+  @Override
+  public TypeObjetDTO getOneType(int id) {
+    try {
+      dal.startTransaction();
+      return typeObjetDAO.getOne(id);
+    } catch (FatalException e) {
+      dal.rollBackTransaction();
+      throw e;
+    } finally {
+      dal.commitTransaction();
+    }
+  }
+
 
 }

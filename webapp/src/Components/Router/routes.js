@@ -10,7 +10,8 @@ import TableauDeBord from '../Pages/Helper/TableauDeBord';
 import VenteDobjet from '../Pages/Helper/VenteDobjet';
 import Membres from '../Pages/Responsable/Membres';
 import ObjetsPropose from '../Pages/Responsable/ObjetsPropose';
-import StatistiquePage from '../Pages/Helper/StatistiquesObjet'
+import StatistiquePage from '../Pages/Helper/StatistiquesObjet';
+import AddObjetPage from "../Pages/AddObjetPage";
 
 const routes = {
   '/': HomePage,
@@ -26,7 +27,8 @@ const routes = {
   '/venteObjet': VenteDobjet,
   '/Membres': Membres,
   '/ObjetsPropose': ObjetsPropose,
-  '/Statistiques' : StatistiquePage
+  '/Statistiques' : StatistiquePage,
+  '/AddObjet': AddObjetPage
 };
 
 export default routes;
