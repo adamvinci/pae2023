@@ -146,12 +146,12 @@ public class ObjetRessource {
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public ObjetDTO ajouterObjet(ObjetDTO objet) {
-    System.out.println("dezdzdz");
+
     if (objet.getDescription().isBlank() || objet.getDescription().isEmpty()
-        || objet.getPhoto().isBlank() || objet.getPhoto().isEmpty()) {
+        || objet.getPhoto().isBlank() || objet.getPhoto().isEmpty() || objet.getTypeObjet() == null
+        || objet.getDisponibilite() == null) {
       throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
     }
-    objet.setPhoto(Config.getProperty("pathToObjectImage") + objet.getPhoto());
 
     objet = objetUCC.ajouterObjet(objet);
 

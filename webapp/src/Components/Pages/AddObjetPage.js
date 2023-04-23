@@ -113,18 +113,21 @@ async function renderAddObjetForm() {
     const responseType = await fetch(`${process.env.API_BASE_URL}/objet/typeObjet/${nbType}`);
     const type=await responseType.json();
     const disponibilite = await responseDisponibiltite.json();
-    console.log(util);
-    console.log(gsm2);
 
     const fileInput = document.querySelector('input[name=file]');
     const formData = new FormData();
-    const photo=fileInput.files[0].name;
     formData.append('file', fileInput.files[0]);
     const options1 = {
       method: 'POST',
       body: formData
     };
-    fetch(`${process.env.API_BASE_URL}/objet/upload`, options1);
+    const responseImage = await fetch(`${process.env.API_BASE_URL}/objet/upload`, options1);
+
+    if (!responseImage.ok) {
+      Swal.fire((await responseImage.text()).valueOf())
+    }
+    const imageSaved =  await responseImage.text();
+    const photo= imageSaved
 
     const options = {
       method: 'POST',
