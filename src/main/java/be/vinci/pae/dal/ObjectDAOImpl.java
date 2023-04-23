@@ -255,5 +255,38 @@ public class ObjectDAOImpl implements ObjectDAO {
     return objet;
   }
 
+  public ObjetDTO updateObject(ObjetDTO objetDTO, String description, TypeObjetDTO typeObjetDTO,
+      String photo) {
+
+    ObjetDTO objetDTO1 = objetFactory.getObjet();
+    String query =
+        "UPDATE projet.objets SET description = ? , type = CAST(? AS INTEGER), photo = ?, version = version +1  WHERE id_objet = ?"
+            + "AND version = ? RETURNING *";
+
+    try (PreparedStatement statement = dalService.preparedStatement(query)) {
+      statement.setString(1, description);
+      statement.setInt(2, Integer.parseInt(String.valueOf(typeObjetDTO.getIdObjet())));
+      statement.setString(3, photo);
+      statement.setInt(4, objetDTO.getIdObjet());
+      statement.setInt(5, objetDTO.getNoVersion());
+
+      try (ResultSet rs = statement.executeQuery()) {
+        if (!rs.isBeforeFirst()) {
+          throw new NoSuchElementException();
+        }
+      }
+
+    } catch (SQLException e) {
+      throw new FatalException(e);
+    }
+
+    objetDTO1.setDescription(description);
+    objetDTO1.setTypeObjet(typeObjetDTO);
+    objetDTO1.setPhoto(photo);
+    objetDTO1.setNoVersion(objetDTO.getNoVersion() + 1);
+
+    return objetDTO1;
+  }
+
 
 }
