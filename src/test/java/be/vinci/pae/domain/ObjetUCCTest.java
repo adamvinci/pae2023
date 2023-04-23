@@ -61,7 +61,7 @@ class ObjetUCCTest {
     objectDAO = locator.getService(ObjectDAO.class);
     typeObjetDAO = locator.getService(TypeObjetDAO.class);
     objetFactory = locator.getService(ObjetFactory.class);
-    typeFactory= locator.getService(TypeObjetFactory.class);
+    typeFactory = locator.getService(TypeObjetFactory.class);
     notificationFactory = locator.getService(NotificationFactory.class);
     notificationDAO = locator.getService(NotificationDAO.class);
     objetDTO = objetFactory.getObjet();
@@ -165,6 +165,7 @@ class ObjetUCCTest {
     assertThrows(FatalException.class, () -> objetUCC.getOne(1));
 
   }
+
   @DisplayName("Test  getOneType(int id) with a non-existent id")
   @Test
   void testGetOneTypeWithBadId() {
