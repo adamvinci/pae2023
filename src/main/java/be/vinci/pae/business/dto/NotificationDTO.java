@@ -65,7 +65,17 @@ public interface NotificationDTO {
    */
   void setType(String type);
 
+  /**
+   * Récupère l'état de lecture de la notification.
+   *
+   * @return {@code true} si la notification a été lue, {@code false} sinon.
+   */
   Boolean getLue();
-  
+
+  /**
+   * Définit l'état de lecture de la notification.
+   *
+   * @param lue {@code true} si la notification doit être marquée comme lue, {@code false} sinon.
+   */
   void setLue(Boolean lue);
 }
