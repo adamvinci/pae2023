@@ -12,6 +12,9 @@ import Membres from '../Pages/Responsable/Membres';
 import ObjetsPropose from '../Pages/Responsable/ObjetsPropose';
 import StatistiquePage from '../Pages/Helper/StatistiquesObjet';
 import AddObjetPage from "../Pages/AddObjetPage";
+import StatistiquePage from '../Pages/Helper/StatistiquesObjet'
+import UserPage from "../Pages/UserPage";
+
 
 const routes = {
   '/': HomePage,
@@ -29,6 +32,8 @@ const routes = {
   '/ObjetsPropose': ObjetsPropose,
   '/Statistiques' : StatistiquePage,
   '/AddObjet': AddObjetPage
+  '/UserPage': UserPage,
+  
 };
 
 export default routes;

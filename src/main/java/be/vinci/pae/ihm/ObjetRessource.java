@@ -31,6 +31,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -372,16 +373,20 @@ public class ObjetRessource {
   @POST
   @Path("upload")
   @Consumes(MediaType.MULTIPART_FORM_DATA)
-  public Response uploadFile(@FormDataParam("file") InputStream file,
+  @Produces(MediaType.TEXT_PLAIN)
+  public String uploadFile(@FormDataParam("file") InputStream file,
       @FormDataParam("file") FormDataContentDisposition fileDisposition) {
     String fileName = fileDisposition.getFileName();
+    String pathToSave = Config.getProperty("pathToObjectImage");
+    String newFileName = UUID.randomUUID() + "." + fileName;
+    pathToSave += newFileName;
     try {
-      Files.copy(file, Paths.get(Config.getProperty("pathToObjectImage") + fileName));
+      Files.copy(file, Paths.get(pathToSave));
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Adding picture of object ");
-    return Response.ok().build();
+    return pathToSave;
   }
 
 

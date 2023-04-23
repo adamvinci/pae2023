@@ -133,4 +133,43 @@ public class UserUccImpl implements UserUcc {
       dal.commitTransaction();
     }
   }
+
+  @Override
+  public UserDTO update(UserDTO newUser, String actualPassword) {
+    try {
+      UserDTO userToChange = getOne(newUser.getId());
+      if (userToChange == null) {
+        throw new FatalException("This user do not exists");
+      }
+      dal.startTransaction();
+      User user = (User) userToChange;
+      if (!user.checkPassword(actualPassword)) {
+        throw new FatalException("Wrong password");
+      }
+      userToChange.setEmail(newUser.getEmail());
+      userToChange.setGsm(newUser.getGsm());
+      userToChange.setNom(newUser.getNom());
+      userToChange.setPrenom(newUser.getPrenom());
+      String password = newUser.getPassword();
+
+      if (newUser.getImage() != null) {
+        userToChange.setImage(newUser.getImage());
+      }
+      if (password != null && !password.isEmpty() && !password.isBlank()) {
+        userToChange.setPassword(user.hashPassword(password));
+      }
+      dataService.update(userToChange);
+      userToChange.setVersion(userToChange.getVersion() + 1);
+      dal.commitTransaction();
+      return userToChange;
+    } catch (Exception e) {
+      if (e instanceof NoSuchElementException) {
+        throw new ConflictException("Bad version number, retry");
+      }
+      dal.rollBackTransaction();
+      throw e;
+    }
+  }
+
+
 }

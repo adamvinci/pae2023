@@ -17,6 +17,10 @@ import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.ApplicationBinderMock;
 import be.vinci.pae.utils.exception.ConflictException;
 import be.vinci.pae.utils.exception.FatalException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import jakarta.ws.rs.WebApplicationException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,7 @@ import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**
@@ -87,6 +92,8 @@ class UserUccTest {
 
     Mockito.when(userDAO.getOne(1)).thenReturn(userMemberSteven);
     Mockito.when(userDAO.getOne("steven.agbassah@student.vinci.be")).thenReturn(userMemberSteven);
+
+
   }
 
   @DisplayName("Test login(String email, String password) w ith good email and good password")
@@ -250,5 +257,148 @@ class UserUccTest {
     assertThrows(FatalException.class, () -> userUcc.getPicture(1));
 
   }
+
+
+  @DisplayName("Test update with a Conflict")
+  @Test
+  void updateWithAConflict() {
+    UserDTO user = userFactory.getUserDTO();
+    user.setNom("Lebron");
+    user.setPrenom("James");
+    user.setEmail("lebron.james@nba.be");
+    user.setGsm("123");
+    user.setId(1);
+    user.setPassword("bm");
+    doThrow(new NoSuchElementException("exception")).when(userDAO).update(userMemberSteven);
+    assertThrows(ConflictException.class, () -> userUcc.update(user, "123*"));
+  }
+
+
+  @DisplayName("Test update ")
+  @Test
+  void testUpdate() {
+    UserDTO user = userFactory.getUserDTO();
+    user.setNom("Lebron");
+    user.setPrenom("James");
+    user.setEmail("lebron.james@nba.be");
+    user.setGsm("123");
+    user.setId(1);
+    user.setPassword("bm");
+    user.setImage("blablabla");
+
+    assertEquals(userMemberSteven.getNom(), "Agbassah");
+    assertNotNull(userUcc.update(user, "123*"));
+    assertEquals(userMemberSteven.getNom(), "Lebron");
+  }
+
+  @DisplayName("Test update without changes on the image ")
+  @Test
+  void testUpdateWithoutImageChanges() {
+    UserDTO user = userFactory.getUserDTO();
+    user.setNom("Lebron");
+    user.setPrenom("James");
+    user.setEmail("lebron.james@nba.be");
+    user.setGsm("123");
+    user.setId(1);
+    user.setPassword("bm");
+
+    assertEquals(userMemberSteven.getNom(), "Agbassah");
+    assertNotNull(userUcc.update(user, "123*"));
+    assertEquals(userMemberSteven.getNom(), "Lebron");
+  }
+
+  @DisplayName("Test update with a blank new password")
+  @Test
+  void testUpdateBlankPassword() {
+    UserDTO user = userFactory.getUserDTO();
+    user.setNom("Lebron");
+    user.setPrenom("James");
+    user.setEmail("lebron.james@nba.be");
+    user.setGsm("123");
+    user.setId(1);
+    user.setImage("blablabla");
+    user.setPassword("  ");
+
+    assertEquals(userMemberSteven.getNom(), "Agbassah");
+    assertNotNull(userUcc.update(user, "123*"));
+    assertEquals(userMemberSteven.getNom(), "Lebron");
+  }
+
+  @DisplayName("Test update with a empty new password")
+  @Test
+  void testUpdateEmptyPassword() {
+    UserDTO user = userFactory.getUserDTO();
+    user.setNom("Lebron");
+    user.setPrenom("James");
+    user.setEmail("lebron.james@nba.be");
+    user.setGsm("123");
+    user.setId(1);
+    user.setImage("blablabla");
+    user.setPassword("");
+
+    assertEquals(userMemberSteven.getNom(), "Agbassah");
+    assertNotNull(userUcc.update(user, "123*"));
+    assertEquals(userMemberSteven.getNom(), "Lebron");
+  }
+
+  @DisplayName("Test update with a null new password")
+  @Test
+  void testUpdateNullPassword() {
+    UserDTO user = userFactory.getUserDTO();
+    user.setNom("Lebron");
+    user.setPrenom("James");
+    user.setEmail("lebron.james@nba.be");
+    user.setGsm("123");
+    user.setId(1);
+    user.setImage("blablabla");
+
+    assertEquals(userMemberSteven.getNom(), "Agbassah");
+    assertNotNull(userUcc.update(user, "123*"));
+    assertEquals(userMemberSteven.getNom(), "Lebron");
+  }
+
+  @DisplayName("Test update with wrong actual password")
+  @Test
+  void updateWrongPassword() {
+    UserDTO user = userFactory.getUserDTO();
+    user.setNom("Lebron");
+    user.setPrenom("James");
+    user.setEmail("lebron.james@nba.be");
+    user.setGsm("123");
+    user.setId(1);
+    user.setPassword("bm");
+
+    assertThrows(FatalException.class, () -> userUcc.update(user, "124*"));
+  }
+
+  @DisplayName("Test update with a FatalException")
+  @Test
+  void updateWithFatalException() {
+    UserDTO user = userFactory.getUserDTO();
+    user.setNom("Lebron");
+    user.setPrenom("James");
+    user.setEmail("lebron.james@nba.be");
+    user.setGsm("123");
+    user.setId(1);
+    user.setPassword("bm");
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> userUcc.update(user, "123*"));
+  }
+
+  @DisplayName("Test update with an non existing user (in the DB)")
+  @Test
+  void updateNonExistingUser() {
+    UserDTO user = userFactory.getUserDTO();
+    user.setNom("Lebron");
+    user.setPrenom("James");
+    user.setEmail("lebron.james@nba.be");
+    user.setGsm("123");
+    user.setId(100);
+    user.setPassword("bm");
+
+    Mockito.when(userDAO.getOne(100)).thenReturn(null);
+    assertThrows(WebApplicationException.class, () -> userUcc.update(user, "123*"));
+  }
+
 
 }

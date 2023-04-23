@@ -58,12 +58,13 @@ public class DisponibiliteUCCImpl implements DisponibiliteUCC {
       if (disponibiliteDAO.disponibilityExist(disponibiliteDTO1)) {
         throw new ConflictException("This disponibilty already exist");
       }
-      DisponibiliteDTO disponibiliteDTO = disponibiliteDAO.createOne(disponibiliteDTO1);
-      dal.commitTransaction();
-      return disponibiliteDTO;
+
+      return disponibiliteDAO.createOne(disponibiliteDTO1);
     } catch (FatalException e) {
       dal.rollBackTransaction();
       throw e;
+    } finally {
+      dal.commitTransaction();
     }
   }
 }

@@ -125,11 +125,11 @@ Content-Type: application/json
 }
 
 ###
-POST {{baseUrl}}/objet/accepterObject/6
+POST {{baseUrl}}/objet/accepterObject/8
 Authorization: {{adrienToken}}
 
 ###
-POST {{baseUrl}}/objet/depositObject/6
+POST {{baseUrl}}/objet/depositObject/8
 Authorization: {{aidantToken}}
 Content-Type: application/json
 
@@ -138,7 +138,7 @@ Content-Type: application/json
 }
 
 ###
-POST {{baseUrl}}/objet/misEnVenteObject/6
+POST {{baseUrl}}/objet/misEnVenteObject/8
 Authorization: {{aidantToken}}
 Content-Type: application/json
 
@@ -147,7 +147,7 @@ Content-Type: application/json
 }
 
 ###
-POST {{baseUrl}}/objet/vendreObject/6
+POST {{baseUrl}}/objet/vendreObject/8
 Authorization: {{aidantToken}}
 
 ###
@@ -164,7 +164,7 @@ POST {{baseUrl}}/disponibilite
 Content-Type: application/json
 
 {
-  "date": "2023-11-07",
+  "date": "2023-04-15",
   "plage": "matin"
 }
 
@@ -178,3 +178,29 @@ Content-Type: application/json
 }
 
 
+
+###
+PUT {{baseUrl}}/users/2
+Authorization: {{memberToken}}
+Content-Type: application/json
+
+{
+  "nom": "Lebron",
+  "prenom": "James",
+  "email": "lebron.james@nba.be",
+  "gsm": "019849784-474"
+}
+
+
+###
+PUT {{baseUrl}}/users/2
+Authorization: {{memberToken}}
+Content-Type: application/json
+
+{
+  "nom": "Lebron",
+  "prenom": "James",
+  "email": "lebron.james@nba.be",
+  "gsm": "            ",
+  "image" : "efzerkogj"
+}

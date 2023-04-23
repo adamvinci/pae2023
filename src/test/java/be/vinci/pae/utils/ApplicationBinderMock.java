@@ -10,6 +10,8 @@ import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.business.factory.UserFactoryImpl;
 import be.vinci.pae.business.ucc.DisponibiliteUCC;
 import be.vinci.pae.business.ucc.DisponibiliteUCCImpl;
+import be.vinci.pae.business.ucc.NotificationUCC;
+import be.vinci.pae.business.ucc.NotificationUCCImpl;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.business.ucc.ObjetUCCImpl;
 import be.vinci.pae.business.ucc.UserUcc;
@@ -45,6 +47,7 @@ public class ApplicationBinderMock extends AbstractBinder {
     bind(UserUccImpl.class).to(UserUcc.class).in(Singleton.class);
     bind(ObjetUCCImpl.class).to(ObjetUCC.class).in(Singleton.class);
     bind(DisponibiliteUCCImpl.class).to(DisponibiliteUCC.class).in(Singleton.class);
+    bind(NotificationUCCImpl.class).to(NotificationUCC.class).in(Singleton.class);
 
     //to avoid calling the UserDataServiceImpl which call the database
     // but cant as dev.propreties not initialzied

@@ -5,8 +5,8 @@ import java.util.List;
 
 
 /**
- * UserUcc acts  as an orchestrator to allow {@link be.vinci.pae.ihm.AuthRessource} and
- * {@link be.vinci.pae.dal.UserDAO} layers to communicate.
+ * UserUcc acts  as an orchestrator to allow {@link be.vinci.pae.ihm.AuthRessource} and {@link
+ * be.vinci.pae.dal.UserDAO} layers to communicate.
  */
 public interface UserUcc {
 
@@ -60,4 +60,14 @@ public interface UserUcc {
    * @return the path of the picture
    */
   String getPicture(int id);
+
+
+  /**
+   * Update an user with new informations.
+   *
+   * @param newUser an user with the potentially new user's information
+   * @param actualPassword is the password that the user has provided to confirm the changes
+   * @return the userDTO updated
+   */
+  UserDTO update(UserDTO newUser, String actualPassword);
 }

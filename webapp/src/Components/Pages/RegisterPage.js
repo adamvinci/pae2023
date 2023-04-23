@@ -88,6 +88,7 @@ function renderRegisterForm() {
   labelForm1.innerText = "Select File"
   const inputForm = document.createElement('input')
   inputForm.type = "file"
+  inputForm.accept ="image/*"
   inputForm.name = "file"
   inputForm.required = "true"
   form1.appendChild(labelForm1)
@@ -189,7 +190,14 @@ async function onRegister(e) {
       method: 'POST',
       body: formData
     };
-    fetch(`${process.env.API_BASE_URL}/auths/upload`, options1);
+    const responseImage = await fetch(`${process.env.API_BASE_URL}/auths/upload`, options1);
+
+    if (!responseImage.ok) {
+      Swal.fire((await responseImage.text()).valueOf())
+    }
+      const imageSaved =  await responseImage.text();
+     image = imageSaved
+
   }else{
     const avatarRadios = document.getElementsByName('avatar');
     avatarRadios.forEach((avtr)=>{
