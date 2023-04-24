@@ -175,7 +175,18 @@ async function tableAllObject (datas) {
     </tr>`;
   })
 
+  const btnUpdate = document.querySelectorAll("#modifier");
+  btnUpdate.forEach((button) => {
+    button.addEventListener("click", () => {
+      const id = parseInt(button.closest('tr').getAttribute("data-id"), 10);
 
+      const objectSelectionner = datas.find(element => element.idObjet === id);
+
+      sessionStorage.setItem("objet", JSON.stringify(objectSelectionner));
+      console.log(objectSelectionner);
+      window.location.href = "/updatePage";
+    });
+  });
 
   const btnDetail = document.querySelectorAll("#buttonDetail");
   let popup;
