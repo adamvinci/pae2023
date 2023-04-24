@@ -248,15 +248,17 @@ public class ObjetUCCImpl implements ObjetUCC {
       ObjetDTO objetDATA = dataService.createObjet(objetDTO);
 
       List<UserDTO> listAidant = userDAO.getAll();
-      List<UserDTO> listFiltred = listAidant.stream().filter((o) -> o.getRole().equals("aidant")
-          || o.getRole().equals("responsable")).toList();
-      listAidant = listFiltred;
+      if (listAidant != null) {
+        List<UserDTO> listFiltred = listAidant.stream().filter((o) -> o.getRole().equals("aidant")
+            || o.getRole().equals("responsable")).toList();
+        listAidant = listFiltred;
+      }
 
       notification.setObject(objetDATA.getIdObjet());
       notification.setType("alerteProposition");
       notification.setMessage("l'objet : " + objetDATA.getDescription() + " a ete ajouté");
       NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
-      if (listAidant.size() > 0) {
+      if (listAidant != null) {
         for (UserDTO u : listAidant) {
           dataServiceNotification.linkNotifToUser(notificationCreated.getId(),
               u.getId());

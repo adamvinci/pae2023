@@ -17,6 +17,7 @@ import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.dal.NotificationDAO;
 import be.vinci.pae.dal.ObjectDAO;
 import be.vinci.pae.dal.TypeObjetDAO;
+import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.ApplicationBinderMock;
 import be.vinci.pae.utils.exception.BusinessException;
@@ -50,6 +51,7 @@ class ObjetUCCTest {
   private NotificationFactory notificationFactory;
   private NotificationDAO notificationDAO;
   private NotificationDTO notificationDTO;
+  private UserDAO userDAO;
 
   private TypeObjetDAO typeObjetDAO;
 
@@ -68,6 +70,7 @@ class ObjetUCCTest {
     notificationDTO = notificationFactory.getNotification();
     dalService = locator.getService(DALTransaction.class);
     typeObjetDTO = typeFactory.getTypeObjet();
+    userDAO = locator.getService(UserDAO.class);
 
 
   }
@@ -473,6 +476,15 @@ class ObjetUCCTest {
   @Test
   void testAjouterObjet() {
     Mockito.when(objectDAO.createObjet(objetDTO)).thenReturn(objetDTO);
+    objetUCC.ajouterObjet(objetDTO, notificationDTO);
+  }
+
+  @DisplayName("Test AjouterObjet() with a good object without aidant and responsable")
+  @Test
+  void testAjouterObjetSansAidant() {
+    Mockito.when(objectDAO.createObjet(objetDTO)).thenReturn(objetDTO);
+    Mockito.when(userDAO.getAll().stream().filter((o) -> o.getRole().equals("aidant")
+        || o.getRole().equals("responsable"))).thenReturn(null);
     objetUCC.ajouterObjet(objetDTO, notificationDTO);
   }
 
