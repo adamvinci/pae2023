@@ -146,7 +146,7 @@ async function majObject(stringPicture) {
         text: 'Votre mise à jour a été effectuée avec succès.',
         timer: 5000
       }).then(() => {
-        window.location.href = '/ReceptionObjets';
+        window.location.href = '/TableauDeBord';
       });
     }
   } catch (error) {
