@@ -164,8 +164,11 @@ async function sendPicture(e){
 
   } else {
     try {
-      // eslint-disable-next-line prefer-destructuring
-      stringPicture = document.querySelector("input[name=file]").files[0];
+
+      if (document.querySelector("input[name=file]").files.length > 0) {
+        [stringPicture] = document.querySelector("input[name=file]").files;
+      }
+
       const fileInput = document.getElementById("photo");
 
       const formData = new FormData();
