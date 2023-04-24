@@ -100,7 +100,8 @@ public class ObjetRessource {
    *
    *@param request the container request context
    *@return the list of objects owned by the authenticated user as a List of ObjetDTOs
-   *@throws WebApplicationException if there are no objects in the database or if the request is not authorized
+   *@throws WebApplicationException if there are no objects in the database or if the request is
+   *        not authorized
    */
   @GET
   @Authorize
@@ -114,8 +115,8 @@ public class ObjetRessource {
 
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
         "Retrieve the complete list of object from user " + authenticatedUser.getEmail());
-    return objetUCC.getAllObject().stream().filter(objetDTO -> objetDTO.getUtilisateur() ==
-        authenticatedUser.getId() && objetDTO.getEtat() == "proposer").toList();
+    return objetUCC.getAllObject().stream().filter(objetDTO -> objetDTO.getUtilisateur()
+        == authenticatedUser.getId() && objetDTO.getEtat() == "proposer").toList();
   }
 
 
@@ -178,7 +179,7 @@ public class ObjetRessource {
       throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
     }
     NotificationDTO notification = notificationFactory.getNotification();
-    objet = objetUCC.ajouterObjet(objet,notification);
+    objet = objetUCC.ajouterObjet(objet, notification);
 
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "ajout de l'objet : "
         + objet.getDescription());
