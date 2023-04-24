@@ -114,12 +114,9 @@ public interface ObjetUCC {
   /**
    * Updates the information of an object based on the provided parameters.
    *
-   * @param objetDTO    the object to be updated
-   * @param description the new description of the object
-   * @param type        the new type of the object
-   * @param photo       the new photo of the object
+   * @param objetDTO the object to be updated
    * @return an updated ObjetDTO with the new information
    */
 
-  ObjetDTO updateObject(ObjetDTO objetDTO, String description, int type, String photo);
+  ObjetDTO updateObject(ObjetDTO objetDTO);
 }

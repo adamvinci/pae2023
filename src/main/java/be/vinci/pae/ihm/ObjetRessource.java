@@ -28,11 +28,13 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -399,17 +401,22 @@ public class ObjetRessource {
   @POST
   @Path("upload")
   @Consumes(MediaType.MULTIPART_FORM_DATA)
-  public Response uploadFile(@FormDataParam("file") InputStream file,
+
+  public String uploadFile(@FormDataParam("file") InputStream file,
       @FormDataParam("file") FormDataContentDisposition fileDisposition) {
-    System.out.println("upload");
     String fileName = fileDisposition.getFileName();
+
+    String pathToSave = Config.getProperty("pathToObjectImage");
+    String newFileName = UUID.randomUUID() + "." + fileName;
+
+    pathToSave += newFileName;
     try {
-      Files.copy(file, Paths.get(Config.getProperty("pathToObjectImage") + fileName));
+      Files.copy(file, Paths.get(pathToSave));
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Adding picture of object ");
-    return Response.ok().build();
+    return pathToSave;
   }
 
 
@@ -429,32 +436,49 @@ public class ObjetRessource {
   @Consumes(MediaType.APPLICATION_JSON)
 
   public ObjetDTO updateObject(@PathParam("id") int idObject, JsonNode json) {
-    System.out.println("updateobject");
 
-    ObjetDTO objectSelectionner = objetUCC.getOne(idObject);
+    if (!json.hasNonNull("version")) {
+      throw new WebApplicationException(
+          "The current version of the object your are trying to update is required",
+          Status.BAD_REQUEST);
+    }
+    String description = json.hasNonNull("description") ? json.get("description").asText() : null;
+    String photo = json.hasNonNull("photo") ? json.get("photo").asText() : null;
+    int type = json.hasNonNull("type") ? json.get("type").asInt() : 0;
 
-    if (!json.hasNonNull("description")) {
-      throw new WebApplicationException("Manque variable", Status.BAD_REQUEST);
+    if ((description == null || description.isBlank())
+        && (photo == null || photo.isBlank()) && type == 0) {
+      throw new WebApplicationException("You must at least change the description type or picture",
+          Status.BAD_REQUEST);
+    }
+    ObjetDTO objetToChange = objetUCC.getOne(idObject);
+    objetToChange.setNoVersion(json.get("version").asInt());
+    if (description != null && !description.isBlank()) {
+      objetToChange.setDescription(description);
     }
 
-    String description = json.get("description").asText();
-
-    int typeObject;
-    if (json.has("type") && !json.get("type").asText().equals("Type d'objet")) {
-      typeObject = json.get("type").asInt();
-
-    } else {
-      typeObject = objectSelectionner.getTypeObjet().getIdObjet();
+    if (type != 0) {
+      TypeObjetDTO typeObjetDTO = objetUCC.getOneType(type);
+      if (typeObjetDTO == null) {
+        throw new WebApplicationException("this type does not exist",
+            Status.BAD_REQUEST);
+      }
+      objetToChange.setTypeObjet(typeObjetDTO);
     }
 
-    String photo = "";
-
-    if (json.has("photo")) {
-      photo = json.get("photo").asText();
+    if (photo != null && !photo.isBlank()) {
+      if (!Files.exists(java.nio.file.Path.of(json.get("photo").asText()))) {
+        throw new WebApplicationException("This image is not stored in the server ",
+            Status.BAD_REQUEST);
+      }
+      File oldPictureObject = new File(objetToChange.getPhoto());
+      if (oldPictureObject.delete()) {
+        Logger.getLogger(MyLogger.class.getName())
+            .log(Level.INFO, "Deleted picture " + oldPictureObject);
+      }
+      objetToChange.setPhoto(json.get("photo").asText());
     }
 
-    objetUCC.updateObject(objectSelectionner, description, typeObject, photo);
-
-    return objectSelectionner;
+    return objetUCC.updateObject(objetToChange);
   }
 }

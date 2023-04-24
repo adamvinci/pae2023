@@ -51,14 +51,9 @@ public interface ObjectDAO {
   /**
    * Updates an object in the database with a new description, photo and/or type.
    *
-   * @param objetDTO     The object to be updated, containing the ID of the object and its current
-   *                     version number.
-   * @param description  The new description of the object. Can be null if the description has not
-   *                     changed.
-   * @param typeObjetDTO The new type of the object. Can be null if the type has not changed.
-   * @param photo        The new photo of the object. Can be null if the photo has not changed.
+   * @param objetDTO The object to be updated, containing the ID of the object and its current
+   *                 version number.
    * @return The updated object.
    */
-  ObjetDTO updateObject(ObjetDTO objetDTO, String description, TypeObjetDTO typeObjetDTO,
-      String photo);
+  ObjetDTO updateObject(ObjetDTO objetDTO);
 }

@@ -258,27 +258,22 @@ public class ObjectDAOImpl implements ObjectDAO {
   /**
    * Updates an object with the specified description, type, and photo in the database.
    *
-   * @param objetDTO     the object to be updated
-   * @param description  the new description of the object
-   * @param typeObjetDTO the new type of the object
-   * @param photo        the new photo of the object
+   * @param objetDTO the object to be updated
    * @return the updated object as an ObjetDTO object
    * @throws FatalException         if there is an error with the database
    * @throws NoSuchElementException if the specified object cannot be found in the database
    */
 
-  public ObjetDTO updateObject(ObjetDTO objetDTO, String description, TypeObjetDTO typeObjetDTO,
-      String photo) {
+  public ObjetDTO updateObject(ObjetDTO objetDTO) {
 
-    ObjetDTO objetDTO1 = objetFactory.getObjet();
-    String query = "UPDATE projet.objets SET description = ? , type = CAST(? AS INTEGER), "
+    String query = "UPDATE projet.objets SET description = ? , type = ?, "
         + "photo = ?, version = version +1  WHERE id_objet = ?"
         + "AND version = ? RETURNING *";
 
     try (PreparedStatement statement = dalService.preparedStatement(query)) {
-      statement.setString(1, description);
-      statement.setInt(2, Integer.parseInt(String.valueOf(typeObjetDTO.getIdObjet())));
-      statement.setString(3, photo);
+      statement.setString(1, objetDTO.getDescription());
+      statement.setInt(2, objetDTO.getTypeObjet().getIdObjet());
+      statement.setString(3, objetDTO.getPhoto());
       statement.setInt(4, objetDTO.getIdObjet());
       statement.setInt(5, objetDTO.getNoVersion());
 
@@ -292,12 +287,9 @@ public class ObjectDAOImpl implements ObjectDAO {
       throw new FatalException(e);
     }
 
-    objetDTO1.setDescription(description);
-    objetDTO1.setTypeObjet(typeObjetDTO);
-    objetDTO1.setPhoto(photo);
-    objetDTO1.setNoVersion(objetDTO.getNoVersion() + 1);
+    objetDTO.setNoVersion(objetDTO.getNoVersion() + 1);
 
-    return objetDTO1;
+    return objetDTO;
   }
 
 

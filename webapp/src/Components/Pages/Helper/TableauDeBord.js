@@ -186,7 +186,7 @@ async function tableAllObject(datas) {
       const objectSelectionner = datas.find(element => element.idObjet === id);
 
       sessionStorage.setItem("objet", JSON.stringify(objectSelectionner));
-      console.log(objectSelectionner);
+
       window.location.href = "/updatePage";
     });
   });
@@ -265,7 +265,6 @@ async function tableAllObject(datas) {
 
 function navigateUserPage() {
   const idUs = parseInt(document.getElementById('idUser').textContent, 10);
-  console.log(idUs);
   Navigate(`/UserObjectPage?idUs=${idUs}`);
 
 }
@@ -300,7 +299,7 @@ async function head() {
   html += await filtrageObjet();
   html += tableEnTete;
   table();
-  console.log("on est en head");
+
   html += "</div>"
   main.innerHTML = html;
 

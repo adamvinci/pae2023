@@ -53,7 +53,7 @@ function table() {
       }
 
       const datas = await response.json();
-    console.log(datas)
+
       const data = datas.filter((d) =>( d.etat === 'accepte'&& d.localisation === undefined) ||( d.etat === 'accepte' && d.localisation === "Atelier")  )
 
       const size = data.length;
