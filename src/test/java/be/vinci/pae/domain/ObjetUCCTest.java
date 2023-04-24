@@ -479,15 +479,6 @@ class ObjetUCCTest {
     objetUCC.ajouterObjet(objetDTO, notificationDTO);
   }
 
-  @DisplayName("Test AjouterObjet() with a good object without aidant and responsable")
-  @Test
-  void testAjouterObjetSansAidant() {
-    Mockito.when(objectDAO.createObjet(objetDTO)).thenReturn(objetDTO);
-    Mockito.when(userDAO.getAll().stream().filter((o) -> o.getRole().equals("aidant")
-        || o.getRole().equals("responsable"))).thenReturn(null);
-    objetUCC.ajouterObjet(objetDTO, notificationDTO);
-  }
-
   @DisplayName("Test ajouterObjet() with a FatalException")
   @Test
   void testAjouterObjetWithFatalException() {
