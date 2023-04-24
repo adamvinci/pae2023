@@ -68,7 +68,7 @@ async function filtrageObjet() {
     <div class="filterRechercheObjet">
       <form>
         <div>
-          <h3>Type d'objet</h3>
+          <h3 class="">Type d'objet</h3>
           ${optionsHtml}
         </div>
         <p>
@@ -76,8 +76,8 @@ async function filtrageObjet() {
           <input type="text" id="prix1" size="1"> jusqu'a <input type="text" id="prix2" size="1">
         </p>
         <p>
-          <h3>Date depot</h3>
-          <input type="date" id="dateDepot"><br>
+          <h3>Disponibilite</h3>
+          <input type="date" id="dateDispo"><br>
         </p>
         <p></p>
         <input type="button" id="filtreBtn" value="Filtrer">
@@ -85,7 +85,6 @@ async function filtrageObjet() {
       </form>
     </div>
   `;
-
   return filtre;
 }
 
@@ -105,7 +104,6 @@ async function objetFiltrer(){
   }
 
   const datas = await response.json();
-  console.log(datas);
 
   const typesSelectionnes = document.querySelectorAll('input[type="checkbox"][name="type"]:checked');
   const typesValeurs = [];
@@ -113,14 +111,13 @@ async function objetFiltrer(){
     typesValeurs.push(type.value);
   });
 
-  console.log(typesValeurs);
 
   const prix1 = document.getElementById("prix1").value;
   const prix2 = document.getElementById("prix2").value;
-  const dateDepot = document.getElementById("dateDepot").value;
+  const dateDispo = document.getElementById("dateDispo").value;
 
   const data = datas.filter(
-      (d) => ((d.prix >= prix1 && d.prix <= prix2) || (d.date_depot === dateDepot)) || (typesValeurs.includes(d.typeObjet.libelle))
+      (d) => ((d.prix >= prix1 && d.prix <= prix2)) || (typesValeurs.includes(d.typeObjet.libelle) || (`${d.disponibilite.date[0]}-${d.disponibilite.date[1]}-${d.disponibilite.date[2]}` === dateDispo))
   );
 
   tableAllObject(data);
