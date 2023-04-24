@@ -255,7 +255,9 @@ class ObjetUCCTest {
     Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
     assertAll(
         () -> assertEquals(objetDTO, objetUCC.refuserObject(objetDTO, "message", notificationDTO)),
-        () -> assertEquals("message", notificationDTO.getMessage())
+        () -> assertEquals(
+            "l'objet (" + objetDTO.getDescription() + ") est refusé car: " + "message",
+            notificationDTO.getMessage())
     );
   }
 
@@ -271,7 +273,9 @@ class ObjetUCCTest {
 
     assertAll(
         () -> assertEquals(objetDTO, objetUCC.refuserObject(objetDTO, "message", notificationDTO)),
-        () -> assertEquals("message", notificationDTO.getMessage())
+        () -> assertEquals(
+            "l'objet (" + objetDTO.getDescription() + ") est refusé car: " + "message",
+            notificationDTO.getMessage())
     );
   }
 

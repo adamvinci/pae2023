@@ -85,6 +85,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       if (objetDTO1.getUtilisateur() != null) {
         notification.setObject(objetDTO1.getIdObjet());
         notification.setType("acceptation");
+        notification.setMessage("l'objet (" + objetDTO.getDescription() + ") a été accepté");
         NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
         dataServiceNotification.linkNotifToUser(notificationCreated.getId(),
             objetDTO1.getUtilisateur());
@@ -113,7 +114,8 @@ public class ObjetUCCImpl implements ObjetUCC {
       ObjetDTO objetDTO1 = dataService.updateObjectState(objetDTO);
 
       notification.setObject(objetDTO1.getIdObjet());
-      notification.setMessage(message);
+      notification.setMessage(
+          "l'objet (" + objetDTO.getDescription() + ") est refusé car: " + message);
       notification.setType("refus");
       NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
       if (objetDTO1.getUtilisateur() != null) {
