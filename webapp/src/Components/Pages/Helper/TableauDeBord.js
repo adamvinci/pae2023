@@ -49,41 +49,46 @@ async function getTypeObject() {
 }
 
 async function filtrageObjet() {
+  let optionsHtml;
   const typeObjet = await getTypeObject();
+  optionsHtml = '';
+  for (let i = 0; i < typeObjet.length;) {
+    const type = typeObjet[i];
 
-  let type = "";
-  type += `<h1>Type d'objet</h1>`;
-  typeObjet.forEach((typee) => {
-    type += `
-      <div id="typeObjet">
-        <label>
-          <input type="checkbox" name="menu" data-value="${typee.libelle}">
-          ${typee.libelle}
-        </label>
+    optionsHtml += `
+      <div>
+        <input type="checkbox" id="${type.idObjet}" name="type" value="${type.libelle}">
+        <label for="${type.idObjet}">${type.libelle}</label>
       </div>
     `;
-  });
+    i += 1;
+  }
+  const filtre = `
 
-  return `
     <div class="filterRechercheObjet">
       <form>
-        ${type}
+        <div>
+          <h3 class="">Type d'objet</h3>
+          ${optionsHtml}
+        </div>
         <p>
           <h3>Prix</h3>
-          $<input type="text" size="1"> jusqu'a <input type="text" size="1">
+          <input type="text" id="prix1" size="1"> jusqu'a <input type="text" id="prix2" size="1">
         </p>
         <p>
-          <h3>Date depot</h3>
-          <input type="date" id="date"><br>
+          <h3>Disponibilite</h3>
+          <input type="date" id="dateDispo"><br>
         </p>
         <p></p>
-        <input type="button" value="Filtrer">
+        <input type="button" id="filtreBtn" value="Filtrer">
+        
       </form>
     </div>
   `;
+  return filtre;
 }
 
-async function table() {
+async function objetFiltrer(){
 
   const opt = {
     method: 'GET',
@@ -100,8 +105,50 @@ async function table() {
 
   const datas = await response.json();
 
+  const typesSelectionnes = document.querySelectorAll('input[type="checkbox"][name="type"]:checked');
+  const typesValeurs = [];
+  typesSelectionnes.forEach(type => {
+    typesValeurs.push(type.value);
+  });
 
+
+  const prix1 = document.getElementById("prix1").value;
+  const prix2 = document.getElementById("prix2").value;
+  const dateDispo = document.getElementById("dateDispo").value;
+
+  const data = datas.filter(
+      (d) => ((d.prix >= prix1 && d.prix <= prix2)) || (typesValeurs.includes(d.typeObjet.libelle) || (`${d.disponibilite.date[0]}-${d.disponibilite.date[1]}-${d.disponibilite.date[2]}` === dateDispo))
+  );
+
+  tableAllObject(data);
+}
+
+async function table() {
+
+  const opt = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: getToken()
+    },
+  };
+
+  const response = await fetch(`${process.env.API_BASE_URL}/objet`, opt);
+
+  if (!response.ok) {
+    Swal.fire((await response.text()).valueOf())
+  }
+
+  const datas = await response.json();
+
+  tableAllObject(datas);
+}
+
+async function tableAllObject (datas) {
   const tableBody = document.querySelector('.tableData');
+  // Efface la table avant de l'afficher à nouveau
+  tableBody.innerHTML = '';
+
   datas.forEach((objet) => {
     tableBody.innerHTML += `
     <tr>
@@ -109,8 +156,7 @@ async function table() {
       <td class="receptionObjetsTd">${objet.typeObjet.libelle}</td>
       <td class="td"><img src=/api/objet/getPicture/${objet.idObjet} alt="photo" width="100px"></td> 
       <td class="receptionObjetsTd">${objet.description}</td>
-            <td class="receptionObjetsTd">${objet.etat ? changeEtatName(
-        objet.etat) : '/'}</td>
+      <td class="receptionObjetsTd">${objet.etat ? changeEtatName(objet.etat) : '/'}</td>
       <td class="receptionObjetsTd">${objet.date_acceptation
         ? ` ${objet.date_acceptation[2]}/${objet.date_acceptation[1]}/${objet.date_acceptation[0]}`
         : '/'}</td>
@@ -123,10 +169,11 @@ async function table() {
       <td class="receptionObjetsTd">${objet.date_vente
         ? ` ${objet.date_vente[2]}/${objet.date_vente[1]}/${objet.date_vente[0]}`
         : '/'}</td>
- <td class="receptionObjetsTd"> ${objet.gsm ? objet.gsm
+      <td class="receptionObjetsTd"> ${objet.gsm ? objet.gsm
         : `<a id = "buttonDetail" data-id=${objet.utilisateur}>Details Utilisateur</a> `}</td>
     </tr>`;
   })
+
   const btnDetail = document.querySelectorAll("#buttonDetail");
   let popup;
   btnDetail.forEach((btn) => {
@@ -141,16 +188,14 @@ async function table() {
         },
       };
 
-      const response1 = await fetch(
-          `${process.env.API_BASE_URL}/auths/getPicture/${idUser}`, options);
+      const response1 = await fetch(`${process.env.API_BASE_URL}/auths/getPicture/${idUser}`, options);
 
       const img1 = await response1.blob();
-      const response2 = await fetch(`${process.env.API_BASE_URL}/users/${idUser}`,
-          options);
+      const response2 = await fetch(`${process.env.API_BASE_URL}/users/${idUser}`, options);
       const users = await response2.json();
       popup = ` 
- <div class="popUpContainer">
-        <div id="informationContainerTb" style="overflow-x: scroll;">
+        <div class="popUpContainer">
+          <div id="informationContainerTb" style="overflow-x: scroll;">
           <div class="photoPopup"> 
             <img src=${URL.createObjectURL(img1)}  alt="Photo" >
           </div>
@@ -159,33 +204,31 @@ async function table() {
            <table>
               <thead> 
                 <tr> 
-                 <th class="rechercheObjetsTh"> Nom </th> 
+                  <th class="rechercheObjetsTh"> Nom </th> 
                   <th class="rechercheObjetsTh"> Prenom </th> 
                   <th class="rechercheObjetsTh"> email  </th>
                   <th class="rechercheObjetsTh"> Date inscription </th>
                   <th class="rechercheObjetsTh"> Role </th>
-                                    <th class="rechercheObjetsTh"> Gsm </th>
+                  <th class="rechercheObjetsTh"> Gsm </th>
                 </tr>
               </thead>
               <tbody class="tableData">
                 <tr>
-                               <td class="rechercheObjetsTd">${users.nom}</td> 
-               <td class="rechercheObjetsTd">${users.prenom}</td> 
+                  <td class="rechercheObjetsTd">${users.nom}</td> 
+                  <td class="rechercheObjetsTd">${users.prenom}</td> 
                   <td class="rechercheObjetsTd">${users.email}</td> 
-            <td class="rechercheObjetsTd"> Le ${users.dateInscription[2]}/${users.dateInscription[1]}/${users.dateInscription[0]}</td>
+                  <td class="rechercheObjetsTd"> Le ${users.dateInscription[2]}/${users.dateInscription[1]}/${users.dateInscription[0]}</td>
                   <td class="rechercheObjetsTd">${users.role}</td>
-                                    <td class="rechercheObjetsTd">${users.gsm}</td>
+                  <td class="rechercheObjetsTd">${users.gsm}</td>
                 </tr>
               </tbody>    
             </table>
-          </div>
+           </div>
           <div class = "fermer"></div>
           <input type="button" id="closeButtonTb" value="Fermer">
         </div>
-       
-      </div>
+      </div>`
 
-    `
       const main = document.querySelector('main');
       main.insertAdjacentHTML("beforeend", popup);
       const popupContainer = document.querySelector('.popUpContainer');
@@ -193,16 +236,13 @@ async function table() {
       closeButton.addEventListener('click', closePopup);
     })
   })
-
 }
 
 function closePopup() {
   const popup = document.querySelector('.popUpContainer');
   if (popup) {
-
     popup.parentNode.removeChild(popup);
   }
-
 }
 
 function changeEtatName(etat) {
@@ -219,21 +259,26 @@ function changeEtatName(etat) {
     return 'Vendu'
   }
   return 'Proposé'
-
 }
 
-const TableauDeBord = async () => {
-  clearPage();
+async function head() {
+
   const main = document.querySelector('main');
   let html = "<div id=pageTb>"
-
   html += await filtrageObjet();
   html += tableEnTete;
   table();
+  console.log("on est en head");
   html +="</div>"
-  main.innerHTML =html
+  main.innerHTML =html;
 
+  const filtreBtn = document.getElementById("filtreBtn");
+  filtreBtn.addEventListener("click", objetFiltrer);
 
+}
+const TableauDeBord = async () => {
+  clearPage();
+  await head();
 };
 
 export default TableauDeBord;
