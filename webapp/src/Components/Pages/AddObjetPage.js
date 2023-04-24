@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import { clearPage } from '../../utils/render';
 import {getAuthenticatedUser,getToken} from '../../utils/auths'
+import Navigate from "../Router/Navigate";
 
 
 const AddObjetPage = () => {
@@ -151,6 +152,7 @@ async function renderAddObjetForm() {
     if (!response.ok) {
       Swal.fire((await response.text()).valueOf())
     }
+    Navigate("/")
   });
 }
 
