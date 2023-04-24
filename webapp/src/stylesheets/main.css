@@ -218,6 +218,10 @@ button {
   padding: 5px;
 }
 
+#notification-list li {
+  cursor: pointer;
+}
+
 
 /********************Register Page------------------------------*/
 #radioAvatar label img {

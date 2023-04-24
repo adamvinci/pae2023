@@ -152,7 +152,7 @@ async function renderNavbar() {
       let nbNonLues = nonLues.length;
       const bouttonCo = document.getElementById('bouttonCo');
       bouttonCo.innerHTML = `
-        <div class="notification-container">
+        <div class="notification-container" style="position: relative; z-index: 1;">
           <button class="notification-button" id="notification-btn">
             <span class="notification-icon"><i class="fa fa-bell"></i></span>
             <span class="notification-text">Notification</span>
