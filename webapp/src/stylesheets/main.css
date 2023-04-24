@@ -346,3 +346,97 @@ text-align: center;
   text-align: center;
   flex: 1;
 }
+
+/*****UpdateObjectPage ***********/
+
+
+.titre1{
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#tableContainer{
+  overflow-x: auto;
+  background-color: white;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+#tableUpdate {
+
+}
+
+#tableUpdate ,th,td{
+  border: none;
+  text-align: left !important;
+
+}
+
+
+.titre {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 300;
+  color: #222;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  display: grid;
+  grid-template-columns: 1fr max-content 1fr;
+  grid-template-rows: 27px 0;
+  grid-gap: 20px;
+  align-items: center;
+
+  margin-top: 30px;
+
+}
+
+.titre h2:after, .titre h2:before{
+  content: " ";
+  display: block;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  height: 5px;
+  background-color: #A47148;
+}
+
+
+#formulaireContainer{
+  max-width: 100%;
+  text-align: center;
+}
+
+#formulaireUpdate {
+  position: relative;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 50%;
+  height: 50%;
+  margin: auto;
+  overflow-y: auto;
+}
+
+
+.form-select{
+  margin: 5px auto;
+  width: 350px;
+  text-align: center;
+}
+
+.form-control {
+  margin: 5px auto;
+  width: 350px;
+}
+
+#updateBtn {
+  display: block;
+  margin: 0 auto;
+
+}
+
+textarea {
+  resize: none;
+  width: 300px;
+  height: 200px;
+}

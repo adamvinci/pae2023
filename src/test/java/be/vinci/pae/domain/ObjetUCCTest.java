@@ -3,6 +3,7 @@ package be.vinci.pae.domain;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doThrow;
@@ -486,4 +487,22 @@ class ObjetUCCTest {
 
   }
 
+  @DisplayName("Test update object")
+  @Test
+  void testUpdateObjectOK() {
+
+    objetDTO.setDescription("Table en bois");
+    typeObjetDTO.setIdObjet(2);
+    typeObjetDTO.setLibelle("Table");
+    objetDTO.setPhoto("table.png");
+
+    Mockito.when(typeObjetDAO.getOne(2)).thenReturn(typeObjetDTO);
+
+    Mockito.when(objectDAO.updateObject(objetDTO, "Table en bois", typeObjetDTO, "table.png"))
+        .thenReturn(objetDTO);
+
+    ObjetDTO objetDTO1 = objetUCC.updateObject(objetDTO, "Table en bois", 2, "table.png");
+
+    assertNotEquals(objetDTO1, objetDTO);
+  }
 }

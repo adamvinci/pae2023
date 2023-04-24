@@ -1,6 +1,7 @@
 package be.vinci.pae.dal;
 
 import be.vinci.pae.business.dto.ObjetDTO;
+import be.vinci.pae.business.dto.TypeObjetDTO;
 import java.util.List;
 
 /**
@@ -40,10 +41,24 @@ public interface ObjectDAO {
   ObjetDTO getOne(int id);
 
   /**
-   *Inserts a new object into the project database.
+   * Inserts a new object into the project database.
    *
-   *@param objet the object to insert
-   *@return the object with its generated ID, or null if the insertion failed
+   * @param objet the object to insert
+   * @return the object with its generated ID, or null if the insertion failed
    */
   ObjetDTO createObjet(ObjetDTO objet);
+
+  /**
+   * Updates an object in the database with a new description, photo and/or type.
+   *
+   * @param objetDTO     The object to be updated, containing the ID of the object and its current
+   *                     version number.
+   * @param description  The new description of the object. Can be null if the description has not
+   *                     changed.
+   * @param typeObjetDTO The new type of the object. Can be null if the type has not changed.
+   * @param photo        The new photo of the object. Can be null if the photo has not changed.
+   * @return The updated object.
+   */
+  ObjetDTO updateObject(ObjetDTO objetDTO, String description, TypeObjetDTO typeObjetDTO,
+      String photo);
 }

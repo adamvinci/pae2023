@@ -10,10 +10,12 @@ import VenteDobjet from '../Pages/Helper/VenteDobjet';
 import Membres from '../Pages/Responsable/Membres';
 import ObjetsPropose from '../Pages/Responsable/ObjetsPropose';
 import AddObjetPage from "../Pages/AddObjetPage";
-import StatistiquePage from '../Pages/Helper/StatistiquesObjet'
+import StatistiquePage from '../Pages/Helper/StatistiquesObjet';
 import UserPage from "../Pages/UserPage";
 import MyObjectPage from "../Pages/MyObjectPage";
 import UserObjectPage from "../Pages/Helper/UserObjectPage";
+import UpdateObjectPage from '../Pages/Helper/UpdateObjet';
+
 
 
 const routes = {
@@ -34,7 +36,9 @@ const routes = {
   '/AddObjet': AddObjetPage,
   '/UserPage': UserPage,
   '/MyObjectPage': MyObjectPage,
-  '/UserObjectPage': UserObjectPage
+  '/UserObjectPage': UserObjectPage,
+  "/updatePage": UpdateObjectPage,
+
   
 };
 

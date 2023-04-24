@@ -95,18 +95,31 @@ public interface ObjetUCC {
   void retirerObjetVente(List<ObjetDTO> objetDTOS);
 
   /**
-   *Adds an object represented by the given ObjectDTO to the system.
+   * Adds an object represented by the given ObjectDTO to the system.
    *
-   *@param objet the ObjectDTO representing the object to be added
-   *@return the ObjectDTO representing the added object
+   * @param objet the ObjectDTO representing the object to be added
+   * @return the ObjectDTO representing the added object
    */
   ObjetDTO ajouterObjet(ObjetDTO objet);
 
   /**
-   *Retrieves a TypeObjetDTO object corresponding to the specified ID.
+   * Retrieves a TypeObjetDTO object corresponding to the specified ID.
    *
-   *@param id the ID of the TypeObjetDTO to retrieve.
-   *@return the TypeObjetDTO object with the specified ID.
+   * @param id the ID of the TypeObjetDTO to retrieve.
+   * @return the TypeObjetDTO object with the specified ID.
    */
   TypeObjetDTO getOneType(int id);
+
+
+  /**
+   * Updates the information of an object based on the provided parameters.
+   *
+   * @param objetDTO    the object to be updated
+   * @param description the new description of the object
+   * @param type        the new type of the object
+   * @param photo       the new photo of the object
+   * @return an updated ObjetDTO with the new information
+   */
+
+  ObjetDTO updateObject(ObjetDTO objetDTO, String description, int type, String photo);
 }

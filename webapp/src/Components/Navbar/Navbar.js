@@ -126,9 +126,7 @@ async function renderNavbar() {
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/Membres">Membres</a>
     </li>
-                <li id="registerItem" class="nav-item">
-              <a class="nav-link"  href="#" data-uri="">Proposer un objet </a>
-            </li>  
+                 
     `;
     }
     member.innerHTML+=`
