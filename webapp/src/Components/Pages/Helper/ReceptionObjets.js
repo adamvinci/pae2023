@@ -77,12 +77,24 @@ function table() {
       <td class="receptionObjetsTd">${data[i].date_depot ? data[i].date_depot  : '/' }</td>
       <td class="receptionObjetsTd">${data[i].prix_vente ? data[i].prix_vente : '/' }</td>
       <td class="receptionObjetsTd"><input type="button" value="Confirmer"></td>
-      <td class="receptionObjetsTd"><input type="button" value="Modifier"></td>
+      <td class="receptionObjetsTd"><button id="btnUpdate" class="btn btn-secondary" type="button">Modifier l'object</button></td>
     </tr>`;
         i += 1;
       }
       const tableBody = document.querySelector('.tableData');
       tableBody.innerHTML = dataHtml;
+
+      const btnUpdate = document.querySelectorAll("#btnUpdate");
+      btnUpdate.forEach((button) => {
+        button.addEventListener("click", () => {
+          const id = parseInt(button.parentNode.parentNode.querySelector("select").getAttribute("data-id"), 10);
+
+          const objectSelectionner = data.find(element => element.idObjet === id);
+
+          sessionStorage.setItem("objet", JSON.stringify(objectSelectionner));
+          window.location.href = "/updatePage";
+        });
+      });
 
 // Sélectionnez tous les select dans le corps de la table
       const selects = document.querySelectorAll('.tableData select');

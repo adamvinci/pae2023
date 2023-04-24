@@ -265,5 +265,34 @@ public class ObjetUCCImpl implements ObjetUCC {
     }
   }
 
+  @Override
+  public ObjetDTO updateObject(ObjetDTO objetDTO, String description, int type, String photo) {
+    try {
+      dal.startTransaction();
 
+      if (photo.isBlank() || photo.isEmpty()) {
+        photo = objetDTO.getPhoto();
+
+      } else {
+        photo = "src/main/java/be/vinci/pae/utils/images/" + photo;
+      }
+
+      if (description.isBlank() || description.isEmpty()) {
+        description = objetDTO.getDescription();
+      }
+
+      TypeObjetDTO typeObjetDTO = typeObjetDAO.getOne(type);
+      ObjetDTO objetDTO1 = dataService.updateObject(objetDTO, description, typeObjetDTO, photo);
+      dal.commitTransaction();
+
+      return objetDTO1;
+
+    } catch (Exception e) {
+      if (e instanceof NoSuchElementException) {
+        throw new ConflictException("Bad version number, retry");
+      }
+      dal.rollBackTransaction();
+      throw e;
+    }
+  }
 }

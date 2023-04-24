@@ -18,6 +18,7 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -31,7 +32,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
@@ -111,12 +111,12 @@ public class ObjetRessource {
   }
 
   /**
-   *Retrieves a single instance of TypeObjetDTO with the specified id from the server.
+   * Retrieves a single instance of TypeObjetDTO with the specified id from the server.
    *
-   *@param id the id of the TypeObjetDTO instance to retrieve
-   *@return a TypeObjetDTO object in JSON format
-   *@throws WebApplicationException if the id is -1 or if the requested TypeObjetDTO instance does
-   *        not exist on the server
+   * @param id the id of the TypeObjetDTO instance to retrieve
+   * @return a TypeObjetDTO object in JSON format
+   * @throws WebApplicationException if the id is -1 or if the requested TypeObjetDTO instance does
+   *                                 not exist on the server
    */
   @GET
   @Path("/typeObjet/{id}")
@@ -134,12 +134,12 @@ public class ObjetRessource {
   }
 
   /**
-   *Adds the provided object to the system and returns the added object with
-   * its ID and photo path set.
+   * Adds the provided object to the system and returns the added object with its ID and photo path
+   * set.
    *
-   *@param objet the object to add to the system
-   *@return the added object with its ID and photo path set
-   *@throws WebApplicationException if any required fields are missing or empty
+   * @param objet the object to add to the system
+   * @return the added object with its ID and photo path set
+   * @throws WebApplicationException if any required fields are missing or empty
    */
   @POST
   @Path("ajouterObjet")
@@ -373,21 +373,62 @@ public class ObjetRessource {
   @POST
   @Path("upload")
   @Consumes(MediaType.MULTIPART_FORM_DATA)
-  @Produces(MediaType.TEXT_PLAIN)
-  public String uploadFile(@FormDataParam("file") InputStream file,
+  public Response uploadFile(@FormDataParam("file") InputStream file,
       @FormDataParam("file") FormDataContentDisposition fileDisposition) {
+    System.out.println("upload");
     String fileName = fileDisposition.getFileName();
-    String pathToSave = Config.getProperty("pathToObjectImage");
-    String newFileName = UUID.randomUUID() + "." + fileName;
-    pathToSave += newFileName;
     try {
-      Files.copy(file, Paths.get(pathToSave));
+      Files.copy(file, Paths.get(Config.getProperty("pathToObjectImage") + fileName));
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Adding picture of object ");
-    return pathToSave;
+    return Response.ok().build();
   }
 
 
+  /**
+   * Updates an object with the specified ID in the database using the information provided in a
+   * JSON payload.
+   *
+   * @param idObject the ID of the object to be updated
+   * @param json     the JSON payload containing the new information for the object
+   * @return the updated object as an ObjetDTO object
+   * @throws WebApplicationException if the JSON payload is missing required information
+   */
+
+  @PUT
+  @Path("updateObject/{id}")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+
+  public ObjetDTO updateObject(@PathParam("id") int idObject, JsonNode json) {
+    System.out.println("updateobject");
+
+    ObjetDTO objectSelectionner = objetUCC.getOne(idObject);
+
+    if (!json.hasNonNull("description")) {
+      throw new WebApplicationException("Manque variable", Status.BAD_REQUEST);
+    }
+
+    String description = json.get("description").asText();
+
+    int typeObject;
+    if (json.has("type") && !json.get("type").asText().equals("Type d'objet")) {
+      typeObject = json.get("type").asInt();
+
+    } else {
+      typeObject = objectSelectionner.getTypeObjet().getIdObjet();
+    }
+
+    String photo = "";
+
+    if (json.has("photo")) {
+      photo = json.get("photo").asText();
+    }
+
+    objetUCC.updateObject(objectSelectionner, description, typeObject, photo);
+
+    return objectSelectionner;
+  }
 }

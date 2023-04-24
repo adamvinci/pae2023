@@ -151,7 +151,7 @@ async function tableAllObject (datas) {
 
   datas.forEach((objet) => {
     tableBody.innerHTML += `
-    <tr>
+    <tr data-id="${objet.idObjet}">
       <td class="receptionObjetsTd">${objet.idObjet}</td> 
       <td class="receptionObjetsTd">${objet.typeObjet.libelle}</td>
       <td class="td"><img src=/api/objet/getPicture/${objet.idObjet} alt="photo" width="100px"></td> 
@@ -171,8 +171,22 @@ async function tableAllObject (datas) {
         : '/'}</td>
       <td class="receptionObjetsTd"> ${objet.gsm ? objet.gsm
         : `<a id = "buttonDetail" data-id=${objet.utilisateur}>Details Utilisateur</a> `}</td>
+      <td class="receptionObjetsTd"><button id="modifier" class="btn btn-secondary" type="button">Modifier l'object</button></td>
     </tr>`;
   })
+
+  const btnUpdate = document.querySelectorAll("#modifier");
+  btnUpdate.forEach((button) => {
+    button.addEventListener("click", () => {
+      const id = parseInt(button.closest('tr').getAttribute("data-id"), 10);
+
+      const objectSelectionner = datas.find(element => element.idObjet === id);
+
+      sessionStorage.setItem("objet", JSON.stringify(objectSelectionner));
+      console.log(objectSelectionner);
+      window.location.href = "/updatePage";
+    });
+  });
 
   const btnDetail = document.querySelectorAll("#buttonDetail");
   let popup;

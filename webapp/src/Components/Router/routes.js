@@ -10,8 +10,9 @@ import VenteDobjet from '../Pages/Helper/VenteDobjet';
 import Membres from '../Pages/Responsable/Membres';
 import ObjetsPropose from '../Pages/Responsable/ObjetsPropose';
 import AddObjetPage from "../Pages/AddObjetPage";
-import StatistiquePage from '../Pages/Helper/StatistiquesObjet'
+import StatistiquePage from '../Pages/Helper/StatistiquesObjet';
 import UserPage from "../Pages/UserPage";
+import UpdateObjectPage from '../Pages/Helper/UpdateObjet';
 
 
 const routes = {
@@ -31,6 +32,7 @@ const routes = {
   '/Statistiques' : StatistiquePage,
   '/AddObjet': AddObjetPage,
   '/UserPage': UserPage,
+  "/updatePage": UpdateObjectPage,
   
 };
 
