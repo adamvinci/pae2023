@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import {clearPage} from "../../../utils/render";
 import {getToken} from "../../../utils/auths";
+import Navigate from "../../Router/Navigate";
 
 const tableEnTete = `
 
@@ -29,8 +30,6 @@ const tableEnTete = `
       </tbody>    
     </table>
   </div>`;
-
-
 
 async function getTypeObject() {
 
@@ -88,7 +87,7 @@ async function filtrageObjet() {
   return filtre;
 }
 
-async function objetFiltrer(){
+async function objetFiltrer() {
 
   const opt = {
     method: 'GET',
@@ -105,19 +104,22 @@ async function objetFiltrer(){
 
   const datas = await response.json();
 
-  const typesSelectionnes = document.querySelectorAll('input[type="checkbox"][name="type"]:checked');
+  const typesSelectionnes = document.querySelectorAll(
+      'input[type="checkbox"][name="type"]:checked');
   const typesValeurs = [];
   typesSelectionnes.forEach(type => {
     typesValeurs.push(type.value);
   });
-
 
   const prix1 = document.getElementById("prix1").value;
   const prix2 = document.getElementById("prix2").value;
   const dateDispo = document.getElementById("dateDispo").value;
 
   const data = datas.filter(
-      (d) => ((d.prix >= prix1 && d.prix <= prix2)) || (typesValeurs.includes(d.typeObjet.libelle) || (`${d.disponibilite.date[0]}-${d.disponibilite.date[1]}-${d.disponibilite.date[2]}` === dateDispo))
+      (d) => ((d.prix >= prix1 && d.prix <= prix2)) || (typesValeurs.includes(
+              d.typeObjet.libelle)
+          || (`${d.disponibilite.date[0]}-${d.disponibilite.date[1]}-${d.disponibilite.date[2]}`
+              === dateDispo))
   );
 
   tableAllObject(data);
@@ -144,7 +146,7 @@ async function table() {
   tableAllObject(datas);
 }
 
-async function tableAllObject (datas) {
+async function tableAllObject(datas) {
   const tableBody = document.querySelector('.tableData');
   // Efface la table avant de l'afficher à nouveau
   tableBody.innerHTML = '';
@@ -156,7 +158,8 @@ async function tableAllObject (datas) {
       <td class="receptionObjetsTd">${objet.typeObjet.libelle}</td>
       <td class="td"><img src=/api/objet/getPicture/${objet.idObjet} alt="photo" width="100px"></td> 
       <td class="receptionObjetsTd">${objet.description}</td>
-      <td class="receptionObjetsTd">${objet.etat ? changeEtatName(objet.etat) : '/'}</td>
+      <td class="receptionObjetsTd">${objet.etat ? changeEtatName(objet.etat)
+        : '/'}</td>
       <td class="receptionObjetsTd">${objet.date_acceptation
         ? ` ${objet.date_acceptation[2]}/${objet.date_acceptation[1]}/${objet.date_acceptation[0]}`
         : '/'}</td>
@@ -202,10 +205,12 @@ async function tableAllObject (datas) {
         },
       };
 
-      const response1 = await fetch(`${process.env.API_BASE_URL}/auths/getPicture/${idUser}`, options);
+      const response1 = await fetch(
+          `${process.env.API_BASE_URL}/auths/getPicture/${idUser}`, options);
 
       const img1 = await response1.blob();
-      const response2 = await fetch(`${process.env.API_BASE_URL}/users/${idUser}`, options);
+      const response2 = await fetch(
+          `${process.env.API_BASE_URL}/users/${idUser}`, options);
       const users = await response2.json();
       popup = ` 
         <div class="popUpContainer">
@@ -234,12 +239,15 @@ async function tableAllObject (datas) {
                   <td class="rechercheObjetsTd"> Le ${users.dateInscription[2]}/${users.dateInscription[1]}/${users.dateInscription[0]}</td>
                   <td class="rechercheObjetsTd">${users.role}</td>
                   <td class="rechercheObjetsTd">${users.gsm}</td>
+                  <span id="idUser" style="display: none;">${users.id}</span>
                 </tr>
               </tbody>    
             </table>
            </div>
           <div class = "fermer"></div>
           <input type="button" id="closeButtonTb" value="Fermer">
+          <div class = "objetUser"></div>
+          <input type="button" id="objectUserButtonTb" value="voir les objets de l'user">
         </div>
       </div>`
 
@@ -247,9 +255,19 @@ async function tableAllObject (datas) {
       main.insertAdjacentHTML("beforeend", popup);
       const popupContainer = document.querySelector('.popUpContainer');
       const closeButton = popupContainer.querySelector('#closeButtonTb');
+      const userObjetButton = popupContainer.querySelector(
+          '#objectUserButtonTb');
       closeButton.addEventListener('click', closePopup);
+      userObjetButton.addEventListener('click', navigateUserPage)
     })
   })
+}
+
+function navigateUserPage() {
+  const idUs = parseInt(document.getElementById('idUser').textContent, 10);
+  console.log(idUs);
+  Navigate(`/UserObjectPage?idUs=${idUs}`);
+
 }
 
 function closePopup() {
@@ -283,13 +301,14 @@ async function head() {
   html += tableEnTete;
   table();
   console.log("on est en head");
-  html +="</div>"
-  main.innerHTML =html;
+  html += "</div>"
+  main.innerHTML = html;
 
   const filtreBtn = document.getElementById("filtreBtn");
   filtreBtn.addEventListener("click", objetFiltrer);
 
 }
+
 const TableauDeBord = async () => {
   clearPage();
   await head();

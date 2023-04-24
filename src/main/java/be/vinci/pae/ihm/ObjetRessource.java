@@ -6,6 +6,7 @@ import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.ucc.ObjetUCC;
+import be.vinci.pae.ihm.filters.Authorize;
 import be.vinci.pae.ihm.filters.PictureService;
 import be.vinci.pae.ihm.filters.ResponsableAuthorization;
 import be.vinci.pae.ihm.filters.ResponsableOrAidant;
@@ -93,6 +94,31 @@ public class ObjetRessource {
         .filter(objetDTO -> objetDTO.getLocalisation() != null && objetDTO.getLocalisation()
             .equals("Magasin") && objetDTO.getDate_retrait() == null).toList();
   }
+
+  /**
+   * Endpoint to retrieve the list of objects owned by the authenticated user.
+   *
+   * @param request the container request context
+   * @return the list of objects owned by the authenticated user as a List of ObjetDTOs
+   * @throws WebApplicationException if there are no objects in the database or if the request is
+   *                                 not authorized
+   */
+  @GET
+  @Authorize
+  @Path("userObject/")
+  @Produces(MediaType.APPLICATION_JSON)
+  public List<ObjetDTO> getObjectFromUser(@Context ContainerRequest request) {
+    if (objetUCC.getAllObject() == null) {
+      throw new WebApplicationException("No object in the database", Status.NO_CONTENT);
+    }
+    UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
+
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
+        "Retrieve the complete list of object from user " + authenticatedUser.getEmail());
+    return objetUCC.getAllObject().stream().filter(objetDTO -> objetDTO.getUtilisateur()
+        == authenticatedUser.getId() && objetDTO.getEtat() == "proposer").toList();
+  }
+
 
   /**
    * Retrieve all the type of object in the database.

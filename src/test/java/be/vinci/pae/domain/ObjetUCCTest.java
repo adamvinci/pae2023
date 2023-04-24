@@ -11,13 +11,16 @@ import static org.mockito.Mockito.doThrow;
 import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
+import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.factory.ObjetFactory;
 import be.vinci.pae.business.factory.TypeObjetFactory;
+import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.dal.NotificationDAO;
 import be.vinci.pae.dal.ObjectDAO;
 import be.vinci.pae.dal.TypeObjetDAO;
+import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.ApplicationBinderMock;
 import be.vinci.pae.utils.exception.BusinessException;
@@ -51,7 +54,6 @@ class ObjetUCCTest {
   private NotificationFactory notificationFactory;
   private NotificationDAO notificationDAO;
   private NotificationDTO notificationDTO;
-
   private TypeObjetDAO typeObjetDAO;
 
   private DALTransaction dalService;
@@ -473,6 +475,7 @@ class ObjetUCCTest {
   @DisplayName("Test AjouterObjet() with a good object")
   @Test
   void testAjouterObjet() {
+    Mockito.when(objectDAO.createObjet(objetDTO)).thenReturn(objetDTO);
     objetUCC.ajouterObjet(objetDTO);
   }
 

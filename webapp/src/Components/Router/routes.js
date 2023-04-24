@@ -12,7 +12,10 @@ import ObjetsPropose from '../Pages/Responsable/ObjetsPropose';
 import AddObjetPage from "../Pages/AddObjetPage";
 import StatistiquePage from '../Pages/Helper/StatistiquesObjet';
 import UserPage from "../Pages/UserPage";
+import MyObjectPage from "../Pages/MyObjectPage";
+import UserObjectPage from "../Pages/Helper/UserObjectPage";
 import UpdateObjectPage from '../Pages/Helper/UpdateObjet';
+
 
 
 const routes = {
@@ -32,7 +35,10 @@ const routes = {
   '/Statistiques' : StatistiquePage,
   '/AddObjet': AddObjetPage,
   '/UserPage': UserPage,
+  '/MyObjectPage': MyObjectPage,
+  '/UserObjectPage': UserObjectPage,
   "/updatePage": UpdateObjectPage,
+
   
 };
 
