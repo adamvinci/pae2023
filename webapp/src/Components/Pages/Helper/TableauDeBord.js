@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import {clearPage} from "../../../utils/render";
 import {getToken} from "../../../utils/auths";
+import Navigate from "../../Router/Navigate";
 
 const tableEnTete = `
 
@@ -175,12 +176,15 @@ async function table() {
             <td class="rechercheObjetsTd"> Le ${users.dateInscription[2]}/${users.dateInscription[1]}/${users.dateInscription[0]}</td>
                   <td class="rechercheObjetsTd">${users.role}</td>
                                     <td class="rechercheObjetsTd">${users.gsm}</td>
+                                     <span id="idUser" style="display: none;">${users.id}</span>
                 </tr>
               </tbody>    
             </table>
           </div>
           <div class = "fermer"></div>
           <input type="button" id="closeButtonTb" value="Fermer">
+          <div class = "objetUser"></div>
+          <input type="button" id="objectUserButtonTb" value="voir les objets de l'user">
         </div>
        
       </div>
@@ -190,12 +194,19 @@ async function table() {
       main.insertAdjacentHTML("beforeend", popup);
       const popupContainer = document.querySelector('.popUpContainer');
       const closeButton = popupContainer.querySelector('#closeButtonTb');
+      const userObjetButton = popupContainer.querySelector('#objectUserButtonTb');
       closeButton.addEventListener('click', closePopup);
+      userObjetButton.addEventListener('click', navigateUserPage)
     })
   })
 
 }
+function navigateUserPage(){
+  const idUs = parseInt(document.getElementById('idUser').textContent,10);
+  console.log(idUs);
+  Navigate(`/UserObjectPage?idUs=${idUs}`);
 
+}
 function closePopup() {
   const popup = document.querySelector('.popUpContainer');
   if (popup) {

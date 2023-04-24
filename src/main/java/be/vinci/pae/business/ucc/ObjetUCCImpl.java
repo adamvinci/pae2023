@@ -4,9 +4,11 @@ import be.vinci.pae.business.domaine.Objet;
 import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
+import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.dal.NotificationDAO;
 import be.vinci.pae.dal.ObjectDAO;
 import be.vinci.pae.dal.TypeObjetDAO;
+import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.MyLogger;
 import be.vinci.pae.utils.exception.ConflictException;
@@ -28,6 +30,8 @@ public class ObjetUCCImpl implements ObjetUCC {
   private NotificationDAO dataServiceNotification;
   @Inject
   private TypeObjetDAO typeObjetDAO;
+  @Inject
+  private UserDAO userDAO;
 
   @Inject
   private DALTransaction dal;
@@ -234,12 +238,29 @@ public class ObjetUCCImpl implements ObjetUCC {
   }
 
   @Override
-  public ObjetDTO ajouterObjet(ObjetDTO objetDTO) {
+  public ObjetDTO ajouterObjet(ObjetDTO objetDTO, NotificationDTO notification) {
     try {
       dal.startTransaction();
       Objet objet = (Objet) objetDTO;
       objet.initierEtat();
       ObjetDTO objetDATA = dataService.createObjet(objetDTO);
+
+      List<UserDTO> listAidant = userDAO.getAll();
+      List<UserDTO> listFiltred = listAidant.stream().filter((o) -> o.getRole().equals("aidant")
+          || o.getRole().equals("responsable")).toList();
+      listAidant=listFiltred;
+
+      notification.setObject(objetDATA.getIdObjet());
+      notification.setType("alerteProposition");
+      notification.setMessage("l'objet : "+objetDATA.getDescription()+" a ete ajouté");
+      NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
+      if (listAidant.size()>0) {
+        for (UserDTO u : listAidant) {
+          dataServiceNotification.linkNotifToUser(notificationCreated.getId(),
+              u.getId());
+        }
+      }
+
       return objetDATA;
     } catch (FatalException e) {
       dal.rollBackTransaction();

@@ -136,7 +136,9 @@ async function renderNavbar() {
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/logout">Logout</a>
     </li>
-    
+    <li class="nav-item">
+              <a class="nav-link" href="#" data-uri="/MyObjectPage">Mes objets</a>
+    </li>
     <li class="nav-item">
               <a class="nav-link" >${authenticatedUser.prenom}</a>
     </li>

@@ -6,6 +6,7 @@ import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.ucc.ObjetUCC;
+import be.vinci.pae.ihm.filters.Authorize;
 import be.vinci.pae.ihm.filters.PictureService;
 import be.vinci.pae.ihm.filters.ResponsableAuthorization;
 import be.vinci.pae.ihm.filters.ResponsableOrAidant;
@@ -95,6 +96,30 @@ public class ObjetRessource {
   }
 
   /**
+   *Endpoint to retrieve the list of objects owned by the authenticated user.
+   *
+   *@param request the container request context
+   *@return the list of objects owned by the authenticated user as a List of ObjetDTOs
+   *@throws WebApplicationException if there are no objects in the database or if the request is not authorized
+   */
+  @GET
+  @Authorize
+  @Path("userObject/")
+  @Produces(MediaType.APPLICATION_JSON)
+  public List<ObjetDTO> getObjectFromUser(@Context ContainerRequest request) {
+    if (objetUCC.getAllObject() == null) {
+      throw new WebApplicationException("No object in the database", Status.NO_CONTENT);
+    }
+    UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
+
+    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
+        "Retrieve the complete list of object from user " + authenticatedUser.getEmail());
+    return objetUCC.getAllObject().stream().filter(objetDTO -> objetDTO.getUtilisateur() ==
+        authenticatedUser.getId() && objetDTO.getEtat() == "proposer").toList();
+  }
+
+
+  /**
    * Retrieve all the type of object in the database.
    *
    * @return a list of object type or a WebAppException if there are none.
@@ -111,12 +136,12 @@ public class ObjetRessource {
   }
 
   /**
-   *Retrieves a single instance of TypeObjetDTO with the specified id from the server.
+   * Retrieves a single instance of TypeObjetDTO with the specified id from the server.
    *
-   *@param id the id of the TypeObjetDTO instance to retrieve
-   *@return a TypeObjetDTO object in JSON format
-   *@throws WebApplicationException if the id is -1 or if the requested TypeObjetDTO instance does
-   *        not exist on the server
+   * @param id the id of the TypeObjetDTO instance to retrieve
+   * @return a TypeObjetDTO object in JSON format
+   * @throws WebApplicationException if the id is -1 or if the requested TypeObjetDTO instance does
+   *                                 not exist on the server
    */
   @GET
   @Path("/typeObjet/{id}")
@@ -134,12 +159,12 @@ public class ObjetRessource {
   }
 
   /**
-   *Adds the provided object to the system and returns the added object with
-   * its ID and photo path set.
+   * Adds the provided object to the system and returns the added object with its ID and photo path
+   * set.
    *
-   *@param objet the object to add to the system
-   *@return the added object with its ID and photo path set
-   *@throws WebApplicationException if any required fields are missing or empty
+   * @param objet the object to add to the system
+   * @return the added object with its ID and photo path set
+   * @throws WebApplicationException if any required fields are missing or empty
    */
   @POST
   @Path("ajouterObjet")
@@ -152,8 +177,8 @@ public class ObjetRessource {
         || objet.getDisponibilite() == null) {
       throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
     }
-
-    objet = objetUCC.ajouterObjet(objet);
+    NotificationDTO notification = notificationFactory.getNotification();
+    objet = objetUCC.ajouterObjet(objet,notification);
 
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "ajout de l'objet : "
         + objet.getDescription());

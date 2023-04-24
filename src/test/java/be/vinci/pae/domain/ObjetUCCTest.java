@@ -468,14 +468,15 @@ class ObjetUCCTest {
   @DisplayName("Test AjouterObjet() with a good object")
   @Test
   void testAjouterObjet() {
-    objetUCC.ajouterObjet(objetDTO);
+    Mockito.when(objectDAO.createObjet(objetDTO)).thenReturn(objetDTO);
+    objetUCC.ajouterObjet(objetDTO, notificationDTO);
   }
 
   @DisplayName("Test ajouterObjet() with a FatalException")
   @Test
   void testAjouterObjetWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
-    assertThrows(FatalException.class, () -> objetUCC.ajouterObjet(objetDTO));
+    assertThrows(FatalException.class, () -> objetUCC.ajouterObjet(objetDTO, notificationDTO));
 
   }
 

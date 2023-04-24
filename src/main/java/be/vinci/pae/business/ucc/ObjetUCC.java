@@ -100,7 +100,7 @@ public interface ObjetUCC {
    *@param objet the ObjectDTO representing the object to be added
    *@return the ObjectDTO representing the added object
    */
-  ObjetDTO ajouterObjet(ObjetDTO objet);
+  ObjetDTO ajouterObjet(ObjetDTO objet, NotificationDTO notificationDTO);
 
   /**
    *Retrieves a TypeObjetDTO object corresponding to the specified ID.
