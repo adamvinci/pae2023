@@ -1,7 +1,6 @@
 package be.vinci.pae.dal;
 
 import be.vinci.pae.business.dto.ObjetDTO;
-import be.vinci.pae.business.dto.TypeObjetDTO;
 import java.util.List;
 
 /**

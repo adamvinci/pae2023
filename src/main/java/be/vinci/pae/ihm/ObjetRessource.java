@@ -5,6 +5,7 @@ import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
+import be.vinci.pae.business.ucc.DisponibiliteUCC;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.ihm.filters.Authorize;
 import be.vinci.pae.ihm.filters.PictureService;
@@ -50,6 +51,9 @@ public class ObjetRessource {
 
   @Inject
   private ObjetUCC objetUCC;
+
+  @Inject
+  private DisponibiliteUCC disponibiliteUCC;
   @Inject
   private NotificationFactory notificationFactory;
 
@@ -180,7 +184,19 @@ public class ObjetRessource {
         || objet.getDisponibilite() == null) {
       throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
     }
+    if (objetUCC.getOneType(objet.getTypeObjet().getIdObjet()) == null) {
+      throw new WebApplicationException("this type does not exist",
+          Status.BAD_REQUEST);
+    }
+    if (disponibiliteUCC.getOne(objet.getDisponibilite().getId()) == null) {
+      throw new WebApplicationException("this disponibility does not exist",
+          Status.BAD_REQUEST);
+    }
 
+    if (!Files.exists(java.nio.file.Path.of(objet.getPhoto()))) {
+      throw new WebApplicationException("This image is not stored in the server ",
+          Status.BAD_REQUEST);
+    }
     objet = objetUCC.ajouterObjet(objet);
 
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "ajout de l'objet : "

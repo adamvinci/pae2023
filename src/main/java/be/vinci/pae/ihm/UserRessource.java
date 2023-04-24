@@ -7,7 +7,6 @@ import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.ihm.filters.Authorize;
 import be.vinci.pae.ihm.filters.ResponsableAuthorization;
 import be.vinci.pae.ihm.filters.ResponsableOrAidant;
-import be.vinci.pae.utils.Config;
 import be.vinci.pae.utils.Json;
 import be.vinci.pae.utils.MyLogger;
 import be.vinci.pae.utils.exception.BusinessException;
