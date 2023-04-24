@@ -96,12 +96,12 @@ public class ObjetRessource {
   }
 
   /**
-   *Endpoint to retrieve the list of objects owned by the authenticated user.
+   * Endpoint to retrieve the list of objects owned by the authenticated user.
    *
-   *@param request the container request context
-   *@return the list of objects owned by the authenticated user as a List of ObjetDTOs
-   *@throws WebApplicationException if there are no objects in the database or if the request is
-   *        not authorized
+   * @param request the container request context
+   * @return the list of objects owned by the authenticated user as a List of ObjetDTOs
+   * @throws WebApplicationException if there are no objects in the database or if the request is
+   *                                 not authorized
    */
   @GET
   @Authorize
@@ -178,8 +178,8 @@ public class ObjetRessource {
         || objet.getDisponibilite() == null) {
       throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
     }
-    NotificationDTO notification = notificationFactory.getNotification();
-    objet = objetUCC.ajouterObjet(objet, notification);
+
+    objet = objetUCC.ajouterObjet(objet);
 
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "ajout de l'objet : "
         + objet.getDescription());

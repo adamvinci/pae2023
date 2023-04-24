@@ -10,9 +10,11 @@ import static org.mockito.Mockito.doThrow;
 import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
+import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.factory.ObjetFactory;
 import be.vinci.pae.business.factory.TypeObjetFactory;
+import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.dal.NotificationDAO;
 import be.vinci.pae.dal.ObjectDAO;
@@ -52,6 +54,8 @@ class ObjetUCCTest {
   private NotificationDAO notificationDAO;
   private NotificationDTO notificationDTO;
   private UserDAO userDAO;
+  private UserDTO userDTO;
+  private UserFactory userFactory;
 
   private TypeObjetDAO typeObjetDAO;
 
@@ -71,6 +75,7 @@ class ObjetUCCTest {
     dalService = locator.getService(DALTransaction.class);
     typeObjetDTO = typeFactory.getTypeObjet();
     userDAO = locator.getService(UserDAO.class);
+    userFactory = locator.getService(UserFactory.class);
 
 
   }
