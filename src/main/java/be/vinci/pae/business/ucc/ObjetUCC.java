@@ -98,7 +98,6 @@ public interface ObjetUCC {
    *Adds an object represented by the given ObjectDTO to the system.
    *
    *@param objet the ObjectDTO representing the object to be added
-   *@param notificationDTO notification that will be sent
    *@return the ObjectDTO representing the added object
    */
   ObjetDTO ajouterObjet(ObjetDTO objet);
