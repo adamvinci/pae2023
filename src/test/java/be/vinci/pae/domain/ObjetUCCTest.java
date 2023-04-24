@@ -53,10 +53,6 @@ class ObjetUCCTest {
   private NotificationFactory notificationFactory;
   private NotificationDAO notificationDAO;
   private NotificationDTO notificationDTO;
-  private UserDAO userDAO;
-  private UserDTO userDTO;
-  private UserFactory userFactory;
-
   private TypeObjetDAO typeObjetDAO;
 
   private DALTransaction dalService;
@@ -74,8 +70,6 @@ class ObjetUCCTest {
     notificationDTO = notificationFactory.getNotification();
     dalService = locator.getService(DALTransaction.class);
     typeObjetDTO = typeFactory.getTypeObjet();
-    userDAO = locator.getService(UserDAO.class);
-    userFactory = locator.getService(UserFactory.class);
 
 
   }
@@ -481,14 +475,14 @@ class ObjetUCCTest {
   @Test
   void testAjouterObjet() {
     Mockito.when(objectDAO.createObjet(objetDTO)).thenReturn(objetDTO);
-    objetUCC.ajouterObjet(objetDTO, notificationDTO);
+    objetUCC.ajouterObjet(objetDTO);
   }
 
   @DisplayName("Test ajouterObjet() with a FatalException")
   @Test
   void testAjouterObjetWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
-    assertThrows(FatalException.class, () -> objetUCC.ajouterObjet(objetDTO, notificationDTO));
+    assertThrows(FatalException.class, () -> objetUCC.ajouterObjet(objetDTO));
 
   }
 
