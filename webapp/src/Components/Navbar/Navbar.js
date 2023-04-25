@@ -74,9 +74,6 @@ async function renderNavbar() {
               <li id="registerItem" class="nav-item">
               <a class="nav-link"  href="#" data-uri="/AddObjet">Proposer un objet </a>
             </li>  
-            <li id="registerItem" class="nav-item">
-              <a class="nav-link"  href="#" data-uri="/UserPage">UserPage</a>
-            </li>  
           </ul>
         </div>
       </div>
@@ -99,6 +96,9 @@ async function renderNavbar() {
     const member=document.getElementById('member');
     if(authenticatedUser?.role==='aidant' || authenticatedUser?.role==='responsable'){
     member.innerHTML+=`
+    <li id="registerItem" class="nav-item">
+              <a class="nav-link"  href="#" data-uri="/UserPage">UserPage</a>
+            </li>  
     
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/Disponibilites">Disponibilités</a>
