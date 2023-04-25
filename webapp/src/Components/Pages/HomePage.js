@@ -3,7 +3,7 @@ import Navigate from "../Router/Navigate";
 
 const HomePage = async () => {
   const main = document.querySelector('main');
-  main.innerHTML = `<h3>Welcome to your home page!</h3>`;
+  main.innerHTML = `<h3 class ="titles">Loading ... </h3>`;
   let objets = await getObjects();
   shuffleArray(objets);
 
@@ -19,6 +19,7 @@ const HomePage = async () => {
     const filteredArray = objets.filter((o) => o.etat === etat);
     objets = filteredArray;
   }
+  if(objets.length === 0)  main.innerHTML = `<br><h3 class = "titles" >Pas encore d'objets ! </h3>`;
   // Filter the array depending on the type (if there are one and the type is not 'None')
   if (type && parseInt(type, 10) !== 0) {
     const filteredArray2 = objets.filter(
