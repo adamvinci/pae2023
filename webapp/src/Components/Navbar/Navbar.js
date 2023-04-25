@@ -1,7 +1,6 @@
 // eslint-disable-next-line no-unused-vars
-import { Navbar as BootstrapNavbar } from 'bootstrap';
 import {getAuthenticatedUser,getToken} from '../../utils/auths';
-import HomePage from "../Pages/HomePage";
+import Navigate from '../Router/Navigate';
 
 const Navbar = () => {
 
@@ -59,23 +58,20 @@ async function renderNavbar() {
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0" id='member'>
-         <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#" data-uri="/">Objets en magasin</a>
-            </li>      
-            <li id="loginItem" class="nav-item">
-              <a class="nav-link"  href="#" data-uri="/?etat=vente">Objets en vente</a>
-            </li>
-            <li id="registerItem" class="nav-item">
-              <a class="nav-link"  href="#" data-uri="/?etat=vendu">Objets vendu </a>
-            </li>    
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Objets
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#" data-uri="/">Objets en magasins</a></li>
+            <li><a class="dropdown-item" href="#" data-uri="/?etat=vendu">Objets en vente</a></li>
+            <li><a class="dropdown-item" href="#"  data-uri="/AddObjet">Objets vendus</a></li>
+          </ul>
+        </li> 
               <li id="registerItem" class="nav-item">
               <a class="nav-link"  href="#" data-uri="/AddObjet">Proposer un objet </a>
-            </li>  
-            <li id="registerItem" class="nav-item">
-              <a class="nav-link"  href="#" data-uri="/UserPage">UserPage</a>
             </li>  
           </ul>
         </div>
@@ -107,7 +103,7 @@ async function renderNavbar() {
               <a class="nav-link" href="#" data-uri="/ReceptionObjets">Dépôt d'objets</a>
     </li>
     <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/TableauDeBord">TableauDeBord</a>
+              <a class="nav-link" href="#" data-uri="/TableauDeBord">Tableau de bord</a>
     </li>
       <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/Statistiques">Statistiques</a>
@@ -130,13 +126,27 @@ async function renderNavbar() {
     `;
     }
     member.innerHTML+=`
- 
     <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/logout">Logout</a>
+      <a class="nav-link" href="#" data-uri="/MyObjectPage">Mes objets</a>
     </li>
-    <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/MyObjectPage">Mes objets</a>
-    </li>
+    <li id="registerItem" class="nav-item">
+    <button id = "profileButton" type="button" class="btn btn-outline-secondary">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="" class="bi bi-person-circle" viewBox="0 0 16 16">
+        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
+        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"></path>
+      </svg>
+    <span class="visually-hidden">Button</span>
+  </button>
+    </li>  
+
+    
+
+    <button id="logoutButton" type="button" class="btn btn-outline-secondary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="" class="bi bi-arrow-right-square" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"></path>
+        </svg>
+        <span class="visually-hidden">Button</span>
+      </button>
     <li class="nav-item">
               <a class="nav-link" >${authenticatedUser.prenom}</a>
     </li>
@@ -242,7 +252,16 @@ async function renderNavbar() {
   }
   const buttonTitle = document.querySelector("#nomSite");
   buttonTitle.addEventListener("click",()=>{
-    HomePage();
+    Navigate('/');;
+  })
+  const logoutButton = document.querySelector("#logoutButton");
+  logoutButton.addEventListener("click",()=>{
+    Navigate('/logout');
+  })
+
+  const profileButton = document.querySelector("#profileButton");
+  profileButton.addEventListener("click",()=>{
+    Navigate('/UserPage');
   })
       
 }

@@ -8,6 +8,18 @@ body {
   cursor: pointer;
 }
 
+@media screen and (min-width:1000px ) {
+  .logoo{
+    margin-left: 250px;
+    display: flex;
+  }
+}
+
+#logoutButton, #profileButton{
+  margin-right: 15px;
+}
+
+
 /*-----Accepter----Refuser--objet---------------------------------------------------------*/
 
 .tableEnTete {
@@ -132,7 +144,6 @@ button {
   grid-column-start: 1;
   grid-column-end: 3;
 }
-
 
 
 
