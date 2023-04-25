@@ -8,6 +8,14 @@ body {
   cursor: pointer;
 }
 
+@media screen and (min-width:1000px ) {
+  .logoo{
+    margin-left: 250px;
+    display: flex;
+  }
+}
+
+
 /*-----Accepter----Refuser--objet---------------------------------------------------------*/
 
 .tableEnTete {
@@ -133,7 +141,10 @@ button {
   grid-column-end: 3;
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9eeb1aefdbf7f0a6b4289e0f87671013437165ca
 
 
 /*--------------------------------depot-object----------------------------------------------------------------------*/
