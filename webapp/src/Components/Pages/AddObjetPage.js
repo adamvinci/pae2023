@@ -157,8 +157,16 @@ async function renderAddObjetForm() {
 
     if (!response.ok) {
       Swal.fire((await response.text()).valueOf())
+    }else{
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: "Votre objet a bien été proposé",
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
-    Navigate("/")
+    Navigate("/");
   });
 }
 
