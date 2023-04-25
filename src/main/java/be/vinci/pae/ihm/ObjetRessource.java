@@ -290,7 +290,7 @@ public class ObjetRessource {
    * @param json contains the price of sell
    * @return the modified object
    */
-  @ResponsableAuthorization
+  @ResponsableOrAidant
   @POST
   @Path("misEnVenteObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)
@@ -320,7 +320,7 @@ public class ObjetRessource {
   }
 
   /**
-   * Change the state of an object to 'vendu'.
+   * Change the state of an object from en vente to 'vendu'.
    *
    * @param id of the object to modify
    * @return the modified object
@@ -341,6 +341,41 @@ public class ObjetRessource {
           "Impossible changement,the object need to be in the state 'en vente'"
               + "to be sold", 412);
     }
+    Logger.getLogger(MyLogger.class.getName())
+        .log(Level.INFO, "Sale of object : " + id);
+    return changedObject;
+  }
+
+
+  /**
+   * Change the state of an object from accepte to 'vendu'.
+   *
+   * @param id   of the object to modify
+   * @param json contains the price of sell
+   * @return of the object to modify
+   */
+  @ResponsableAuthorization
+  @POST
+  @Path("vendreObjectResponsable/{id}")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public ObjetDTO vendreObjectAdmin(@PathParam("id") int id, JsonNode json) {
+    ObjetDTO retrievedObject = objetUCC.getOne(id);
+    if (retrievedObject == null) {
+      throw new WebApplicationException("This object does not exist", Status.NOT_FOUND);
+    }
+    if (!json.hasNonNull("prix")) {
+      throw new WebApplicationException("Price required", Status.BAD_REQUEST);
+    }
+    String prix = json.get("prix").asText();
+    if (prix.isBlank() || prix.isEmpty()) {
+      throw new WebApplicationException("Price required", Status.BAD_REQUEST);
+    }
+    if (Double.parseDouble(prix) > 10) {
+      throw new WebApplicationException("The price must be inferior to 10", 412);
+    }
+    retrievedObject.setPrix(Double.parseDouble(prix));
+    ObjetDTO changedObject = objetUCC.vendreObjectAdmin(retrievedObject);
     Logger.getLogger(MyLogger.class.getName())
         .log(Level.INFO, "Sale of object : " + id);
     return changedObject;

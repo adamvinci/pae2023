@@ -19,6 +19,10 @@ body {
   margin-right: 15px;
 }
 
+.titles {
+  text-align: center
+}
+
 
 /*-----Accepter----Refuser--objet---------------------------------------------------------*/
 
@@ -457,3 +461,4 @@ textarea {
   width: 300px;
   height: 200px;
 }
+

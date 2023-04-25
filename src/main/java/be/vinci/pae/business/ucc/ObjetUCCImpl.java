@@ -203,6 +203,24 @@ public class ObjetUCCImpl implements ObjetUCC {
   }
 
   @Override
+  public ObjetDTO vendreObjectAdmin(ObjetDTO objetDTO) {
+    try {
+      dal.startTransaction();
+      Objet objet = (Objet) objetDTO;
+      objet.vendreObjetAdmin();
+      return dataService.updateObjectState(objetDTO);
+    } catch (Exception e) {
+      if (e instanceof NoSuchElementException) {
+        throw new ConflictException("Bad version number, retry");
+      }
+      dal.rollBackTransaction();
+      throw e;
+    } finally {
+      dal.commitTransaction();
+    }
+  }
+
+  @Override
   public ObjetDTO getOne(int id) {
     try {
       dal.startTransaction();
