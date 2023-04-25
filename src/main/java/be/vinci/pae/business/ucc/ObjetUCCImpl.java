@@ -88,7 +88,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       if (objetDTO1.getUtilisateur() != null) {
         notification.setObject(objetDTO1.getIdObjet());
         notification.setType("acceptation");
-        notification.setMessage("l'objet (" + objetDTO.getDescription() + ") a été accepté");
+        notification.setMessage("Votre Objet (" + objetDTO.getDescription() + ") a été accepté");
         NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
         dataServiceNotification.linkNotifToUser(notificationCreated.getId(),
             objetDTO1.getUtilisateur());
@@ -118,7 +118,7 @@ public class ObjetUCCImpl implements ObjetUCC {
 
       notification.setObject(objetDTO1.getIdObjet());
       notification.setMessage(
-          "l'objet (" + objetDTO.getDescription() + ") est refusé car: " + message);
+          "Votre Objet (" + objetDTO.getDescription() + ") a été refusé car: " + message);
       notification.setType("refus");
       NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
       if (objetDTO1.getUtilisateur() != null) {
@@ -265,7 +265,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       ObjetDTO objetDATA = dataService.createObjet(objetDTO);
       notification.setObject(objetDATA.getIdObjet());
       notification.setType("alerteProposition");
-      notification.setMessage("l'objet n" + objetDATA.getIdObjet() + " a ete ajouté");
+      notification.setMessage("l'Objet n" + objetDATA.getIdObjet() + " a été proposé");
       NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
       dataServiceNotification.linkNotifToAidantAndResponsable(notificationCreated.getId());
       return objetDATA;

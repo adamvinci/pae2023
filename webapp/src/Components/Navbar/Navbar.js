@@ -22,7 +22,7 @@ function header(){
       </div>
     </div>
     <div style="flex-grow: 1;">
-      <div style="display: flex; margin-left: 250px;">
+      <div class="logoo"">
         <h1>
           <span style="background-color: #eee; padding: 20px;" id="nomSite">
             DonneMoi
