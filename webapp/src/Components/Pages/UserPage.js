@@ -108,7 +108,7 @@ const UserPage = async () => {
                                 <h6 class="mb-0">Date d'inscription </h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input type="text" class="form-control" value="${loggedUser.dateInscription}" disabled="disabled">
+                                <input type="text" class="form-control" value="${loggedUser.dateInscription[2]}/${loggedUser.dateInscription[1]}/${loggedUser.dateInscription[0]}" disabled="disabled">
                             </div>
                         </div>
                     
