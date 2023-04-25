@@ -346,10 +346,12 @@ public class ObjetRessource {
     return changedObject;
   }
 
+
   /**
    * Change the state of an object from accepte to 'vendu'.
    *
-   * @param id of the object to modify
+   * @param id   of the object to modify
+   * @param json contains the price of sell
    * @return of the object to modify
    */
   @ResponsableAuthorization
