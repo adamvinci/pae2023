@@ -22,6 +22,7 @@ async function renderAddObjetForm() {
   gsm.placeholder = 'Numero de telephone';
   gsm.required = "true";
   const label = document.createElement('label')
+  label.className = "labelAddObject"
   label.innerText = "Choisissez une image"
   const inputForm = document.createElement('input')
   inputForm.type = "file"
@@ -36,7 +37,7 @@ async function renderAddObjetForm() {
   description.required = "true"
 
   const submit = document.createElement('input');
-  submit.value = 'ajouter';
+  submit.value = 'Ajouter';
   submit.type = 'submit';
   submit.className = 'btn btn-info';
 
@@ -45,7 +46,7 @@ async function renderAddObjetForm() {
 
   const typeObjet = await getTypeObject();
 
-  let typeObjString= `<label for="type-select">choisis un type d'objet:</label>
+  let typeObjString= `<label  class="labelAddObject" for="type-select">Choisissez un type d'objet:</label>
    <select required name="type" id="type-select">
     <option value="">--Please choose an option--</option>`
 
@@ -56,7 +57,7 @@ async function renderAddObjetForm() {
 
   typeObjString+=`</select>  <br/>`
 
-  typeObjString+= `<label for="dispo-select">choisis une disponibilité:</label>
+  typeObjString+= `<label class="labelAddObject" for="dispo-select">Choisissez une disponibilité:</label>
    <select required name="dispo" id="dispo-select">
     <option value="">--Please choose an option--</option>`
 
@@ -66,6 +67,9 @@ async function renderAddObjetForm() {
     typeObjString+= `<option value="${disp.id}">${disp.date}(${disp.plage})</option>`
   })
 
+  const title = document.createElement('h3');
+  title.innerHTML = "Proposer un objet"
+  form.appendChild(title);
   typeObjString+=`</select>  <br/>`
   if(!getToken()) {
     form.appendChild(gsm);
