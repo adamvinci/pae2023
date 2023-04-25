@@ -208,6 +208,7 @@ class UserUccTest {
     doThrow(new NoSuchElementException("exception")).when(userDAO).update(userMemberSteven);
     assertThrows(ConflictException.class, () -> userUcc.makeAdmin(userMemberSteven));
   }
+
   @DisplayName("Test make an user which is 'member' manager (= 'responsable')")
   @Test
   void makeManagerWithAGoodUser() {
