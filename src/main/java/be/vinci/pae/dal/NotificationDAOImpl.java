@@ -1,6 +1,7 @@
 package be.vinci.pae.dal;
 
 import be.vinci.pae.business.dto.NotificationDTO;
+import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.dal.services.DALService;
 import be.vinci.pae.utils.exception.FatalException;
@@ -22,6 +23,9 @@ public class NotificationDAOImpl implements NotificationDAO {
   private DALService dalService;
   @Inject
   private NotificationFactory notificationFactory;
+
+  @Inject
+  private UserDAO userDAO;
 
 
   @Override
@@ -185,4 +189,21 @@ public class NotificationDAOImpl implements NotificationDAO {
     return notificationDTO;
   }
 
+  @Override
+  public void linkNotifToAidantAndResponsable(int idNotif) {
+    List<UserDTO> userDTOS = userDAO.getAll();
+    String query = "INSERT INTO  projet.notifications_utilisateurs (notification, utilisateur_notifie, lue) VALUES (?,?,false)";
+    try (PreparedStatement statement = dalService.preparedStatement(query)) {
+      statement.setInt(1, idNotif);
+      for (UserDTO userDTO : userDTOS.stream().filter((o) -> o.getRole().equals("aidant")
+          || o.getRole().equals("responsable")).toList()) {
+        statement.setInt(2, userDTO.getId());
+        statement.addBatch();
+      }
+      statement.executeBatch();
+
+    } catch (SQLException e) {
+      throw new FatalException(e);
+    }
+  }
 }

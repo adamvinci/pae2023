@@ -239,13 +239,17 @@ public class ObjetUCCImpl implements ObjetUCC {
   }
 
   @Override
-  public ObjetDTO ajouterObjet(ObjetDTO objetDTO) {
+  public ObjetDTO ajouterObjet(ObjetDTO objetDTO, NotificationDTO notification) {
     try {
       dal.startTransaction();
       Objet objet = (Objet) objetDTO;
       objet.initierEtat();
       ObjetDTO objetDATA = dataService.createObjet(objetDTO);
-
+      notification.setObject(objetDATA.getIdObjet());
+      notification.setType("alerteProposition");
+      notification.setMessage("l'objet n" + objetDATA.getIdObjet() + " a ete ajouté");
+      NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
+      dataServiceNotification.linkNotifToAidantAndResponsable(notificationCreated.getId());
       return objetDATA;
     } catch (FatalException e) {
       dal.rollBackTransaction();

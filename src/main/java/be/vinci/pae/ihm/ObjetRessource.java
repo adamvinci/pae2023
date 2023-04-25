@@ -197,7 +197,8 @@ public class ObjetRessource {
       throw new WebApplicationException("This image is not stored in the server ",
           Status.BAD_REQUEST);
     }
-    objet = objetUCC.ajouterObjet(objet);
+    NotificationDTO notification = notificationFactory.getNotification();
+    objet = objetUCC.ajouterObjet(objet, notification);
 
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "ajout de l'objet : "
         + objet.getDescription());
@@ -289,7 +290,7 @@ public class ObjetRessource {
    * @param json contains the price of sell
    * @return the modified object
    */
-  @ResponsableOrAidant
+  @ResponsableAuthorization
   @POST
   @Path("misEnVenteObject/{id}")
   @Consumes(MediaType.APPLICATION_JSON)

@@ -3,12 +3,13 @@ import {clearPage} from "../../../utils/render";
 import {getToken} from "../../../utils/auths";
 import Navigate from "../../Router/Navigate";
 
+
 const tableEnTete = `
 
   <div id = "tableData">
   <div>
   
-      <h1 >Réception d'objets</h1>
+      <h1 >Tableau De Bord</h1>
 </div>
     <table class="tableEnTete">
       <thead> 
@@ -172,8 +173,8 @@ async function tableAllObject(datas) {
       <td class="receptionObjetsTd">${objet.date_vente
         ? ` ${objet.date_vente[2]}/${objet.date_vente[1]}/${objet.date_vente[0]}`
         : '/'}</td>
-      <td class="receptionObjetsTd"> ${objet.gsm ? objet.gsm
-        : `<a id = "buttonDetail" data-id=${objet.utilisateur}>Details Utilisateur</a> `}</td>
+      <td class="receptionObjetsTd"> ${objet.utilisateur ?`<a id = "buttonDetail" data-id=${objet.utilisateur}>Details Utilisateur</a> `: objet.gsm
+         }</td>
       <td class="receptionObjetsTd"><button id="modifier" class="btn btn-secondary" type="button">Modifier l'object</button></td>
     </tr>`;
   })
@@ -192,10 +193,12 @@ async function tableAllObject(datas) {
   });
 
   const btnDetail = document.querySelectorAll("#buttonDetail");
+
   let popup;
   btnDetail.forEach((btn) => {
+    console.log(btn)
     btn.addEventListener('click', async (e) => {
-
+      console.log(e.target.dataset.id)
       const idUser = e.target.dataset.id;
       const options = {
         method: 'GET',

@@ -55,4 +55,6 @@ public interface ObjectDAO {
    * @return The updated object.
    */
   ObjetDTO updateObject(ObjetDTO objetDTO);
+
+
 }

@@ -26,6 +26,13 @@ public interface NotificationDAO {
   void linkNotifToUser(int idNotif, int idUser);
 
   /**
+   * Insert several row in notification_utilisateur.
+   *
+   * @param idNotif to link with the aidant/responsable
+   */
+  void linkNotifToAidantAndResponsable(int idNotif);
+
+  /**
    * Recherche les notifications associées à un utilisateur donné.
    *
    * @param userId L'identifiant de l'utilisateur.

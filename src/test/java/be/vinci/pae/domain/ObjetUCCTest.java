@@ -3,7 +3,6 @@ package be.vinci.pae.domain;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doThrow;
@@ -11,16 +10,13 @@ import static org.mockito.Mockito.doThrow;
 import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
-import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.factory.ObjetFactory;
 import be.vinci.pae.business.factory.TypeObjetFactory;
-import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.dal.NotificationDAO;
 import be.vinci.pae.dal.ObjectDAO;
 import be.vinci.pae.dal.TypeObjetDAO;
-import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.ApplicationBinderMock;
 import be.vinci.pae.utils.exception.BusinessException;
@@ -476,14 +472,14 @@ class ObjetUCCTest {
   @Test
   void testAjouterObjet() {
     Mockito.when(objectDAO.createObjet(objetDTO)).thenReturn(objetDTO);
-    objetUCC.ajouterObjet(objetDTO);
+    objetUCC.ajouterObjet(objetDTO, notificationDTO);
   }
 
   @DisplayName("Test ajouterObjet() with a FatalException")
   @Test
   void testAjouterObjetWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
-    assertThrows(FatalException.class, () -> objetUCC.ajouterObjet(objetDTO));
+    assertThrows(FatalException.class, () -> objetUCC.ajouterObjet(objetDTO, notificationDTO));
 
   }
 

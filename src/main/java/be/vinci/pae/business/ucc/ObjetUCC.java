@@ -97,10 +97,11 @@ public interface ObjetUCC {
   /**
    * Adds an object represented by the given ObjectDTO to the system.
    *
-   * @param objet the ObjectDTO representing the object to be added
+   * @param objet           the ObjectDTO representing the object to be added
+   * @param notificationDTO to save the reason of the refusal
    * @return the ObjectDTO representing the added object
    */
-  ObjetDTO ajouterObjet(ObjetDTO objet);
+  ObjetDTO ajouterObjet(ObjetDTO objet, NotificationDTO notificationDTO);
 
   /**
    * Retrieves a TypeObjetDTO object corresponding to the specified ID.
