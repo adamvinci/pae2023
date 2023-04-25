@@ -472,6 +472,8 @@ class ObjetUCCTest {
   @Test
   void testAjouterObjet() {
     Mockito.when(objectDAO.createObjet(objetDTO)).thenReturn(objetDTO);
+    Mockito.when(notificationDAO.createOne(notificationDTO)).thenReturn(notificationDTO);
+    //  notificationDTO.setId(1);
     objetUCC.ajouterObjet(objetDTO, notificationDTO);
   }
 
