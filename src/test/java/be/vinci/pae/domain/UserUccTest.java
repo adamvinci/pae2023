@@ -186,7 +186,7 @@ class UserUccTest {
     assertEquals(userMemberSteven.getRole(), "aidant");
   }
 
-  @DisplayName("Test make an user which is 'member' admin (= 'aidant')")
+  @DisplayName("Test make an user which is 'aidant' admin (= 'aidant')")
   @Test
   void makeAdminWithABadUser() {
     userMemberSteven.setRole("aidant");
@@ -207,6 +207,39 @@ class UserUccTest {
   void makeAdminWithConflictException() {
     doThrow(new NoSuchElementException("exception")).when(userDAO).update(userMemberSteven);
     assertThrows(ConflictException.class, () -> userUcc.makeAdmin(userMemberSteven));
+  }
+
+  @DisplayName("Test make an user which is 'member' manager (= 'responsable')")
+  @Test
+  void makeManagerWithAGoodUser() {
+    Mockito.when(userDAO.update(userMemberSteven)).thenReturn(true);
+    assertEquals(userMemberSteven.getRole(), "membre");
+    assertTrue(userMemberSteven.checkCanBeManager());
+    assertEquals(userMemberSteven, userUcc.makeManager(userMemberSteven));
+    assertEquals(userMemberSteven.getRole(), "responsable");
+  }
+
+  @DisplayName("Test make an user which is already 'responsable' manager (= 'responsable')")
+  @Test
+  void makeManagerWithABadUser() {
+    userMemberSteven.setRole("responsable");
+    assertEquals(userMemberSteven.getRole(), "responsable");
+    assertNull(userUcc.makeManager(userMemberSteven));
+    assertEquals(userMemberSteven.getRole(), "responsable");
+  }
+
+  @DisplayName("Test makeManager with a FatalException")
+  @Test
+  void makeManagerWithFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> userUcc.makeManager(userMemberSteven));
+  }
+
+  @DisplayName("Test makeAdmin with a Conflict")
+  @Test
+  void makeManagerWithConflictException() {
+    doThrow(new NoSuchElementException("exception")).when(userDAO).update(userMemberSteven);
+    assertThrows(ConflictException.class, () -> userUcc.makeManager(userMemberSteven));
   }
 
   @DisplayName("Test getAll() users with a non-empty list(resultset)")

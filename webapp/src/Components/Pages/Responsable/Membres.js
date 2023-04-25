@@ -34,6 +34,36 @@ const confirmHelper = async (e) => {
 
 }
 
+const confirmResponsable = async (e) => {
+  e.preventDefault();
+  const userID = e.target.parentNode.children[0].value;
+
+  const options = {
+    method: 'POST',
+    body: JSON.stringify({
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization : getToken()
+    },
+  };
+
+  const response = await fetch(`${process.env.API_BASE_URL}/users/${userID}/confirmManager`, options);
+  if (!response.ok) {
+    Swal.fire((await response.text()).valueOf())
+  }
+
+  Swal.fire({
+    position: 'top-end',
+    icon: 'success',
+    title: "L'utilisateur est désormais un 'responsable' ! ",
+    showConfirmButton: false,
+    timer: 1500
+  })
+  Membres(); // eslint-disable-line no-use-before-define
+
+}
+
 
 const renderUsersTable = async () => {
   const main = document.querySelector('main');
@@ -50,6 +80,7 @@ const renderUsersTable = async () => {
                               <th scope="col">GSM</th>
                               <th scope="col">Date d'inscription</th>
                               <th scope="col">Rôle</th>
+                              <th scope="col"></th>
                               <th scope="col"></th>
                               </tr>
                           </thead>
@@ -102,9 +133,19 @@ const renderUsersTable = async () => {
       <input type="hidden" id="userId" name="userId" value="${users[index].id}" />
       <button type="submit" class="btn btn-success">Confirmer aidant</button>
       </form>
+      </td>`
+  }
+      else {usersTableHTML +=  `<td> Action Impossible </td>`}
+      if(users[index].role === 'membre' || users[index].role ==='aidant' ) {
+        usersTableHTML +=  `
+      <td>
+      <form class = "confirmResponsableButton"> 
+      <input type="hidden" id="userId" name="userId" value="${users[index].id}" />
+      <button type="submit" class="btn btn-success">Confirmer responsable</button>
+      </form>
       </td>
       `
-    } 
+      }
       else {usersTableHTML +=  `<td> Action Impossible </td>`}
       usersTableHTML += `</tr>`
 
@@ -119,6 +160,12 @@ const renderUsersTable = async () => {
   const forms = document.getElementsByClassName('confirmHelperButton');
   for (let i = 0; i < forms.length; i+=1) {
     forms[i].addEventListener("click", confirmHelper)
+    
+  }
+
+  const confirmResponsableButtons = document.getElementsByClassName('confirmResponsableButton');
+  for (let i = 0; i < forms.length; i+=1) {
+    confirmResponsableButtons[i].addEventListener("click", confirmResponsable);
     
   }
 }

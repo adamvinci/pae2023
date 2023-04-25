@@ -152,11 +152,25 @@ public class UserImpl implements User {
   }
 
   @Override
+  public boolean checkCanBeManager() {
+    return this.getRole().equals("membre") || this.getRole().equals("aidant");
+  }
+
+  @Override
   public boolean changeToAdmin() {
     if (!this.checkCanBeAdmin()) {
       return false;
     }
     this.setRole("aidant");
+    return true;
+  }
+
+  @Override
+  public boolean changeToManager() {
+    if (!this.checkCanBeManager()) {
+      return false;
+    }
+    this.setRole("responsable");
     return true;
   }
 

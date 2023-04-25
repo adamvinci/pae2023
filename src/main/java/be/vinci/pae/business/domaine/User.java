@@ -40,4 +40,19 @@ public interface User extends UserDTO {
   boolean changeToAdmin();
 
 
+  /**
+   * Check if the user can gain the role of 'responsable'.
+   *
+   * @return true if the user  is not already an 'aidant' or 'responsable', false if not
+   */
+  boolean checkCanBeManager();
+
+  /**
+   * Change the role of a member into a 'responsable'.
+   *
+   * @return true if the user is now an 'responsable',false if not
+   */
+  boolean changeToManager();
+
+
 }

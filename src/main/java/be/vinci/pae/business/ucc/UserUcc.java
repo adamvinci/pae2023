@@ -54,6 +54,14 @@ public interface UserUcc {
   UserDTO makeAdmin(UserDTO userToChange);
 
   /**
+   * Update the role of the user making it becoming "responsable".
+   *
+   * @param userToChange the business object of the user who has to be changed
+   * @return the userDTO updated
+   */
+  UserDTO makeManager(UserDTO userToChange);
+
+  /**
    * Ask the db the image of the user.
    *
    * @param id linked to an object
@@ -65,7 +73,7 @@ public interface UserUcc {
   /**
    * Update an user with new informations.
    *
-   * @param newUser an user with the potentially new user's information
+   * @param newUser        an user with the potentially new user's information
    * @param actualPassword is the password that the user has provided to confirm the changes
    * @return the userDTO updated
    */
