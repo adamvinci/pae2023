@@ -508,4 +508,46 @@ class ObjetUCCTest {
     assertThrows(ConflictException.class, () -> objetUCC.updateObject(objetDTO));
   }
 
+  @DisplayName("Test vendreObjectAdmin(ObjetDTO objetDTO) with a bad state")
+  @Test
+  void testVendreObjectAdminWithABadState() {
+    objetDTO.setEtat("proposer");
+    assertThrows(BusinessException.class, () -> objetUCC.vendreObjectAdmin(objetDTO),
+        "to put an object at sell its statut must be 'accepte");
+  }
+
+  @DisplayName("Test vendreObjectAdmin(ObjetDTO objetDTO) with a good state but bad localisation")
+  @Test
+  void testVendreObjectAdminWithAGoodStateBadLocalisation() {
+    objetDTO.setEtat("accepte");
+    objetDTO.setLocalisation("Atelier");
+    assertThrows(BusinessException.class, () -> objetUCC.vendreObjectAdmin(objetDTO),
+        "to put an object at sell its need to be deposited in the sto");
+  }
+
+  @DisplayName("Test vendreObjectAdmin(ObjetDTO objetDTO) with good params")
+  @Test
+  void testVendreObjectAdminWithGoodParams() {
+    objetDTO.setEtat("accepte");
+    objetDTO.setLocalisation("Magasin");
+    Mockito.when(objectDAO.updateObjectState(objetDTO)).thenReturn(objetDTO);
+    assertEquals("vendu", objetUCC.vendreObjectAdmin(objetDTO).getEtat());
+  }
+
+  @DisplayName("Test vendreObjectAdmin(ObjetDTO objetDTO)with a FatalException")
+  @Test
+  void testVendreObjectAdminWithFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> objetUCC.vendreObjectAdmin(objetDTO));
+  }
+
+  @DisplayName("Test vendreObjectAdmin with a ConflictException")
+  @Test
+  void testVendreObjectAdminWithConflictException() {
+    objetDTO.setEtat("accepte");
+    objetDTO.setLocalisation("Magasin");
+    doThrow(new NoSuchElementException("exception")).when(objectDAO).updateObjectState(objetDTO);
+    assertThrows(ConflictException.class, () -> objetUCC.vendreObjectAdmin(objetDTO));
+  }
+
 }

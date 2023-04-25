@@ -212,3 +212,12 @@ Content-Type: application/json
   "gsm": "            ",
   "image" : "efzerkogj"
 }
+
+###
+POST {{baseUrl}}/objet/vendreObjectResponsable/6
+Authorization: {{aidantToken}}
+Content-Type: application/json
+
+{
+  "prix" : "6"
+}

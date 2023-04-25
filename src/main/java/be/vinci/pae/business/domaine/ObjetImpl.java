@@ -264,6 +264,22 @@ public class ObjetImpl implements Objet, ObjetDTO {
   }
 
   @Override
+  public Boolean vendreObjetAdmin() {
+    if (!Objects.equals(getEtat(), "accepte")) {
+      throw new BusinessException("Impossible changement, to put an object "
+          + "at sold its statut must be 'accepte'");
+    }
+
+    if (!Objects.equals(getLocalisation(), "Magasin")) {
+      throw new BusinessException("Impossible changement, to put an object at sold "
+          + "its need to be deposited in the store'");
+    }
+    setEtat("vendu");
+    setDate_vente(LocalDate.now());
+    return true;
+  }
+
+  @Override
   public Boolean vendreObjet() {
     if (!Objects.equals(getEtat(), "en vente")) {
       return false;
