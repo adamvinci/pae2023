@@ -164,8 +164,8 @@ POST {{baseUrl}}/disponibilite
 Content-Type: application/json
 
 {
-  "date": "2023-04-15",
-  "plage": "matin"
+  "date": "2023-04-29",
+  "plage": "apres midi"
 }
 
 ###
@@ -177,7 +177,15 @@ Content-Type: application/json
   "photo": "d"
 }
 
+###
+PUT {{baseUrl}}/objet/updateObject/4
+Content-Type: application/json
 
+{
+  "description" : "1",
+  "version" : "9"
+
+}
 
 ###
 PUT {{baseUrl}}/users/2

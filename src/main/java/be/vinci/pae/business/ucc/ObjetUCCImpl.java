@@ -239,13 +239,17 @@ public class ObjetUCCImpl implements ObjetUCC {
   }
 
   @Override
-  public ObjetDTO ajouterObjet(ObjetDTO objetDTO) {
+  public ObjetDTO ajouterObjet(ObjetDTO objetDTO, NotificationDTO notification) {
     try {
       dal.startTransaction();
       Objet objet = (Objet) objetDTO;
       objet.initierEtat();
       ObjetDTO objetDATA = dataService.createObjet(objetDTO);
-
+      notification.setObject(objetDATA.getIdObjet());
+      notification.setType("alerteProposition");
+      notification.setMessage("l'objet n" + objetDATA.getIdObjet() + " a ete ajouté");
+      NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
+      dataServiceNotification.linkNotifToAidantAndResponsable(notificationCreated.getId());
       return objetDATA;
     } catch (FatalException e) {
       dal.rollBackTransaction();
@@ -270,23 +274,10 @@ public class ObjetUCCImpl implements ObjetUCC {
   }
 
   @Override
-  public ObjetDTO updateObject(ObjetDTO objetDTO, String description, int type, String photo) {
+  public ObjetDTO updateObject(ObjetDTO objetDTO) {
     try {
       dal.startTransaction();
-
-      if (photo.isBlank() || photo.isEmpty()) {
-        photo = objetDTO.getPhoto();
-
-      } else {
-        photo = "src/main/java/be/vinci/pae/utils/images/" + photo;
-      }
-
-      if (description.isBlank() || description.isEmpty()) {
-        description = objetDTO.getDescription();
-      }
-
-      TypeObjetDTO typeObjetDTO = typeObjetDAO.getOne(type);
-      ObjetDTO objetDTO1 = dataService.updateObject(objetDTO, description, typeObjetDTO, photo);
+      ObjetDTO objetDTO1 = dataService.updateObject(objetDTO);
       dal.commitTransaction();
 
       return objetDTO1;

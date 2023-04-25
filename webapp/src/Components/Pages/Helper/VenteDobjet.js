@@ -72,7 +72,7 @@ function homeScreen(){
         if (data[i].etat === "en vente") {
           dataHtml += `<button  class="buttonVendu" size="1" data-index="${data[i].idObjet}" style="background-color: indianred">Indiquer vendu</button>`;
         }else{
-          dataHtml += `<p>${data[i].etat}</p>`;
+          dataHtml += `<p>${changeEtatName(data[i].etat)}</p>`;
         }
 
         i+=1;
@@ -150,6 +150,21 @@ function homeScreen(){
   getData();
 }
 
+function changeEtatName(etat) {
+  if (etat === 'accepte') {
+    return 'Accepté'
+  }
+  if (etat === 'refuser') {
+    return 'Refusé'
+  }
+  if (etat === 'en vente') {
+    return 'En Vente'
+  }
+  if (etat === 'vendu') {
+    return 'Vendu'
+  }
+  return 'Proposé'
+}
 const VenteDobjet =async () => {
   clearPage();
    head();

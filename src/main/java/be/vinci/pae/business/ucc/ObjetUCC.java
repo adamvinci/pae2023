@@ -97,10 +97,11 @@ public interface ObjetUCC {
   /**
    * Adds an object represented by the given ObjectDTO to the system.
    *
-   * @param objet the ObjectDTO representing the object to be added
+   * @param objet           the ObjectDTO representing the object to be added
+   * @param notificationDTO to save the reason of the refusal
    * @return the ObjectDTO representing the added object
    */
-  ObjetDTO ajouterObjet(ObjetDTO objet);
+  ObjetDTO ajouterObjet(ObjetDTO objet, NotificationDTO notificationDTO);
 
   /**
    * Retrieves a TypeObjetDTO object corresponding to the specified ID.
@@ -114,12 +115,9 @@ public interface ObjetUCC {
   /**
    * Updates the information of an object based on the provided parameters.
    *
-   * @param objetDTO    the object to be updated
-   * @param description the new description of the object
-   * @param type        the new type of the object
-   * @param photo       the new photo of the object
+   * @param objetDTO the object to be updated
    * @return an updated ObjetDTO with the new information
    */
 
-  ObjetDTO updateObject(ObjetDTO objetDTO, String description, int type, String photo);
+  ObjetDTO updateObject(ObjetDTO objetDTO);
 }

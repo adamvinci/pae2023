@@ -105,7 +105,7 @@ async function filtrageObjet() {
               ${optionsHtml}
           </select>
           <textarea id="description" class="form-control"  placeholder="Modifier la description maximum 120 caractères"></textarea>
-          <input class="form-control" id="photo" name="file" type= "file" />
+          <input class="form-control" id="photo" name="file" type= "file" accept="image/*" />
           <input id="updateBtn" type="button" value="Mettre a jour">
        </form>
        
@@ -118,10 +118,12 @@ async function majObject(stringPicture) {
   const objectId = JSON.parse(sessionStorage.getItem("objet"));
   const id = objectId.idObjet;
 
+
   const description = document.getElementById("description").value;
   const type = document.getElementById("type").value;
+  const version = objectId.noVersion
 
-  const photo = stringPicture.name;
+  const photo = stringPicture;
 
   try {
     const options = {
@@ -133,6 +135,7 @@ async function majObject(stringPicture) {
         description,
         type,
         photo,
+        version
       }),
     };
 
@@ -184,7 +187,8 @@ async function sendPicture(e){
       if (!response.ok) {
         Swal.fire((await response.text()).valueOf())
       }else{
-        majObject(stringPicture);
+        const imageSaved =  await response.text();
+        majObject(imageSaved);
       }
 
     } catch (error) {

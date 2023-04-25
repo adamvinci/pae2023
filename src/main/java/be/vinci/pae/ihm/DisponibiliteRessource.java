@@ -15,6 +15,7 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,11 +47,11 @@ public class DisponibiliteRessource {
   }
 
   /**
-   *Retrieves a single DisponibiliteDTO by its id.
+   * Retrieves a single DisponibiliteDTO by its id.
    *
-   *@param id the id of the DisponibiliteDTO to retrieve.
-   *@return the DisponibiliteDTO with the specified id.
-   *@throws WebApplicationException if the id is -1 or the DisponibiliteDTO is not found.
+   * @param id the id of the DisponibiliteDTO to retrieve.
+   * @return the DisponibiliteDTO with the specified id.
+   * @throws WebApplicationException if the id is -1 or the DisponibiliteDTO is not found.
    */
   @GET
   @Path("/{id}")
@@ -68,7 +69,6 @@ public class DisponibiliteRessource {
   }
 
 
-
   /**
    * Create a disponibility.
    *
@@ -84,6 +84,9 @@ public class DisponibiliteRessource {
     }
     if (disponibiliteDTO.getDate().getDayOfWeek() != DayOfWeek.SATURDAY) {
       throw new WebApplicationException("The date has to be a sunday", Status.BAD_REQUEST);
+    }
+    if (disponibiliteDTO.getDate().isBefore(LocalDate.now())) {
+      throw new WebApplicationException("Select a future date", Status.BAD_REQUEST);
     }
     if (disponibiliteDTO.getPlage() == null || disponibiliteDTO.getPlage().equals("")) {
       throw new WebApplicationException("Plage horaire required", Status.BAD_REQUEST);
