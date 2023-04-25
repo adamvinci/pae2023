@@ -1,7 +1,6 @@
 import Swal from "sweetalert2";
 import { clearPage } from '../../utils/render';
-import {getAuthenticatedUser,getToken} from '../../utils/auths'
-import Navigate from "../Router/Navigate";
+import {getAuthenticatedUser,getToken} from '../../utils/auths';
 
 
 const AddObjetPage = () => {
@@ -166,7 +165,7 @@ async function renderAddObjetForm() {
         timer: 1500
       })
     }
-    Navigate("/");
+    AddObjetPage();
   });
 }
 
