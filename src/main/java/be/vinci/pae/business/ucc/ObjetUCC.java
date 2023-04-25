@@ -79,6 +79,15 @@ public interface ObjetUCC {
   ObjetDTO vendreObject(ObjetDTO objetDTO);
 
   /**
+   * Sold an object.
+   *
+   * @param objetDTO the solded object.
+   * @return the changed ObjetDTO
+   */
+  ObjetDTO vendreObjectAdmin(ObjetDTO objetDTO);
+
+
+  /**
    * Retrieve the object linked to the id.
    *
    * @param id of the object to retrieve
