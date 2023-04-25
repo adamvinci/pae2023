@@ -36,7 +36,7 @@ const UserPage = async () => {
                                 <h4>${loggedUser.prenom} ${loggedUser.nom}</h4>
                                 <form>
                                     <label>Modifier la photo</label>
-                                    <input type="file" name="myImage" accept=".png, .jpg, .jpeg"/>
+                                    <input type="file" name="myImage" accept="image/*""/>
                                 </form>
                             </div>
                         </div>
@@ -174,7 +174,14 @@ async function updateUser() {
             method: 'POST',
             body: formData
         };
-        fetch(`${process.env.API_BASE_URL}/auths/upload`, options1);
+      const responseImage = await fetch(`${process.env.API_BASE_URL}/auths/upload`, options1);
+
+      if (!responseImage.ok) {
+        Swal.fire((await responseImage.text()).valueOf())
+      }
+      const imageSaved =  await responseImage.text();
+      img = imageSaved
+
     }
 
     const options = {

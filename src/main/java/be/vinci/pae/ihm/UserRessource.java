@@ -7,7 +7,6 @@ import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.ihm.filters.Authorize;
 import be.vinci.pae.ihm.filters.ResponsableAuthorization;
 import be.vinci.pae.ihm.filters.ResponsableOrAidant;
-import be.vinci.pae.utils.Config;
 import be.vinci.pae.utils.Json;
 import be.vinci.pae.utils.MyLogger;
 import be.vinci.pae.utils.exception.BusinessException;
@@ -27,6 +26,7 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 import java.io.File;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -184,6 +184,10 @@ public class UserRessource {
     }
 
     if (newUsersData.hasNonNull("image")) {
+      if (!Files.exists(java.nio.file.Path.of(newUsersData.get("image").asText()))) {
+        throw new WebApplicationException("This image is not stored in the server ",
+            Status.BAD_REQUEST);
+      }
       File oldAvatar = new File(userToChange.getImage());
       String[] parts = oldAvatar.toString().split("\\\\");
       String fileName = parts[parts.length - 1];
@@ -192,8 +196,7 @@ public class UserRessource {
         Logger.getLogger(MyLogger.class.getName())
             .log(Level.INFO, "Deleted picture " + oldAvatar);
       }
-      newUser.setImage(
-          Config.getProperty("pathToUserImage") + newUsersData.get("image").asText());
+      newUser.setImage(newUsersData.get("image").asText());
     }
     UserDTO changedUser;
     try {

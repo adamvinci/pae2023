@@ -3,7 +3,6 @@ package be.vinci.pae.domain;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doThrow;
@@ -11,16 +10,13 @@ import static org.mockito.Mockito.doThrow;
 import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
 import be.vinci.pae.business.dto.TypeObjetDTO;
-import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.factory.ObjetFactory;
 import be.vinci.pae.business.factory.TypeObjetFactory;
-import be.vinci.pae.business.factory.UserFactory;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.dal.NotificationDAO;
 import be.vinci.pae.dal.ObjectDAO;
 import be.vinci.pae.dal.TypeObjetDAO;
-import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.ApplicationBinderMock;
 import be.vinci.pae.utils.exception.BusinessException;
@@ -476,33 +472,40 @@ class ObjetUCCTest {
   @Test
   void testAjouterObjet() {
     Mockito.when(objectDAO.createObjet(objetDTO)).thenReturn(objetDTO);
-    objetUCC.ajouterObjet(objetDTO);
+    Mockito.when(notificationDAO.createOne(notificationDTO)).thenReturn(notificationDTO);
+    //  notificationDTO.setId(1);
+    objetUCC.ajouterObjet(objetDTO, notificationDTO);
   }
 
   @DisplayName("Test ajouterObjet() with a FatalException")
   @Test
   void testAjouterObjetWithFatalException() {
     doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
-    assertThrows(FatalException.class, () -> objetUCC.ajouterObjet(objetDTO));
+    assertThrows(FatalException.class, () -> objetUCC.ajouterObjet(objetDTO, notificationDTO));
 
   }
 
-  @DisplayName("Test update object")
+  @DisplayName("Test updateObject(ObjetDTO objetDTO) with a FatalException")
   @Test
-  void testUpdateObjectOK() {
+  void testUpdateObjetWithFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> objetUCC.updateObject(objetDTO));
 
-    objetDTO.setDescription("Table en bois");
-    typeObjetDTO.setIdObjet(2);
-    typeObjetDTO.setLibelle("Table");
-    objetDTO.setPhoto("table.png");
-
-    Mockito.when(typeObjetDAO.getOne(2)).thenReturn(typeObjetDTO);
-
-    Mockito.when(objectDAO.updateObject(objetDTO, "Table en bois", typeObjetDTO, "table.png"))
-        .thenReturn(objetDTO);
-
-    ObjetDTO objetDTO1 = objetUCC.updateObject(objetDTO, "Table en bois", 2, "table.png");
-
-    assertNotEquals(objetDTO1, objetDTO);
   }
+
+  @DisplayName("Test updateObject(ObjetDTO objetDTO) ")
+  @Test
+  void testUpdateObjet() {
+    Mockito.when(objectDAO.updateObject(objetDTO)).thenReturn(objetDTO);
+    assertEquals(objetDTO, objetUCC.updateObject(objetDTO));
+
+  }
+
+  @DisplayName("Test updateObject(ObjetDTO objetDTO) with a ConflictException")
+  @Test
+  void testUpdateObjetWithConflictException() {
+    doThrow(new NoSuchElementException("exception")).when(objectDAO).updateObject(objetDTO);
+    assertThrows(ConflictException.class, () -> objetUCC.updateObject(objetDTO));
+  }
+
 }
