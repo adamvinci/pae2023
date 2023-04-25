@@ -1,7 +1,6 @@
 import Swal from "sweetalert2";
 import { clearPage } from '../../utils/render';
-import {getAuthenticatedUser,getToken} from '../../utils/auths'
-import Navigate from "../Router/Navigate";
+import {getAuthenticatedUser,getToken} from '../../utils/auths';
 
 
 const AddObjetPage = () => {
@@ -157,8 +156,16 @@ async function renderAddObjetForm() {
 
     if (!response.ok) {
       Swal.fire((await response.text()).valueOf())
+    }else{
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: "Votre objet a bien été proposé",
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
-    Navigate("/")
+    AddObjetPage();
   });
 }
 
