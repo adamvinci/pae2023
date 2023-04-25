@@ -151,8 +151,9 @@ public class UserImpl implements User {
     return this.getRole().equals("membre");
   }
 
+  @Override
   public boolean checkCanBeManager() {
-    return (this.getRole().equals("membre") || this.getRole().equals("aidant"));
+    return this.getRole().equals("membre") || this.getRole().equals("aidant");
   }
 
   @Override
@@ -164,6 +165,7 @@ public class UserImpl implements User {
     return true;
   }
 
+  @Override
   public boolean changeToManager() {
     if (!this.checkCanBeManager()) {
       return false;

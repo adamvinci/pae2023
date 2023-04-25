@@ -121,6 +121,7 @@ public class UserUccImpl implements UserUcc {
 
   }
 
+  @Override
   public UserDTO makeManager(UserDTO userToChange) {
     try {
       dal.startTransaction();
