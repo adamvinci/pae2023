@@ -61,7 +61,7 @@ async function renderAddObjetForm() {
 
   dispo.forEach((disp) => {
 
-    typeObjString+= `<option value="${disp.id}">${disp.date}(${disp.plage})</option>`
+    typeObjString+= `<option value="${disp.id}">${disp.date[2]}/${disp.date[1]}/${disp.date[0]}(${disp.plage})</option>`
   })
 
   typeObjString+=`</select>  <br/>`

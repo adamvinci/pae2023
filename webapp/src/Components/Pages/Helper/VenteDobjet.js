@@ -57,7 +57,7 @@ function homeScreen(){
         <tr>
                   <td class="td"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
           <td class="rechercheObjetsTd">${data[i].typeObjet.libelle}</td> 
-          <td class="rechercheObjetsTd">${data[i].date_depot}</td>
+          <td class="rechercheObjetsTd">${data[i].date_depot[2]}/${data[i].date_depot[1]}/${data[i].date_depot[0]}</td>
           <td class="rechercheObjetsTd" id="prixDonne">`;
 
         if (data[i].prix) {

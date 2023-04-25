@@ -66,7 +66,7 @@ function table() {
       <td class="receptionObjetsTd">${data[i].typeObjet.libelle}</td>
       <td class="td"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
       <td class="receptionObjetsTd">${data[i].description}</td>
-      <td class="receptionObjetsTd">${data[i].date_acceptation}</td>
+      <td class="receptionObjetsTd">${data[i].date_acceptation[2]}/${data[i].date_acceptation[1]}/${data[i].date_acceptation[0]}</td>
       <td class="receptionObjetsTd"> 
         <select data-id =${data[i].idObjet}>
           <option value="" disabled ${currentLocation ? '' : 'selected'}>Localisation</option>
