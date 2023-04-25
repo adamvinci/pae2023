@@ -59,18 +59,18 @@ async function renderNavbar() {
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0" id='member'>
-         <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#" data-uri="/">Objets en magasin</a>
-            </li>      
-            <li id="loginItem" class="nav-item">
-              <a class="nav-link"  href="#" data-uri="/?etat=vente">Objets en vente</a>
-            </li>
-            <li id="registerItem" class="nav-item">
-              <a class="nav-link"  href="#" data-uri="/?etat=vendu">Objets vendu </a>
-            </li>    
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Objets
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#" data-uri="/">Objets en magasins</a></li>
+            <li><a class="dropdown-item" href="#" data-uri="/?etat=vendu">Objets en vente</a></li>
+            <li><a class="dropdown-item" href="#"  data-uri="/AddObjet">Objets vendus</a></li>
+          </ul>
+        </li> 
               <li id="registerItem" class="nav-item">
               <a class="nav-link"  href="#" data-uri="/AddObjet">Proposer un objet </a>
             </li>  
@@ -96,9 +96,6 @@ async function renderNavbar() {
     const member=document.getElementById('member');
     if(authenticatedUser?.role==='aidant' || authenticatedUser?.role==='responsable'){
     member.innerHTML+=`
-    <li id="registerItem" class="nav-item">
-              <a class="nav-link"  href="#" data-uri="/UserPage">UserPage</a>
-            </li>  
     
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/Disponibilites">Disponibilités</a>
@@ -107,7 +104,7 @@ async function renderNavbar() {
               <a class="nav-link" href="#" data-uri="/ReceptionObjets">Dépôt d'objets</a>
     </li>
     <li class="nav-item">
-              <a class="nav-link" href="#" data-uri="/TableauDeBord">TableauDeBord</a>
+              <a class="nav-link" href="#" data-uri="/TableauDeBord">Tableau de bord</a>
     </li>
       <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/Statistiques">Statistiques</a>
@@ -115,6 +112,9 @@ async function renderNavbar() {
     <li class="nav-item">
               <a class="nav-link" href="#" data-uri="/venteObjet">Gérer la vente d'objets</a>
     </li>
+    <li id="registerItem" class="nav-item">
+              <a class="nav-link"  href="#" data-uri="/UserPage">Mon profil</a>
+    </li>  
     `;
     }
     if(authenticatedUser?.role==='responsable'){
