@@ -221,3 +221,26 @@ Content-Type: application/json
 {
   "prix" : "6"
 }
+
+###
+POST {{baseUrl}}/users/4/confirmManager
+
+###
+POST {{baseUrl}}/users/4/confirmManager
+Authorization: {{aidantToken}}
+
+###
+POST {{baseUrl}}/users/3/confirmManager
+Authorization: {{adrienToken}}
+
+###
+POST {{baseUrl}}/users/4/confirmManager
+Authorization: {{adrienToken}}
+
+###
+POST {{baseUrl}}/users/7/confirmManager
+Authorization: {{adrienToken}}
+
+###
+POST {{baseUrl}}/users/1/confirmManager
+Authorization: {{adrienToken}}

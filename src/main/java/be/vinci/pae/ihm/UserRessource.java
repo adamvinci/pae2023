@@ -117,6 +117,37 @@ public class UserRessource {
 
 
   /**
+   * Change the role of a user to make him "responsable".
+   *
+   * @param id of the user
+   * @return a json object with the modified user.
+   */
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/{id}/confirmManager")
+  @ResponsableAuthorization
+  public UserDTO confirmManager(
+      @DefaultValue("-1") @PathParam("id") int id) {
+    if (id == -1) {
+      throw new WebApplicationException("No content", Status.BAD_REQUEST);
+    }
+
+    UserDTO userToChange = userUcc.getOne(id);
+    if (userToChange == null) {
+      throw new WebApplicationException("This user does not exist", Status.BAD_REQUEST);
+    }
+    UserDTO changedUser = userUcc.makeManager(userToChange);
+    if (changedUser == null) {
+      throw new WebApplicationException(
+          "This user can't become an 'responsable' because "
+              + "he already has the role 'responsable'",
+          412);
+    }
+    return changedUser;
+  }
+
+
+  /**
    * Update the informations of an user.
    *
    * @param id           of the user

@@ -121,6 +121,27 @@ public class UserUccImpl implements UserUcc {
 
   }
 
+  public UserDTO makeManager(UserDTO userToChange) {
+    try {
+      dal.startTransaction();
+      User user = (User) userToChange;
+      if (user.changeToManager()) {
+        dataService.update(userToChange);
+        userToChange.setVersion(userToChange.getVersion() + 1);
+        dal.commitTransaction();
+        return userToChange;
+      }
+      return null;
+    } catch (Exception e) {
+      if (e instanceof NoSuchElementException) {
+        throw new ConflictException("Bad version number, retry");
+      }
+      dal.rollBackTransaction();
+      throw e;
+    }
+
+  }
+
   @Override
   public String getPicture(int id) {
     try {

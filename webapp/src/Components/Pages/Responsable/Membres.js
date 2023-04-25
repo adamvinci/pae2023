@@ -48,7 +48,7 @@ const confirmResponsable = async (e) => {
     },
   };
 
-  const response = await fetch(`${process.env.API_BASE_URL}/users/${userID}/confirmResponsable`, options);
+  const response = await fetch(`${process.env.API_BASE_URL}/users/${userID}/confirmManager`, options);
   if (!response.ok) {
     Swal.fire((await response.text()).valueOf())
   }
