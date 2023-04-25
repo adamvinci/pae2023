@@ -485,5 +485,27 @@ class ObjetUCCTest {
 
   }
 
+  @DisplayName("Test updateObject(ObjetDTO objetDTO) with a FatalException")
+  @Test
+  void testUpdateObjetWithFatalException() {
+    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
+    assertThrows(FatalException.class, () -> objetUCC.updateObject(objetDTO));
+
+  }
+
+  @DisplayName("Test updateObject(ObjetDTO objetDTO) ")
+  @Test
+  void testUpdateObjet() {
+    Mockito.when(objectDAO.updateObject(objetDTO)).thenReturn(objetDTO);
+    assertEquals(objetDTO, objetUCC.updateObject(objetDTO));
+
+  }
+
+  @DisplayName("Test updateObject(ObjetDTO objetDTO) with a ConflictException")
+  @Test
+  void testUpdateObjetWithConflictException() {
+    doThrow(new NoSuchElementException("exception")).when(objectDAO).updateObject(objetDTO);
+    assertThrows(ConflictException.class, () -> objetUCC.updateObject(objetDTO));
+  }
 
 }
