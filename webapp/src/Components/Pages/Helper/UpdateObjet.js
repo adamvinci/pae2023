@@ -192,7 +192,7 @@ async function sendPicture(e){
       }
 
     } catch (error) {
-      console.error(error);
+      // r
     }
   }
 }

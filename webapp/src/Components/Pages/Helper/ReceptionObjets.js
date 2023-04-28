@@ -18,7 +18,6 @@ const tableEnTete = `
           <th class="receptionObjetsTh"> Localisation </th>
           <th class="receptionObjetsTh"> Date dépot </th>
           <th class="receptionObjetsTh"> Prix </th>
-          <th class="receptionObjetsTh"> Confirmation </th>
           <th class="receptionObjetsTh"> Modifier </th>
         </tr>
       </thead>
@@ -76,7 +75,6 @@ function table() {
       </td>
       <td class="receptionObjetsTd">${data[i].date_depot ? data[i].date_depot  : '/' }</td>
       <td class="receptionObjetsTd">${data[i].prix_vente ? data[i].prix_vente : '/' }</td>
-      <td class="receptionObjetsTd"><input type="button" value="Confirmer"></td>
       <td class="receptionObjetsTd"><button id="btnUpdate" class="btn btn-secondary" type="button">Modifier l'object</button></td>
     </tr>`;
         i += 1;
