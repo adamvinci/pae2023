@@ -88,7 +88,6 @@ const objets2 = objets
 
 
   main.innerHTML = html;
-  console.log(objets)
   let popup;
   const img = document.querySelectorAll("#imgCarousel");
   img.forEach((im)=>{

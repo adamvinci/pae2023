@@ -31,7 +31,6 @@ body {
   text-align: center;
   padding: 20px;
   margin: auto;
-  position: absolute;
   background-color: white;
 }
 
@@ -54,6 +53,7 @@ button {
 }
 
 /*-------used--On--RechercherObjets*/
+
 
 .popUpContainer {
   display: flex;

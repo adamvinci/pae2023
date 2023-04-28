@@ -117,38 +117,22 @@ function homeScreen(){
       confirmerBtns.forEach(btn => {
         btn.addEventListener('click', async (event) => {
           const authenticatedUser =await auths();
-          console.log(authenticatedUser?.role);
-          if(authenticatedUser?.role==='responsable'){
-            Swal.fire({
-              title: 'Do you want to save the changes?',
-              showDenyButton: true,
-              showCancelButton: true,
-              confirmButtonText: 'Save',
-              denyButtonText: `Don't save`,
-            }).then((result) => {
-              /* Read more about isConfirmed, isDenied below */
-              if (result.isConfirmed) {
-                Swal.fire('Saved!', '', 'success')
-              } else if (result.isDenied) {
-                Swal.fire('Changes are not saved', '', 'info')
-              }
-            })
-          }else{
-            const idObjet = event.target.dataset.id;
-            const prixInput = document.querySelector(`#prix-${idObjet}`);
-            const prix = prixInput.value;
-            try{
-              const options = {
-                method: 'POST',
-                body: JSON.stringify({
-                  prix,
-                }),
-                headers: {
-                  'Content-Type': 'application/json',
-                  Authorization : getToken()
-                },
-              };
+          const idObjet = event.target.dataset.id;
+          const prixInput = document.querySelector(`#prix-${idObjet}`);
+          const prix = prixInput.value;
+          const options = {
+            method: 'POST',
+            body: JSON.stringify({
+              prix,
+            }),
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization : getToken()
+            }};
+          // Function mis en vente
+          const misEnVente=async()=>{
 
+            try{
 
               const rep = await fetch(`${process.env.API_BASE_URL}/objet/misEnVenteObject/${idObjet}`, options);
 
@@ -160,6 +144,52 @@ function homeScreen(){
             catch (err){
               throw Error(err);
             }
+          }
+          // Function vendu
+          const vendu = async()=>{
+
+            try{
+
+              const rep = await fetch(`${process.env.API_BASE_URL}/objet/vendreObjectResponsable/${idObjet}`, options);
+
+              if (!rep.ok) Swal.fire((await rep.text()).valueOf())
+              else{
+                window.location.reload();
+              }
+            }
+            catch (err){
+              throw Error(err);
+            }
+          }
+          if(authenticatedUser?.role==='responsable'){
+            const swalWithBootstrapButtons = Swal.mixin({
+              customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+              },
+              buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+              title: 'Choisissez l\'état de l\'objet ?',
+              showCancelButton: true,
+              confirmButtonText: 'En vente',
+              cancelButtonText: 'Vendu',
+              reverseButtons: true
+            }).then((result) => {
+              if (result.isConfirmed) {
+                misEnVente();
+
+              } else if (
+                  /* Read more about handling dismissals below */
+                  result.dismiss === Swal.DismissReason.cancel
+              ) {
+                vendu();
+
+              }
+            })
+          }else{
+            misEnVente();
           }
 
 

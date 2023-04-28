@@ -196,9 +196,7 @@ async function tableAllObject(datas) {
 
   let popup;
   btnDetail.forEach((btn) => {
-    console.log(btn)
     btn.addEventListener('click', async (e) => {
-      console.log(e.target.dataset.id)
       const idUser = e.target.dataset.id;
       const options = {
         method: 'GET',

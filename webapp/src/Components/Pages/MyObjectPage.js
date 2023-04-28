@@ -3,7 +3,7 @@ import {getToken} from '../../utils/auths'
 
 const MyObjectPage = async () => {
   const main = document.querySelector('main');
-  main.innerHTML = `<h3>Welcome to your home page!</h3>`;
+  main.innerHTML = `<h3 style="text-align: center">Loading...</h3>`;
   const objets = await getObjects();
   shuffleArray(objets);
 
