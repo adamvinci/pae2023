@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 import {clearPage} from "../../../utils/render";
-import {getToken} from "../../../utils/auths";
+import {getAuthenticatedUser, getToken} from "../../../utils/auths";
 
 const tableEnTete = `
   <div style=" justify-content: center; display: flex"><h1>Gestion de la vente</h1></div>
@@ -107,37 +107,62 @@ function homeScreen(){
         });
       });
 
+      const auths=async ()=>{
+        const ath=await getAuthenticatedUser()
+        return ath;
+      }
 
 
       const confirmerBtns = document.querySelectorAll('.confirmer');
       confirmerBtns.forEach(btn => {
         btn.addEventListener('click', async (event) => {
-          const idObjet = event.target.dataset.id;
-          const prixInput = document.querySelector(`#prix-${idObjet}`);
-          const prix = prixInput.value;
-          try{
-            const options = {
-              method: 'POST',
-              body: JSON.stringify({
-                prix,
-              }),
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization : getToken()
-              },
-            };
+          const authenticatedUser =await auths();
+          console.log(authenticatedUser?.role);
+          if(authenticatedUser?.role==='responsable'){
+            Swal.fire({
+              title: 'Do you want to save the changes?',
+              showDenyButton: true,
+              showCancelButton: true,
+              confirmButtonText: 'Save',
+              denyButtonText: `Don't save`,
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                Swal.fire('Saved!', '', 'success')
+              } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+              }
+            })
+          }else{
+            const idObjet = event.target.dataset.id;
+            const prixInput = document.querySelector(`#prix-${idObjet}`);
+            const prix = prixInput.value;
+            try{
+              const options = {
+                method: 'POST',
+                body: JSON.stringify({
+                  prix,
+                }),
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization : getToken()
+                },
+              };
 
 
-            const rep = await fetch(`${process.env.API_BASE_URL}/objet/misEnVenteObject/${idObjet}`, options);
+              const rep = await fetch(`${process.env.API_BASE_URL}/objet/misEnVenteObject/${idObjet}`, options);
 
-            if (!rep.ok) Swal.fire((await rep.text()).valueOf())
-            else{
-              window.location.reload();
+              if (!rep.ok) Swal.fire((await rep.text()).valueOf())
+              else{
+                window.location.reload();
+              }
+            }
+            catch (err){
+              throw Error(err);
             }
           }
-          catch (err){
-            throw Error(err);
-          }
+
+
         });
       });
 
