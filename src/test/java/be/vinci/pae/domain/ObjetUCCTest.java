@@ -255,7 +255,7 @@ class ObjetUCCTest {
     assertAll(
         () -> assertEquals(objetDTO, objetUCC.refuserObject(objetDTO, "message", notificationDTO)),
         () -> assertEquals(
-            "l'objet (" + objetDTO.getDescription() + ") est refusé car: " + "message",
+            "Votre Objet (" + objetDTO.getDescription() + ") a été refusé car: " + "message",
             notificationDTO.getMessage())
     );
   }
@@ -273,7 +273,7 @@ class ObjetUCCTest {
     assertAll(
         () -> assertEquals(objetDTO, objetUCC.refuserObject(objetDTO, "message", notificationDTO)),
         () -> assertEquals(
-            "l'objet (" + objetDTO.getDescription() + ") est refusé car: " + "message",
+            "Votre Objet (" + objetDTO.getDescription() + ") a été refusé car: " + "message",
             notificationDTO.getMessage())
     );
   }
