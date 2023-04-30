@@ -9,93 +9,20 @@ import avatar2 from '../../img/avatar2.jpg'
 const RegisterPage = () => {
   clearPage();
 
-
   renderRegisterForm();
 };
 
-
-
 function renderRegisterForm() {
   const main = document.querySelector('main');
-  const newDiv = document.createElement("div");
-  newDiv.id = "divForm"
-  const form = document.createElement('form');
-  form.id = "form"
-  form.className = 'p-5';
-  const title = document.createElement('h1');
-  title.innerText = "Creer votre compte";
-  title.style.color = "#634835";
-  const email = document.createElement('input');
-  email.type = 'text';
-  email.id = 'email';
-  email.placeholder = 'Email';
-  email.required = true;
-  email.className = 'form-control mb-3';
-  const nom = document.createElement('input');
-  nom.type = 'text';
-  nom.id = 'nom';
-  nom.placeholder = 'Nom';
-  nom.required = true;
-  nom.className = 'form-control mb-3';
-  const prenom = document.createElement('input');
-  prenom.type = 'text';
-  prenom.id = 'prenom';
-  prenom.placeholder = 'Prenom';
-  prenom.required = true;
-  prenom.className = 'form-control mb-3';
-  const gsm = document.createElement('input');
-  gsm.type = 'text';
-  gsm.id = 'gsm';
-  gsm.placeholder = 'GSM';
-  gsm.required = true;
-  gsm.className = 'form-control mb-3';
-  const password = document.createElement('input');
-  password.type = 'password';
-  password.id = 'password';
-  password.required = true;
-  password.placeholder = 'Password';
-  password.className = 'form-control mb-3';
-  const submit = document.createElement('input');
-  submit.value = 'register';
-  submit.type = 'submit';
-  submit.className = 'btn btn-info';
-
-  const formCheckWrapper = document.createElement('div');
-  formCheckWrapper.className = 'mb-3 form-check';
-
-  const msgErreur = document.createElement("h4");
-  msgErreur.id = "msgErreur";
-  msgErreur.innerText = "";
-  msgErreur.style.color = "red";
-
-  const connecterLink = document.createElement("a");
-  connecterLink.id = "connecterLink";
-  connecterLink.style.cursor = "pointer"
-  connecterLink.innerText = "deja inscrit? connectez-vous ici!";
-  connecterLink.className = "text-dark mt-3";
-  connecterLink.addEventListener("click", () => {
-    Navigate("/login")
-  })
-
-  form.appendChild(title);
-  form.appendChild(nom);
-  form.appendChild(prenom);
-  form.appendChild(email);
-  form.appendChild(password);
-  form.appendChild(gsm);
-  const form1 = document.createElement('form');
-  const labelForm1 = document.createElement('label')
-  labelForm1.innerText = "Select File"
-  const inputForm = document.createElement('input')
-  inputForm.type = "file"
-  inputForm.accept ="image/*"
-  inputForm.name = "file"
-  inputForm.required = "true"
-  form1.appendChild(labelForm1)
-  form1.appendChild(inputForm);
-  form1.style.display = "none"
-  form.innerHTML +=`
-  <label>
+  main.innerHTML = `<div id="divForm">
+  <form id="form" class="p-5">
+    <h1 style="color: #634835;">Creer votre compte</h1>
+    <input type="text" id="email" placeholder="Email" required class="form-control mb-3">
+    <input type="text" id="nom" placeholder="Nom" required class="form-control mb-3">
+    <input type="text" id="prenom" placeholder="Prenom" required class="form-control mb-3">
+    <input type="text" id="gsm" placeholder="GSM" required class="form-control mb-3">
+    <input type="password" id="password" placeholder="Password" required class="form-control mb-3">
+     <label>
     <input type="radio" name="pictureType" value="upload">
   Use file
   </label>
@@ -114,17 +41,31 @@ function renderRegisterForm() {
       <img src="${avatar2}" alt="avatar2">
     </label>
   </div>
-
-`
-
-
-  form.appendChild(form1);
-  form.appendChild(formCheckWrapper);
-  form.appendChild(submit);
-  form.appendChild(msgErreur)
-  form.appendChild(connecterLink)
-  newDiv.appendChild(form);
-  main.appendChild(newDiv);
+   <input id="reg" type="submit" value="register" class="btn btn-info">
+    <div class="mb-3 form-check">
+      <h4 id="msgErreur" style="color: red;"></h4>
+    </div>
+    <a id="connecterLink" style="cursor: pointer;" class="text-dark mt-3">deja inscrit? connectez-vous ici!</a>
+  </form>
+</div>`
+  const connecterLink = document.querySelector("#connecterLink");
+  connecterLink.addEventListener("click", () => {
+    Navigate("/login")
+  })
+  const reg = document.getElementById("reg")
+  const form = document.querySelector('#form')
+  const form1 = document.createElement('form');
+  const labelForm1 = document.createElement('label')
+  labelForm1.innerText = "Select File"
+  const inputForm = document.createElement('input')
+  inputForm.type = "file"
+  inputForm.accept = "image/*"
+  inputForm.name = "file"
+  inputForm.required = "true"
+  form1.appendChild(labelForm1)
+  form1.appendChild(inputForm)
+  form1.style.display = "none"
+  reg.parentNode.insertBefore(form1, reg)
 
   const labels = document.querySelectorAll('#radioAvatar label');
   labels.forEach(label => {
@@ -135,7 +76,6 @@ function renderRegisterForm() {
       label.classList.add('selected');
     });
   });
-
 
   const uploadRadio = document.querySelector('input[value="upload"]');
   const avatarRadio = document.querySelector('input[value="avatar"]');
@@ -148,21 +88,7 @@ function renderRegisterForm() {
     form1.style.display = 'block';
     divRadio.style.display = 'none'
   });
-  newDiv.style.display = "flex";
-  newDiv.style.justifyContent = "center";
-  newDiv.style.minHeight = "87vh";
-  newDiv.style.alignItems = "center";
-  newDiv.style.margin = "0";
-  newDiv.style.overflow = "hidden";
-  newDiv.style.lineHeight = "500%";
-  form.style.position = "relative";
-  form.style.minHeight = "280px";
-  form.style.width = "600px";
-  form.style.maxWidth = "100%";
-  form.style.backgroundColor = "#f2c491";
-  form.style.borderRadius = "10px";
-  form.style.boxShadow = "0 8px 24px rgba(0, 32, 63, .45), 0 8px 8px rgba(0, 32, 63, .45)";
-  form.style.lineHeight = "2";
+
   form.addEventListener('submit', onRegister);
 
 }
@@ -178,38 +104,38 @@ async function onRegister(e) {
 
   const fileInput = document.querySelector('input[name=file]');
 
-  const uploadRadio = document.querySelector('input[name="pictureType"][value="upload"]');
+  const uploadRadio = document.querySelector(
+      'input[name="pictureType"][value="upload"]');
 
-
-  let image ;
-  if(uploadRadio.checked){
+  let image;
+  if (uploadRadio.checked) {
     const formData = new FormData();
-    image=fileInput.files[0].name;
+    image = fileInput.files[0].name;
     formData.append('file', fileInput.files[0]);
     const options1 = {
       method: 'POST',
       body: formData
     };
-    const responseImage = await fetch(`${process.env.API_BASE_URL}/auths/upload`, options1);
+    const responseImage = await fetch(
+        `${process.env.API_BASE_URL}/auths/upload`, options1);
 
     if (!responseImage.ok) {
       Swal.fire((await responseImage.text()).valueOf())
     }
-      const imageSaved =  await responseImage.text();
-     image = imageSaved
+    const imageSaved = await responseImage.text();
+    image = imageSaved
+    console.log(image)
 
-  }else{
+  } else {
     const avatarRadios = document.getElementsByName('avatar');
-    avatarRadios.forEach((avtr)=>{
-      if(avtr.checked){
-
+    avatarRadios.forEach((avtr) => {
+      if (avtr.checked) {
+        console.log(avtr.id);
         image = avtr.id;
       }
     });
 
   }
-
-
 
   const options = {
     method: 'POST',
@@ -239,7 +165,5 @@ async function onRegister(e) {
   Navigate('/login');
 
 }
-
-
 
 export default RegisterPage;

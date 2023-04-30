@@ -1,6 +1,10 @@
 import Swal from "sweetalert2";
-import { getRememberMe, setAuthenticatedUser, setRememberMe } from '../../utils/auths';
-import { clearPage } from '../../utils/render';
+import {
+  getRememberMe,
+  setAuthenticatedUser,
+  setRememberMe
+} from '../../utils/auths';
+import {clearPage} from '../../utils/render';
 import Navbar from '../Navbar/Navbar';
 import Navigate from '../Router/Navigate';
 
@@ -10,85 +14,33 @@ const LoginPage = () => {
   renderRegisterForm();
 };
 
-
 function renderRegisterForm() {
   const main = document.querySelector('main');
-  const newDiv = document.createElement("div");
-  const form = document.createElement('form');
-  form.className = 'p-5';
-  const title = document.createElement('h1');
-  title.innerText="Bienvenue dans la page de connexion";
-  title.style.color="#634835";
-  const email = document.createElement('input');
-  email.type = 'text';
-  email.id = 'email';
-  email.placeholder = 'Email';
-  email.required = true;
-  email.className = 'form-control mb-3';
-  const password = document.createElement('input');
-  password.type = 'password';
-  password.id = 'password';
-  password.required = true;
-  password.placeholder = 'Password';
-  password.className = 'form-control mb-3';
-  const submit = document.createElement('input');
-  submit.value = 'Login';
-  submit.type = 'submit';
-  submit.className = 'btn btn-info';
-
-  const formCheckWrapper = document.createElement('div');
-  formCheckWrapper.className = 'mb-3 form-check';
-
-  const rememberme = document.createElement('input');
-  rememberme.type = 'checkbox';
-  rememberme.className = 'form-check-input';
-  rememberme.id = 'rememberme';
+  main.innerHTML = `<div id="login-container">
+  <form id="login-form" class="p-5">
+    <h1 id="login-title">Bienvenue dans la page de connexion</h1>
+    <input type="text" id="email-input" class="form-control mb-3" placeholder="Email" required>
+    <input type="password" id="password-input" class="form-control mb-3" placeholder="Password" required>
+    <div id="remember-me-wrapper" class="mb-3 form-check">
+      <input type="checkbox" id="remember-me" class="form-check-input">
+      <label for="remember-me" class="form-check-label">Remember me</label>
+    </div>
+    <input type="submit" id="login-submit" class="btn btn-info" value="Login">
+    <br>
+    <a id="register-link" class="text-dark mt-3" style="cursor: pointer;">Pas encore inscrit? Inscrivez-vous ici!</a>
+  </form>
+</div>`
+  const rememberme = document.querySelector("#remember-me")
   const remembered = getRememberMe();
   rememberme.checked = remembered;
   rememberme.addEventListener('click', onCheckboxClicked);
 
-  const checkLabel = document.createElement('label');
-  checkLabel.htmlFor = 'rememberme';
-  checkLabel.className = 'form-check-label';
-  checkLabel.textContent = 'Remember me';
-
-  const connecterLink = document.createElement("a");
-  connecterLink.id = "connecterLink";
-  connecterLink.innerText = "Pas encore inscrit? Inscrivez-vous ici!";
-  connecterLink.style.cursor = "pointer"
-  connecterLink.className = "text-dark mt-3";
+  const connecterLink = document.querySelector('#register-link');
   connecterLink.addEventListener("click", () => {
     Navigate("/register")
-  })
+  });
 
-  const br = document.createElement("br");
-
-  formCheckWrapper.appendChild(rememberme);
-  formCheckWrapper.appendChild(checkLabel);
-  form.appendChild(title);
-  form.appendChild(email);
-  form.appendChild(password);
-  form.appendChild(formCheckWrapper);
-  form.appendChild(submit);
-  form.appendChild(br);
-  form.appendChild(connecterLink)
-  newDiv.appendChild(form);
-  main.appendChild(newDiv);
-  newDiv.style.display="flex";
-  newDiv.style.justifyContent="center";
-  newDiv.style.minHeight="87vh";
-  newDiv.style.alignItems="center";
-  newDiv.style.margin="0";
-  newDiv.style.overflow="hidden";
-  newDiv.style.lineHeight="500%";
-  form.style.position="relative";
-  form.style.minHeight="280px";
-  form.style.width="600px";
-  form.style.maxWidth="100%";
-  form.style.backgroundColor="#f2c491";
-  form.style.borderRadius="10px";
-  form.style.boxShadow="0 8px 24px rgba(0, 32, 63, .45), 0 8px 8px rgba(0, 32, 63, .45)";
-  form.style.lineHeight="2";
+  const form = document.getElementById("login-form");
   form.addEventListener('submit', onLogin);
 }
 
@@ -99,8 +51,8 @@ function onCheckboxClicked(e) {
 async function onLogin(e) {
   e.preventDefault();
 
-  const email = document.querySelector('#email').value;
-  const password = document.querySelector('#password').value;
+  const email = document.querySelector('#email-input').value;
+  const password = document.querySelector('#password-input').value;
 
   const options = {
     method: 'POST',
@@ -113,13 +65,12 @@ async function onLogin(e) {
     },
   };
 
+  const response = await fetch(`${process.env.API_BASE_URL}/auths/login`,
+      options);
 
-  const response = await fetch(`${process.env.API_BASE_URL}/auths/login`, options);
-
-    if (!response.ok) {
-      Swal.fire((await response.text()).valueOf())
-    }
-
+  if (!response.ok) {
+    Swal.fire((await response.text()).valueOf())
+  }
 
   const authenticatedUser = await response.json();
 
