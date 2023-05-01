@@ -80,8 +80,8 @@ const renderUsersTable = async () => {
                               <th scope="col">GSM</th>
                               <th scope="col">Date d'inscription</th>
                               <th scope="col">Rôle</th>
-                              <th scope="col"></th>
-                              <th scope="col"></th>
+                              <th scope="col">Confirmer aidant</th>
+                              <th scope="col">Confirmer responsable</th>
                               </tr>
                           </thead>
                           <tbody>`  
