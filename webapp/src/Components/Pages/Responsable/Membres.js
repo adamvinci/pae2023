@@ -164,7 +164,7 @@ const renderUsersTable = async () => {
   }
 
   const confirmResponsableButtons = document.getElementsByClassName('confirmResponsableButton');
-  for (let i = 0; i < forms.length; i+=1) {
+  for (let i = 0; i < confirmResponsableButtons.length; i+=1) {
     confirmResponsableButtons[i].addEventListener("click", confirmResponsable);
     
   }
