@@ -67,8 +67,8 @@ async function renderNavbar() {
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#" data-uri="/">Objets en magasins</a></li>
-            <li><a class="dropdown-item" href="#" data-uri="/?etat=vendu">Objets en vente</a></li>
-            <li><a class="dropdown-item" href="#"  data-uri="/?etat=vente">Objets vendus</a></li>
+            <li><a class="dropdown-item" href="#" data-uri="/?etat=vente">Objets en vente</a></li>
+            <li><a class="dropdown-item" href="#"  data-uri="/?etat=vendu">Objets vendus</a></li>
           </ul>
         </li> 
               <li id="registerItem" class="nav-item">
