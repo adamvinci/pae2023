@@ -104,13 +104,13 @@ const renderUsersTable = async () => {
   const users = await response.json();
 
   users.sort((a, b) => {
-    const fa = a.nom.toLowerCase();
-    const fb = b.nom.toLowerCase();
+    const dateA = new Date(a.dateInscription).getTime();
+    const dateB = new Date(b.dateInscription).getTime();
 
-    if (fa < fb) {
+    if (dateA < dateB) {
         return -1;
     }
-    if (fa > fb) {
+    if (dateA > dateB) {
         return 1;
     }
     return 0;
