@@ -104,13 +104,13 @@ const renderUsersTable = async () => {
   const users = await response.json();
 
   users.sort((a, b) => {
-    const fa = a.nom.toLowerCase();
-    const fb = b.nom.toLowerCase();
+    const dateA = new Date(a.dateInscription).getTime();
+    const dateB = new Date(b.dateInscription).getTime();
 
-    if (fa < fb) {
+    if (dateA < dateB) {
         return -1;
     }
-    if (fa > fb) {
+    if (dateA > dateB) {
         return 1;
     }
     return 0;
@@ -164,7 +164,7 @@ const renderUsersTable = async () => {
   }
 
   const confirmResponsableButtons = document.getElementsByClassName('confirmResponsableButton');
-  for (let i = 0; i < forms.length; i+=1) {
+  for (let i = 0; i < confirmResponsableButtons.length; i+=1) {
     confirmResponsableButtons[i].addEventListener("click", confirmResponsable);
     
   }
