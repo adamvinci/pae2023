@@ -131,7 +131,7 @@ async function onRegister(e) {
     avatarRadios.forEach((avtr) => {
       if (avtr.checked) {
         console.log(avtr.id);
-        image = avtr.id;
+          image = `src/main/java/be/vinci/pae/utils/avatar/${avtr.id}`
       }
     });
 
