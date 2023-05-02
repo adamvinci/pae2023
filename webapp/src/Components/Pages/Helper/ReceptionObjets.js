@@ -16,8 +16,6 @@ const tableEnTete = `
           <th class="receptionObjetsTh"> Description </th>
           <th class="receptionObjetsTh"> Date de reception </th>
           <th class="receptionObjetsTh"> Localisation </th>
-          <th class="receptionObjetsTh"> Date dépot </th>
-          <th class="receptionObjetsTh"> Prix </th>
           <th class="receptionObjetsTh"> Modifier </th>
         </tr>
       </thead>
@@ -73,8 +71,6 @@ function table() {
           <option value="Atelier" ${currentLocation === 'Atelier' ? 'selected' : ''} ${currentLocation === 'Atelier' ? 'disabled' : ''}>Atelier</option>
         </select>
       </td>
-      <td class="receptionObjetsTd">${data[i].date_depot ? data[i].date_depot  : '/' }</td>
-      <td class="receptionObjetsTd">${data[i].prix_vente ? data[i].prix_vente : '/' }</td>
       <td class="receptionObjetsTd"><button id="btnUpdate" class="btn btn-secondary" type="button">Modifier l'object</button></td>
     </tr>`;
         i += 1;
