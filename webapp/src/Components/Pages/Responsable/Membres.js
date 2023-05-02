@@ -123,7 +123,7 @@ const renderUsersTable = async () => {
       <td>${users[index].nom}</td>
       <td>${users[index].email}</td>
       <td>${users[index].gsm}</td>
-      <td>${users[index].dateInscription}</td>
+      <td>${users[index].dateInscription[2]}/${users[index].dateInscription[1]}/${users[index].dateInscription[0]}</td>
       <td>${users[index].role}</td>
       
       `
