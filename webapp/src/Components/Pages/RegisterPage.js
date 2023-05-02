@@ -124,13 +124,11 @@ async function onRegister(e) {
     }
     const imageSaved = await responseImage.text();
     image = imageSaved
-    console.log(image)
 
   } else {
     const avatarRadios = document.getElementsByName('avatar');
     avatarRadios.forEach((avtr) => {
       if (avtr.checked) {
-        console.log(avtr.id);
           image = `src/main/java/be/vinci/pae/utils/avatar/${avtr.id}`
       }
     });

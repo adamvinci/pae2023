@@ -254,15 +254,20 @@ async function renderNavbar() {
   buttonTitle.addEventListener("click",()=>{
     Navigate('/');;
   })
-  const logoutButton = document.querySelector("#logoutButton");
-  logoutButton.addEventListener("click",()=>{
-    Navigate('/logout');
-  })
+
+    const logoutButton = document.querySelector("#logoutButton");
+    if(logoutButton) {
+      logoutButton.addEventListener("click", () => {
+        Navigate('/logout');
+      })
+    }
 
   const profileButton = document.querySelector("#profileButton");
-  profileButton.addEventListener("click",()=>{
-    Navigate('/UserPage');
-  })
+  if(profileButton){
+    profileButton.addEventListener("click",()=>{
+      Navigate('/UserPage');
+    })
+  }
       
 }
 
