@@ -25,6 +25,14 @@ const HomePage = async () => {
     const filteredArray2 = objets.filter(
         (o) => o.typeObjet.libelle.startsWith(type));
     objets = filteredArray2;
+    if(filteredArray2.length===0){
+      Swal.fire({
+        title: 'Pas d\'objets!',
+        confirmButtonText: 'Acceuil',
+      }).then(() => {
+        window.location.href='/';
+      })
+    }
   }
   const typeObjet = await getTypeObject();
 
