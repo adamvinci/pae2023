@@ -122,7 +122,7 @@ public class ObjetRessource {
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
         "Retrieve the complete list of object from user " + authenticatedUser.getEmail());
     return objetUCC.getAllObject().stream().filter(objetDTO -> objetDTO.getUtilisateur()
-        == authenticatedUser.getId() && objetDTO.getEtat() == "proposer").toList();
+        == authenticatedUser.getId()).toList();
   }
 
 
