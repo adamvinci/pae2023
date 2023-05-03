@@ -125,19 +125,11 @@ async function objetFiltrer() {
   jour = parseInt(jour, 10);
   dateFin = `${annee}-${mois}-${jour}`;
 
-
-
-  console.log()
-
   const data = datas.filter(d =>
       (d.prix >= prix1 && d.prix <= prix2)
       || typesValeurs.includes(d.typeObjet.libelle)
       || (d.date_acceptation && `${d.date_acceptation[0]}-${d.date_acceptation[1]}-${d.date_acceptation[2]}` >= dateDebut && `${d.date_acceptation[0]}-${d.date_acceptation[1]}-${d.date_acceptation[2]}` <= dateFin)
   );
-
-
-
-  console.log(data);
 
   tableAllObject(data);
 }

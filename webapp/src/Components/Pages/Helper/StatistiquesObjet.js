@@ -128,8 +128,6 @@ const Statistique = async () => {
       responsive:true
     }
   });
-  console.log(mychart)
-  console.log(mychart2)
 };
 
 async function getObjects() {
