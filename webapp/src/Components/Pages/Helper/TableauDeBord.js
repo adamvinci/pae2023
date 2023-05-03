@@ -9,7 +9,7 @@ const tableEnTete = `
   <div id = "tableData">
   <div>
   
-      <h1 >Tableau De Bord</h1>
+      <h1>Liste d'objets</h1>
 </div>
     <table class="tableEnTete">
       <thead> 
@@ -82,6 +82,7 @@ async function filtrageObjet() {
         </p>
         <p></p>
         <input type="button" id="filtreBtn" value="Filtrer">
+        <input type="button" id="resetBtn" value="Reset">
         
       </form>
     </div>
@@ -135,6 +136,24 @@ async function objetFiltrer() {
 
   tableAllObject(data);
 
+  const prix1Input = document.getElementById("prix1");
+  const prix2Input = document.getElementById("prix2")
+  const dateDebutInput = document.getElementById("dateDebut");
+  const dateFinInput = document.getElementById("dateFin");
+
+  prix1Input.value = '';
+  prix2Input.value = '';
+  dateDebutInput.value = '';
+  dateFinInput.value = '';
+
+  typesSelectionnes.forEach((checkbox) => {
+    const newChecked = false;
+    const currentChecked = checkbox.checked;
+    if (currentChecked !== newChecked) {
+      const updatedCheckbox = checkbox;
+      updatedCheckbox.checked = newChecked;
+    }
+  });
 }
 
 async function table() {
@@ -180,7 +199,7 @@ async function tableAllObject(datas) {
         : '/'}</td>
       <td class="receptionObjetsTd"> ${objet.localisation ? objet.localisation
         : '/'}</td>
-      <td class="receptionObjetsTd">${objet.prix ? objet.prix : '/'}</td>
+      <td class="receptionObjetsTd">${objet.prix ? `${objet.prix}€` : '/'}</td>
       <td class="receptionObjetsTd">${objet.date_vente
         ? ` ${objet.date_vente[2]}/${objet.date_vente[1]}/${objet.date_vente[0]}`
         : '/'}</td>
@@ -317,6 +336,9 @@ async function head() {
 
   const filtreBtn = document.getElementById("filtreBtn");
   filtreBtn.addEventListener("click", objetFiltrer);
+
+  const resetBtn = document.getElementById("resetBtn");
+  resetBtn.addEventListener("click", table);
 
 }
 
