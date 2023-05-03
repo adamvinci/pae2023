@@ -119,6 +119,8 @@ async function objetFiltrer() {
   let dateFin = document.getElementById("dateFin").value;
 
 
+
+
   let [annee, mois, jour] = dateFin.split("-");
   annee = parseInt(annee, 10);
   mois = parseInt(mois, 10);
@@ -126,12 +128,13 @@ async function objetFiltrer() {
   dateFin = `${annee}-${mois}-${jour}`;
 
   const data = datas.filter(d =>
-      (d.prix >= prix1 && d.prix <= prix2)
-      || typesValeurs.includes(d.typeObjet.libelle)
-      || (d.date_acceptation && `${d.date_acceptation[0]}-${d.date_acceptation[1]}-${d.date_acceptation[2]}` >= dateDebut && `${d.date_acceptation[0]}-${d.date_acceptation[1]}-${d.date_acceptation[2]}` <= dateFin)
+      (d.prix >= prix1 && d.prix <= prix2 || !prix1 || !prix2) && (typesValeurs.includes(d.typeObjet.libelle) ||
+          !typesValeurs.length) &&
+      (d.date_acceptation && `${d.date_acceptation[0]}-${d.date_acceptation[1]}-${d.date_acceptation[2]}` >= dateDebut && `${d.date_acceptation[0]}-${d.date_acceptation[1]}-${d.date_acceptation[2]}` <= dateFin || !dateDebut || !dateFin)
   );
 
   tableAllObject(data);
+
 }
 
 async function table() {

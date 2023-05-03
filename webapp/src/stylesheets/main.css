@@ -271,9 +271,8 @@ button {
 
 .filterRechercheObjet {
   flex: 0.3;
-
   border: 2px solid darkgray;
-  height: auto;
+  height: 600px;
 }
 
 #informationContainerTb {
