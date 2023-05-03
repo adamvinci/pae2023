@@ -76,7 +76,7 @@ const UserPage = async () => {
                                 <h6 class="mb-0">GSM</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <input id="userGsm" type="number" class="form-control" value="${loggedUser.gsm}" required>
+                                <input id="userGsm" type="text" class="form-control" value="${loggedUser.gsm}" required>
                             </div>
                         </div>
                         <div class="row mb-3">
