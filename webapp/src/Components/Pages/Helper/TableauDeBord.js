@@ -9,7 +9,7 @@ const tableEnTete = `
   <div id = "tableData">
   <div>
   
-      <h1 >Tableau De Bord</h1>
+      <h1>Liste d'objets</h1>
 </div>
     <table class="tableEnTete">
       <thead> 
@@ -77,10 +77,12 @@ async function filtrageObjet() {
         </p>
         <p>
           <h3>Disponibilite</h3>
-          <input type="date" id="dateDispo"><br>
+          <input type="date" id="dateDebut"> <p>jusqu'au </p>
+          <input type="date" id="dateFin">
         </p>
         <p></p>
         <input type="button" id="filtreBtn" value="Filtrer">
+        <input type="button" id="resetBtn" value="Reset">
         
       </form>
     </div>
@@ -114,16 +116,44 @@ async function objetFiltrer() {
 
   const prix1 = document.getElementById("prix1").value;
   const prix2 = document.getElementById("prix2").value;
-  const dateDispo = document.getElementById("dateDispo").value;
+  const dateDebut = document.getElementById("dateDebut").value;
+  let dateFin = document.getElementById("dateFin").value;
 
-  const data = datas.filter(
-      (d) => ((d.prix >= prix1 && d.prix <= prix2)) || (typesValeurs.includes(
-              d.typeObjet.libelle)
-          || (`${d.disponibilite.date[0]}-${d.disponibilite.date[1]}-${d.disponibilite.date[2]}`
-              === dateDispo))
+
+
+
+  let [annee, mois, jour] = dateFin.split("-");
+  annee = parseInt(annee, 10);
+  mois = parseInt(mois, 10);
+  jour = parseInt(jour, 10);
+  dateFin = `${annee}-${mois}-${jour}`;
+
+  const data = datas.filter(d =>
+      (d.prix >= prix1 && d.prix <= prix2 || !prix1 || !prix2) && (typesValeurs.includes(d.typeObjet.libelle) ||
+          !typesValeurs.length) &&
+      (d.date_acceptation && `${d.date_acceptation[0]}-${d.date_acceptation[1]}-${d.date_acceptation[2]}` >= dateDebut && `${d.date_acceptation[0]}-${d.date_acceptation[1]}-${d.date_acceptation[2]}` <= dateFin || !dateDebut || !dateFin)
   );
 
   tableAllObject(data);
+
+  const prix1Input = document.getElementById("prix1");
+  const prix2Input = document.getElementById("prix2")
+  const dateDebutInput = document.getElementById("dateDebut");
+  const dateFinInput = document.getElementById("dateFin");
+
+  prix1Input.value = '';
+  prix2Input.value = '';
+  dateDebutInput.value = '';
+  dateFinInput.value = '';
+
+  typesSelectionnes.forEach((checkbox) => {
+    const newChecked = false;
+    const currentChecked = checkbox.checked;
+    if (currentChecked !== newChecked) {
+      const updatedCheckbox = checkbox;
+      updatedCheckbox.checked = newChecked;
+    }
+  });
 }
 
 async function table() {
@@ -151,7 +181,7 @@ async function tableAllObject(datas) {
   const tableBody = document.querySelector('.tableData');
   // Efface la table avant de l'afficher à nouveau
   tableBody.innerHTML = '';
-
+  console.log(datas);
   datas.forEach((objet) => {
     tableBody.innerHTML += `
     <tr data-id="${objet.idObjet}">
@@ -169,7 +199,7 @@ async function tableAllObject(datas) {
         : '/'}</td>
       <td class="receptionObjetsTd"> ${objet.localisation ? objet.localisation
         : '/'}</td>
-      <td class="receptionObjetsTd">${objet.prix ? objet.prix : '/'}</td>
+      <td class="receptionObjetsTd">${objet.prix ? `${objet.prix}€` : '/'}</td>
       <td class="receptionObjetsTd">${objet.date_vente
         ? ` ${objet.date_vente[2]}/${objet.date_vente[1]}/${objet.date_vente[0]}`
         : '/'}</td>
@@ -306,6 +336,9 @@ async function head() {
 
   const filtreBtn = document.getElementById("filtreBtn");
   filtreBtn.addEventListener("click", objetFiltrer);
+
+  const resetBtn = document.getElementById("resetBtn");
+  resetBtn.addEventListener("click", table);
 
 }
 
