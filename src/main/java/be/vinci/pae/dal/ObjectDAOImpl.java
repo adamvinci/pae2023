@@ -208,8 +208,10 @@ public class ObjectDAOImpl implements ObjectDAO {
         if (!set.isBeforeFirst()) {
           return null;
         } else {
-          while (set.next()) {
+          int count =0;
+          while (set.next() && count<=1 ) {
             setObjetDTOFromResultSet(set, objetDTO);
+            count++;
           }
 
         }

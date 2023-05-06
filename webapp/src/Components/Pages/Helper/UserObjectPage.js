@@ -6,12 +6,7 @@ const UserObjectPage = async () => {
   main.innerHTML = `<h3>Welcome to your home page!</h3>`;
   let nbDispo = window.location.search.split("?")[1]?.split("=")[1];
   nbDispo = parseInt(nbDispo, 10);
-  let objets = await getObjects();
-  const ob = objets.filter((o) => o.utilisateur === nbDispo);
-  objets = ob
-
-  const obProp = objets.filter((o) => o.etat === "proposer");
-  objets = obProp;
+  const objets = await getObjects(nbDispo);
   shuffleArray(objets);
 
   let html = "";
@@ -167,7 +162,7 @@ function changeEtatName(etat) {
 
 }
 
-async function getObjects() {
+async function getObjects(idUser) {
 
   const options = {
     method: 'GET',
@@ -176,7 +171,7 @@ async function getObjects() {
       Authorization: getToken()
     },
   };
-  const response = await fetch(`${process.env.API_BASE_URL}/objet`, options);
+  const response = await fetch(`${process.env.API_BASE_URL}/objet/userObject/${idUser}`, options);
   if (!response.ok) {
     Swal.fire((await response.text()).valueOf())
   }

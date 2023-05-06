@@ -35,6 +35,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -103,26 +104,33 @@ public class ObjetRessource {
 
   /**
    * Endpoint to retrieve the list of objects owned by the authenticated user.
-   *
    * @param request the container request context
-   * @return the list of objects owned by the authenticated user as a List of ObjetDTOs
-   * @throws WebApplicationException if there are no objects in the database or if the request is
-   *                                 not authorized
+   * @param id the id of the user to retrieve object from
+   * @return the object of the users
    */
   @GET
   @Authorize
-  @Path("userObject/")
+  @Path("userObject/{id}")
   @Produces(MediaType.APPLICATION_JSON)
-  public List<ObjetDTO> getObjectFromUser(@Context ContainerRequest request) {
+  public List<ObjetDTO> getObjectFromUser(@Context ContainerRequest request,
+      @PathParam("id") int id) {
+    if (id == -1) {
+      throw new WebApplicationException("Id of user required", Status.BAD_REQUEST);
+    }
     if (objetUCC.getAllObject() == null) {
       throw new WebApplicationException("No object in the database", Status.NO_CONTENT);
     }
-    UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
 
+    UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
+    if (authenticatedUser.getId() != id && !authenticatedUser.getRole().equals("responsable")
+        && !authenticatedUser.getRole().equals("aidant")) {
+      throw new WebApplicationException("You do not have acces to this ressource",
+          Status.UNAUTHORIZED);
+    }
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
         "Retrieve the complete list of object from user " + authenticatedUser.getEmail());
-    return objetUCC.getAllObject().stream().filter(objetDTO -> objetDTO.getUtilisateur()
-        == authenticatedUser.getId()).toList();
+    return objetUCC.getAllObject().stream().filter(objetDTO -> Objects.equals(
+        objetDTO.getUtilisateur(), id)).toList();
   }
 
 

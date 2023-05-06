@@ -214,6 +214,7 @@ async function updateUser() {
         showConfirmButton: false,
         timer: 1500
       })
+        window.location="/";
     }
     UserPage(); // eslint-disable-line no-use-before-define
   
