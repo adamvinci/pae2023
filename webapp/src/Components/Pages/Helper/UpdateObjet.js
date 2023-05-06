@@ -120,7 +120,10 @@ async function majObject(stringPicture) {
 
 
   const description = document.getElementById("description").value;
-  const type = document.getElementById("type").value;
+  const typeElement = document.getElementById("type").value;
+
+  const type = typeElement === "Type d'objet" ? objectId.typeObjet.idObjet : typeElement;
+  console.log(type)
   const version = objectId.noVersion
 
   const photo = stringPicture;
