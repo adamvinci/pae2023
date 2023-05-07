@@ -84,6 +84,29 @@ public class ObjetRessource {
   }
 
   /**
+   * Retrieve one object from the database.
+   *
+   * @param id of the object to retrieve
+   * @return the retrieved object
+   */
+  @ResponsableOrAidant
+  @GET
+  @Path("{id}")
+  @Produces(MediaType.APPLICATION_JSON)
+
+  public ObjetDTO getOneObject(@PathParam("id") int id){
+    if (id == -1) {
+      throw new WebApplicationException("Id of type required", Status.BAD_REQUEST);
+    }
+    ObjetDTO objetDTO = objetUCC.getOne(id);
+    if (objetDTO == null) {
+      throw new WebApplicationException("This object does not exist",
+          Status.NOT_FOUND);
+    }
+    return objetDTO;
+  }
+
+  /**
    * Retrieve the object located in the store.
    *
    * @return a list containing these objects

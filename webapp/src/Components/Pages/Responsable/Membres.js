@@ -74,6 +74,7 @@ const renderUsersTable = async () => {
   usersTable.innerHTML =  `<thead class="thead-light">
                               <tr>
                               <th scope="col">#</th>
+                                <th scope="col">Photo</th>
                               <th scope="col">Prénom</th>
                               <th scope="col">Nom</th>
                               <th scope="col">Mail</th>
@@ -117,8 +118,11 @@ const renderUsersTable = async () => {
 });
 
   for (let index = 0; index < users.length; index+=1) {
+
+
       let usersTableHTML = `<tr>
       <th scope="row">${index + 1}</th>
+          <td> <img id = "photoUsr" height="50px" data-id=${users[index].id}  alt="Photo" ></td>
       <td>${users[index].prenom}</td>
       <td>${users[index].nom}</td>
       <td>${users[index].email}</td>
@@ -157,6 +161,18 @@ const renderUsersTable = async () => {
   
   tableWrapper.appendChild(usersTable);
   main.appendChild(tableWrapper);
+  const imgUser = document.querySelectorAll("#photoUsr");
+  imgUser.forEach(async (usr)=>{
+    const idUsr=usr.dataset.id
+
+    const response1 = await fetch(
+        `${process.env.API_BASE_URL}/auths/getPicture/${idUsr}`, options);
+
+    const img1 = await response1.blob();
+    /* eslint-disable */
+    usr.src = URL.createObjectURL(img1);
+    /* eslint-enable */
+  })
   const forms = document.getElementsByClassName('confirmHelperButton');
   for (let i = 0; i < forms.length; i+=1) {
     forms[i].addEventListener("click", confirmHelper)
@@ -169,6 +185,7 @@ const renderUsersTable = async () => {
     
   }
 }
+
 
 const Membres = async () => {
   clearPage();

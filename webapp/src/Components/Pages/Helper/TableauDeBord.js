@@ -110,7 +110,7 @@ const Statistique = async () => {
       labels: ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet',
         'Aout', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
       datasets: [{
-        label: date,
+        label: 'Objet proposé ',
         backgroundColor: barColors,
         data: [monthCounts.Janvier,
           monthCounts.Fevrier,

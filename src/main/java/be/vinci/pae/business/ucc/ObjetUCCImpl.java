@@ -265,7 +265,7 @@ public class ObjetUCCImpl implements ObjetUCC {
       ObjetDTO objetDATA = dataService.createObjet(objetDTO);
       notification.setObject(objetDATA.getIdObjet());
       notification.setType("alerteProposition");
-      notification.setMessage("l'Objet n" + objetDATA.getIdObjet() + " a été proposé");
+      notification.setMessage("l'Objet ( " + objetDATA.getDescription() + ") a été proposé");
       NotificationDTO notificationCreated = dataServiceNotification.createOne(notification);
       dataServiceNotification.linkNotifToAidantAndResponsable(notificationCreated.getId());
       return objetDATA;
