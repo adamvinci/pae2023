@@ -200,7 +200,8 @@ public class ObjectDAOImpl implements ObjectDAO {
         + "tob.libelle,d.id_disponibilite,d.date_disponibilite,"
         + "p.plage,o.version FROM projet.objets o,projet.disponibilites d "
         + ",projet.plages_horaires p ,projet.types_objets tob "
-        + "  WHERE id_objet = (?)  ";
+        + "  WHERE o.disponibilite = d.id_disponibilite AND d.plage = p.id_plage_horaire"
+        + " AND o.type = tob.id_type AND id_objet = (?)  ";
     try (PreparedStatement statement = dalService.preparedStatement(query)) {
       statement.setInt(1, id);
       try (ResultSet set = statement.executeQuery()) {
@@ -208,10 +209,9 @@ public class ObjectDAOImpl implements ObjectDAO {
         if (!set.isBeforeFirst()) {
           return null;
         } else {
-          int count =0;
-          while (set.next() && count<=1 ) {
+          while (set.next()) {
+
             setObjetDTOFromResultSet(set, objetDTO);
-            count++;
           }
 
         }
