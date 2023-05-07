@@ -181,7 +181,6 @@ async function tableAllObject(datas) {
   const tableBody = document.querySelector('.tableData');
   // Efface la table avant de l'afficher à nouveau
   tableBody.innerHTML = '';
-  console.log(datas);
   datas.forEach((objet) => {
     tableBody.innerHTML += `
     <tr data-id="${objet.idObjet}">
