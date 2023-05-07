@@ -250,6 +250,7 @@ public class UserRessource {
     }
     return changedUser;
   }
+
   /**
    * Path to retrieve the user from a token.
    *

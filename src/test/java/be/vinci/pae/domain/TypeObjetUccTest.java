@@ -25,6 +25,7 @@ import org.mockito.Mockito;
  * Unit test of {@link be.vinci.pae.business.ucc.TypeObjetUccImpl}.
  */
 class TypeObjetUccTest {
+
   private ServiceLocator locator = ServiceLocatorUtilities.bind(new ApplicationBinderMock());
   private TypeObjetDAO typeObjetDAO;
   private TypeObjetDTO typeObjetDTO;
@@ -32,6 +33,7 @@ class TypeObjetUccTest {
   private TypeObjetFactory typeFactory;
 
   private DALTransaction dalService;
+
   @BeforeEach
   void setUp() {
     dalService = locator.getService(DALTransaction.class);
@@ -41,6 +43,7 @@ class TypeObjetUccTest {
     typeObjetDTO = typeFactory.getTypeObjet();
 
   }
+
   @DisplayName("Test getAllObjectType() return null when resultset is null")
   @Test
   void testGetAllObjectTypeReturnNull() {
