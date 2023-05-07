@@ -84,6 +84,29 @@ public class ObjetRessource {
   }
 
   /**
+   * Retrieve one object from the database.
+   *
+   * @param id of the object to retrieve
+   * @return the retrieved object
+   */
+  @ResponsableOrAidant
+  @GET
+  @Path("{id}")
+  @Produces(MediaType.APPLICATION_JSON)
+
+  public ObjetDTO getOneObject(@PathParam("id") int id) {
+    if (id == -1) {
+      throw new WebApplicationException("Id of type required", Status.BAD_REQUEST);
+    }
+    ObjetDTO objetDTO = objetUCC.getOne(id);
+    if (objetDTO == null) {
+      throw new WebApplicationException("This object does not exist",
+          Status.NOT_FOUND);
+    }
+    return objetDTO;
+  }
+
+  /**
    * Retrieve the object located in the store.
    *
    * @return a list containing these objects
@@ -104,33 +127,26 @@ public class ObjetRessource {
 
   /**
    * Endpoint to retrieve the list of objects owned by the authenticated user.
+   *
    * @param request the container request context
-   * @param id the id of the user to retrieve object from
-   * @return the object of the users
+   * @return the list of objects owned by the authenticated user as a List of ObjetDTOs
+   * @throws WebApplicationException if there are no objects in the database or if the request is
+   *                                 not authorized
    */
   @GET
   @Authorize
-  @Path("userObject/{id}")
+  @Path("userObject/")
   @Produces(MediaType.APPLICATION_JSON)
-  public List<ObjetDTO> getObjectFromUser(@Context ContainerRequest request,
-      @PathParam("id") int id) {
-    if (id == -1) {
-      throw new WebApplicationException("Id of user required", Status.BAD_REQUEST);
-    }
+  public List<ObjetDTO> getObjectFromUser(@Context ContainerRequest request) {
     if (objetUCC.getAllObject() == null) {
       throw new WebApplicationException("No object in the database", Status.NO_CONTENT);
     }
-
     UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
-    if (authenticatedUser.getId() != id && !authenticatedUser.getRole().equals("responsable")
-        && !authenticatedUser.getRole().equals("aidant")) {
-      throw new WebApplicationException("You do not have acces to this ressource",
-          Status.UNAUTHORIZED);
-    }
+
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
         "Retrieve the complete list of object from user " + authenticatedUser.getEmail());
     return objetUCC.getAllObject().stream().filter(objetDTO -> Objects.equals(
-        objetDTO.getUtilisateur(), id)).toList();
+        objetDTO.getUtilisateur(), authenticatedUser.getId())).toList();
   }
 
 

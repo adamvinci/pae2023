@@ -5,6 +5,7 @@ const HomePage = async () => {
   const main = document.querySelector('main');
   main.innerHTML = `<h3 class ="titles">Loading ... </h3>`;
   let objets = await getObjects();
+  console.log(objets);
   shuffleArray(objets);
 
   let etat = window.location.search.split("?")[1]?.split("=")[1];
@@ -18,6 +19,14 @@ const HomePage = async () => {
     }
     const filteredArray = objets.filter((o) => o.etat === etat);
     objets = filteredArray;
+    if(filteredArray.length===0){
+      Swal.fire({
+        title: `Pas d'objets ${etat} en magasin`,
+        confirmButtonText: 'Acceuil',
+      }).then(() => {
+        window.location.href='/';
+      })
+    }
   }
   if(objets.length === 0)  main.innerHTML = `<br><h3 class = "titles" >Pas encore d'objets ! </h3>`;
   // Filter the array depending on the type (if there are one and the type is not 'None')
@@ -27,7 +36,7 @@ const HomePage = async () => {
     objets = filteredArray2;
     if(filteredArray2.length===0){
       Swal.fire({
-        title: 'Pas d\'objets!',
+        title: 'Pas d\'objets de ce type !',
         confirmButtonText: 'Acceuil',
       }).then(() => {
         window.location.href='/';

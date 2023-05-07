@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import {getAuthenticatedUser, getToken} from '../../utils/auths'
+import {getToken} from '../../utils/auths'
 
 const MyObjectPage = async () => {
   const main = document.querySelector('main');
@@ -18,8 +18,7 @@ const MyObjectPage = async () => {
     <div class="carousel-item active">
       <img id = "imgCarousel" class="d-block " src=/api/objet/getPicture/${objets[0].idObjet}  data-x = ${0} alt=${objets[0].descritpion} >
             <div class="carousel-caption d-none d-md-block">
-        <h5 >${objets[0].description}</h5>
-        <h6 >${objets[0].typeObjet.libelle}</h6>
+        <h5 >${objets[0].typeObjet.libelle}</h5>
         <p >${changeEtatName(objets[0].etat)}</p>
       </div>
     </div>
@@ -33,8 +32,7 @@ const MyObjectPage = async () => {
          <div class="carousel-item">
       <img id = "imgCarousel" class="d-block  " src=/api/objet/getPicture/${o.idObjet} data-x = ${objets.indexOf(o)} alt=${o.description} >
                <div class="carousel-caption d-none d-md-block">
-        <h5 id="libelle">${o.description}</h5>
-        <h6 id="libelle">${o.typeObjet.libelle}</h6>
+        <h5 id="libelle">${o.typeObjet.libelle}</h5>
 
         <p id = "etat">
   ${changeEtatName(o.etat)}
@@ -156,7 +154,7 @@ function changeEtatName(etat){
 
 }
 async function getObjects() {
-  const authenticatedUser = await getAuthenticatedUser();
+
 
   const options = {
     method: 'GET',
@@ -165,7 +163,7 @@ async function getObjects() {
       Authorization : getToken()
     },
   };
-  const response = await fetch(`${process.env.API_BASE_URL}/objet/userObject/${authenticatedUser.id}`, options);
+  const response = await fetch(`${process.env.API_BASE_URL}/objet/userObject`, options);
   if (!response.ok) {
     Swal.fire((await response.text()).valueOf())
   }

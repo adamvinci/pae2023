@@ -181,7 +181,6 @@ async function tableAllObject(datas) {
   const tableBody = document.querySelector('.tableData');
   // Efface la table avant de l'afficher à nouveau
   tableBody.innerHTML = '';
-  console.log(datas);
   datas.forEach((objet) => {
     tableBody.innerHTML += `
     <tr data-id="${objet.idObjet}">
@@ -218,7 +217,7 @@ async function tableAllObject(datas) {
 
       sessionStorage.setItem("objet", JSON.stringify(objectSelectionner));
 
-      window.location.href = "/updatePage";
+      window.location.href = `/updatePage?id=${id}`;
     });
   });
 
@@ -275,10 +274,11 @@ async function tableAllObject(datas) {
               </tbody>    
             </table>
            </div>
-          <div class = "fermer"></div>
+          <div class = "fermer">
           <input type="button" id="closeButtonTb" value="Fermer">
+          </div>
           <div class = "objetUser"></div>
-          <input type="button" id="objectUserButtonTb" value="voir les objets de l'user">
+          <input type="button" id="objectUserButtonTb" value="voir les objets de l'utilisateur">
         </div>
       </div>`
 

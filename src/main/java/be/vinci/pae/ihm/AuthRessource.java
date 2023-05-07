@@ -117,7 +117,6 @@ public class AuthRessource {
         || userDTO.getImage().equals("")) {
       throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
     }
-    System.out.println(userDTO.getImage());
     if (!Files.exists(java.nio.file.Path.of(userDTO.getImage()))) {
       throw new WebApplicationException("this image is not stored in the server ",
           Status.BAD_REQUEST);

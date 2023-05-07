@@ -4,6 +4,7 @@ import be.vinci.pae.business.domaine.User;
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.dal.services.DALTransaction;
+import be.vinci.pae.utils.exception.BusinessException;
 import be.vinci.pae.utils.exception.ConflictException;
 import be.vinci.pae.utils.exception.FatalException;
 import jakarta.inject.Inject;
@@ -166,7 +167,7 @@ public class UserUccImpl implements UserUcc {
       dal.startTransaction();
       User user = (User) userToChange;
       if (!user.checkPassword(actualPassword)) {
-        throw new FatalException("Wrong password");
+        throw new BusinessException("Wrong password");
       }
       userToChange.setEmail(newUser.getEmail());
       userToChange.setGsm(newUser.getGsm());

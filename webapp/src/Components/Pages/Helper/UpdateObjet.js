@@ -1,25 +1,34 @@
 import Swal from "sweetalert2";
+import {getToken} from "../../../utils/auths";
 
+async function getObjectToUpdate(){
+  const idObjet =  window.location.search.split("?")[1]?.split("=")[1];
 
-// Récupérer l'objet de la session
-let object = sessionStorage.getItem("objet");
-if (!object) {
-  // L'objet n'existe pas encore, on peut définir une valeur par défaut
-  object = {
-    idObjet: '',
-    typeObjet: {libelle: ''},
-    description: '',
-    etat: null,
-    date_acceptation: null,
-    date_depot: null,
-    localisation: null,
-    prix: null,
-    utilisateur: ''
+  const options1 = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization : getToken()
+    },
   };
-} else {
-  object = JSON.parse(object);
+
+  const response1 = await fetch(`${process.env.API_BASE_URL}/objet/${idObjet}`, options1);
+
+  if (!response1.ok) {
+    Swal.fire((await response1.text()).valueOf())
+  }
+
+
+  const object = await response1.json();
+
+  return object;
 }
-const selectedObject = `
+
+
+
+
+ function getSelectedObjet( object){
+  return   `
 
  <div class="titre1">
   <h1>Objet selectionner</h1>
@@ -49,11 +58,11 @@ const selectedObject = `
           <td>${object.description}</td>
           <td>${object.etat ? `${object.etat}` : '/'}</td>
           <td>${object.date_acceptation
-    ? `${object.date_acceptation[2]}/${object.date_acceptation[1]}/${object.date_acceptation[0]}`
-    : '/'}</td>
+      ? `${object.date_acceptation[2]}/${object.date_acceptation[1]}/${object.date_acceptation[0]}`
+      : '/'}</td>
           <td>${object.date_depot
-    ? `${object.date_depot[2]}/${object.date_depot[1]}/${object.date_depot[0]}`
-    : '/'}</td>
+      ? `${object.date_depot[2]}/${object.date_depot[1]}/${object.date_depot[0]}`
+      : '/'}</td>
           <td>${object.localisation ? `${object.localisation}` : '/'}</td>
           <td>${object.prix ? `${object.prix}€` : '/'}</td>
           <td>${object.utilisateur}</td>
@@ -61,6 +70,8 @@ const selectedObject = `
       </tbody>    
     </table>
   </div>`;
+}
+
 
 async function getTypeObject() {
 
@@ -200,8 +211,9 @@ async function sendPicture(e){
 }
 
 async function head() {
+  const objets =await getObjectToUpdate();
   const main = document.querySelector('main');
-  main.innerHTML += selectedObject;
+  main.innerHTML += getSelectedObjet(objets);
   main.innerHTML += await filtrageObjet();
 
   const updateBtn = document.getElementById("updateBtn");

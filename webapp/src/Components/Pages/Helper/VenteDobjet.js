@@ -169,7 +169,7 @@ function homeScreen(){
                 confirmButton: 'btn btn-success',
                 cancelButton: 'btn btn-danger'
               },
-              buttonsStyling: false
+              buttonsStyling: true
             })
 
             swalWithBootstrapButtons.fire({
