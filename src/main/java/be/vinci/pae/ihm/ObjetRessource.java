@@ -94,7 +94,7 @@ public class ObjetRessource {
   @Path("{id}")
   @Produces(MediaType.APPLICATION_JSON)
 
-  public ObjetDTO getOneObject(@PathParam("id") int id){
+  public ObjetDTO getOneObject(@PathParam("id") int id) {
     if (id == -1) {
       throw new WebApplicationException("Id of type required", Status.BAD_REQUEST);
     }
@@ -148,7 +148,6 @@ public class ObjetRessource {
     return objetUCC.getAllObject().stream().filter(objetDTO -> Objects.equals(
         objetDTO.getUtilisateur(), authenticatedUser.getId())).toList();
   }
-
 
 
   /**
