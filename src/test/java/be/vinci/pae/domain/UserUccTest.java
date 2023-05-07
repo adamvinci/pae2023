@@ -15,6 +15,7 @@ import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.ApplicationBinderMock;
+import be.vinci.pae.utils.exception.BusinessException;
 import be.vinci.pae.utils.exception.ConflictException;
 import be.vinci.pae.utils.exception.FatalException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -401,7 +402,7 @@ class UserUccTest {
     user.setId(1);
     user.setPassword("bm");
 
-    assertThrows(FatalException.class, () -> userUcc.update(user, "124*"));
+    assertThrows(BusinessException.class, () -> userUcc.update(user, "124*"));
   }
 
   @DisplayName("Test update with a FatalException")
