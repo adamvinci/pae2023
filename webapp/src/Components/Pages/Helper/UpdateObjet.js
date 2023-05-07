@@ -78,7 +78,7 @@ async function getTypeObject() {
   const options = {
     method: 'GET',
   };
-  const response = await fetch(`${process.env.API_BASE_URL}/objet/typeObjet`,
+  const response = await fetch(`${process.env.API_BASE_URL}/typeObjet`,
       options);
 
   if (!response.ok) {

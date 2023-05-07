@@ -2,8 +2,6 @@ package be.vinci.pae.ihm;
 
 import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.ucc.UserUcc;
-import be.vinci.pae.ihm.filters.Authorize;
-import be.vinci.pae.ihm.filters.PictureService;
 import be.vinci.pae.utils.Config;
 import be.vinci.pae.utils.Json;
 import be.vinci.pae.utils.MyLogger;
@@ -15,28 +13,16 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DefaultValue;
-import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Date;
-import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
-import org.glassfish.jersey.server.ContainerRequest;
 
 /**
  * AuthRessource retrieve the request process by Grizzly and treat it.
@@ -50,8 +36,7 @@ public class AuthRessource {
 
   @Inject
   private UserUcc userUcc;
-  @Inject
-  private PictureService pictureService;
+
 
 
   /**
@@ -128,85 +113,6 @@ public class AuthRessource {
     return Json.filterPublicJsonView(userDTO, UserDTO.class);
   }
 
-
-  /**
-   * Path to retrieve the user from a token.
-   *
-   * @param request contains the token in the header
-   * @return the user contained in the token
-   */
-  @GET
-  @Path("user")
-  @Produces(MediaType.APPLICATION_JSON)
-  @Authorize
-  public UserDTO getUser(@Context ContainerRequest request) {
-    UserDTO userDTO = (UserDTO) request.getProperty("user");
-    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve user from token of "
-        + userDTO.getEmail());
-    return Json.filterPublicJsonView(userDTO, UserDTO.class);
-
-  }
-
-  /**
-   * Upload the avatar image of a user.
-   *
-   * @param file            the image
-   * @param fileDisposition the file data as a FormDataContentDisposition object, containing the
-   *                        file name and metadata
-   * @return a Response object indicating success or failure of the file upload
-   */
-  @POST
-  @Path("upload")
-  @Consumes(MediaType.MULTIPART_FORM_DATA)
-  @Produces(MediaType.TEXT_PLAIN)
-  public String uploadFile(@FormDataParam("file") InputStream file,
-      @FormDataParam("file") FormDataContentDisposition fileDisposition) {
-    String fileName = fileDisposition.getFileName();
-    String pathToSave = Config.getProperty("pathToUserImage");
-    String newFileName = UUID.randomUUID() + "." + fileName;
-    pathToSave += newFileName;
-
-    try {
-      Files.copy(file, Paths.get(pathToSave));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Adding avatar");
-    return pathToSave;
-  }
-
-  /**
-   * Retrieve the picture of a user.
-   *
-   * @param id      of the user
-   * @param request contains the user asking the picture
-   * @return the image
-   */
-  @Authorize
-  @GET
-  @Path("getPicture/{id}")
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces({"image/png", "image/jpg", "image/jpeg"})
-  public Response getPictureUser(@DefaultValue("-1") @PathParam("id") int id,
-      @Context ContainerRequest request) {
-    UserDTO userDTO = (UserDTO) request.getProperty("user");
-    if (id == -1) {
-      throw new WebApplicationException("Id of photo required", Status.BAD_REQUEST);
-    }
-    if (userDTO.getId() != id && userDTO.getRole().equals("membre")) {
-      throw new WebApplicationException("You cant acces avatar from other user",
-          Status.UNAUTHORIZED);
-    }
-    String pathPicture = userUcc.getPicture(id);
-    if (pathPicture == null) {
-      throw new WebApplicationException("No image for this user in the database",
-          Status.NOT_FOUND);
-      // delete from img if exists
-    }
-
-    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve picture of user " + id);
-    return pictureService.transformImage(pathPicture);
-  }
 
 
 }

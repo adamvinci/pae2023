@@ -2,7 +2,6 @@ package be.vinci.pae.business.ucc;
 
 import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
-import be.vinci.pae.business.dto.TypeObjetDTO;
 import java.util.List;
 
 /**
@@ -18,12 +17,7 @@ public interface ObjetUCC {
    */
   List<ObjetDTO> getAllObject();
 
-  /**
-   * Retrieve all the type of object in the database.
-   *
-   * @return a list of object type
-   */
-  List<TypeObjetDTO> getAllObjectType();
+
 
   /**
    * Ask the db the image of the object.
@@ -112,13 +106,7 @@ public interface ObjetUCC {
    */
   ObjetDTO ajouterObjet(ObjetDTO objet, NotificationDTO notificationDTO);
 
-  /**
-   * Retrieves a TypeObjetDTO object corresponding to the specified ID.
-   *
-   * @param id the ID of the TypeObjetDTO to retrieve.
-   * @return the TypeObjetDTO object with the specified ID.
-   */
-  TypeObjetDTO getOneType(int id);
+
 
 
   /**

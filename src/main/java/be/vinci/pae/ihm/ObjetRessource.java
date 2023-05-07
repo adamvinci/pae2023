@@ -7,6 +7,7 @@ import be.vinci.pae.business.dto.UserDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.ucc.DisponibiliteUCC;
 import be.vinci.pae.business.ucc.ObjetUCC;
+import be.vinci.pae.business.ucc.TypeObjetUcc;
 import be.vinci.pae.ihm.filters.Authorize;
 import be.vinci.pae.ihm.filters.PictureService;
 import be.vinci.pae.ihm.filters.ResponsableAuthorization;
@@ -59,6 +60,9 @@ public class ObjetRessource {
   private NotificationFactory notificationFactory;
 
   @Inject
+  private TypeObjetUcc typeObjetUcc;
+
+  @Inject
   private PictureService pictureService;
 
   /**
@@ -93,7 +97,6 @@ public class ObjetRessource {
   @GET
   @Path("{id}")
   @Produces(MediaType.APPLICATION_JSON)
-
   public ObjetDTO getOneObject(@PathParam("id") int id) {
     if (id == -1) {
       throw new WebApplicationException("Id of type required", Status.BAD_REQUEST);
@@ -150,44 +153,9 @@ public class ObjetRessource {
   }
 
 
-  /**
-   * Retrieve all the type of object in the database.
-   *
-   * @return a list of object type or a WebAppException if there are none.
-   */
-  @GET
-  @Path("typeObjet")
-  @Produces(MediaType.APPLICATION_JSON)
-  public List<TypeObjetDTO> getAllObjectType() {
-    if (objetUCC.getAllObjectType() == null) {
-      throw new WebApplicationException("No type of object in the database", Status.NO_CONTENT);
-    }
-    Logger.getLogger(MyLogger.class.getName()).log(Level.INFO, "Retrieve the type of object");
-    return objetUCC.getAllObjectType();
-  }
 
-  /**
-   * Retrieves a single instance of TypeObjetDTO with the specified id from the server.
-   *
-   * @param id the id of the TypeObjetDTO instance to retrieve
-   * @return a TypeObjetDTO object in JSON format
-   * @throws WebApplicationException if the id is -1 or if the requested TypeObjetDTO instance does
-   *                                 not exist on the server
-   */
-  @GET
-  @Path("/typeObjet/{id}")
-  @Produces(MediaType.APPLICATION_JSON)
-  public TypeObjetDTO getOneType(@PathParam("id") int id) {
-    if (id == -1) {
-      throw new WebApplicationException("Id of type required", Status.BAD_REQUEST);
-    }
-    TypeObjetDTO typeObjetDTO = objetUCC.getOneType(id);
-    if (typeObjetDTO == null) {
-      throw new WebApplicationException("type invalide",
-          Status.NOT_FOUND);
-    }
-    return typeObjetDTO;
-  }
+
+
 
   /**
    * Adds the provided object to the system and returns the added object with its ID and photo path
@@ -208,7 +176,7 @@ public class ObjetRessource {
         || objet.getDisponibilite() == null) {
       throw new WebApplicationException("missing fields", Status.BAD_REQUEST);
     }
-    if (objetUCC.getOneType(objet.getTypeObjet().getIdObjet()) == null) {
+    if (typeObjetUcc.getOneType(objet.getTypeObjet().getIdObjet()) == null) {
       throw new WebApplicationException("this type does not exist",
           Status.BAD_REQUEST);
     }
@@ -534,7 +502,7 @@ public class ObjetRessource {
     }
 
     if (type != 0) {
-      TypeObjetDTO typeObjetDTO = objetUCC.getOneType(type);
+      TypeObjetDTO typeObjetDTO = typeObjetUcc.getOneType(type);
       if (typeObjetDTO == null) {
         throw new WebApplicationException("this type does not exist",
             Status.BAD_REQUEST);

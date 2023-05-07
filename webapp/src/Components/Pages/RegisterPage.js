@@ -117,7 +117,7 @@ async function onRegister(e) {
       body: formData
     };
     const responseImage = await fetch(
-        `${process.env.API_BASE_URL}/auths/upload`, options1);
+        `${process.env.API_BASE_URL}/users/upload`, options1);
 
     if (!responseImage.ok) {
       Swal.fire((await responseImage.text()).valueOf())
