@@ -12,7 +12,7 @@ const Disponibilites = async () => {
     },
   };
 
-  const response = await fetch(`${process.env.API_BASE_URL}/auths/getPicture/${user.id}`, options);
+  const response = await fetch(`${process.env.API_BASE_URL}/users/getPicture/${user.id}`, options);
 
   const img1 = await response.blob();
   const main = document.querySelector('main');

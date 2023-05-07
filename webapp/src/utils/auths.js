@@ -29,7 +29,7 @@ async function getAuthenticatedUser() {
       },
     };
 
-    const response = await fetch(`${process.env.API_BASE_URL}/auths/user`, options);
+    const response = await fetch(`${process.env.API_BASE_URL}/users/user`, options);
     // if the user retrieved with the token is null then the user is redirected to the login page
     if (!response.ok){
       clearAuthenticatedUser();

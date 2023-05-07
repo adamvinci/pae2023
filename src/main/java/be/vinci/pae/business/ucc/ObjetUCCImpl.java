@@ -3,10 +3,8 @@ package be.vinci.pae.business.ucc;
 import be.vinci.pae.business.domaine.Objet;
 import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
-import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.dal.NotificationDAO;
 import be.vinci.pae.dal.ObjectDAO;
-import be.vinci.pae.dal.TypeObjetDAO;
 import be.vinci.pae.dal.UserDAO;
 import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.MyLogger;
@@ -27,8 +25,7 @@ public class ObjetUCCImpl implements ObjetUCC {
   private ObjectDAO dataService;
   @Inject
   private NotificationDAO dataServiceNotification;
-  @Inject
-  private TypeObjetDAO typeObjetDAO;
+
   @Inject
   private UserDAO userDAO;
 
@@ -48,18 +45,7 @@ public class ObjetUCCImpl implements ObjetUCC {
     }
   }
 
-  @Override
-  public List<TypeObjetDTO> getAllObjectType() {
-    try {
-      dal.startTransaction();
-      return typeObjetDAO.getAll();
-    } catch (FatalException e) {
-      dal.rollBackTransaction();
-      throw e;
-    } finally {
-      dal.commitTransaction();
-    }
-  }
+
 
   @Override
   public String getPicture(int id) {
@@ -278,18 +264,7 @@ public class ObjetUCCImpl implements ObjetUCC {
     }
   }
 
-  @Override
-  public TypeObjetDTO getOneType(int id) {
-    try {
-      dal.startTransaction();
-      return typeObjetDAO.getOne(id);
-    } catch (FatalException e) {
-      dal.rollBackTransaction();
-      throw e;
-    } finally {
-      dal.commitTransaction();
-    }
-  }
+
 
   @Override
   public ObjetDTO updateObject(ObjetDTO objetDTO) {

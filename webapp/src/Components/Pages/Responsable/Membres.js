@@ -166,7 +166,7 @@ const renderUsersTable = async () => {
     const idUsr=usr.dataset.id
 
     const response1 = await fetch(
-        `${process.env.API_BASE_URL}/auths/getPicture/${idUsr}`, options);
+        `${process.env.API_BASE_URL}/users/getPicture/${idUsr}`, options);
 
     const img1 = await response1.blob();
     /* eslint-disable */

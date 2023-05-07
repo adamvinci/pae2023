@@ -9,14 +9,11 @@ import static org.mockito.Mockito.doThrow;
 
 import be.vinci.pae.business.dto.NotificationDTO;
 import be.vinci.pae.business.dto.ObjetDTO;
-import be.vinci.pae.business.dto.TypeObjetDTO;
 import be.vinci.pae.business.factory.NotificationFactory;
 import be.vinci.pae.business.factory.ObjetFactory;
-import be.vinci.pae.business.factory.TypeObjetFactory;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.dal.NotificationDAO;
 import be.vinci.pae.dal.ObjectDAO;
-import be.vinci.pae.dal.TypeObjetDAO;
 import be.vinci.pae.dal.services.DALTransaction;
 import be.vinci.pae.utils.ApplicationBinderMock;
 import be.vinci.pae.utils.exception.BusinessException;
@@ -43,14 +40,14 @@ class ObjetUCCTest {
 
   private ObjetUCC objetUCC;
   private ObjectDAO objectDAO;
-  private TypeObjetDTO typeObjetDTO;
-  private TypeObjetFactory typeFactory;
+
+
   private ObjetDTO objetDTO;
   private ObjetFactory objetFactory;
   private NotificationFactory notificationFactory;
   private NotificationDAO notificationDAO;
   private NotificationDTO notificationDTO;
-  private TypeObjetDAO typeObjetDAO;
+
 
   private DALTransaction dalService;
 
@@ -58,15 +55,14 @@ class ObjetUCCTest {
   void setUp() {
     objetUCC = locator.getService(ObjetUCC.class);
     objectDAO = locator.getService(ObjectDAO.class);
-    typeObjetDAO = locator.getService(TypeObjetDAO.class);
     objetFactory = locator.getService(ObjetFactory.class);
-    typeFactory = locator.getService(TypeObjetFactory.class);
+
     notificationFactory = locator.getService(NotificationFactory.class);
     notificationDAO = locator.getService(NotificationDAO.class);
     objetDTO = objetFactory.getObjet();
     notificationDTO = notificationFactory.getNotification();
     dalService = locator.getService(DALTransaction.class);
-    typeObjetDTO = typeFactory.getTypeObjet();
+
 
 
   }
@@ -96,28 +92,7 @@ class ObjetUCCTest {
 
   }
 
-  @DisplayName("Test getAllObjectType() return null when resultset is null")
-  @Test
-  void testGetAllObjectTypeReturnNull() {
-    Mockito.when(typeObjetDAO.getAll()).thenReturn(null);
-    assertNull(objetUCC.getAllObjectType(), "No type of object in the database");
-  }
 
-  @DisplayName("Test getAllObjectType() return list when resultset is not empty")
-  @Test
-  void testGetAllObjectTypeReturnList() {
-    List<TypeObjetDTO> typeObjetDTOList = new ArrayList<>();
-    Mockito.when(typeObjetDAO.getAll()).thenReturn(typeObjetDTOList);
-    assertEquals(typeObjetDTOList, objetUCC.getAllObjectType());
-  }
-
-  @DisplayName("Test getAllObjectType()  with a FatalException")
-  @Test
-  void testGetAllObjectTypeWithFatalException() {
-    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
-    assertThrows(FatalException.class, () -> objetUCC.getAllObjectType());
-
-  }
 
 
   @DisplayName("Test getPicture() return null for an non existent id")
@@ -165,27 +140,7 @@ class ObjetUCCTest {
 
   }
 
-  @DisplayName("Test  getOneType(int id) with a non-existent id")
-  @Test
-  void testGetOneTypeWithBadId() {
-    Mockito.when(typeObjetDAO.getOne(1)).thenReturn(null);
-    assertNull(objetUCC.getOneType(1), "This id doesnt exist");
-  }
 
-  @DisplayName("Test  getOneType(int id) with a =existent id")
-  @Test
-  void testGetOneTypeWithGoodId() {
-    Mockito.when(typeObjetDAO.getOne(1)).thenReturn(typeObjetDTO);
-    assertEquals(typeObjetDTO, objetUCC.getOneType(1));
-  }
-
-  @DisplayName("Test getOneType(int id)  with a FatalException")
-  @Test
-  void testGetOneTypeObjectWithFatalException() {
-    doThrow(new FatalException("exception")).doNothing().when(dalService).startTransaction();
-    assertThrows(FatalException.class, () -> objetUCC.getOneType(1));
-
-  }
 
   @DisplayName("Test accepterObjet(ObjetDTO objetDTO) with a bad state")
   @Test

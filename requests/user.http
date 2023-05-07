@@ -10,6 +10,11 @@ Content-Type: application/json
   client.global.set("adrienToken", response.body.token);
 %}
 
+###
+GET {{baseUrl}}/typeObjet/
+
+###
+GET {{baseUrl}}/typeObjet/9
 
 ###
 GET http://localhost:3000/auths/user

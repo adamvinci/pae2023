@@ -17,6 +17,8 @@ import be.vinci.pae.business.ucc.NotificationUCC;
 import be.vinci.pae.business.ucc.NotificationUCCImpl;
 import be.vinci.pae.business.ucc.ObjetUCC;
 import be.vinci.pae.business.ucc.ObjetUCCImpl;
+import be.vinci.pae.business.ucc.TypeObjetUcc;
+import be.vinci.pae.business.ucc.TypeObjetUccImpl;
 import be.vinci.pae.business.ucc.UserUcc;
 import be.vinci.pae.business.ucc.UserUccImpl;
 import be.vinci.pae.dal.DisponibiliteDAO;
@@ -63,6 +65,7 @@ public class ApplicationBinder extends AbstractBinder {
 
     bind(UserUccImpl.class).to(UserUcc.class).in(Singleton.class);
     bind(ObjetUCCImpl.class).to(ObjetUCC.class).in(Singleton.class);
+    bind(TypeObjetUccImpl.class).to(TypeObjetUcc.class).in(Singleton.class);
     bind(DisponibiliteUCCImpl.class).to(DisponibiliteUCC.class).in(Singleton.class);
     bind(NotificationUCCImpl.class).to(NotificationUCC.class).in(Singleton.class);
 

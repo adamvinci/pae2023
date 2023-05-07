@@ -23,7 +23,7 @@ const UserPage = async () => {
     },
   };
 
-  const response = await fetch(`${process.env.API_BASE_URL}/auths/getPicture/${userID}`, options);
+  const response = await fetch(`${process.env.API_BASE_URL}/users/getPicture/${userID}`, options);
   const img = await response.blob();
   main.innerHTML = `<div class="container">
     <div class="main-body">
@@ -175,7 +175,7 @@ async function updateUser() {
             method: 'POST',
             body: formData
         };
-      const responseImage = await fetch(`${process.env.API_BASE_URL}/auths/upload`, options1);
+      const responseImage = await fetch(`${process.env.API_BASE_URL}/users/upload`, options1);
 
       if (!responseImage.ok) {
         Swal.fire((await responseImage.text()).valueOf())

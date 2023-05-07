@@ -116,7 +116,7 @@ async function renderAddObjetForm() {
     const nbDispo = Number.parseInt(dispo1,10)
     const nbType = Number.parseInt(type1,10)
     const responseDisponibiltite = await fetch(`${process.env.API_BASE_URL}/disponibilite/${nbDispo}`);
-    const responseType = await fetch(`${process.env.API_BASE_URL}/objet/typeObjet/${nbType}`);
+    const responseType = await fetch(`${process.env.API_BASE_URL}/typeObjet/${nbType}`);
     const type=await responseType.json();
     const disponibilite = await responseDisponibiltite.json();
 
@@ -175,7 +175,7 @@ async function getTypeObject() {
   const options = {
     method: 'GET',
   };
-  const response = await fetch(`${process.env.API_BASE_URL}/objet/typeObjet`,
+  const response = await fetch(`${process.env.API_BASE_URL}/typeObjet`,
       options);
 
   if (!response.ok) {
