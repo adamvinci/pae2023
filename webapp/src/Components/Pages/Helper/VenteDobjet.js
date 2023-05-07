@@ -11,6 +11,7 @@ const tableEnTete = `
         <tr> 
                   <th class="rechercheObjetsTh"> Photo objet </th>
           <th class="rechercheObjetsTh"> Type d'objet </th> 
+          <th class="rechercheObjetsTh"> Description </th> 
           <th class="rechercheObjetsTh"> date de dépot </th>
           <th class="rechercheObjetsTh"> Prix de l'objet </th>
           <th class="rechercheObjetsTh"> Etat de vente </th>
@@ -57,6 +58,7 @@ function homeScreen(){
         <tr>
                   <td class="td"><img src=/api/objet/getPicture/${data[i].idObjet} alt="photo" width="100px"></td> 
           <td class="rechercheObjetsTd">${data[i].typeObjet.libelle}</td> 
+          <td class="rechercheObjetsTd">${data[i].description}</td>
           <td class="rechercheObjetsTd">${data[i].date_depot[2]}/${data[i].date_depot[1]}/${data[i].date_depot[0]}</td>
           <td class="rechercheObjetsTd" id="prixDonne">`;
 

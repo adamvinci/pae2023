@@ -2,19 +2,18 @@ import HomePage from '../Pages/HomePage';
 import Logout from '../Logout/Logout';
 import LoginPage from '../Pages/LoginPage';
 import RegisterPage from '../Pages/RegisterPage';
-import ObjetsProposer from '../Pages/ObjetProposerPage';
 import Disponibilites from '../Pages/Helper/Disponibilites';
 import ReceptionObjets from '../Pages/Helper/ReceptionObjets';
-import TableauDeBord from '../Pages/Helper/TableauDeBord';
+import ListeObjets from '../Pages/Helper/ListeObjets';
 import VenteDobjet from '../Pages/Helper/VenteDobjet';
 import Membres from '../Pages/Responsable/Membres';
 import ObjetsPropose from '../Pages/Responsable/ObjetsPropose';
 import AddObjetPage from "../Pages/AddObjetPage";
-import StatistiquePage from '../Pages/Helper/StatistiquesObjet';
 import UserPage from "../Pages/UserPage";
 import MyObjectPage from "../Pages/MyObjectPage";
 import UserObjectPage from "../Pages/Helper/UserObjectPage";
 import UpdateObjectPage from '../Pages/Helper/UpdateObjet';
+import tableauDeBord from "../Pages/Helper/TableauDeBord";
 
 
 
@@ -25,14 +24,13 @@ const routes = {
   '/login': LoginPage,
   '/register': RegisterPage,
   '/logout': Logout,
-  '/ObjetProposer': ObjetsProposer,
   '/Disponibilites': Disponibilites,
   '/ReceptionObjets': ReceptionObjets,
-  '/TableauDeBord': TableauDeBord,
+  '/TableauDeBord': tableauDeBord,
   '/venteObjet': VenteDobjet,
   '/Membres': Membres,
   '/ObjetsPropose': ObjetsPropose,
-  '/Statistiques' : StatistiquePage,
+  '/ListeObjets' : ListeObjets,
   '/AddObjet': AddObjetPage,
   '/UserPage': UserPage,
   '/MyObjectPage': MyObjectPage,

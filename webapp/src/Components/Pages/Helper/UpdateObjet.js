@@ -120,7 +120,9 @@ async function majObject(stringPicture) {
 
 
   const description = document.getElementById("description").value;
-  const type = document.getElementById("type").value;
+  const typeElement = document.getElementById("type").value;
+
+  const type = typeElement === "Type d'objet" ? objectId.typeObjet.idObjet : typeElement;
   const version = objectId.noVersion
 
   const photo = stringPicture;
@@ -149,7 +151,7 @@ async function majObject(stringPicture) {
         text: 'Votre mise à jour a été effectuée avec succès.',
         timer: 5000
       }).then(() => {
-        window.location.href = '/TableauDeBord';
+        window.location.href = '/ListeObjets';
       });
     }
   } catch (error) {
