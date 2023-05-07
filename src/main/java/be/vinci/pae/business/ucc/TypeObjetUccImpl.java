@@ -17,6 +17,7 @@ public class TypeObjetUccImpl implements TypeObjetUcc {
 
   @Inject
   private DALTransaction dal;
+
   @Override
   public List<TypeObjetDTO> getAllObjectType() {
     try {
