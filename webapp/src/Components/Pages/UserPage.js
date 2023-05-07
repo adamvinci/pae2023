@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import { getAuthenticatedUser, getToken } from "../../utils/auths";
 import Navigate from "../Router/Navigate";
+import navbar from "../Navbar/Navbar";
 
 
 let userID;
@@ -214,7 +215,7 @@ async function updateUser() {
         showConfirmButton: false,
         timer: 1500
       })
-        window.location="/";
+        navbar();
     }
     UserPage(); // eslint-disable-line no-use-before-define
   
