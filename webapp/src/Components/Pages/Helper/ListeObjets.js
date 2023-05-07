@@ -235,8 +235,7 @@ async function tableAllObject(datas) {
         },
       };
 
-      const response1 = await fetch(
-          `${process.env.API_BASE_URL}/auths/getPicture/${idUser}`, options);
+      const response1 = await fetch(`${process.env.API_BASE_URL}/users/getPicture/${idUser}`, options);
 
       const img1 = await response1.blob();
       const response2 = await fetch(
