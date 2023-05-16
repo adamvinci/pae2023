@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  * Class with the business method of object.
  */
 @JsonDeserialize(as = ObjetImpl.class)
-public interface Objet extends ObjetDTO {
+public interface Objet {
 
   /**
    * Indicates whether this object has been accepted.

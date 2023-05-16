@@ -1,6 +1,8 @@
 package be.vinci.pae.ihm.filters;
 
 import be.vinci.pae.business.dto.UserDTO;
+import be.vinci.pae.ihm.filters.TokenService;
+import be.vinci.pae.ihm.filters.ResponsableOrAidant;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.WebApplicationException;

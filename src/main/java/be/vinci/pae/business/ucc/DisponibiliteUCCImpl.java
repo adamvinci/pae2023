@@ -11,6 +11,7 @@ import java.util.List;
 /**
  * Implementation of {@link DisponibiliteUCC}.
  */
+
 public class DisponibiliteUCCImpl implements DisponibiliteUCC {
 
 

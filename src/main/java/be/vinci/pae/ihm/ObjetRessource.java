@@ -75,15 +75,15 @@ public class ObjetRessource {
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   public List<ObjetDTO> getAllObject(@Context ContainerRequest request) {
-
-    if (objetUCC.getAllObject() == null) {
+    List<ObjetDTO> objetDTOList = objetUCC.getAllObject();
+    if (objetDTOList == null) {
       throw new WebApplicationException("No object in the database", Status.NO_CONTENT);
     }
     UserDTO authenticatedUser = (UserDTO) request.getProperty("user");
 
     Logger.getLogger(MyLogger.class.getName()).log(Level.INFO,
         "Retrieve the complete list of object from user " + authenticatedUser.getEmail());
-    return objetUCC.getAllObject();
+    return objetDTOList;
 
   }
 

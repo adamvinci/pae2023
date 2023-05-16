@@ -3,8 +3,8 @@ POST http://localhost:3000/auths/login
 Content-Type: application/json
 
 {
-  "email":"adrien.riez@hotmail.be",
-  "password":"123*"
+  "email":"bert.riez@gmail.be",
+  "password":"Jaune;10."
 }
 > {%
   client.global.set("adrienToken", response.body.token);
@@ -41,7 +41,8 @@ Content-Type: application/json
   "password":"oui",
   "nom":"test2",
   "prenom":"test2",
-  "gsm": "044444444"
+  "gsm": "044444444",
+  "image": "src/main/java/be/vinci/pae/utils/images/50bbbe4e-f962-4c20-b082-2b8cde148080.Vaisselle-Tasses-SousTasses-coffee-1053505_1280.jpg"
 }
 > {%
   client.global.set("leonToken", response.body.token);
@@ -135,7 +136,7 @@ Authorization: {{adrienToken}}
 
 ###
 POST {{baseUrl}}/objet/depositObject/8
-Authorization: {{aidantToken}}
+Authorization: {{adrienToken}}
 Content-Type: application/json
 
 {
@@ -144,7 +145,7 @@ Content-Type: application/json
 
 ###
 POST {{baseUrl}}/objet/misEnVenteObject/8
-Authorization: {{aidantToken}}
+Authorization: {{adrienToken}}
 Content-Type: application/json
 
 {
@@ -153,7 +154,7 @@ Content-Type: application/json
 
 ###
 POST {{baseUrl}}/objet/vendreObject/8
-Authorization: {{aidantToken}}
+Authorization: {{adrienToken}}
 
 ###
 GET {{baseUrl}}/auths/getPicture/14

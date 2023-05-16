@@ -64,7 +64,6 @@ class ObjetUCCTest {
     dalService = locator.getService(DALTransaction.class);
 
 
-
   }
 
   @DisplayName("Test getAllObject() return null when resultset is null")
